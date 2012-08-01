@@ -1,0 +1,57 @@
+<%= render 'sidebar' %>
+
+<div id="main">
+  <h2>
+    <%= @title %>
+  </h2>
+  <%= form_for @user do |f| %>
+    <div class="field-box base">
+      <p>
+        <%= f.label :username %>
+        <%= f.text_field :username %>
+      </p>
+      <p>
+        <%= f.label :email %>
+        <%= f.text_field :email %>
+      </p>
+      <p>
+        <%= f.label :password %>
+        <%= f.password_field :password %>
+      </p>
+      <p>
+        <%= f.label :password_confirmation %>
+        <%= f.password_field :password_confirmation %>
+      </p>
+    </div>
+    <div class="field-box more">
+      <p>
+        <%= f.label :name %>
+        <%= f.text_field :name %>
+      </p>
+      <p>
+        <%= f.label :prename %>
+        <%= f.text_field :prename %>
+      </p>
+    </div>
+    <div class="field-box more<%= ' disabled' if current_user?(@user) %>">
+      <%= fields_for @user.privilege do |p| %>
+        <p>
+          <%= f.label :privileges %>
+          <%= p.check_box :admin, disabled: current_user?(@user) %>
+          <%= p.label :admin, class: 'check-box-label' %>
+        </p>
+        <p>
+          <% Privilege.sections.each do |section| %>
+            <%= p.check_box section, disabled: current_user?(@user) %>
+            <%= p.label section, class: 'check-box-label' %>
+          <% end %>
+        </p>
+      <% end %>
+    </div>
+    <div class="field-box buttons">
+      <p>
+        <%= f.submit %>
+      </p>
+    </div>
+  <% end %>
+</div>

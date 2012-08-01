@@ -1,0 +1,38 @@
+<%= render 'sidebar' %>
+
+<div id="main">
+  <h2>
+    <%= @title %>
+  </h2>
+  <table>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td>
+            <p>
+              <strong><%= user.full_name %></strong> (<%= user.username%>)
+            </p>
+            <p>
+              <%= mail_to user.email %>
+            </p>
+          </td>
+          <td class="privileges">
+            <p>
+              <strong><%= t :label_privileges %></strong>
+            </p>
+            <p>
+              <%= list_privileges(user) %>
+            </p>
+          </td>
+          <td class="icons">
+            <p>
+              <%= link_to t(:action_edit), edit_user_path(user) %>
+            </p>
+            <p>
+              <%= button_to t(:action_delete), user_path(user), method: :delete %>
+            </p>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

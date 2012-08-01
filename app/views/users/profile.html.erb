@@ -1,0 +1,44 @@
+<div id="main">
+  <h2>
+    <%= @title %>
+  </h2>
+  <%= form_for @user, url: profile_url do |f| %>
+    <div class="field-box base">
+      <p>
+        <%= f.label :username %>
+        <%= f.text_field :username, disabled: true %>
+      </p>
+      <p>
+        <%= f.label :email %>
+        <%= f.text_field :email %>
+      </p>
+      <p>
+        <%= f.label :password %>
+        <%= f.password_field :password %>
+      </p>
+      <p>
+        <%= f.label :password_confirmation %>
+        <%= f.password_field :password_confirmation %>
+      </p>
+      <p>
+        <%= f.label :password_old %>
+        <%= f.password_field :password_old %>
+      </p>
+    </div>
+    <div class="field-box more">
+      <p>
+        <%= f.label :name %>
+        <%= f.text_field :name %>
+      </p>
+      <p>
+        <%= f.label :prename %>
+        <%= f.text_field :prename %>
+      </p>
+    </div>
+    <div class="field-box buttons">
+      <p>
+        <%= f.submit %>
+      </p>
+    </div>
+  <% end %>
+</div>

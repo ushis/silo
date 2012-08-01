@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title><%= @title %> | silo</title>
+
+    <%= stylesheet_link_tag    'silo', media: :all %>
+    <%= javascript_include_tag 'silo' %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body class="<%= @body_class.join(' ') %>">
+    <div id="wrapper">
+      <header id="header">
+        <h1>
+          <%= link_to 'silo', root_path %>
+        </h1>
+        <%= flash_all %>
+        <ul id="user-tools">
+          <li>
+            <%= button_to t(:action_logout), login_path, method: :delete %>
+          </li>
+          <li>
+            <%= link_to current_user.full_name, profile_path %>
+          </li>
+        </ul>
+      </header>
+      <nav id="nav">
+        <ul>
+          <li class="experts">
+            <%= link_to t(:label_experts), experts_path %>
+          </li>
+          <li class="partners">
+            <%= link_to t(:label_partners), partners_path %>
+          </li>
+          <li class="references">
+            <%= link_to t(:label_references), references_path %>
+          </li>
+          <% if current_user.admin? %>
+            <li class="users">
+              <%= link_to t(:label_users), users_path %>
+            </li>
+          <% end %>
+        </ul>
+      </nav>
+      <div id="content">
+        <%= yield %>
+      </div>
+    </div>
+    <script>
+      $('div.flash').siloFlash();
+    </script>
+  </body>
+</html>

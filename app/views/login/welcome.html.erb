@@ -1,0 +1,15 @@
+<%= form_tag login_path, method: :post, id: 'login-form' do %>
+  <p>
+    <%= text_field_tag :username, @username, placeholder: t(:label_username) %>
+  </p>
+  <p>
+    <%= password_field_tag :password, nil, placeholder: t(:label_password) %>
+  </p>
+  <p>
+    <%= submit_tag t(:action_login) %>
+  </p>
+<% end %>
+
+<script>
+  $('#login-form').siloLogin();
+</script>
