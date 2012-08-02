@@ -1,5 +1,4 @@
-#
-#
+# The Expert model.
 class Expert < ActiveRecord::Base
   attr_accessible(:name, :prename, :gender, :birthname, :birthday,
                   :birthplace, :citizenship, :degree, :marital_status)
@@ -12,32 +11,55 @@ class Expert < ActiveRecord::Base
 
   default_scope includes(:contact)
 
-  #
-  CONST_VALUES = {
+  # Lookup for database <-> application translations. Defines database values
+  # for _gender_ and _marital_status_.
+  TRANSLATIONS = {
     gender:         { female: 'f',  male: 'm' },
     marital_status: { married: 'm', single: 's' }
   }
 
+  # Defines class methods returning translation hashes.
   #
-  CONST_VALUES.each do |method, values|
+  #   Expert.gender
+  #   #=> { female: 'f', male: 'm' }
+  #
+  # Defines the methods _Expert.gender_ and _Expert.marital_status_.
+  class << self
+    TRANSLATIONS.each do |method, values|
+      define_method(method) { values }
+    end
+  end
+
+  # Defines instance methods to access the TRANSLATIONS hash. For each
+  # translation hash a getter method, translating the database value to
+  # a symbol, and a setter method, translating a symbol to the corresponding
+  # database value, is defined.
+  #
+  #   # Get the symbol for db value 'f'
+  #   expert.gender
+  #   #=> :female
+  #
+  #   # Sets db value to 'm'
+  #   expert.gender = :male
+  #   #=> :male
+  #
+  # If the setter method gets a non-symbol argument, the value is assigned
+  # without translation.
+  TRANSLATIONS.each do |method, values|
     define_method(method) do
       values.find { |_, val| val == super() }.try(:[], 0)
     end
 
-    define_method("#{method}=") { |sym| super(values[sym]) }
+    define_method("#{method}=") do |val|
+      if val.is_a? Symbol
+        super(values[val])
+      else
+        super(val)
+      end
+    end
   end
 
-  #
-  def self.gender
-    CONST_VALUES[:gender]
-  end
-
-  #
-  def self.marital_status
-    CONST_VALUES[:marital_status]
-  end
-
-  #
+  # Initializes the contact.
   def init_contact
     self.contact ||= Contact.new
   end

@@ -44,9 +44,10 @@ namespace :experts do
           end
         end
 
-        if (email = data['E-Mail'])
-          email = email.strip.split(/\s+|#/)
-          e.contact.emails << email[0] if email.length > 0
+        if (email = data['E_Mail'])
+          unless (parts = email.strip.split(/\s+|#/)).empty?
+            e.contact.emails << parts[0]
+          end
         end
 
         if (fax = data['Fax'])

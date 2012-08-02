@@ -92,7 +92,7 @@ class User < ActiveRecord::Base
     self.privilege ||= Privilege.new
     self.privilege.admin = privileges[:admin]
 
-    Privilege.sections.each do |section|
+    Privilege::SECTIONS.each do |section|
       self.privilege.send("#{section}=".to_s, admin? || privileges[section])
     end
   end

@@ -17,8 +17,6 @@
 #   user.contact.emails << 'mail@server.net'
 #   #=> ['mail@example.com', 'mail@server.net']
 #   user.save
-#
-# The fields list can be retrieved through the method _Contact.fields_.
 class Contact < ActiveRecord::Base
   serialize :contacts, JSON
 
@@ -31,11 +29,6 @@ class Contact < ActiveRecord::Base
 
   FIELDS.each do |method|
     define_method(method) { self.contacts[method.to_s] ||= [] }
-  end
-
-  # Returns the fields list.
-  def self.fields
-    FIELDS
   end
 
   # Initializes the contacts hash.

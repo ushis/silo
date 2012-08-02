@@ -13,14 +13,6 @@ class Privilege < ActiveRecord::Base
   # A list of all sections.
   SECTIONS = [:experts, :partners, :references]
 
-  # Returns a list of all sections.
-  #
-  #   Privilege.sections
-  #   #=> [:experts, :partners, :references]
-  def self.sections
-    SECTIONS
-  end
-
   # Returns the privileges hash.
   #
   #   privilege.privileges

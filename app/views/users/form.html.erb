@@ -41,7 +41,7 @@
           <%= p.label :admin, class: 'check-box-label' %>
         </p>
         <p>
-          <% Privilege.sections.each do |section| %>
+          <% Privilege::SECTIONS.each do |section| %>
             <%= p.check_box section, disabled: current_user?(@user) %>
             <%= p.label section, class: 'check-box-label' %>
           <% end %>
