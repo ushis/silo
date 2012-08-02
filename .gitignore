@@ -22,3 +22,6 @@
 
 # Docs
 /doc/app
+
+# DB-Config
+/config/database.yml
