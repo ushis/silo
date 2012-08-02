@@ -11,7 +11,48 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 1) do
+ActiveRecord::Schema.define(:version => 2) do
+
+  create_table "addresses", :force => true do |t|
+    t.integer "addressable_id"
+    t.string  "addressable_type"
+    t.string  "street",           :null => false
+    t.string  "city",             :null => false
+    t.string  "zipcode"
+    t.string  "country"
+    t.string  "more"
+  end
+
+  add_index "addresses", ["addressable_id", "addressable_type"], :name => "index_addresses_on_addressable_id_and_addressable_type"
+  add_index "addresses", ["city"], :name => "index_addresses_on_city"
+  add_index "addresses", ["zipcode"], :name => "index_addresses_on_zipcode"
+
+  create_table "contacts", :force => true do |t|
+    t.integer "contactable_id"
+    t.string  "contactable_type"
+    t.text    "contacts",         :null => false
+  end
+
+  add_index "contacts", ["contactable_id", "contactable_type"], :name => "index_contacts_on_contactable_id_and_contactable_type"
+
+  create_table "experts", :force => true do |t|
+    t.integer  "user_id",                              :null => false
+    t.string   "name",                                 :null => false
+    t.string   "prename",                              :null => false
+    t.string   "gender",                               :null => false
+    t.string   "birthname"
+    t.datetime "birthday"
+    t.string   "birthplace"
+    t.string   "citizenship"
+    t.string   "degree"
+    t.string   "marital_status", :default => "single", :null => false
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
+  end
+
+  add_index "experts", ["name"], :name => "index_experts_on_name"
+  add_index "experts", ["prename"], :name => "index_experts_on_prename"
+  add_index "experts", ["user_id"], :name => "index_experts_on_user_id"
 
   create_table "privileges", :force => true do |t|
     t.integer "user_id",                       :null => false
@@ -20,6 +61,8 @@ ActiveRecord::Schema.define(:version => 1) do
     t.boolean "partners",   :default => false, :null => false
     t.boolean "references", :default => false, :null => false
   end
+
+  add_index "privileges", ["user_id"], :name => "index_privileges_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "username",        :null => false

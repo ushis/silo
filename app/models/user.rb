@@ -35,7 +35,8 @@ class User < ActiveRecord::Base
   validates :name,       presence: true
   validates :prename,    presence: true
 
-  has_one :privilege, autosave: true, dependent: :destroy
+  has_many :experts
+  has_one  :privilege, autosave: true, dependent: :destroy
 
   default_scope includes(:privilege)
 

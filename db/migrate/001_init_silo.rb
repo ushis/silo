@@ -21,6 +21,8 @@ class InitSilo < ActiveRecord::Migration
       t.boolean :partners,   null: false, default: false
       t.boolean :references, null: false, default: false
     end
+
+    add_index :privileges, :user_id
   end
 
   def down
