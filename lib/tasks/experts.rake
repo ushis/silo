@@ -20,9 +20,9 @@ namespace :experts do
         e.prename = prename.split(/\s+/).join(' ')
 
         if data['m'] == '1'
-          e.gender = Expert.genders[:male]
+          e.gender = :male
         else
-          e.gender = Expert.genders[:female]
+          e.gender = :female
         end
 
         e.birthname = data['Geburtsname']
@@ -32,14 +32,12 @@ namespace :experts do
         e.degree = data['Titel']
 
         if data['Familienstand'].try(:downcase) == 'v'
-          e.marital_status = Expert.marital_status[:married]
+          e.marital_status = :married
         else
-          e.marital_status = Expert.marital_status[:single]
+          e.marital_status = :single
         end
 
         # Contact data
-        e.contact = Contact.new
-
         ['Handy', 'TelefonP', 'TelefonD'].each do |phone|
           if (number = data[phone])
             e.contact.phones << number

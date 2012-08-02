@@ -26,6 +26,8 @@ require 'securerandom'
 class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :name, :prename
 
+  after_initialize :init_privilege
+
   has_secure_password
 
   validates :password,   presence: true,  on: :create
@@ -39,6 +41,11 @@ class User < ActiveRecord::Base
   has_one  :privilege, autosave: true, dependent: :destroy
 
   default_scope includes(:privilege)
+
+  # Initializes the users privileges.
+  def init_privilege
+    self.privilege ||= Privilege.new
+  end
 
   # Checks for admin privileges.
   #
@@ -73,8 +80,8 @@ class User < ActiveRecord::Base
     privilege.privileges
   end
 
-  # Sets the users privileges. It takes a hash of sections and their corresponding
-  # access values.
+  # Sets the users privileges. It takes a hash of sections and their
+  # corresponding access values.
   #
   #   user.privileges = { experts: true, references: false }
   #   user.privileges
@@ -84,10 +91,9 @@ class User < ActiveRecord::Base
   def privileges=(privileges)
     self.privilege ||= Privilege.new
     self.privilege.admin = privileges[:admin]
-    admin = self.privilege.admin
 
     Privilege.sections.each do |section|
-      self.privilege.send("#{section}=".to_s, admin || privileges[section])
+      self.privilege.send("#{section}=".to_s, admin? || privileges[section])
     end
   end
 
