@@ -43,11 +43,8 @@ class Cv < ActiveRecord::Base
       ext = File.extname(document.original_filename)
     elsif document.is_a? File
       ext = File.extname(document.path)
-    elsif document.is_a? String
-      ext = File.extname(document)
-      document = File.open(document, 'rb')
     else
-      raise ArgumentError, 'Argument must be File, UploadedFile or String.'
+      raise ArgumentError, 'Argument must be a File or a UploadedFile.'
     end
 
     empty_document(ext) do |f|
