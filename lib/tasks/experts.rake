@@ -69,8 +69,4 @@ namespace :experts do
       puts "Imported #{len - err} experts."
     end
   end
-
-  task :deleteall => :environment do
-    Expert.all.each { |e| e.destroy }
-  end
 end

@@ -7,8 +7,12 @@ en:
   action_logout: 'Log Out'
 
   label:
-    en: 'English'
     de: 'German'
+    en: 'English'
+    female: 'Female'
+    male: 'Male'
+    married: 'Married'
+    single: 'Single'
 
   label_admin: 'Admin'
   label_all_users: 'All Users'
