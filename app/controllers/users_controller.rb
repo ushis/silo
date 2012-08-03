@@ -116,10 +116,10 @@ class UsersController < ApplicationController
       redirect_to users_url and return
     end
 
-    unless user.destroy
-      flash[:alert] = t(:msg_could_not_delete_user)
-    else
+    if user.destroy
       flash[:notice] = t(:msg_deleted_user, user: user.username)
+    else
+      flash[:alert] = t(:msg_could_not_delete_user)
     end
 
     redirect_to users_url

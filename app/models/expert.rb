@@ -5,8 +5,9 @@ class Expert < ActiveRecord::Base
 
   after_initialize :init_contact
 
-  has_one    :contact,   as: :contactable, autosave: true, dependent: :destroy
-  has_many   :addresses, as: :addressable, autosave: true, dependent: :destroy
+  has_one    :contact,   autosave: true, dependent: :destroy, as: :contactable
+  has_many   :addresses, autosave: true, dependent: :destroy, as: :addressable
+  has_many   :cvs,       autosave: true, dependent: :destroy
   belongs_to :user
 
   default_scope includes(:contact)
@@ -62,5 +63,10 @@ class Expert < ActiveRecord::Base
   # Initializes the contact.
   def init_contact
     self.contact ||= Contact.new
+  end
+
+  # Returns a string containing name and prename.
+  def full_name
+    "#{name}, #{prename}"
   end
 end

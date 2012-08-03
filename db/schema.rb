@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 2) do
+ActiveRecord::Schema.define(:version => 3) do
 
   create_table "addresses", :force => true do |t|
     t.integer "addressable_id"
@@ -34,6 +34,18 @@ ActiveRecord::Schema.define(:version => 2) do
   end
 
   add_index "contacts", ["contactable_id", "contactable_type"], :name => "index_contacts_on_contactable_id_and_contactable_type"
+
+  create_table "cvs", :force => true do |t|
+    t.integer  "expert_id",  :null => false
+    t.string   "filename",   :null => false
+    t.string   "language"
+    t.text     "cv"
+    t.datetime "created_at"
+  end
+
+  add_index "cvs", ["cv"], :name => "fulltext_cv"
+  add_index "cvs", ["expert_id"], :name => "index_cvs_on_expert_id"
+  add_index "cvs", ["filename"], :name => "index_cvs_on_filename"
 
   create_table "experts", :force => true do |t|
     t.integer  "user_id",                              :null => false
