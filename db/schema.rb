@@ -77,13 +77,14 @@ ActiveRecord::Schema.define(:version => 3) do
   add_index "privileges", ["user_id"], :name => "index_privileges_on_user_id"
 
   create_table "users", :force => true do |t|
-    t.string   "username",        :null => false
-    t.string   "email",           :null => false
-    t.string   "password_digest", :null => false
+    t.string   "username",                          :null => false
+    t.string   "email",                             :null => false
+    t.string   "password_digest",                   :null => false
     t.string   "login_hash"
-    t.string   "name",            :null => false
-    t.string   "prename",         :null => false
-    t.datetime "created_at",      :null => false
+    t.string   "name",                              :null => false
+    t.string   "prename",                           :null => false
+    t.string   "locale",          :default => "en", :null => false
+    t.datetime "created_at",                        :null => false
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"

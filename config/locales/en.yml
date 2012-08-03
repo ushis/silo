@@ -6,7 +6,10 @@ en:
   action_login:  'Log In'
   action_logout: 'Log Out'
 
-  # Labels
+  label:
+    en: 'English'
+    de: 'German'
+
   label_admin: 'Admin'
   label_all_users: 'All Users'
   label_edit_user: 'Edit User'

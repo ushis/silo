@@ -13,6 +13,7 @@ require 'securerandom'
 # - *login_hash* string
 # - *name* string
 # - *prename* string
+# - *locale* string
 # - *created_at* datetime
 #
 # It uses _bcrypt-ruby_ for password encryption. It provides the two properties
@@ -24,7 +25,8 @@ require 'securerandom'
 #
 # If the two passwords are not equal, the _save_ call will fail.
 class User < ActiveRecord::Base
-  attr_accessible :email, :password, :password_confirmation, :name, :prename
+  attr_accessible(:email, :password, :password_confirmation, :name, :prename,
+                  :locale)
 
   after_initialize :init_privilege
 
@@ -42,9 +44,33 @@ class User < ActiveRecord::Base
 
   default_scope includes(:privilege)
 
+  # Available localizations
+  LOCALES = [:en, :de]
+
+  # Returns a valid locale symbol for a value using the LOCALES constant.
+  #
+  #   User.locale('en')
+  #   #=> :en
+  #
+  # If no valid symbol is found, the first symbol of LOCALES is returned.
+  def self.locale(locale)
+    LOCALES.find { |l| l == locale.try(:to_sym) } || LOCALES.first
+  end
+
   # Initializes the users privileges.
   def init_privilege
     self.privilege ||= Privilege.new
+  end
+
+  # Returns the users preferred locale.
+  def locale
+    User.locale(super)
+  end
+
+  # Sets the users preferred locale. If the given locale value is not found
+  # in the LOCALES list, a default locale is assigned.
+  def locale=(locale)
+    super(User.locale(locale).to_s)
   end
 
   # Checks for admin privileges.
