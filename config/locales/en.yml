@@ -6,7 +6,10 @@ en:
   action_login:  'Log In'
   action_logout: 'Log Out'
 
-  # Labels
+  label:
+    en: 'English'
+    de: 'German'
+
   label_admin: 'Admin'
   label_advanced_search: 'Advanced Search'
   label_age: 'Age'

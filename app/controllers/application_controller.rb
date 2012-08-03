@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   before_filter :authenticate
+  before_filter :set_locale
   before_filter :body_class
 
   helper_method :current_user
@@ -23,6 +24,11 @@ class ApplicationController < ActionController::Base
   def body_class
     @body_class = [params[:controller], params[:action]]
     @body_class << :admin if current_user.try(:admin?)
+  end
+
+  # Sets the users preffered locale.
+  def set_locale
+    I18n.locale = current_user.locale if current_user
   end
 
   # Redirects the user to the login, unless he/she is already logged in.

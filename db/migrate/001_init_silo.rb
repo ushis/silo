@@ -7,6 +7,7 @@ class InitSilo < ActiveRecord::Migration
       t.string    :login_hash,      null: true
       t.string    :name,            null: false
       t.string    :prename,         null: false
+      t.string    :locale,          null: false, default: 'en'
       t.timestamp :created_at,      null: false
     end
 

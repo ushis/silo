@@ -13,4 +13,12 @@ module UserHelper
       ret << content_tag(:span, t("label_#{item[0]}".to_s), class: klass)
     end.html_safe
   end
+
+  # Returns all available locales in a select box friendly format.
+  #
+  #   list_locales
+  #   #=> [['English', :en], ['German', :de]]
+  def list_locales
+    User::LOCALES.collect { |l| [t("label.#{l}"), l] }
+  end
 end

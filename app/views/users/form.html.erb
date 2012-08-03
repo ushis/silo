@@ -32,6 +32,10 @@
         <%= f.label :prename %>
         <%= f.text_field :prename %>
       </p>
+      <p>
+        <%= f.label :locale %>
+        <%= f.select :locale, list_locales %>
+      </p>
     </div>
     <div class="field-box more<%= ' disabled' if current_user?(@user) %>">
       <%= fields_for @user.privilege do |p| %>

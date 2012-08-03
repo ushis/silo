@@ -19,41 +19,43 @@ class UsersController < ApplicationController
       redirect_to edit_user_url(current_user)
     end
 
-    @title = t(:label_profile)
     @user = current_user
+    @title = t(:label_profile)
   end
 
   # Updates a users profile. If a user wants to change his(her password, the
   # old password is required.
   def update_profile
-    @title = t(:label_profile)
-    @user = current_user
     password_old = params[:user].delete(:password_old)
+
+    @user = current_user
     @user.attributes = params[:user]
 
     if ! params[:user][:password].blank? && ! @user.authenticate(password_old)
       flash.now[:alert] = t(:msg_could_not_save_changes)
       @user.errors.add(:password_old, t(:msg_wrong_password))
     elsif @user.save
+      I18n.locale = @user.locale
       flash.now[:notice] = t(:msg_saved_changes)
     else
       flash.now[:alert] = t(:msg_could_not_save_changes)
     end
 
+    @title = t(:label_profile)
     render :profile
   end
 
   # Serves a list of all users.
   def index
-    @title = t(:label_all_users)
     @users = User.order('name, prename')
+    @title = t(:label_all_users)
   end
 
   # Servers a blank user form.
   def new
-    @title = t(:label_new_user)
     @user = User.new
     @user.privilege = Privilege.new
+    @title = t(:label_new_user)
     render :form
   end
 
@@ -76,8 +78,8 @@ class UsersController < ApplicationController
 
   # Serves an edit form, populated with the users data.
   def edit
-    @title = t(:label_edit_user)
     @user = User.find(params[:id])
+    @title = t(:label_edit_user)
     render :form
   end
 
@@ -85,10 +87,9 @@ class UsersController < ApplicationController
   #
   # *Note:* A user can not change his/her own privileges.
   def update
-    @title = t(:label_edit_user)
-    @user = User.find(params[:id])
-
     username = params[:user].delete(:username)
+
+    @user = User.find(params[:id])
     @user.attributes = params[:user]
     @user.username = username
 
@@ -97,11 +98,13 @@ class UsersController < ApplicationController
     end
 
     if @user.save
+      I18n.locale = @user.locale if @user == current_user
       flash.now[:notice] = t(:msg_saved_changes)
     else
       flash.now[:alert] = t(:msg_could_not_save_changes)
     end
 
+    @title = t(:label_edit_user)
     render :form
   end
 
