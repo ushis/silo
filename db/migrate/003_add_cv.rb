@@ -9,7 +9,7 @@ class AddCv < ActiveRecord::Migration
     end
 
     add_index :cvs, :expert_id
-    add_index :cvs, :filename
+    add_index :cvs, :filename, unique: true
 
     execute('ALTER TABLE cvs ENGINE = MyISAM')
     execute('CREATE FULLTEXT INDEX fulltext_cv ON cvs (cv)')

@@ -8,6 +8,8 @@ class Cv < ActiveRecord::Base
 
   after_destroy :delete_document
 
+  validates :filename, presence: true, uniqueness: true
+
   belongs_to :experts
 
   # Filename prefix.
@@ -18,6 +20,13 @@ class Cv < ActiveRecord::Base
 
   # Absolute path to the cv store.
   STORE = Rails.root.join('public', DIRNAME)
+
+  # Adds a fulltext search condition to the database query.
+  #
+  # Returns ActiveRecord:Relation.
+  def self.search(query)
+    where('MATCH (cvs.cv) AGAINST (?)', query)
+  end
 
   # Returns the absolute path to the cv document.
   def absolute_path
