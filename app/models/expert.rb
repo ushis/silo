@@ -101,4 +101,21 @@ class Expert < ActiveRecord::Base
   def full_name
     "#{name}, #{prename}"
   end
+
+  # Returns the experts age or nil if the birthday is unknown.
+  #
+  #   expert.age
+  #   #=> 43
+  def age
+    return nil unless birthday
+
+    now = Time.now.utc.to_date
+    age = now.year - birthday.year
+
+    if now.month < birthday.month || (now.month == birthday.month && now.day < birthday.day)
+      age - 1
+    else
+      age
+    end
+  end
 end
