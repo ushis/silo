@@ -5,33 +5,33 @@ class ExpertsController < ApplicationController
   #
   def authorize
     unless current_user.access?(:experts)
-      flash[:alert] = t(:msg_access_prohibited)
+      flash[:alert] = t('msg.access_prohibited')
       redirect_to experts_url
     end
   end
 
   # Serves a paginated table of all experts.
   def index
-    @title = t(:label_experts)
+    @title = t('label.experts')
     @experts = Expert.limit(25)
   end
 
   #
   def destroy
-  	expert = Expert.find(params[:id])
-  	
-  	if expert.destroy
-  	  flash[:notice] = t(:msg_expert_deleted, expert: expert.name)
-  	else
-  	  flash[:alert] = t(:msg_could_not_delete_expert)
-  	end
+    expert = Expert.find(params[:id])
+
+    if expert.destroy
+      flash[:notice] = t('msg.expert_deleted, expert: expert.name')
+    else
+      flash[:alert] = t('msg.could_not_delete_expert')
+    end
 
   	redirect_to experts_url
   end
 
   #
   def not_found
-  	flash[:alert] = t(:msg_expert_not_found)
+    flash[:alert] = t('msg.expert_not_found')
     redirect_to experts_url
   end
 end

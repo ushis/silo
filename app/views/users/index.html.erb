@@ -18,7 +18,7 @@
           </td>
           <td class="privileges">
             <p>
-              <strong><%= t :label_registered_on %>:</strong> 
+              <strong><%= t 'label.registered_on' %>:</strong> 
               <%= l user.created_at, format: :short  %>
             </p>
             <p>
@@ -27,10 +27,10 @@
           </td>
           <td class="icons">
             <p>
-              <%= link_to t(:action_edit), edit_user_path(user) %>
+              <%= link_to t('action.edit'), edit_user_path(user) %>
             </p>
             <p>
-              <%= button_to t(:action_delete), user_path(user), method: :delete %>
+              <%= button_to t('action.delete'), user_path(user), method: :delete %>
             </p>
           </td>
         </tr>
