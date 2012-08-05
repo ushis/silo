@@ -1,16 +1,18 @@
 class AddExperts < ActiveRecord::Migration
   def up
     create_table :experts do |t|
-      t.integer    :user_id,          null: false
-      t.string     :name,             null: false
-      t.string     :prename,          null: false
-      t.string     :gender,           null: false
-      t.string     :birthname,        null: true
-      t.datetime   :birthday,         null: true
-      t.string     :birthplace,       null: true
-      t.string     :citizenship,      null: true
-      t.string     :degree,           null: true
-      t.string     :marital_status,   null: false, default: 'single'
+      t.integer     :user_id,              null: false
+      t.string      :name,                 null: false
+      t.string      :prename,              null: false
+      t.string      :gender,               null: false
+      t.string      :birthname,            null: true
+      t.datetime    :birthday,             null: true
+      t.string      :birthplace,           null: true
+      t.string      :citizenship,          null: true
+      t.string      :degree,               null: true
+      t.string      :marital_status,       null: false, default: 'single'
+      t.boolean     :former_collaboration, null: false, default: false
+      t.string      :fee,                  null: true
       t.timestamps
     end
 
