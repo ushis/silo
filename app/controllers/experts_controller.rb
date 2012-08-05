@@ -5,7 +5,7 @@ class ExpertsController < ApplicationController
   #
   def authorize
     unless current_user.access?(:experts)
-      flash[:alert] = t('msg.access_prohibited')
+      flash[:alert] = t('msg.access_denied')
       redirect_to experts_url
     end
   end
@@ -21,7 +21,7 @@ class ExpertsController < ApplicationController
     expert = Expert.find(params[:id])
 
     if expert.destroy
-      flash[:notice] = t('msg.expert_deleted, expert: expert.name')
+      flash[:notice] = t('msg.expert_deleted', expert: expert.name)
     else
       flash[:alert] = t('msg.could_not_delete_expert')
     end
