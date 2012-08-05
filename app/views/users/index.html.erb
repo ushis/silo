@@ -4,7 +4,7 @@
   <h2>
     <%= @title %>
   </h2>
-  <table>
+  <table class="users">
     <tbody>
       <% @users.each do |user| %>
         <tr>
@@ -18,7 +18,8 @@
           </td>
           <td class="privileges">
             <p>
-              <strong><%= t :label_privileges %></strong>
+              <strong><%= t :label_registered_on %>:</strong> 
+              <%= l user.created_at, format: :short  %>
             </p>
             <p>
               <%= list_privileges(user) %>
@@ -31,6 +32,7 @@
             <p>
               <%= button_to t(:action_delete), user_path(user), method: :delete %>
             </p>
+          </td>
         </tr>
       <% end %>
     </tbody>
