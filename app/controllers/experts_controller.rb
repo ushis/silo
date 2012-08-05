@@ -16,6 +16,13 @@ class ExpertsController < ApplicationController
     @experts = Expert.limit(25)
   end
 
+  # Servers a blank experts form
+  def new
+    @expert = Expert.new
+    @title = t('label.new_expert')
+    render :form
+  end
+
   #
   def destroy
     expert = Expert.find(params[:id])
