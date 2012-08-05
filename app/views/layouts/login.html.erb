@@ -8,10 +8,10 @@
     <%= javascript_include_tag 'silo' %>
     <%= csrf_meta_tags %>
   </head>
-  <body>
-    <div id="wrapper" class="login">
-      <%= flash_all %>
+  <body class="<%= @body_class.join(' ') %>">
+    <div id="wrapper">
       <div id="content">
+        <%= flash_all %>
         <h1>
           <%= @title %>
         </h1>
