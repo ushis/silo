@@ -61,22 +61,34 @@ do($ = jQuery) ->
   # Adds a delete confirmation field to the selector
   $.fn.siloConfirmDelete = (options) ->
     settings = $.extend {
-      duration: 200
+      duration: 100
       confirmationClass: 'confirm-delete'
+      pendingClass: 'pending'
       deleteLabel: 'Delete'
       abortLabel: 'Abort'
     }, options
 
     @each ->
       $(@).click ->
-        do (form = $(@).closest('form')) ->
-          form.before ->
-            do (box = $('<div>')) ->
-              box.addClass(settings.confirmationClass).append ->
-                $('<div>').text(settings.deleteLabel).click -> form.submit()
-              .append ->
-                $('<div>').text(settings.abortLabel).click -> 
-                  box.fadeOut settings.duration, ->
-                    box.remove()
-              .fadeIn(settings.duration)
+        form = $(@).closest('form')
+        offset = $(@).closest('td').offset()
+        top = offset.top
+        right = $(document).width() - offset.left
+        height = '30px'
+
+        form.addClass(settings.pendingClass)
+
+        box = $('<div>')
+        $('body').prepend ->
+          box.css({top: top, right: right, height: height})
+             .addClass(settings.confirmationClass).append ->
+            $('<div>').addClass('confirm').text(settings.deleteLabel).click ->
+              form.submit().removeClass(settings.pendingClass)
+          .append ->
+             $('<div>').addClass('abort').text(settings.abortLabel).click ->
+              form.removeClass(settings.pendingClass)
+              box.fadeOut settings.duration, ->
+                box.remove()
+          .fadeIn(settings.duration)
+
         false

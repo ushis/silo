@@ -2,7 +2,7 @@
 
 <div id="main">
   <div>
-    <div id="experts_header">
+    <div id="experts_header" class="header">
       <h2>
         <%= @title %>
       </h2>
@@ -10,24 +10,23 @@
         <%= text_field_tag :search, nil, placeholder: t(:label_search) %>
         <%= submit_tag t(:label_search) %>
       </div>
-      <div id="toggle_filter_button">
+      <div id="toggle_filter_button" class="button">
         <%= t(:label_advanced_search) %>
       </div>
       <div id="filter">
         Filter Form
       </div>
     </div>
+    <br/>
     <table class="experts">
       <thead>
         <tr>
+          <th></th>
           <th>
             <%= t :label_name %><span>⇳</span>
           </th>
           <th>
             <%= t :label_degree %><span>⇳</span>
-          </th>
-          <th>
-            Bums<span>⇳</span>
           </th>
           <th>
             <%= t :label_age %><span>⇳</span>
@@ -43,6 +42,8 @@
         <% @experts.each do |expert| %>
           <tr>
             <td class="<%= expert.gender %>">
+            </td>
+            <td>
               <p>
                 <%= expert.full_name %> 
               </p>
@@ -51,16 +52,15 @@
               <%= expert.degree %>
             </td>
             <td>
-              <%= expert.birthplace %>
-            </td>
-            <td>
-              <%= l(expert.birthday, format: :short) if expert.birthday %>
+              <%= expert.age %>
             </td>
             <td>
               <%= expert.citizenship %>
             </td>
             <td class="icons">
-              <%= button_to 'h', expert_path(expert), method: :delete, class: 'delete' %>
+              <div>
+                <%= button_to t(:label_delete), expert_path(expert), method: :delete, class: 'delete' %>
+              </div>
             </td>
           </tr>
         <% end %>
@@ -70,6 +70,8 @@
 </div>
 
 <script>
+$(document).ready(function(){
   $('#toggle_filter_button').siloToggler('#filter');
   $('input.delete').siloConfirmDelete();
+});
 </script>

@@ -69,4 +69,13 @@ class Expert < ActiveRecord::Base
   def full_name
     "#{name}, #{prename}"
   end
+
+  # Returns the age of an expert.
+  def age
+    if birthday
+      now = Time.now.utc.to_date
+      now.year - birthday.year - ((now.month > birthday.month || 
+        (now.month == birthday.month && now.day >= birthday.day)) ? 0 : 1)
+    end
+  end
 end
