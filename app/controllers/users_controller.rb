@@ -8,7 +8,7 @@ class UsersController < ApplicationController
   # if he/she is no admin.
   def authorize
     unless current_user.admin?
-      flash[:alert] = t(:msg_access_prohibited)
+      flash[:alert] = t('msg.access_denied')
       redirect_to root_url
     end
   end
@@ -20,7 +20,7 @@ class UsersController < ApplicationController
     end
 
     @user = current_user
-    @title = t(:label_profile)
+    @title = t('label.profile')
   end
 
   # Updates a users profile. If a user wants to change his(her password, the
@@ -32,30 +32,30 @@ class UsersController < ApplicationController
     @user.attributes = params[:user]
 
     if ! params[:user][:password].blank? && ! @user.authenticate(password_old)
-      flash.now[:alert] = t(:msg_could_not_save_changes)
-      @user.errors.add(:password_old, t(:msg_wrong_password))
+      flash.now[:alert] = t('msg.could_not_save_changes')
+      @user.errors.add(:password_old, t('msg.wrong_password'))
     elsif @user.save
       I18n.locale = @user.locale
-      flash.now[:notice] = t(:msg_saved_changes)
+      flash.now[:notice] = t('msg.saved_changes')
     else
-      flash.now[:alert] = t(:msg_could_not_save_changes)
+      flash.now[:alert] = t('msg.could_not_save_changes')
     end
 
-    @title = t(:label_profile)
+    @title = t('label.profile')
     render :profile
   end
 
   # Serves a list of all users.
   def index
     @users = User.order('name, prename')
-    @title = t(:label_all_users)
+    @title = t('label.all_users')
   end
 
   # Servers a blank user form.
   def new
     @user = User.new
     @user.privilege = Privilege.new
-    @title = t(:label_new_user)
+    @title = t('label.new_user')
     render :form
   end
 
@@ -67,11 +67,11 @@ class UsersController < ApplicationController
     @user.privileges = params[:privilege]
 
     if @user.save
-      flash[:notice] = t(:msg_created_user, user: @user.username)
+      flash[:notice] = t('msg.created_user', user: @user.username)
       redirect_to edit_user_url(@user)
     else
       @title = t(:label_new_user)
-      flash.now[:alert] = t(:msg_could_not_create_user)
+      flash.now[:alert] = t('msg.could_not_create_user')
       render :form
     end
   end
@@ -79,7 +79,7 @@ class UsersController < ApplicationController
   # Serves an edit form, populated with the users data.
   def edit
     @user = User.find(params[:id])
-    @title = t(:label_edit_user)
+    @title = t('label.edit_user')
     render :form
   end
 
@@ -99,12 +99,12 @@ class UsersController < ApplicationController
 
     if @user.save
       I18n.locale = @user.locale if @user == current_user
-      flash.now[:notice] = t(:msg_saved_changes)
+      flash.now[:notice] = t('msg.saved_changes')
     else
-      flash.now[:alert] = t(:msg_could_not_save_changes)
+      flash.now[:alert] = t('msg.could_not_save_changes')
     end
 
-    @title = t(:label_edit_user)
+    @title = t('label.edit_user')
     render :form
   end
 
@@ -115,14 +115,14 @@ class UsersController < ApplicationController
     user = User.find(params[:id])
 
     if user == current_user
-      flash[:alert] = t(:msg_delete_current_user_error)
+      flash[:alert] = t('msg.delete_current_user_error')
       redirect_to users_url and return
     end
 
     if user.destroy
-      flash[:notice] = t(:msg_deleted_user, user: user.username)
+      flash[:notice] = t('msg.deleted_user', user: user.username)
     else
-      flash[:alert] = t(:msg_could_not_delete_user)
+      flash[:alert] = t('msg.could_not_delete_user')
     end
 
     redirect_to users_url
@@ -130,7 +130,7 @@ class UsersController < ApplicationController
 
   # Sets a "user not found" alert and redirects to the users index page.
   def not_found
-    flash[:alert] = t(:msg_user_not_found)
+    flash[:alert] = t('msg.user_not_found')
     redirect_to users_url
   end
 end

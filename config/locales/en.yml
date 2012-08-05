@@ -1,15 +1,32 @@
 # English localization file
 en:
-  # Actions
+  action:
+    delete: 'Delete'
+    edit: 'Edit'
+    login: 'Login'
+    logout: 'Logout'
+
+  # Remove!
   action_delete: 'Delete'
   action_edit: 'Edit'
   action_login:  'Log In'
   action_logout: 'Log Out'
 
   label:
-    en: 'English'
+    all_users: 'All Users'
     de: 'German'
+    edit_user: 'Edit User'
+    en: 'English'
+    female: 'Female'
+    male: 'Male'
+    married: 'Married'
+    new_user: 'New User'
+    partners: 'Partners'
+    profile: 'Profile'
+    references: 'References'
+    single: 'Single'
 
+  # Remove!
   label_admin: 'Admin'
   label_advanced_search: 'Advanced Search'
   label_age: 'Age'
@@ -25,10 +42,11 @@ en:
   label_name: 'Name'
   label_new_expert: 'New Expert'
   label_new_user: 'New User'
+  label_email: 'Email'
+  label_experts: 'Experts'
   label_partners: 'Partners'
   label_password: 'Password'
   label_privileges: 'Privileges'
-  label_profile: 'Profile'
   label_references: 'References'
   label_registered_on: 'Registered on'
   label_search: 'Search'
@@ -58,3 +76,19 @@ en:
   time:
     formats: 
       short: '%B %e, %Y'
+  msg:
+    access_denied: 'Access denied.'
+    could_not_create_user: 'Could not create user.'
+    could_not_delete_user: 'Could not delete user.'
+    could_not_save_changes: 'Could not save changes.'
+    created_user: 'Created user: %{user}'
+    delete_current_user_error: 'You can not delete yourself.'
+    deleted_user: 'Deleted user: %{user}'
+    generic_error: 'Sorry, but something went wrong.'
+    invalid_credentials: 'Wrong username or password.'
+    partner_not_found: 'Partner not found.'
+    record_not_found: 'Record not found.'
+    reference_not_found: 'Reference not found.'
+    saved_changes: 'Saved changes.'
+    user_not_found: 'User not found.'
+    wrong_password: 'Wrong password.'

@@ -1,4 +1,35 @@
-# The Expert model.
+# The Expert model provides access to the experts data and several methods
+# for manipulation.
+#
+# Database scheme:
+#
+# - *id* integer
+# - *user_id* integer
+# - *name* string
+# - *prename* string
+# - *gender* string
+# - *birthname* string
+# - *birthday* string
+# - *birthplace* string
+# - *citizenship* string
+# - *degree* string
+# - *marital_status* string
+#
+# Several attributes have a constant list of possible values, defined in
+# CONSTANTS, such as _gender_ and _marital_status_. The getter methods of
+# these attributes return symbols. The setter methods try to convert the
+# assigned value into a symbol, found in CONSTANTS. If no symbol is found
+# a default value is assigned.
+#
+#   # Make expert female
+#   expert.gender = 'female'
+#   expert.gender
+#   #=> :female
+#
+#   # Assign an invalid value
+#   expert.gender = 'tiger'
+#   expert.gender
+#   #=> :male
 class Expert < ActiveRecord::Base
   attr_accessible(:name, :prename, :gender, :birthname, :birthday,
                   :birthplace, :citizenship, :degree, :marital_status)
@@ -12,51 +43,52 @@ class Expert < ActiveRecord::Base
 
   default_scope includes(:contact)
 
-  # Lookup for database <-> application translations. Defines database values
-  # for _gender_ and _marital_status_.
-  TRANSLATIONS = {
-    gender:         { female: 'f',  male: 'm' },
-    marital_status: { married: 'm', single: 's' }
+  # Defines constant values for specific attributes, such as gender and
+  # marital_status. For each attribute listed in this hash, a getter and
+  # a setter method is defined, ensuring that the values are valid.
+  CONSTANTS = {
+    gender: [:female, :male],
+    marital_status: [:married, :single]
   }
 
-  # Defines class methods returning translation hashes.
+  # Defines class methods returning a constant from CONSTANTS for a given
+  # value. If not correspong constant is found, the last one is returned.
   #
-  #   Expert.gender
-  #   #=> { female: 'f', male: 'm' }
+  #   Expert.gender('female')
+  #   #=> :female
   #
   # Defines the methods _Expert.gender_ and _Expert.marital_status_.
   class << self
-    TRANSLATIONS.each do |method, values|
-      define_method(method) { values }
+    CONSTANTS.each do |method, values|
+      define_method(method) do |lookup|
+        values.find { |val| val == lookup.try(:to_sym) } || values.last
+      end
     end
   end
 
-  # Defines instance methods to access the TRANSLATIONS hash. For each
-  # translation hash a getter method, translating the database value to
-  # a symbol, and a setter method, translating a symbol to the corresponding
+  # Defines instance methods to access the CONSTANTS hash. For each
+  # key a getter method, translating the database value to a symbol,
+  # and a setter method, translating a symbol to the corresponding
   # database value, is defined.
   #
-  #   # Get the symbol for db value 'f'
   #   expert.gender
   #   #=> :female
   #
-  #   # Sets db value to 'm'
   #   expert.gender = :male
   #   #=> :male
   #
-  # If the setter method gets a non-symbol argument, the value is assigned
-  # without translation.
-  TRANSLATIONS.each do |method, values|
+  # If the assigned/saved value is not in the CONSTANTS hash, a default
+  # value is assigned/returned.
+  CONSTANTS.each do |method, values|
+
+    # Define getter methods
     define_method(method) do
-      values.find { |_, val| val == super() }.try(:[], 0)
+      Expert.send(method, super())
     end
 
+    # Define setter methods
     define_method("#{method}=") do |val|
-      if val.is_a? Symbol
-        super(values[val])
-      else
-        super(val)
-      end
+      super(Expert.send(method, val).to_s)
     end
   end
 
@@ -70,12 +102,20 @@ class Expert < ActiveRecord::Base
     "#{name}, #{prename}"
   end
 
-  # Returns the age of an expert.
+  # Returns the experts age or nil if the birthday is unknown.
+  #
+  #   expert.age
+  #   #=> 43
   def age
-    if birthday
-      now = Time.now.utc.to_date
-      now.year - birthday.year - ((now.month > birthday.month || 
-        (now.month == birthday.month && now.day >= birthday.day)) ? 0 : 1)
+    return nil unless birthday
+
+    now = Time.now.utc.to_date
+    age = now.year - birthday.year
+
+    if now.month < birthday.month || (now.month == birthday.month && now.day < birthday.day)
+      age - 1
+    else
+      age
     end
   end
 end

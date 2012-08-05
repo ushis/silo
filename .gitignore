@@ -10,6 +10,9 @@
 # Ignore the default SQLite database.
 /db/*.sqlite3
 
+# We will use structure.sql for that.
+/db/schema.rb
+
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp

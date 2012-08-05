@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
 
   # Sets a not found alert and redirects to the root url.
   def not_found
-    flash[:alert] = t(:msg_record_not_found)
+    flash[:alert] = t('msg.record_not_found')
     redirect_to root_url
   end
 
