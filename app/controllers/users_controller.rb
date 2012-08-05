@@ -70,7 +70,7 @@ class UsersController < ApplicationController
       flash[:notice] = t('msg.created_user', user: @user.username)
       redirect_to edit_user_url(@user)
     else
-      @title = t(:label_new_user)
+      @title = t('label.new_user')
       flash.now[:alert] = t('msg.could_not_create_user')
       render :form
     end

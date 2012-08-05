@@ -13,22 +13,22 @@ class LoginController < ApplicationController
 
   # Serves a simple login form
   def welcome
-    @title = t(:label_welcome)
+    @title = t('label.welcome')
   end
 
   # Checks the users credentials and loggs he/she in, if they are correct.
   def login
-    @title = t(:label_welcome)
+    @title = t('label.welcome')
     @username = params[:username]
     user = User.find_by_username(@username)
 
     unless user.try(:authenticate, params[:password])
-      flash.now[:alert] = t(:msg_invalid_credentials)
+      flash.now[:alert] = t('msg.invalid_credentials')
       render :welcome and return
     end
 
     unless user.refresh_login_hash!
-      flash.now[:alert] = t(:msg_generic_error)
+      flash.now[:alert] = t('msg.generic_error')
       render :welcome and return
     end
 
@@ -38,7 +38,7 @@ class LoginController < ApplicationController
 
   # Loggs out the user and renders the login form.
   def logout
-    @title = t(:label_welcome)
+    @title = t('label.welcome')
     @username = current_user.username
     session[:login_hash] = nil
     render :welcome

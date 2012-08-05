@@ -10,7 +10,7 @@ module UserHelper
   def list_privileges(user)
     user.privileges.inject('') do |ret, item|
       klass = 'checked' if item[1]
-      ret << content_tag(:span, t("label_#{item[0]}".to_s), class: klass)
+      ret << content_tag(:span, t("label.#{item[0]}".to_s), class: klass)
     end.html_safe
   end
 

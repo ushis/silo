@@ -14,6 +14,10 @@
 # - *citizenship* string
 # - *degree* string
 # - *marital_status* string
+# - *former_collaboration* boolean
+# - *fee* string
+# - *created_at* datetime
+# - *updated_at* datetime
 #
 # Several attributes have a constant list of possible values, defined in
 # CONSTANTS, such as _gender_ and _marital_status_. The getter methods of
@@ -32,7 +36,8 @@
 #   #=> :male
 class Expert < ActiveRecord::Base
   attr_accessible(:name, :prename, :gender, :birthname, :birthday,
-                  :birthplace, :citizenship, :degree, :marital_status)
+                  :birthplace, :citizenship, :degree, :marital_status,
+                  :former_collaboration, :fee)
 
   after_initialize :init_contact
 

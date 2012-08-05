@@ -1,12 +1,12 @@
 <%= form_tag login_path, method: :post, id: 'login-form' do %>
   <p>
-    <%= text_field_tag :username, @username, placeholder: t(:label_username) %>
+    <%= text_field_tag :username, @username, placeholder: t('label.username') %>
   </p>
   <p>
-    <%= password_field_tag :password, nil, placeholder: t(:label_password) %>
+    <%= password_field_tag :password, nil, placeholder: t('label.password') %>
   </p>
   <p>
-    <%= submit_tag t(:action_login) %>
+    <%= submit_tag t('action.login') %>
   </p>
 <% end %>
 

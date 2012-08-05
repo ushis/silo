@@ -7,11 +7,11 @@
         <%= @title %>
       </h2>
       <div id="quicksearch">
-        <%= text_field_tag :search, nil, placeholder: t(:label_search) %>
-        <%= submit_tag t(:label_search) %>
+        <%= text_field_tag :search, nil, placeholder: t('label.search') %>
+        <%= submit_tag t('label.search') %>
       </div>
       <div id="toggle_filter_button" class="button">
-        <%= t(:label_advanced_search) %>
+        <%= t('label.advanced_search') %>
       </div>
       <div id="filter">
         Filter Form
@@ -23,16 +23,16 @@
         <tr>
           <th></th>
           <th>
-            <%= t :label_name %><span>⇳</span>
+            <%= t 'label.name' %><span>⇳</span>
           </th>
           <th>
-            <%= t :label_degree %><span>⇳</span>
+            <%= t 'label.degree' %><span>⇳</span>
           </th>
           <th>
-            <%= t :label_age %><span>⇳</span>
+            <%= t 'label.age' %><span>⇳</span>
           </th>
           <th>
-            <%= t :label_citizenship %><span>⇳</span>
+            <%= t 'label.citizenship' %><span>⇳</span>
           </th>
           <th>
           </th>
@@ -45,7 +45,7 @@
             </td>
             <td>
               <p>
-                <%= expert.full_name %> 
+                <%= expert.full_name %>
               </p>
             </td>
             <td>
@@ -59,7 +59,8 @@
             </td>
             <td class="icons">
               <div>
-                <%= button_to t(:label_delete), expert_path(expert), method: :delete, class: 'delete' %>
+                <%= button_to(t('action.delete'), expert_path(expert),
+                              { method: :delete, class: 'delete' }) %>
               </div>
             </td>
           </tr>

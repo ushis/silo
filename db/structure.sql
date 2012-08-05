@@ -11,7 +11,7 @@ CREATE TABLE `addresses` (
   KEY `index_addresses_on_zipcode` (`zipcode`),
   KEY `index_addresses_on_city` (`city`),
   KEY `index_addresses_on_addressable_id_and_addressable_type` (`addressable_id`,`addressable_type`)
-) ENGINE=InnoDB AUTO_INCREMENT=2045 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `contacts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -20,7 +20,7 @@ CREATE TABLE `contacts` (
   `contacts` text NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_contacts_on_contactable_id_and_contactable_type` (`contactable_id`,`contactable_type`)
-) ENGINE=InnoDB AUTO_INCREMENT=4368 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `cvs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -47,13 +47,15 @@ CREATE TABLE `experts` (
   `citizenship` varchar(255) DEFAULT NULL,
   `degree` varchar(255) DEFAULT NULL,
   `marital_status` varchar(255) NOT NULL DEFAULT 'single',
+  `former_collaboration` tinyint(1) NOT NULL DEFAULT '0',
+  `fee` varchar(255) DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_experts_on_user_id` (`user_id`),
   KEY `index_experts_on_name` (`name`),
   KEY `index_experts_on_prename` (`prename`)
-) ENGINE=InnoDB AUTO_INCREMENT=4368 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `privileges` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
