@@ -15,48 +15,44 @@
           <%= f.label :email %>
           <%= f.text_field :email %>
         </p>
-        <p>
-          <table>
-            <tr>
-              <td>
-                <%= f.label :password %>
-              </td>
-              <td>
-                 <%= f.label :password_confirmation %>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <%= f.password_field :password %>
-              </td>
-              <td>
-                 <%= f.password_field :password_confirmation %>
-              </td>
-            </tr>
-          </table>
-        </p>
+        <table>
+          <tr>
+            <td>
+              <%= f.label :password %>
+            </td>
+            <td>
+               <%= f.label :password_confirmation %>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <%= f.password_field :password %>
+            </td>
+            <td>
+               <%= f.password_field :password_confirmation %>
+            </td>
+          </tr>
+        </table>
       </div>
       <div class="field-box more right">
-        <p>
-          <table>
-            <tr>
-              <td>
-                <%= f.label :prename %>
-              </td>
-              <td>
-                 <%= f.label :name %>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <%= f.text_field :prename %>
-              </td>
-              <td>
-                 <%= f.text_field :name %>
-              </td>
-            </tr>
-          </table>
-        <p>
+        <table>
+          <tr>
+            <td>
+              <%= f.label :prename %>
+            </td>
+            <td>
+               <%= f.label :name %>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <%= f.text_field :prename %>
+            </td>
+            <td>
+               <%= f.text_field :name %>
+            </td>
+          </tr>
+        </table>
         <p>
           <%= f.label :locale, class: 'select-box-label' %>
           <%= f.select :locale, list_locales %>
