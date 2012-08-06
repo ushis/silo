@@ -23,16 +23,22 @@
         <tr>
           <th></th>
           <th>
-            <%= t 'label.name' %><span>⇳</span>
+            <%= t 'label.name' %><span></span>
           </th>
           <th>
-            <%= t 'label.degree' %><span>⇳</span>
+            <%= t 'label.prename' %><span></span>
           </th>
           <th>
-            <%= t 'label.age' %><span>⇳</span>
+            <%= t 'label.degree' %><span></span>
           </th>
           <th>
-            <%= t 'label.citizenship' %><span>⇳</span>
+            <%= t 'label.age' %><span></span>
+          </th>
+          <th>
+            <%= t 'label.citizenship' %><span></span>
+          </th>
+          <th>
+            <%= t 'label.cv' %><span></span>
           </th>
           <th>
           </th>
@@ -41,12 +47,13 @@
       <tbody>
         <% @experts.each do |expert| %>
           <tr>
+            <td>
+            </td>
             <td class="<%= expert.gender %>">
+              <%= link_to expert.name, expert_path(expert) %>
             </td>
             <td>
-              <p>
-                <%= link_to expert.full_name, expert_path(expert) %>
-              </p>
+              <%= link_to expert.prename, expert_path(expert) %>
             </td>
             <td>
               <%= expert.degree %>
@@ -57,11 +64,19 @@
             <td>
               <%= expert.citizenship %>
             </td>
+            <td>
+              <!--CVs-->
+            </td>
             <td class="icons">
-              <div>
-                <%= button_to(t('action.delete'), expert_path(expert),
+              <ul>
+                <li>
+                  <%= link_to t('action.edit'), edit_expert_path(expert), class: 'edit' %>
+                </li>
+                <li>
+                  <%= button_to(t('action.delete'), expert_path(expert),
                               { method: :delete, class: 'delete' }) %>
-              </div>
+                </li>
+              </ul>
             </td>
           </tr>
         <% end %>

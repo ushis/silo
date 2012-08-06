@@ -7,6 +7,7 @@
  */
 body {
   background-color: #3a3a3a;
+  min-width: 700px;
 }
 
 a, form.button_to input[type=submit] {
@@ -246,6 +247,22 @@ body.index #main {
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, .2);
 }
 
+#main div.header h2 {
+  padding: 0;
+  line-height: 1em;
+  text-shadow: 1px 1px 0px #efefef;
+  margin-bottom: 10px;
+}
+
+#main div.header h3 {
+  padding: 0;
+  font-size: .75em;
+  color: #888;
+  line-height: 1em;
+  text-shadow: 1px 1px 0px #efefef;
+  margin-bottom: 10px;
+}
+
 #main div.header ul.tabs {
   position: absolute;
   bottom: 0;
@@ -261,7 +278,7 @@ body.index #main {
   margin-right: 3px;
   background: #f9f9f9;
   border-radius: 4px 4px 0 0;
-  box-shadow: 0 -1px 2px rgba(0,0,0,.2);
+  box-shadow: 0 -2px 1px rgba(0,0,0,.1);
 }
 
 #main div.header div.button, 
@@ -290,10 +307,6 @@ body.index #main {
   padding: 6px 10px 8px 10px;
 }
 
-#main form div.field-box.buttons input[type=submit] {
-  padding: 5px 10px 7px 10px;
-}
-
 #main div.header input[type=text] {
   float: left;
   width: 250px;
@@ -320,7 +333,7 @@ body.index #main {
 }
 
 #main table td {
-  padding: 6px 10px 5px 10px;
+  padding: 7px 10px 5px 10px;
   background-color: #efefef;
   box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
 }
@@ -345,42 +358,69 @@ body.index #main {
   padding-right: 16px;
 }
 
-#main table.users td:first-child {
+#main table td.icons a, 
+#main table td.icons input[type=submit] {
+  display: block;
+  width: 12px;
+  height: 12px;
+  text-indent: -99999px;
+  background-position: left center;
+  background-repeat: no-repeat;
+}
+
+#main table td.icons a.edit {
+  background-image: url(<%= asset_data_uri 'icon_edit.png' %>);
+}
+
+#main table td.icons input[type=submit].delete {
+  background-image: url(<%= asset_data_uri 'icon_delete.png' %>);
+}
+
+#main table td.icons form.pending input[type=submit].delete {
+  background-image: url(<%= asset_data_uri 'loading.gif' %>);
+  cursor: auto;
+}
+
+body.users #main table.users td:first-child {
   padding-left: 55px;
   background: #efefef url(<%= asset_data_uri 'icon_user.png' %>) 20px center no-repeat;
 }
 
-#main table.users td.privileges span.checked {
+body.users #main table.users td.privileges span.checked {
   background: transparent url(<%= asset_data_uri 'icon_checkmark.png' %>) right center no-repeat;
 }
 
-#main table td.icons {
+body.users #main table td.icons {
   width: 10px;
-  padding: 0 10px;
 }
 
-#main table td.icons a, 
-#main table td.icons input[type=submit] {
-  display: block;
-  padding-left: 10px;
+body.users #main table td.icons ul li {
+  margin-bottom: 8px;
+}
+
+body.users #main table td.icons ul li:last-child {
+  margin-bottom: 0;
+}
+
+body.experts #main div.header #quicksearch {
+  float: left;
+}
+
+body.experts #main div.header #quicksearch input[type=submit] {
+  float: left;
+  cursor: pointer;
+  height: 29px;
+  width: 29px;
+  margin: 0 0 0 -29px;
+  background: url(<%= asset_data_uri 'icon_search.png' %>) center center no-repeat;
+  border: none;
   text-indent: -99999px;
-  background-position: center center;
-  background-repeat: no-repeat;
 }
 
-#main table td.icons a {
-  background-image: url(<%= asset_data_uri 'icon_edit.png' %>);
-}
-
-#main table td.icons input[type=submit] {
-  background-image: url(<%= asset_data_uri 'icon_delete.png' %>);
-}
-
-#main table td.icons form.pending input[type=submit] {
-  padding-right: 2px;
-  margin: 0 -1px;
-  background-image: url(<%= asset_data_uri 'loading.gif' %>);
-  cursor: auto;
+body.experts #main div.header #filter {
+  display: none;
+  clear: both;
+  padding-top: 20px;
 }
 
 body.experts #main table.experts {
@@ -419,29 +459,38 @@ body.experts #main table.experts td:first-child {
   padding: 0;
 }
 
-body.experts #main table.experts td:first-child.male {
-  border-right: 2px solid #7c99b6;
+body.experts #main table.experts td:nth-child(2).male {
+  border-left: 2px solid #7c99b6;
 }
 
-body.experts #main table.experts td:first-child.female {
-  border-right: 2px solid #b67c84;
+body.experts #main table.experts td:nth-child(2).female {
+  border-left: 2px solid #b67c84;
 }
 
-body.experts #main table.experts td:nth-child(2) {
+body.experts #main table.experts td:first-child,
+body.experts #main table.experts td:nth-child(2),
+body.experts #main table.experts td:nth-child(3) {
   background: #f7f7f7;
   border-right: 1px solid #EEE;
 }
 
-body.experts #main table.experts td.icons {
-  width: 50px;
-  padding: 0 10px;
+body.experts #main table td.icons {
+  width: 35px;
 }
 
-@-moz-document url-prefix() { 
-  body.experts #main table.experts td.icons input[type=submit] {
-    margin-top: 3px;
-    margin-bottom: -3px;
-  }
+body.experts #main table td.icons ul {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+body.experts #main table td.icons ul li {
+  float: right;
+  margin-left: 8px;
+}
+
+body.experts #main table td.icons ul li:last-child {
+  margin-left: 0;
 }
 
 body.experts div.confirm-delete {
@@ -482,43 +531,6 @@ body.experts div.confirm-delete div:hover {
   background: #ba1d12;
 }
 
-#main div.header h2 {
-  padding: 0;
-  line-height: 1em;
-  text-shadow: 1px 1px 0px #efefef;
-  margin-bottom: 10px;
-}
-
-#main div.header h3 {
-  padding: 0;
-  font-size: .75em;
-  color: #888;
-  line-height: 1em;
-  text-shadow: 1px 1px 0px #efefef;
-  margin-bottom: 10px;
-}
-
-#main #experts_header #quicksearch {
-  float: left;
-}
-
-#main #experts_header #quicksearch input[type=submit] {
-  float: left;
-  cursor: pointer;
-  height: 29px;
-  width: 29px;
-  margin: 0 0 0 -29px;
-  background: url(<%= asset_data_uri 'icon_search.png' %>) center center no-repeat;
-  border: none;
-  text-indent: -99999px;
-}
-
-#main #experts_header #filter {
-  display: none;
-  clear: both;
-  padding-top: 20px;
-}
-
 /* Forms */
 #main form {
   position: relative;
@@ -551,6 +563,10 @@ body.experts div.confirm-delete div:hover {
   margin: 0 0 10px 0;
   background-color: transparent;
   box-shadow: none;
+}
+
+#main form div.field-box.buttons input[type=submit] {
+  padding: 5px 10px 7px 10px;
 }
 
 #main form p {
@@ -591,6 +607,7 @@ body.experts div.confirm-delete div:hover {
 #main form table {
   font-size: 1em;
   border-spacing: 0;
+  margin: 10px 0;
 }
 
 #main form table td, 
