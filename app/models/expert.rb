@@ -104,7 +104,7 @@ class Expert < ActiveRecord::Base
 
   # Returns a string containing name and prename.
   def full_name
-    "#{name}, #{prename}"
+    "#{prename} #{name}"
   end
 
   # Returns the experts age or nil if the birthday is unknown.

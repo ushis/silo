@@ -8,8 +8,8 @@
     <h3>
       <%= t('label.updated_at') %>
       <%= l @expert.updated_at, format: :short %>
-      by
-      <%= @user %>
+      <%= t('label.by') %>
+      <%= @expert.user.full_name %>
     </h3>
     <ul class="functions">
       <li>
