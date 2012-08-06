@@ -45,8 +45,6 @@ class Expert < ActiveRecord::Base
   has_many   :cvs,       autosave: true, dependent: :destroy
   belongs_to :user
 
-  default_scope includes(:contact)
-
   # Defines constant values for specific attributes, such as gender and
   # marital_status. For each attribute listed in this hash, a getter and
   # a setter method is defined, ensuring that the values are valid.
@@ -109,6 +107,14 @@ class Expert < ActiveRecord::Base
   # Returns a string containing name and prename.
   def full_name
     "#{name}, #{prename}"
+  end
+
+  # Returns a string containing degree, prename and name.
+  #
+  #   expert.full_name_with_degree
+  #   #=> "Dr. Alan Turing"
+  def full_name_with_degree
+    "#{degree} #{prename} #{name}"
   end
 
   # Returns the experts age or nil if the birthday is unknown.
