@@ -28,8 +28,6 @@ class User < ActiveRecord::Base
   attr_accessible(:email, :password, :password_confirmation, :name, :prename,
                   :locale)
 
-  after_initialize :init_privilege
-
   has_secure_password
 
   validates :password,   presence: true,  on: :create
@@ -57,9 +55,9 @@ class User < ActiveRecord::Base
     LOCALES.find { |l| l == locale.try(:to_sym) } || LOCALES.first
   end
 
-  # Initializes the users privileges.
-  def init_privilege
-    self.privilege ||= Privilege.new
+  # Auto initializes the users privileges on access.
+  def privilege
+    super || self.privilege = Privilege.new
   end
 
   # Returns the users preferred locale.

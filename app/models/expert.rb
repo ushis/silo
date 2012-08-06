@@ -39,8 +39,6 @@ class Expert < ActiveRecord::Base
                   :birthplace, :citizenship, :degree, :marital_status,
                   :former_collaboration, :fee)
 
-  after_initialize :init_contact
-
   has_one    :contact,   autosave: true, dependent: :destroy, as: :contactable
   has_many   :addresses, autosave: true, dependent: :destroy, as: :addressable
   has_many   :cvs,       autosave: true, dependent: :destroy
@@ -97,9 +95,9 @@ class Expert < ActiveRecord::Base
     end
   end
 
-  # Initializes the contact.
-  def init_contact
-    self.contact ||= Contact.new
+  # Initializes the contact on access, if not already initalized.
+  def contact
+    super || self.contact = Contact.new
   end
 
   # Returns a string containing name and prename.
