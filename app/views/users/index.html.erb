@@ -26,12 +26,14 @@
             </p>
           </td>
           <td class="icons">
-            <p>
-              <%= link_to t('action.edit'), edit_user_path(user) %>
-            </p>
-            <p>
-              <%= button_to t('action.delete'), user_path(user), method: :delete %>
-            </p>
+            <ul>
+              <li>
+                <%= link_to t('action.edit'), edit_user_path(user), class: "edit" %>
+              </li>
+              <li>
+                <%= button_to t('action.delete'), user_path(user), method: :delete, class: "delete"  %>
+              </li>
+            </ul>
           </td>
         </tr>
       <% end %>
