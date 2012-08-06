@@ -5,6 +5,7 @@ en:
     edit: 'Edit'
     login: 'Login'
     logout: 'Logout'
+    print: 'Print'
 
   label:
     admin: 'Admin'
@@ -15,6 +16,7 @@ en:
     citizenship: 'Citizenship'
     de: 'German'
     degree: 'Degree'
+    edit_expert: 'Edit Expert'
     edit_user: 'Edit User'
     email: 'Email'
     en: 'English'
@@ -34,6 +36,7 @@ en:
     registered_on: 'Registered on'
     search: 'Search'
     single: 'Single'
+    updated_at: 'Updated at'
     username: 'Username'
     users: 'Users'
     welcome: 'Welcome'
