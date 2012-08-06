@@ -13,6 +13,18 @@ CREATE TABLE `addresses` (
   KEY `index_addresses_on_addressable_id_and_addressable_type` (`addressable_id`,`addressable_type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE `comments` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `commentable_id` int(11) DEFAULT NULL,
+  `commentable_type` varchar(255) DEFAULT NULL,
+  `comment` text NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_comments_on_commentable_id_and_commentable_type` (`commentable_id`,`commentable_type`),
+  FULLTEXT KEY `fulltext_comment` (`comment`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 CREATE TABLE `contacts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `contactable_id` int(11) DEFAULT NULL,
@@ -94,3 +106,5 @@ INSERT INTO schema_migrations (version) VALUES ('1');
 INSERT INTO schema_migrations (version) VALUES ('2');
 
 INSERT INTO schema_migrations (version) VALUES ('3');
+
+INSERT INTO schema_migrations (version) VALUES ('4');

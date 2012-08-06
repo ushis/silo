@@ -40,6 +40,7 @@ class Expert < ActiveRecord::Base
                   :former_collaboration, :fee)
 
   has_one    :contact,   autosave: true, dependent: :destroy, as: :contactable
+  has_one    :comment,   autosave: true, dependent: :destroy, as: :commentable
   has_many   :addresses, autosave: true, dependent: :destroy, as: :addressable
   has_many   :cvs,       autosave: true, dependent: :destroy
   belongs_to :user
@@ -98,6 +99,11 @@ class Expert < ActiveRecord::Base
   # Initializes the contact on access, if not already initalized.
   def contact
     super || self.contact = Contact.new
+  end
+
+  # Initializes the comment on access, if not already initialized.
+  def comment
+    super || self.comment = Comment.new
   end
 
   # Returns a string containing name and prename.
