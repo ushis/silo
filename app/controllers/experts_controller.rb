@@ -29,6 +29,25 @@ class ExpertsController < ApplicationController
     render :form
   end
 
+  # Creates a new expert and redirects to the experts details page on success.
+  def create
+    comment = params[:expert].try(:delete, :comment)
+
+    @expert = Expert.new(params[:expert])
+    @expert.user = current_user
+    @expert.comment.comment = comment[:comment] if comment
+
+    if @expert.save
+      flash[:notice] = t('msg.created_expert', name: @expert.name)
+      redirect_to expert_url(@expert) and return
+    else
+      flash[:alert] = t('msg.could_not_create_expert')
+    end
+
+    @title = t('label.new_expert')
+    render :form
+  end
+
   # Serves an edit form, populated with the experts data.
   def edit
     @expert = Expert.includes(:comment).find(params[:id])
@@ -36,6 +55,7 @@ class ExpertsController < ApplicationController
     render :form
   end
 
+  # Updates an expert and redirects to the experts details page on success.
   def update
     @expert = Expert.includes(:comment).find(params[:id])
     @expert.user = current_user

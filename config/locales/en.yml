@@ -46,10 +46,12 @@ en:
 
   msg:
     access_denied: 'Access denied.'
+    could_not_create_expert: 'Could not create expert.'
     could_not_create_user: 'Could not create user.'
     could_not_delete_expert: 'Could not delete expert.'
     could_not_delete_user: 'Could not delete user.'
     could_not_save_changes: 'Could not save changes.'
+    created_expert: 'Created expert: %{name}'
     created_user: 'Created user: %{user}'
     delete_current_user_error: 'You can not delete yourself.'
     expert_deleted: 'Deleted expert: %{expert}'
