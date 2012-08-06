@@ -39,7 +39,7 @@ en:
     registered_on: 'Registered on'
     search: 'Search'
     single: 'Single'
-    updated_at: 'Updated at'
+    updated_at: 'Updated at %{date}'
     username: 'Username'
     users: 'Users'
     welcome: 'Welcome'
@@ -67,4 +67,3 @@ en:
   time:
     formats:
       short: '%B %e, %Y'
-

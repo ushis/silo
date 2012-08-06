@@ -6,6 +6,59 @@
   </h2>
   <div class="form-wrapper">
     <%= form_for @expert do |f| %>
+      <p>
+        <%= f.label :degree %>
+        <%= f.text_field :degree %>
+      </p>
+      <p>
+        <%= f.label :prename %>
+        <%= f.text_field :prename %>
+      </p>
+      <p>
+        <%= f.label :name %>
+        <%= f.text_field :name %>
+      </p>
+      <p>
+        <%= f.label :birthname %>
+        <%= f.text_field :birthname %>
+      </p>
+      <p>
+        <%= f.label :birthday %>
+        <%= f.date_select :birthday, start_year: 1901, end_year: Time.now.year %>
+      </p>
+      <p>
+        <%= f.label :birthplace %>
+        <%= f.text_field :birthplace %>
+      </p>
+      <p>
+        <%= f.label :gender %>
+        <%= f.select :gender, list_genders %>
+      </p>
+      <p>
+      <%= f.label :marital_status %>
+      <%= f.select :marital_status, list_marital_statuses %>
+      </p>
+      <p>
+        <%= f.label :citizenship %>
+        <%= f.text_field :citizenship %>
+      </p>
+      <p>
+        <%= f.label :former_collaboration %>
+        <%= f.check_box :former_collaboration %>
+      </p>
+      <p>
+        <%= f.label :fee %>
+        <%= f.text_field :fee %>
+      </p>
+      <%= f.fields_for @expert.comment do |comment_fields| %>
+        <p>
+          <%= comment_fields.label :comment %>
+          <%= comment_fields.text_area :comment %>
+        </p>
+      <%end %>
+      <p>
+        <%= f.submit %>
+      </p>
     <% end %>
   </div>
 </div>
