@@ -29,12 +29,12 @@ class Attachment < ActiveRecord::Base
 
   # Returns the file extension of the stored file.
   def ext
-    File.extname(filename)
+    File.extname(filename.to_s)
   end
 
   # Returns the absolute path to the stored file.
   def absolute_path
-    STORE.join(filename)
+    STORE.join(filename.to_s)
   end
 
   # Stores the attachment on the filesystem and sets the filename.

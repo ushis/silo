@@ -12,4 +12,14 @@ module ExpertHelper
       values.collect { |val| [t("label.#{val}"), val] }
     end
   end
+
+  # Returns a string containing links to the CV downloads.
+  #
+  #   list_cvs(expert)
+  #   #=> '<a href="">en</a><a href="">de</a>'
+  def list_cvs(expert)
+    expert.cvs.inject('') do |ret, cv|
+      ret << link_to(cv.language, expert_cv_path(id: cv, expert_id: expert))
+    end.html_safe
+  end
 end

@@ -12,7 +12,7 @@ class ExpertsController < ApplicationController
 
   # Serves a paginated table of all experts.
   def index
-    @experts = Expert.limit(50).page(params[:page])
+    @experts = Expert.includes(:cvs).limit(50).page(params[:page])
     @title = t('label.experts')
   end
 
