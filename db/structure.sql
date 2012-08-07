@@ -13,6 +13,17 @@ CREATE TABLE `addresses` (
   KEY `index_addresses_on_addressable_id_and_addressable_type` (`addressable_id`,`addressable_type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE `attachments` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `attachable_id` int(11) DEFAULT NULL,
+  `attachable_type` varchar(255) DEFAULT NULL,
+  `filename` varchar(255) NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_attachments_on_filename` (`filename`),
+  KEY `index_attachments_on_attachable_id_and_attachable_type` (`attachable_id`,`attachable_type`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 CREATE TABLE `comments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `commentable_id` int(11) DEFAULT NULL,
@@ -37,12 +48,9 @@ CREATE TABLE `contacts` (
 CREATE TABLE `cvs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `expert_id` int(11) NOT NULL,
-  `filename` varchar(255) NOT NULL,
   `language` varchar(255) DEFAULT NULL,
   `cv` text,
-  `created_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `index_cvs_on_filename` (`filename`),
   KEY `index_cvs_on_expert_id` (`expert_id`),
   FULLTEXT KEY `fulltext_cv` (`cv`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

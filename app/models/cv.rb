@@ -1,25 +1,29 @@
-require 'pathname'
-require 'securerandom'
 require 'yomu'
 
 # The Cv model.
 class Cv < ActiveRecord::Base
   attr_accessible :language
 
-  after_destroy :delete_document
-
-  validates :filename, presence: true, uniqueness: true
-
+  has_one    :attachment, autosave: true, dependent: :destroy, as: :attachable
   belongs_to :experts
 
-  # Filename prefix.
-  PREFIX = 'cv-'
+  # Inits a new Cv from a file. The file is stored on the filesystem and the
+  # contents is stored in the _cv_ attribute.
+  #
+  #   if (cv = Cv.from_file(upload, params[:language]))
+  #     expert.cvs << cv
+  #   end
+  #
+  # Returns a new Cv object or nil on error.
+  def self.from_file(document, language = :en)
+    cv = Cv.new(language: language)
 
-  # Directory name of the cv store.
-  DIRNAME = Pathname.new('cvs')
-
-  # Absolute path to the cv store.
-  STORE = Rails.root.join('public', DIRNAME)
+    if (cv.attachment = Attachment.from_file(document)) && cv.load_document
+      cv
+    else
+      nil
+    end
+  end
 
   # Adds a fulltext search condition to the database query.
   #
@@ -28,51 +32,11 @@ class Cv < ActiveRecord::Base
     where('MATCH (cvs.cv) AGAINST (?)', query)
   end
 
-  # Returns the absolute path to the cv document.
-  def absolute_path
-    STORE.join(filename)
-  end
-
-  # Returns the path to the document download.
-  def download_path
-    DIRNAME.join(filename)
-  end
-
-  # Stores the document in the CV store and sets the filename.
-  #
-  #   cv.store_document(upload)
-  #   #=> 'cv-e4b969da-10df-4374-afd7-648b15b09903.doc'
-  #
-  #   cv.filename
-  #   #=> 'cv-e4b969da-10df-4374-afd7-648b15b09903.doc'
-  #
-  # Returns the filename.
-  def store_document(document)
-    if document.is_a? ActionDispatch::Http::UploadedFile
-      ext = File.extname(document.original_filename)
-    elsif document.is_a? File
-      ext = File.extname(document.path)
-    else
-      raise ArgumentError, 'Argument must be a File or a UploadedFile.'
-    end
-
-    begin
-      empty_document(ext.downcase) do |f|
-        f << document.read
-        self.filename = File.basename(f.path)
-      end
-    rescue
-      nil
-    end
-  end
-
   # Tries to load the document text into the database.
   #
   # Returns the document text on success, else nil.
   def load_document
-    if (cv = Yomu.new(absolute_path).text.strip).blank?
-      nil
-    else
+    unless (cv = Yomu.new(attachment.absolute_path).text).blank?
       self.cv = cv
     end
   rescue
@@ -84,30 +48,5 @@ class Cv < ActiveRecord::Base
   # Returns true on success.
   def load_document!
     load_document && save
-  end
-
-  # Deletes the CV document.
-  def delete_document
-    if absolute_path.file?
-      absolute_path.delete
-    end
-  end
-
-  private
-
-  # Opens a document with unique filename in _wb_ mode.
-  #
-  #   cv.empty_document('.doc')
-  #   #=> <File:/path/to/store/cv-e4b969da-10df-4374-afd7-648b15b09903.doc>
-  def empty_document(suffix = nil)
-    begin
-      path = STORE.join("#{PREFIX}#{SecureRandom.uuid}#{suffix}")
-    end while path.exist?
-
-    if block_given?
-      File.open(path, 'wb') { |f| yield(f) }
-    else
-      File.open(path, 'wb')
-    end
   end
 end
