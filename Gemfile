@@ -14,6 +14,7 @@ end
 gem 'bcrypt-ruby', '~> 3.0.0'
 gem 'will_paginate', '~> 3.0'
 gem 'yomu', '~> 0.1.1'
+gem 'carmen-rails', '~> 1.0.0.beta2'
 
 # To use debugger
 # gem 'debugger'
