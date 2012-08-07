@@ -1,3 +1,4 @@
+require 'set'
 require 'carmen'
 require 'eu'
 
@@ -32,8 +33,8 @@ class Expert < ActiveRecord::Base
   has_many   :cvs,       autosave: true, dependent: :destroy
   belongs_to :user
 
-  # List of vailable genders.
-  GENDERS = [:female, :male]
+  # Set of vailable genders.
+  GENDERS = Set.new([:female, :male])
 
   # Returns a valid gender symbol using the GENDERS list.
   #
@@ -42,7 +43,8 @@ class Expert < ActiveRecord::Base
   #
   # If no valid symbol is found, the first symbol in GENDERS is returned.
   def self.gender(gender)
-    GENDERS.find { |g| g == gender.try(:to_sym) } || GENDERS.first
+    g = gender.try(:to_sym)
+    GENDERS.include?(g) ? g : GENDERS.first
   end
 
   # Initializes the contact on access, if not already initalized.
