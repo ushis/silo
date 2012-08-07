@@ -1,3 +1,5 @@
+require 'eu'
+
 # The Expert model provides access to the experts data and several methods
 # for manipulation.
 #
@@ -102,6 +104,11 @@ class Expert < ActiveRecord::Base
   # Initializes the comment on access, if not already initialized.
   def comment
     super || self.comment = Comment.new
+  end
+
+  # Returns true if expert is an EU citizen, else false.
+  def eu?
+    Eu.eu?(citizenship)
   end
 
   # Returns a string containing name and prename.
