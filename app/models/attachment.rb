@@ -23,6 +23,7 @@ class Attachment < ActiveRecord::Base
     attachment.store(file)
     attachment
   rescue
+    attachment.try(:destroy)
     nil
   end
 
