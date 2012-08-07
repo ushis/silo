@@ -75,6 +75,8 @@ class Attachment < ActiveRecord::Base
   #   cv.empty_document('.doc')
   #   #=> <File:/path/to/store/e4b969da-10df-4374-afd7-648b15b09903.doc>
   def empty_document(suffix = nil)
+    STORE.mkpath unless STORE.exist?
+
     begin
       path = STORE.join("#{SecureRandom.uuid}#{suffix}")
     end while path.exist?
