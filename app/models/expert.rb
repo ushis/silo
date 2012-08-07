@@ -1,3 +1,4 @@
+require 'carmen'
 require 'eu'
 
 # The Expert model provides access to the experts data and several methods
@@ -15,31 +16,15 @@ require 'eu'
 # - *birthplace* string
 # - *citizenship* string
 # - *degree* string
-# - *marital_status* string
 # - *former_collaboration* boolean
 # - *fee* string
+# - *company* string
 # - *created_at* datetime
 # - *updated_at* datetime
-#
-# Several attributes have a constant list of possible values, defined in
-# CONSTANTS, such as _gender_ and _marital_status_. The getter methods of
-# these attributes return symbols. The setter methods try to convert the
-# assigned value into a symbol, found in CONSTANTS. If no symbol is found
-# a default value is assigned.
-#
-#   # Make expert female
-#   expert.gender = 'female'
-#   expert.gender
-#   #=> :female
-#
-#   # Assign an invalid value
-#   expert.gender = 'tiger'
-#   expert.gender
-#   #=> :male
 class Expert < ActiveRecord::Base
-  attr_accessible(:name, :prename, :gender, :birthname, :birthday,
-                  :birthplace, :citizenship, :degree, :marital_status,
-                  :former_collaboration, :fee)
+  attr_accessible(:name, :prename, :gender, :birthname, :birthday, :fee,
+                  :birthplace, :citizenship, :degree, :former_collaboration,
+                  :company)
 
   has_one    :contact,   autosave: true, dependent: :destroy, as: :contactable
   has_one    :comment,   autosave: true, dependent: :destroy, as: :commentable
@@ -47,53 +32,17 @@ class Expert < ActiveRecord::Base
   has_many   :cvs,       autosave: true, dependent: :destroy
   belongs_to :user
 
-  # Defines constant values for specific attributes, such as gender and
-  # marital_status. For each attribute listed in this hash, a getter and
-  # a setter method is defined, ensuring that the values are valid.
-  CONSTANTS = {
-    gender: [:female, :male],
-    marital_status: [:married, :single]
-  }
+  # List of vailable genders.
+  GENDERS = [:female, :male]
 
-  # Defines class methods returning a constant from CONSTANTS for a given
-  # value. If not correspong constant is found, the last one is returned.
+  # Returns a valid gender symbol using the GENDERS list.
   #
   #   Expert.gender('female')
   #   #=> :female
   #
-  # Defines the methods _Expert.gender_ and _Expert.marital_status_.
-  class << self
-    CONSTANTS.each do |method, values|
-      define_method(method) do |lookup|
-        values.find { |val| val == lookup.try(:to_sym) } || values.last
-      end
-    end
-  end
-
-  # Defines instance methods to access the CONSTANTS hash. For each
-  # key a getter method, translating the database value to a symbol,
-  # and a setter method, translating a symbol to the corresponding
-  # database value, is defined.
-  #
-  #   expert.gender
-  #   #=> :female
-  #
-  #   expert.gender = :male
-  #   #=> :male
-  #
-  # If the assigned/saved value is not in the CONSTANTS hash, a default
-  # value is assigned/returned.
-  CONSTANTS.each do |method, values|
-
-    # Define getter methods
-    define_method(method) do
-      Expert.send(method, super())
-    end
-
-    # Define setter methods
-    define_method("#{method}=") do |val|
-      super(Expert.send(method, val).to_s)
-    end
+  # If no valid symbol is found, the first symbol in GENDERS is returned.
+  def self.gender(gender)
+    GENDERS.find { |g| g == gender.try(:to_sym) } || GENDERS.first
   end
 
   # Initializes the contact on access, if not already initalized.
@@ -106,9 +55,25 @@ class Expert < ActiveRecord::Base
     super || self.comment = Comment.new
   end
 
+  # Returns the experts gender.
+  def gender
+    Expert.gender(super)
+  end
+
+  # Sets the experts gender. If the given gender is invalid, a default value
+  # is assigned.
+  def gender=(gender)
+    super(Expert.gender(gender).to_s)
+  end
+
   # Returns true if expert is an EU citizen, else false.
   def eu?
     Eu.eu?(citizenship)
+  end
+
+  # Returns the localized country name.
+  def human_citizenship
+    Carmen::Country.coded(citizenship).try(:name)
   end
 
   # Returns a string containing name and prename.

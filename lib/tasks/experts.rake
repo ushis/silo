@@ -1,7 +1,41 @@
+#encoding: utf-8
+
+require 'carmen'
+
 namespace :experts do
 
   task :import, [:filename] => [:environment] do |task, args|
     puts "Importing experts data from XML file: #{args[:filename]}"
+
+    countries = {
+      'Bosnia And Herzegovina'           => 'BA',
+      'Bolivia'                          => 'BO',
+      'CÔte D’Ivoire'                    => 'CI',
+      'French'                           => 'FR',
+      'Guinea Bissau'                    => 'GW',
+      'Iran'                             => 'IR',
+      'Kosovar Albanian'                 => 'AL',
+      'Kosovo Albania'                   => 'AL',
+      'Kosovo'                           => 'AL',
+      'Macedonia'                        => 'MK',
+      'Moldova'                          => 'MD',
+      'Palestinian'                      => 'PS',
+      'Papua Neuguinea'                  => 'PG',
+      'Russia'                           => 'RU',
+      'Saint Lucian'                     => 'LC',
+      'Saint Vincent And The Grenadines' => 'VC',
+      'Sebien'                           => 'RS',
+      'Serbien'                          => 'RS',
+      'Simbabwe'                         => 'ZW',
+      'St. Kitts & Nevis'                => 'KN',
+      'Syria'                            => 'SY',
+      'Tanzania'                         => 'TZ',
+      'The Gambia'                       => 'GM',
+      'Trinidad And Tobago'              => 'TT',
+      'Trinidad & Tobago'                => 'TT',
+      'Venezuela'                        => 'VE',
+      'Vietnam'                          => 'VN'
+    }.inject({}) { |c, t| c[t[0]] = Carmen::Country.coded(t[1]); c }
 
     File.open(args[:filename]) do |f|
       user = User.first
@@ -28,13 +62,26 @@ namespace :experts do
         e.birthname = data['Geburtsname']
         e.birthday = data['Geburtsdatum'].try(:to_datetime) || nil
         e.birthplace = data['Geburtsort']
-        e.citizenship = data['Staatsb']
         e.degree = data['Titel']
 
-        if data['Familienstand'].try(:downcase) == 'v'
-          e.marital_status = :married
-        else
-          e.marital_status = :single
+        e.company = ['Firma1', 'Firma2'].collect do |f|
+          data[f] || ''
+        end.join(' ')
+
+        if (c = data['Staatsb'])
+          c = c.split('/')[0].gsub(/!|\?/, '').strip.titleize
+
+          unless (co = countries[c]) || (co = Carmen::Country.named(c))
+            puts "Country Code for: \"#{c}\""
+
+            begin
+              code = STDIN.gets.chomp
+            end while ! (co = Carmen::Country.coded(code))
+
+            countries[c] = co
+          end
+
+          e.citizenship = co.code
         end
 
         # Contact data

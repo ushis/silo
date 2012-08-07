@@ -35,10 +35,6 @@
         <%= f.select :gender, list_genders %>
       </p>
       <p>
-      <%= f.label :marital_status %>
-      <%= f.select :marital_status, list_marital_statuses %>
-      </p>
-      <p>
         <%= f.label :citizenship %>
         <%= f.country_select :citizenship %>
       </p>
@@ -49,6 +45,10 @@
       <p>
         <%= f.label :fee %>
         <%= f.text_field :fee %>
+      </p>
+      <p>
+        <%= f.label :company %>
+        <%= f.text_field :company %>
       </p>
       <%= f.fields_for @expert.comment do |comment_fields| %>
         <p>

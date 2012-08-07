@@ -10,9 +10,9 @@ class AddExperts < ActiveRecord::Migration
       t.string      :birthplace,           null: true
       t.string      :citizenship,          null: true
       t.string      :degree,               null: true
-      t.string      :marital_status,       null: false, default: 'single'
       t.boolean     :former_collaboration, null: false, default: false
       t.string      :fee,                  null: true
+      t.string      :company,              null: true
       t.timestamps
     end
 
