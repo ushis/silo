@@ -27,7 +27,12 @@ class Attachment < ActiveRecord::Base
     nil
   end
 
-  # Returns the absolute path to the cv document.
+  # Returns the file extension of the stored file.
+  def ext
+    File.extname(filename)
+  end
+
+  # Returns the absolute path to the stored file.
   def absolute_path
     STORE.join(filename)
   end

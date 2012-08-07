@@ -5,7 +5,7 @@ class Cv < ActiveRecord::Base
   attr_accessible :language
 
   has_one    :attachment, autosave: true, dependent: :destroy, as: :attachable
-  belongs_to :experts
+  belongs_to :expert
 
   # Inits a new Cv from a file. The file is stored on the filesystem and the
   # contents is stored in the _cv_ attribute.
@@ -31,6 +31,20 @@ class Cv < ActiveRecord::Base
   # Returns ActiveRecord:Relation.
   def self.search(query)
     where('MATCH (cvs.cv) AGAINST (?)', query)
+  end
+
+  # Returns the public filename of the cv document.
+  #
+  #   cv.public_filname
+  #   #=> 'cv-arthur-hoffmann-en.doc'
+  def public_filename
+    "cv #{expert.prename} #{expert.name} #{language}".parameterize +
+      attachment.try(:ext)
+  end
+
+  # Returns the absolute path to the stored cv document.
+  def absolute_path
+    attachment.try(:absolute_path)
   end
 
   # Tries to load the document text into the database.
