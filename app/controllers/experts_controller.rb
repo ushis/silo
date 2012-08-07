@@ -10,16 +10,16 @@ class ExpertsController < ApplicationController
     end
   end
 
+  # Serves a paginated table of all experts.
+  def index
+    @experts = Expert.limit(50).page(params[:page])
+    @title = t('label.experts')
+  end
+
   #
   def show
     @expert = Expert.includes(:user).find(params[:id])
     @title = @expert.full_name_with_degree
-  end
-
-  # Serves a paginated table of all experts.
-  def index
-    @title = t('label.experts')
-    @experts = Expert.limit(25)
   end
 
   # Servers a blank experts form

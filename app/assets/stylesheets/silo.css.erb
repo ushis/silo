@@ -424,6 +424,7 @@ body.experts #main div.header #filter {
 }
 
 body.experts #main table.experts {
+  clear: both;
   position: relative;
 }
 
@@ -628,7 +629,6 @@ body.experts div.confirm-delete div:hover {
 
 
 /* Login */
-
 body.login {
   position: absolute;
   bottom: 0;
@@ -689,6 +689,30 @@ body.login #content form#login-form input[type=submit] {
   box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
   box-sizing: border-box;
   -moz-box-sizing: border-box;
+}
+
+/* Pagination */
+ul.pagination {
+   clear: both;
+   float: left;
+   font-size: .8em;
+}
+
+ul.pagination li {
+  float: left;
+  margin-right: 4px;
+}
+
+ul.pagination li > * {
+  padding: 4px 6px;
+  color: #666;
+  background-color: #e9e9e9;
+  border-radius: 2px;
+}
+
+ul.pagination li span {
+  color: #999;
+  background-color: transparent;
 }
 
 /* Flash */
