@@ -2,7 +2,8 @@
 # methods, used by several other controllers. All controllers extend the
 # ApplicationController.
 class ApplicationController < ActionController::Base
-  rescue_from ActiveRecord::RecordNotFound, with: :not_found
+  rescue_from ActiveRecord::RecordNotFound,  with: :not_found
+  rescue_from ActionController::MissingFile, with: :file_not_found
 
   protect_from_forgery
 
@@ -16,6 +17,12 @@ class ApplicationController < ActionController::Base
   # Sets a not found alert and redirects to the root url.
   def not_found
     flash[:alert] = t('msg.record_not_found')
+    redirect_to root_url
+  end
+
+  # Sets a file not found alert and redirects to the root url.
+  def file_not_found
+    flash[:alert] = t('msg.file_not_found')
     redirect_to root_url
   end
 

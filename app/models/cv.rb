@@ -7,6 +7,8 @@ class Cv < ActiveRecord::Base
   has_one    :attachment, autosave: true, dependent: :destroy, as: :attachable
   belongs_to :expert
 
+  default_scope includes(:attachment)
+
   # Inits a new Cv from a file. The file is stored on the filesystem and the
   # contents is stored in the _cv_ attribute.
   #

@@ -82,7 +82,7 @@ class ExpertsController < ApplicationController
     expert = Expert.find(params[:id])
 
     if expert.destroy
-      flash[:notice] = t('msg.expert_deleted', expert: expert.name)
+      flash[:notice] = t('msg.deleted_expert', expert: expert.name)
     else
       flash[:alert] = t('msg.could_not_delete_expert')
     end
