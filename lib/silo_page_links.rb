@@ -17,22 +17,30 @@ module SiloPageLinks
       end
     end
 
-    def page_number(page)
+    def page_number(nr)
       content_tag :li do
-        page == current_page ? content_tag(:span, page) : link_to(page, url(page))
+        nr == current_page ? content_tag(:span, nr) : link_to(nr, url(nr))
       end
     end
 
     def previous_page
-      content_tag(:li, link_to(t('action.back'), url(current_page - 1)), class: 'back') if current_page > 1
+      if current_page > 1
+        content_tag :li, class: 'back' do
+          link_to t('action.back'), url(current_page - 1)
+        end
+      end
     end
 
     def next_page
-      content_tag(:li, link_to(t('action.next'), url(current_page + 1)), class: 'next') if current_page < total_pages
+      if current_page < total_pages
+        content_tag :li, class: 'next' do
+          link_to t('action.next'), url(current_page + 1)
+        end
+      end
     end
 
     def gap
-      content_tag(:li, content_tag(:span, '...', class: 'gap'))
+      content_tag :li, content_tag(:span, '...', class: 'gap')
     end
   end
 end
