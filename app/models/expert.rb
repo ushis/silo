@@ -12,7 +12,6 @@ require 'eu'
 # - *name* string
 # - *prename* string
 # - *gender* string
-# - *birthname* string
 # - *birthday* string
 # - *birthplace* string
 # - *citizenship* string
@@ -20,12 +19,12 @@ require 'eu'
 # - *former_collaboration* boolean
 # - *fee* string
 # - *company* string
+# - *job* string
 # - *created_at* datetime
 # - *updated_at* datetime
 class Expert < ActiveRecord::Base
-  attr_accessible(:name, :prename, :gender, :birthname, :birthday, :fee,
-                  :birthplace, :citizenship, :degree, :former_collaboration,
-                  :company)
+  attr_accessible(:name, :prename, :gender, :birthday, :fee, :birthplace,
+                  :citizenship, :degree, :former_collaboration, :company, :job)
 
   has_one    :contact,     autosave: true, dependent: :destroy, as: :contactable
   has_one    :comment,     autosave: true, dependent: :destroy, as: :commentable

@@ -2,28 +2,29 @@
 
 <div id="main">
   <%= render 'details_header' %>
+  <div>
+    <ul>
+      <% @expert.cvs.each do |cv| %>
+        <li>
+          <%= link_to cv.language.human, [@expert, cv] %>
+          <%= l cv.created_at, format: :long %>
+          <%= button_to 'x', [@expert, cv], method: :delete %>
+        </li>
+      <% end %>
+    </ul>
 
-  <ul>
-    <% @expert.cvs.each do |cv| %>
-      <li>
-        <%= link_to cv.language.human, [@expert, cv] %>
-        <%= l cv.created_at, format: :long %>
-        <%= button_to 'x', [@expert, cv], method: :delete %>
-      </li>
+    <%= form_for Cv.new, url: expert_cvs_path(@expert) do |f| %>
+      <p>
+        <%= f.label :file %>
+        <%= f.file_field :file %>
+      </p>
+      <p>
+        <%= f.label :language_id %>
+        <%= f.collection_select :language_id, languages, :id, :human %>
+      </p>
+      <p>
+        <%= f.submit %>
+      </p>
     <% end %>
-  </ul>
-
-  <%= form_for Cv.new, url: expert_cvs_path(@expert) do |f| %>
-    <p>
-      <%= f.label :file %>
-      <%= f.file_field :file %>
-    </p>
-    <p>
-      <%= f.label :language_id %>
-      <%= f.collection_select :language_id, languages, :id, :human %>
-    </p>
-    <p>
-      <%= f.submit %>
-    </p>
-  <% end %>
+  </div>
 </div>

@@ -5,7 +5,6 @@ class AddExperts < ActiveRecord::Migration
       t.string      :name,                 null: false
       t.string      :prename,              null: false
       t.string      :gender,               null: false
-      t.string      :birthname,            null: true
       t.datetime    :birthday,             null: true
       t.string      :birthplace,           null: true
       t.string      :citizenship,          null: true
@@ -13,6 +12,7 @@ class AddExperts < ActiveRecord::Migration
       t.boolean     :former_collaboration, null: false, default: false
       t.string      :fee,                  null: true
       t.string      :company,              null: true
+      t.string      :job,                  null: true
       t.timestamps
     end
 

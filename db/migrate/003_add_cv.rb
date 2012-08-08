@@ -15,6 +15,7 @@ class AddCv < ActiveRecord::Migration
     create_table :attachments do |t|
       t.references :attachable, polymorphic: true
       t.string     :filename,   null: false
+      t.string     :title,      null: false
       t.timestamp  :created_at
     end
 
