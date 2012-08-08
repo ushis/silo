@@ -47,7 +47,7 @@ class Attachment < ActiveRecord::Base
   # Returns a nice filename generated from the title.
   def public_filename
     if (ext = File.extname(title)).blank?
-      ext = File.extname(filename)
+      ext = File.extname(filename.to_s)
     end
 
     File.basename(title, ext).parameterize + ext

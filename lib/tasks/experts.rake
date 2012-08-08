@@ -59,10 +59,10 @@ namespace :experts do
           e.gender = :female
         end
 
-        e.birthname = data['Geburtsname']
         e.birthday = data['Geburtsdatum'].try(:to_datetime) || nil
         e.birthplace = data['Geburtsort']
         e.degree = data['Titel']
+        e.job = data['FirmaT']
 
         e.company = ['Firma1', 'Firma2'].collect do |f|
           data[f] || ''
