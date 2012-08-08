@@ -24,15 +24,15 @@ module SiloPageLinks
     end
 
     def previous_page
-      content_tag(:li, link_to('<', url(current_page - 1))) if current_page > 1
+      content_tag(:li, link_to(t('action.back'), url(current_page - 1)), class: 'back') if current_page > 1
     end
 
     def next_page
-      content_tag(:li, link_to('>', url(current_page + 1))) if current_page < total_pages
+      content_tag(:li, link_to(t('action.next'), url(current_page + 1)), class: 'next') if current_page < total_pages
     end
 
     def gap
-      content_tag(:li, content_tag(:span, '-', class: 'gap'))
+      content_tag(:li, content_tag(:span, '...', class: 'gap'))
     end
   end
 end
