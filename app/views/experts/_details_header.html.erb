@@ -1,0 +1,20 @@
+<div id="experts_header" class="header">
+  <h2>
+    <%= @expert.full_name_with_degree %>
+  </h2>
+  <h3>
+    <%= t 'label.updated_at', date: l(@expert.updated_at, format: :short) %>
+    <%= t 'label.by', name: @expert.user.full_name %>
+  </h3>
+  <ul class="tabs">
+    <li>
+      <%= link_to t('label.personal'), expert_path(@expert) %>
+    </li>
+    <li>
+      <%= link_to t('label.contacts'), expert_path(@expert) %>
+    </li>
+    <li>
+      <%= link_to t('label.documents'), documents_expert_path(@expert) %>
+    </li>
+  </ul>
+</div>
