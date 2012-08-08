@@ -7,17 +7,19 @@
         <%= @title %>
       </h2>
       <div id="quicksearch">
-        <%= text_field_tag :search, nil, placeholder: t('label.search') %>
+        <%= text_field_tag :search, nil, placeholder: t('label.quicksearch') %>
         <%= submit_tag t('label.search') %>
       </div>
       <div id="toggle_filter_button" class="button">
         <%= t('label.advanced_search') %>
       </div>
+      <div class="pagination">
+        <%= paginate @experts %>
+      </div>
       <div id="filter">
         Filter Form
       </div>
     </div>
-    <%= paginate @experts %>
     <table class="experts">
       <thead>
         <tr>
@@ -82,7 +84,9 @@
         <% end %>
       </tbody>
     </table>
-    <%= paginate @experts %>
+    <div class="pagination bottom">
+      <%= paginate @experts %>
+    </div>
   </div>
 </div>
 
