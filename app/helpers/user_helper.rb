@@ -19,6 +19,6 @@ module UserHelper
   #   list_locales
   #   #=> [['English', :en], ['German', :de]]
   def list_locales
-    User::LOCALES.collect { |l| [t(l, scope: :label), l] }
+    User::LOCALES.collect { |l| [t(l, scope: :language), l] }
   end
 end

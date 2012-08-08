@@ -44,7 +44,7 @@ class User < ActiveRecord::Base
   default_scope includes(:privilege)
 
   # Available localizations
-  LOCALES = Set.new([:en, :de])
+  LOCALES = I18n.available_locales.to_set
 
   # Returns a valid locale symbol for a value using the LOCALES constant.
   #
