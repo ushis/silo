@@ -1,3 +1,4 @@
+require 'set'
 require 'digest/sha1'
 require 'securerandom'
 
@@ -43,7 +44,7 @@ class User < ActiveRecord::Base
   default_scope includes(:privilege)
 
   # Available localizations
-  LOCALES = [:en, :de]
+  LOCALES = Set.new([:en, :de])
 
   # Returns a valid locale symbol for a value using the LOCALES constant.
   #
@@ -52,7 +53,8 @@ class User < ActiveRecord::Base
   #
   # If no valid symbol is found, the first symbol of LOCALES is returned.
   def self.locale(locale)
-    LOCALES.find { |l| l == locale.try(:to_sym) } || LOCALES.first
+    l = locale.try(:to_sym)
+    LOCALES.include?(l) ? l : LOCALES.first
   end
 
   # Auto initializes the users privileges on access.

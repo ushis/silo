@@ -35,12 +35,12 @@
         <%= f.select :gender, list_genders %>
       </p>
       <p>
-      <%= f.label :marital_status %>
-      <%= f.select :marital_status, list_marital_statuses %>
-      </p>
-      <p>
         <%= f.label :citizenship %>
         <%= f.country_select :citizenship %>
+      </p>
+      <p class="multi-lang">
+        <%= f.label :languages %>
+        <%= language_selects @expert.languages %>
       </p>
       <p>
         <%= f.label :former_collaboration %>
@@ -50,15 +50,23 @@
         <%= f.label :fee %>
         <%= f.text_field :fee %>
       </p>
-      <%= f.fields_for @expert.comment do |comment_fields| %>
+      <p>
+        <%= f.label :company %>
+        <%= f.text_field :company %>
+      </p>
+      <%= f.fields_for @expert.comment do |fields| %>
         <p>
-          <%= comment_fields.label :comment %>
-          <%= comment_fields.text_area :comment %>
+          <%= fields.label :comment %>
+          <%= fields.text_area :comment %>
         </p>
-      <%end %>
+      <% end %>
       <p>
         <%= f.submit %>
       </p>
     <% end %>
   </div>
 </div>
+
+<script>
+  $('p.multi-lang select').siloClickAway().parent().parent().siloClickAndClone();
+</script>

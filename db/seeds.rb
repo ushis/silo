@@ -7,3 +7,8 @@
   user.privileges = { admin: true }
   user.save
 end
+
+# Add all available languages
+I18n.t(:language).each do |k, _|
+  Language.create(language: k)
+end

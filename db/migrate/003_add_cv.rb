@@ -1,12 +1,13 @@
 class AddCv < ActiveRecord::Migration
   def up
     create_table :cvs do |t|
-      t.integer   :expert_id,  null: false
-      t.string    :language,   null: true
-      t.text      :cv,         null: true
+      t.integer :expert_id,   null: false
+      t.integer :language_id, null: false
+      t.text    :cv,          null: true
     end
 
     add_index :cvs, :expert_id
+    add_index :cvs, :language_id
 
     execute('ALTER TABLE cvs ENGINE = MyISAM')
     execute('CREATE FULLTEXT INDEX fulltext_cv ON cvs (cv)')

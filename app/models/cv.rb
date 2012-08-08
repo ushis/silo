@@ -2,12 +2,11 @@ require 'yomu'
 
 # The Cv model.
 class Cv < ActiveRecord::Base
-  attr_accessible :language
-
   has_one    :attachment, autosave: true, dependent: :destroy, as: :attachable
   belongs_to :expert
+  belongs_to :language
 
-  default_scope includes(:attachment)
+  default_scope includes(:attachment, :language)
 
   # Inits a new Cv from a file. The file is stored on the filesystem and the
   # contents is stored in the _cv_ attribute.
@@ -18,14 +17,15 @@ class Cv < ActiveRecord::Base
   #
   # Returns a new Cv object or nil on error.
   def self.from_file(document, language = :en)
-    cv = Cv.new(language: language)
+    cv = Cv.new
+    cv.language = Language.from_s(language)
 
     if (cv.attachment = Attachment.from_file(document)) && cv.load_document
-      return cv
+      cv
+    else
+      cv.destroy
+      nil
     end
-
-    cv.destroy
-    nil
   end
 
   # Adds a fulltext search condition to the database query.

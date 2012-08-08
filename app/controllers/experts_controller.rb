@@ -36,6 +36,7 @@ class ExpertsController < ApplicationController
     @expert = Expert.new(params[:expert])
     @expert.user = current_user
     @expert.comment.comment = comment[:comment] if comment
+    @expert.languages = params[:languages]
 
     if @expert.save
       flash[:notice] = t('msg.created_expert', name: @expert.name)
@@ -50,14 +51,14 @@ class ExpertsController < ApplicationController
 
   # Serves an edit form, populated with the experts data.
   def edit
-    @expert = Expert.includes(:comment).find(params[:id])
+    @expert = Expert.includes(:comment, :languages).find(params[:id])
     @title = t('label.edit_expert')
     render :form
   end
 
   # Updates an expert and redirects to the experts details page on success.
   def update
-    @expert = Expert.includes(:comment).find(params[:id])
+    @expert = Expert.includes(:comment, :languages).find(params[:id])
     @expert.user = current_user
 
     if (comment = params[:expert].try(:delete, :comment))
@@ -65,6 +66,7 @@ class ExpertsController < ApplicationController
     end
 
     @expert.attributes = params[:expert]
+    @expert.languages = params[:languages]
 
     if @expert.save
       flash[:notice] = t('msg.saved_changes')

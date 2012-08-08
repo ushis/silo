@@ -48,10 +48,11 @@ CREATE TABLE `contacts` (
 CREATE TABLE `cvs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `expert_id` int(11) NOT NULL,
-  `language` varchar(255) DEFAULT NULL,
+  `language_id` int(11) NOT NULL,
   `cv` text,
   PRIMARY KEY (`id`),
   KEY `index_cvs_on_expert_id` (`expert_id`),
+  KEY `index_cvs_on_language_id` (`language_id`),
   FULLTEXT KEY `fulltext_cv` (`cv`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -66,15 +67,32 @@ CREATE TABLE `experts` (
   `birthplace` varchar(255) DEFAULT NULL,
   `citizenship` varchar(255) DEFAULT NULL,
   `degree` varchar(255) DEFAULT NULL,
-  `marital_status` varchar(255) NOT NULL DEFAULT 'single',
   `former_collaboration` tinyint(1) NOT NULL DEFAULT '0',
   `fee` varchar(255) DEFAULT NULL,
+  `company` varchar(255) DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_experts_on_user_id` (`user_id`),
   KEY `index_experts_on_name` (`name`),
   KEY `index_experts_on_prename` (`prename`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `langs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `language_id` int(11) NOT NULL,
+  `langable_id` int(11) DEFAULT NULL,
+  `langable_type` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_langs_on_language_id` (`language_id`),
+  KEY `index_langs_on_langable_id_and_langable_type` (`langable_id`,`langable_type`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `languages` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `language` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_languages_on_language` (`language`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `privileges` (
@@ -116,3 +134,5 @@ INSERT INTO schema_migrations (version) VALUES ('2');
 INSERT INTO schema_migrations (version) VALUES ('3');
 
 INSERT INTO schema_migrations (version) VALUES ('4');
+
+INSERT INTO schema_migrations (version) VALUES ('5');

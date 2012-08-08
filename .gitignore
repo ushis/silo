@@ -25,3 +25,6 @@
 
 # Docs
 /doc/app
+
+# Public folders
+/public/*/*

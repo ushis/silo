@@ -13,6 +13,24 @@ module ApplicationHelper
     end.html_safe
   end
 
+  def languages
+    @language_collection ||= Language.all
+  end
+
+  def language_select(lang)
+    fields_for lang do |f|
+      f.collection_select :id, languages, :id, :human, {}, name: 'languages[]'
+    end.html_safe
+  end
+
+  def language_selects(langs)
+    if langs.empty?
+      language_select Language.first
+    else
+      langs.collect { |lang| language_select lang }.join('').html_safe
+    end
+  end
+
   # Returns a pagination list.
   #
   #   paginate(@experts)
