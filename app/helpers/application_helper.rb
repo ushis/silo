@@ -37,7 +37,7 @@ module ApplicationHelper
   #   #=> '<ul><li><span>1</span></li><li><a>2</a></li></ul>'
   def paginate(collection)
     if collection
-      will_paginate collection, inner_window: 3, renderer: SiloPageLinks::Renderer
+      will_paginate collection, outer_window: 0, inner_window: 2, renderer: SiloPageLinks::Renderer
     end
   end
 end

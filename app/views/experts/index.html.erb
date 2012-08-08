@@ -42,8 +42,6 @@
           <th>
             <%= t 'label.cv' %><span></span>
           </th>
-          <th>
-          </th>
         </tr>
       </thead>
       <tbody>
@@ -69,17 +67,6 @@
             <td>
               <%= list_cvs expert %>
             </td>
-            <td class="icons">
-              <ul>
-                <li>
-                  <%= link_to t('action.edit'), edit_expert_path(expert), class: 'edit' %>
-                </li>
-                <li>
-                  <%= button_to(t('action.delete'), expert_path(expert),
-                              { method: :delete, class: 'delete' }) %>
-                </li>
-              </ul>
-            </td>
           </tr>
         <% end %>
       </tbody>
@@ -93,6 +80,5 @@
 <script>
 $(document).ready(function(){
   $('#toggle_filter_button').siloToggler('#filter');
-  $('input.delete').siloConfirmDelete();
 });
 </script>
