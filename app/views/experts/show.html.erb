@@ -1,36 +1,5 @@
 <%= render 'sidebar' %>
 
 <div id="main">
-  <div id="experts_header" class="header">
-    <h2>
-      <%= @expert.full_name_with_degree %>
-    </h2>
-    <h3>
-      <%= t 'label.updated_at', date: l(@expert.updated_at, format: :short) %>
-      <%= t 'label.by', name: @expert.user.full_name %>
-    </h3>
-    <ul class="functions">
-      <li>
-        <%= button_to(t('action.delete'), expert_path(@expert),
-                      { method: :delete, class: 'delete button' }) %>
-      </li>
-      <li>
-        <%= link_to t('action.edit'), edit_expert_path, class: 'button' %>
-      </li>
-      <li>
-        <%= link_to_function(t('action.print'), "javascript:print()", class: 'button') %>
-      </li>
-    </ul>
-    <ul class="tabs">
-      <li>
-        Personal
-      </li>
-      <li>
-        Contact
-      </li>
-      <li>
-        Documents
-      </li>
-    </ul>
-  </div>
+  <%= render 'details_header' %>
 </div>

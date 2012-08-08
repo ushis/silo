@@ -17,6 +17,10 @@ Silo::Application.routes.draw do
 
   resources :experts, except: [:index] do
     resources :cvs, only: [:show, :create, :destroy]
+
+    member do
+      get :documents
+    end
   end
 
   # Partners

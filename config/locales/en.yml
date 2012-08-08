@@ -72,3 +72,4 @@ en:
   time:
     formats:
       short: '%B %e, %Y'
+      long: '%Y/%m/%d %H:%M'

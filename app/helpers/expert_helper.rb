@@ -15,7 +15,7 @@ module ExpertHelper
   #   #=> '<a href="">en</a><a href="">de</a>'
   def list_cvs(expert)
     expert.cvs.inject('') do |ret, cv|
-      ret << link_to(cv.language, expert_cv_path(id: cv, expert_id: expert))
+      ret << link_to(cv.language.language, [expert, cv])
     end.html_safe
   end
 end

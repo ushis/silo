@@ -22,6 +22,11 @@ class ExpertsController < ApplicationController
     @title = @expert.full_name_with_degree
   end
 
+  def documents
+    @expert = Expert.includes(:attachments, :cvs, :user).find(params[:id])
+    @title = @expert.full_name_with_degree
+  end
+
   # Servers a blank experts form
   def new
     @expert = Expert.new

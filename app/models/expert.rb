@@ -27,12 +27,13 @@ class Expert < ActiveRecord::Base
                   :birthplace, :citizenship, :degree, :former_collaboration,
                   :company)
 
-  has_one    :contact,   autosave: true, dependent: :destroy, as: :contactable
-  has_one    :comment,   autosave: true, dependent: :destroy, as: :commentable
-  has_many   :addresses, autosave: true, dependent: :destroy, as: :addressable
-  has_many   :langs,     autosave: true, dependent: :destroy, as: :langable
-  has_many   :cvs,       autosave: true, dependent: :destroy
-  has_many   :languages, through: :langs
+  has_one    :contact,     autosave: true, dependent: :destroy, as: :contactable
+  has_one    :comment,     autosave: true, dependent: :destroy, as: :commentable
+  has_many   :attachments, autosave: true, dependent: :destroy, as: :attachable
+  has_many   :addresses,   autosave: true, dependent: :destroy, as: :addressable
+  has_many   :langs,       autosave: true, dependent: :destroy, as: :langable
+  has_many   :cvs,         autosave: true, dependent: :destroy
+  has_many   :languages,   through: :langs
   belongs_to :user
 
   # Set of vailable genders.
