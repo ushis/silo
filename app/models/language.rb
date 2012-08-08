@@ -2,10 +2,11 @@
 class Language < ActiveRecord::Base
   attr_accessible :language
 
-  validates :language, presence: true
+  validates :language, presence: true, uniqueness: true
 
+  has_one  :cv
   has_many :langs,   dependent: :destroy
-  has_many :experts, through: :langs
+  has_many :experts, through:   :langs
 
   # Returns the localized language.
   #

@@ -48,9 +48,11 @@ CREATE TABLE `contacts` (
 CREATE TABLE `cvs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `expert_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,
   `cv` text,
   PRIMARY KEY (`id`),
   KEY `index_cvs_on_expert_id` (`expert_id`),
+  KEY `index_cvs_on_language_id` (`language_id`),
   FULLTEXT KEY `fulltext_cv` (`cv`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 

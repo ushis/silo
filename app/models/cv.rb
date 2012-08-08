@@ -3,8 +3,8 @@ require 'yomu'
 # The Cv model.
 class Cv < ActiveRecord::Base
   has_one    :attachment, autosave: true, dependent: :destroy, as: :attachable
-  has_one    :language,   autosave: true, dependent: :destroy, as: :languageable
   belongs_to :expert
+  belongs_to :language
 
   default_scope includes(:attachment, :language)
 
