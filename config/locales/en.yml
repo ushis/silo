@@ -1,10 +1,12 @@
 # English localization file
 en:
   action:
+    back: 'Back'
     delete: 'Delete'
     edit: 'Edit'
     login: 'Login'
     logout: 'Logout'
+    next: 'Next'
     print: 'Print'
 
   label:
@@ -35,6 +37,7 @@ en:
     prename: 'Prename'
     privileges: 'Privileges'
     profile: 'Profile'
+    quicksearch: 'Quicksearch'
     references: 'References'
     registered_on: 'Registered on'
     search: 'Search'
