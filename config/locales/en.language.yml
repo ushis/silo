@@ -45,7 +45,7 @@ en:
     mt: 'Maltese'
     ne: 'Nepali'
     nl: 'Dutch'
-    no: 'Norwegian'
+    'no': 'Norwegian'
     pa: 'Punjabi'
     pl: 'Polish'
     pt: 'Portuguese'

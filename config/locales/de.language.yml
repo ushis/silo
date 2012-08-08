@@ -45,7 +45,7 @@ de:
     mt: 'Maltesisch'
     ne: 'Nepalesisch'
     nl: 'Niederländisch'
-    no: 'Norwegisch'
+    'no': 'Norwegisch'
     pa: 'Pandschabisch'
     pl: 'Polnisch'
     pt: 'Portugiesisch'
