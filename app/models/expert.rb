@@ -30,7 +30,9 @@ class Expert < ActiveRecord::Base
   has_one    :contact,   autosave: true, dependent: :destroy, as: :contactable
   has_one    :comment,   autosave: true, dependent: :destroy, as: :commentable
   has_many   :addresses, autosave: true, dependent: :destroy, as: :addressable
+  has_many   :langs,     autosave: true, dependent: :destroy, as: :langable
   has_many   :cvs,       autosave: true, dependent: :destroy
+  has_many   :languages, through: :langs
   belongs_to :user
 
   # Set of vailable genders.
@@ -66,6 +68,14 @@ class Expert < ActiveRecord::Base
   # is assigned.
   def gender=(gender)
     super(Expert.gender(gender).to_s)
+  end
+
+  # Sets the experts languages. So we can do things like:
+  #
+  #   en = Language.find_by_language('en')
+  #   expert.languages = [1, 2, "34", en]
+  def languages=(ids)
+    super(Language.where(id: ids)) if [Fixnum, Array].include?(ids.class)
   end
 
   # Returns true if expert is an EU citizen, else false.

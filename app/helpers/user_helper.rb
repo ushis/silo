@@ -10,7 +10,7 @@ module UserHelper
   def list_privileges(user)
     user.privileges.inject('') do |ret, item|
       klass = 'checked' if item[1]
-      ret << content_tag(:span, t("label.#{item[0]}".to_s), class: klass)
+      ret << content_tag(:span, t(item[0], scope: :label), class: klass)
     end.html_safe
   end
 
@@ -19,6 +19,6 @@ module UserHelper
   #   list_locales
   #   #=> [['English', :en], ['German', :de]]
   def list_locales
-    User::LOCALES.collect { |l| [t("label.#{l}"), l] }
+    User::LOCALES.collect { |l| [t(l, scope: :label), l] }
   end
 end

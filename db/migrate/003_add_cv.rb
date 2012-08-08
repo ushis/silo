@@ -2,7 +2,6 @@ class AddCv < ActiveRecord::Migration
   def up
     create_table :cvs do |t|
       t.integer   :expert_id,  null: false
-      t.string    :language,   null: true
       t.text      :cv,         null: true
     end
 

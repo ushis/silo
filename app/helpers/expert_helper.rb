@@ -6,7 +6,7 @@ module ExpertHelper
   #   list_genders
   #   #=> [['Female', :female], ['Male', :male]]
   def list_genders
-    Expert::GENDERS.collect { |g| [t("label.#{g}"), g] }
+    Expert::GENDERS.collect { |g| [t(g, scope: :label), g] }
   end
 
   # Returns a string containing links to the CV downloads.

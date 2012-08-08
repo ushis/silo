@@ -48,7 +48,7 @@ do($ = jQuery) ->
         el.toggleClass settings.class, settings.duration, ->
           el.toggleClass settings.class, settings.duration
 
-  # Animates a toggle slide for the given selector
+  # Animates a toggle slide for the given selector.
   $.fn.siloToggler = (selector, options) ->
     settings = $.extend {
       duration: 400
@@ -57,6 +57,32 @@ do($ = jQuery) ->
     @each ->
       $(@).click ->
         $(selector).slideToggle(settings.duration)
+
+  # Wraps adds a click away x the all elements.
+  $.fn.siloClickAway = (options) ->
+    settings = $.extend {
+      text: '⨯'
+    }, options
+
+    @each ->
+      $(@).wrap('<div>').parent().append ->
+        $('<span>').text(settings.text).click ->
+          $(@).closest('div').remove()
+
+  # Adds a click and clone + to an element.
+  $.fn.siloClickAndClone = (options) ->
+    settings = $.extend {
+      text: '+'
+      selector: 'div'
+    }, options
+
+    @each ->
+      do (el = $(@)) ->
+        el.append ->
+          $('<span>').text(settings.text).click ->
+            $(@).before ->
+              el.find(settings.selector).last().clone(true)
+
 
   # Adds a delete confirmation field to the selector
   $.fn.siloConfirmDelete = (options) ->

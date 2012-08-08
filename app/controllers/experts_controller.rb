@@ -36,6 +36,7 @@ class ExpertsController < ApplicationController
     @expert = Expert.new(params[:expert])
     @expert.user = current_user
     @expert.comment.comment = comment[:comment] if comment
+    @expert.languages = params[:languages]
 
     if @expert.save
       flash[:notice] = t('msg.created_expert', name: @expert.name)
@@ -65,6 +66,7 @@ class ExpertsController < ApplicationController
     end
 
     @expert.attributes = params[:expert]
+    @expert.languages = params[:languages]
 
     if @expert.save
       flash[:notice] = t('msg.saved_changes')
