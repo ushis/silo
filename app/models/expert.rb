@@ -115,9 +115,13 @@ class Expert < ActiveRecord::Base
   # Returns a string containing degree, prename and name.
   #
   #   expert.full_name_with_degree
-  #   #=> "Dr. Alan Turing"
+  #   #=> "Alan Turing, Ph.D."
   def full_name_with_degree
-    "#{degree} #{prename} #{name}"
+    if degree
+      full_name + ", #{I18n.t(degree, scope: :degree)}"
+    else
+      full_name
+    end
   end
 
   # Returns the experts age or nil if the birthday is unknown.
