@@ -2,10 +2,7 @@
 
 <div id="main">
   <div>
-    <div id="experts_header" class="header">
-      <h2>
-        <%= @title %>
-      </h2>
+    <div class="header">
       <div id="quicksearch">
         <%= text_field_tag :search, nil, placeholder: t('label.quicksearch') %>
         <%= submit_tag t('label.search') %>
@@ -64,7 +61,7 @@
             <td>
               <%= expert.human_citizenship %>
             </td>
-            <td>
+            <td class="cvs">
               <%= list_cvs expert %>
             </td>
           </tr>

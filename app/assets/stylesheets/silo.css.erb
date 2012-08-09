@@ -42,6 +42,13 @@ strong {
   -moz-box-sizing: border-box;
 }
 
+div.clear {
+  height: 0;
+  width: 0;
+  visibility: hidden;
+  clear: both;
+}
+
 /* Header */
 #header {
   width: 100%;
@@ -88,6 +95,7 @@ strong {
 
 #header #user-tools li input[type=submit] {
   display: block;
+  margin: 0;
   padding: 4px 10px 5px 10px;
 }
 
@@ -175,7 +183,7 @@ body.users #nav li.users a {
 
 /* Sidebar */
 #sidebar {
-  float: left;
+  position: absolute;
   width: 80px;
   padding: 4px 10px 0 10px;
   font-size: .7em;
@@ -224,9 +232,8 @@ body.new #sidebar li.new {
 
 /* Main */
 #main {
-  min-height: 300px;
   margin: 0 10px 0 100px;
-  padding: 10px 20px;
+  padding: 18px 20px;
   background-color: #f9f9f9;
   border-radius: 4px;
   box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
@@ -236,22 +243,37 @@ body.index #main {
   border-top-left-radius: 0;
 }
 
-#main div.header {
+#main div.header,
+#main div.form-wrapper {
   float: left;
   position: relative;
   width: 100%;
-  margin: 0 0 20px -10px;
+  margin: -8px 0 -8px -10px;
   padding: 10px;
   background: #dbdbdb;
   border-radius: 4px;
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, .2);
 }
 
-#main div.header h2 {
+#main div.header {
+  margin-bottom: 30px;
+}
+
+#main div.header h2,
+#main div.form-wrapper h2 {
   padding: 0;
   line-height: 1em;
   text-shadow: 1px 1px 0px #efefef;
   margin-bottom: 10px;
+}
+
+#main div.form-wrapper h2 {
+  padding: 10px 0 0 10px;
+}
+
+body.experts.new #main div.form-wrapper h2,
+body.users.new #main div.form-wrapper h2 {
+  display: none;
 }
 
 #main div.header h3 {
@@ -272,19 +294,26 @@ body.index #main {
 
 #main div.header ul.tabs li {
   cursor: pointer;
+  text-align: center;
   float: left;
   line-height: 2.2em;
-  padding: 2px 15px 0 15px;
+  padding: 0;
   margin-right: 3px;
-  background: #f9f9f9;
+  background: #646464;
+  color: #d0d0d0;
   border-radius: 4px 4px 0 0;
-  box-shadow: 0 -2px 1px rgba(0,0,0,.1);
+  text-shadow: 1px 1px 0px rgba(0,0,0,.5);
+}
+
+#main div.header ul.tabs li a {
+  display: block;
+  padding: 2px 15px 2px 15px;
 }
 
 #main div.header div.button,
 #main div.header a.button,
 #main div.header input.button,
-#main form div.field-box.buttons input[type=submit] {
+#main input[type=submit] {
   float: left;
   cursor: pointer;
   padding: 4px 10px 4px 10px;
@@ -308,25 +337,14 @@ body.index #main {
 }
 
 #main div.header input[type=text] {
-  float: left;
   width: 250px;
-  height: 100%;
   padding: 7px 30px 5px 10px;
-  background: #f5f5f5;
-  color: #222;
-  font-size: 12px;
-  line-height: 15px;
-  border: none;
-  border-bottom: 1px solid rgba(255, 255, 255, .2);
-  border-radius: 3px;
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .3);
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
 }
 
 #main table {
   width: 100%;
   color: #5b5b5b;
+  clear: left;
   font-size: .75em;
   border-collapse: separate;
   border-spacing: 0 8px;
@@ -373,6 +391,10 @@ body.index #main {
 }
 
 #main table td.icons input[type=submit].delete {
+  padding: 0;
+  margin: 0;
+  text-shadow: none;
+  box-shadow: none;
   background-image: url(<%= asset_data_uri 'icon_delete.png' %>);
 }
 
@@ -400,6 +422,36 @@ body.users #main table td.icons ul li {
 
 body.users #main table td.icons ul li:last-child {
   margin-bottom: 0;
+}
+
+body.experts.show #main div.header,
+body.experts.contacts #main div.header,
+body.experts.documents #main div.header {
+  min-height: 80px;
+}
+
+body.experts.show #main div.header ul.tabs li:first-child {
+  background: #f9f9f9;
+}
+body.experts.show #main div.header ul.tabs li:first-child a {
+  color: #3b3b3b;
+  text-shadow: none;
+}
+
+body.experts.contacts #main div.header ul.tabs li:nth-child(2) {
+  background: #f9f9f9;
+}
+body.experts.contacts #main div.header ul.tabs li:nth-child(2) a {
+  color: #3b3b3b;
+  text-shadow: none;
+}
+
+body.experts.documents #main div.header ul.tabs li:nth-child(3) {
+  background: #f9f9f9;
+}
+body.experts.documents #main div.header ul.tabs li:nth-child(3) a {
+  color: #3b3b3b;
+  text-shadow: none;
 }
 
 body.experts #main div.header #quicksearch {
@@ -437,7 +489,6 @@ body.experts #main div.header #filter {
 
 body.experts #main table.experts {
   position: relative;
-  clear: both;
 }
 
 body.experts #main table.experts thead tr {
@@ -472,10 +523,6 @@ body.experts #main table.experts td:first-child {
   padding: 0;
 }
 
-body.experts #main table td a {
-  display: block;
-}
-
 body.experts #main table.experts td:nth-child(2).male {
   border-left: 2px solid #7c99b6;
 }
@@ -491,23 +538,29 @@ body.experts #main table.experts td:nth-child(3) {
   border-right: 1px solid #EEE;
 }
 
-body.experts #main table td.icons {
-  width: 35px;
+body.experts #main table td:last-child {
+  border-radius: 0 4px 4px 0;
+  background: #efefef;
 }
 
-body.experts #main table td.icons ul {
-  width: 100%;
-  padding: 0;
-  margin: 0;
+body.experts #main table td.cvs {
+  
 }
 
-body.experts #main table td.icons ul li {
-  float: right;
-  margin-left: 8px;
+body.experts #main table td.cvs a {
+  background:  url(<%= asset_data_uri('icon_cv.png') %>) left center no-repeat;
+  border-radius: 2px;
+  padding: 7px 0 3px 16px;
+  margin-right: 8px;
+  display: inline;
+  text-transform: uppercase;
+  color: #444;
+  font-size: .9em;
+  text-shadow: 1px 1px 0px #f5f5f5;
 }
 
-body.experts #main table td.icons ul li:last-child {
-  margin-left: 0;
+body.experts #main table td a {
+  display: block;
 }
 
 body.experts div.confirm-delete {
@@ -553,11 +606,15 @@ body.experts div.confirm-delete div:hover {
   position: relative;
 }
 
+#main div.form-wrapper > form {
+  padding: 10px;
+}
+
 #main form div.field-box {
   width: 49%;
-  padding: 0 10px;
+  padding: 0;
   margin-bottom: 10px;
-  background-color: #e8e8e8;
+  background-color: #efefef;
   box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
   border-radius: 4px;
   box-sizing: border-box;
@@ -586,45 +643,52 @@ body.experts div.confirm-delete div:hover {
   padding: 5px 10px 7px 10px;
 }
 
-#main form p {
+#main form p, #main form table {
   margin: 10px 0;
+  padding: 0 10px 10px 10px;
+  font-size: 1em;
 }
 
-#main form label {
-  display: block;
-  font-size: .75em;
-  color: #444;
+#main form table {
+  border-spacing: 0;
 }
 
-#main form label.check-box-label,
-#main form label.select-box-label {
-  display: inline;
-}
-
-#main form input[type=text],
-#main form input[type=password] {
-  width: 100%;
-  padding: 7px 30px 5px 10px;
-  background: #f5f5f5;
-  color: #222;
-  font-size: 12px;
-  line-height: 16px;
+#main form div.field-box p:last-child, 
+#main form div.field-box table:last-child, 
+#main form div.field-box.buttons table,
+#main form div.field-box.buttons p {
+  padding-bottom: 0;
   border: none;
-  border-bottom: 1px solid rgba(255, 255, 255, .3);
+}
+
+#main form textarea,
+#main form input[type=text],
+#main form input[type=password],
+#main div.header input[type=text] {
+  float: left;
+  height: 100%;
+  padding: 7px 10px 5px 10px;
+  background: #f0f0f0;
+  color: #000;
+  font-size: 12px;
+  line-height: 15px;
+  border: none;
   border-radius: 3px;
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .2);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .3);
   box-sizing: border-box;
   -moz-box-sizing: border-box;
 }
 
-#main form div.field-box.buttons input[type=submit] {
-  float: right;
+#main form textarea:focus,
+#main form input[type=text]:focus,
+#main form input[type=password]:focus,
+#main div.header input[type=text]:focus {
+  background: #f5f5f5;
+  color: #444;
 }
 
-#main form table {
-  font-size: 1em;
-  border-spacing: 0;
-  margin: 10px 0;
+#main form div.field-box.buttons * {
+  float: right;
 }
 
 #main form table td,
@@ -639,8 +703,274 @@ body.experts div.confirm-delete div:hover {
   padding: 0;
 }
 
-#main form table td input[type=text] {
+#main form label {
+  display: block;
+  color: #888;
+  font-size: .7em;
+  padding: 0 2px 4px 2px;
+  font-weight: bold;
+  text-shadow: 1px 1px 0 #EEE;
+}
 
+body.users div.form-wrapper div.row ul {
+  width: 48%;
+  box-sizing: border-box;
+}
+
+body.users div.form-wrapper div.row ul:first-child {
+  float: left;
+}
+
+body.users div.form-wrapper div.row ul:last-child {
+  float: right;
+}
+
+body.users div.form-wrapper div.row ul li {
+  float: left;
+  width: 100%;
+  padding-bottom: 10px;
+}
+
+body.users #main form label.check-box-label,
+body.users #main form label.select-box-label {
+  display: inline;
+}
+
+#main div.form-wrapper form input[type=submit] {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+body.users #main div.form-wrapper form input[type=submit] {
+  position: relative;
+  float: right;
+  margin: 0;
+}
+
+#main div.form-wrapper form textarea,
+#main div.form-wrapper form input[type=text],
+#main div.form-wrapper form input[type=password] {
+  margin: 0;
+  width: 100%;
+}
+
+#main div.form-wrapper div.row {
+  width: 100%;
+  float: left;
+  position: relative;
+  padding-bottom: 10px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #BBB;
+  box-shadow: 0 1px 0px #EFEFEF;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+#main div.form-wrapper div.row:last-child {
+  border-bottom: 0;
+  box-shadow: none;
+  margin-bottom: 0;
+}
+
+#main div.form-wrapper div.row > div {
+  float: left;
+  padding: 0 10px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+body.experts div.form-wrapper div.row > div:first-child {
+  padding-left: 0;
+}
+
+body.experts div.form-wrapper div.row > div:last-child {
+  padding-right: 0;
+}
+
+body.experts div.form-wrapper div.row.main {
+  padding-left: 550px;
+}
+body.experts div.form-wrapper div.gender,
+body.experts div.form-wrapper div.degree,
+body.experts div.form-wrapper div.prename {
+  position: absolute;
+}
+body.experts div.form-wrapper div.gender {
+  width: 80px;
+  left: 0;
+}
+body.experts div.form-wrapper div.degree {
+  width: 180px;
+  left: 90px;
+}
+body.experts div.form-wrapper div.prename {
+  width: 300px;
+  left: 260px;
+}
+body.experts div.form-wrapper div.name {
+  width: 100%;
+}
+
+body.experts div.form-wrapper div.row.birth {
+  padding-left: 550px;
+}
+body.experts div.form-wrapper div.citizenship,
+body.experts div.form-wrapper div.birthday {
+  position: absolute;
+}
+body.experts div.form-wrapper div.citizenship {
+  width: 300px;
+  left: 0;
+}
+body.experts div.form-wrapper div.birthday {
+  width: 235px;
+  left: 305px;
+}
+body.experts div.form-wrapper div.birthplace {
+  width: 100%;
+}
+
+body.experts div.form-wrapper div.row.languages {
+  width: 100%;
+}
+
+body.experts div.form-wrapper div.languages div {
+  float: left;
+  display: inline;
+}
+
+body.experts div.form-wrapper div.row.business {
+  padding-left: 550px;
+}
+
+body.experts div.form-wrapper div.company {
+  position: absolute;
+  left: 0;
+  width: 560px;
+}
+body.experts div.form-wrapper div.row > div.job {
+  position: absolute;
+  left: 0;
+  top: 61px;
+  width: 560px;
+  padding-left: 0;
+}
+body.experts div.form-wrapper div.former_collaboration label,
+body.experts div.form-wrapper div.former_collaboration input[type=checkbox] {
+  float: left;
+}
+
+body.experts div.form-wrapper div.former_collaboration,
+body.experts div.form-wrapper div.fee {
+  float: left;
+  width: 100%;
+}
+
+body.experts div.form-wrapper div.fee {
+  margin-top: 10px;
+}
+
+body.experts div.form-wrapper div.comment {
+  width: 560px;
+}
+
+body.experts #main form div.multi-lang span.more {
+  float: right;
+  position: relative;
+  cursor: pointer;
+  margin: 3px 10px 0 -5px;
+  padding: 0 10px;
+  font-size: .75em;
+  color: #d0d0d0;
+  text-shadow: 1px 1px 0px rgba(0, 0, 0, .5);
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, .1);
+  border-radius: 3px;
+  background: -moz-linear-gradient(top,  #515151 0%, #464646 100%);
+  background: -webkit-linear-gradient(top,  #515151 0%,#464646 100%);
+  background: -o-linear-gradient(top,  #515151 0%,#464646 100%);
+  background: -ms-linear-gradient(top,  #515151 0%,#464646 100%);
+  background: linear-gradient(to bottom,  #515151 0%,#464646 100%);
+}
+
+body.experts #main form div.multi-lang span.more:before {
+  content: ' ';
+  position: absolute;
+  top: 48%;
+  right: 100%;
+  border: solid transparent;
+  width: 0;
+  height: 0;
+  margin-top: -4px;
+  border-width: 4px;
+  border-right-color: #4f4f4f;
+}
+
+body.experts #main form div.multi-lang span.delete {
+  float: right;
+  position: relative;
+  cursor: pointer;
+  padding: 0 8px 2px 8px;
+  margin: 3px 10px 0 5px;
+  font-size: .7em;
+  color: #d0d0d0;
+  text-shadow: 1px 1px 0px rgba(0, 0, 0, .5);
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, .1);
+  border-radius: 3px;
+  background: -moz-linear-gradient(top,  #515151 0%, #464646 100%);
+  background: -webkit-linear-gradient(top,  #515151 0%,#464646 100%);
+  background: -o-linear-gradient(top,  #515151 0%,#464646 100%);
+  background: -ms-linear-gradient(top,  #515151 0%,#464646 100%);
+  background: linear-gradient(to bottom,  #515151 0%,#464646 100%);
+}
+
+body.experts #main form div.multi-lang span.delete:before {
+  content: ' ';
+  position: absolute;
+  top: 48%;
+  right: 100%;
+  border: solid transparent;
+  width: 0;
+  height: 0;
+  margin-top: -4px;
+  border-width: 4px;
+  border-right-color: #4f4f4f;
+}
+
+body.users #main div.form-wrapper div.row {
+  border-bottom: 0;
+  box-shadow: none;
+  margin-bottom: 0;
+}
+
+body.users #main li.privileges input[type="checkbox"] {
+  display: none;
+}
+
+body.users #main li.privileges input[type="checkbox"] + label {
+  float: right;
+  cursor: pointer;
+  display: block;
+  padding: 6px 10px 5px 30px;
+  margin-left: 10px;
+  background: transparent url(<%= asset_data_uri('icon_locked.png') %>) left center no-repeat;
+  border-radius: 3px;
+  border: 1px solid #bbb;
+}
+
+body.users #main li.privileges input[type="checkbox"]:checked + label {
+  color: #444;
+  text-shadow: none;
+  background: #f0f0f0 url(<%= asset_data_uri('icon_unlocked.png') %>) left center no-repeat;
+}
+
+
+body.users #main li.privileges input[type="checkbox"] + label:last-child {
+  float: left;
+  margin-left: 0;
 }
 
 /* Login */
@@ -743,7 +1073,7 @@ ul.pagination li {
 ul.pagination li > * {
   color: #999;
   border-radius: 2px 2px 0 0;
-  padding: 4px 6px;
+  padding: 5px 6px 3px 6px;
   background: #efefef;
   border-radius: 3px;
 }
@@ -751,14 +1081,14 @@ ul.pagination li > * {
 ul.pagination li.back > * {
   color: #666;
   margin-right: 10px;
-  padding-left: 19px;
+  padding-left: 14px;
   background: #efefef url(<%= asset_data_uri 'icon_back.png' %>) left center no-repeat;
 }
 
 ul.pagination li.next > * {
   color: #666;
   margin-left: 10px;
-  padding-right: 19px;
+  padding-right: 14px;
   background: #efefef url(<%= asset_data_uri 'icon_next.png' %>) right center no-repeat;
 }
 
