@@ -28,3 +28,6 @@
 
 # Public folders
 /public/*/*
+
+# Attachments
+/attachments

@@ -16,7 +16,7 @@ class Attachment < ActiveRecord::Base
   DIRNAME = Pathname.new('attachments')
 
   # Absolute path to the attachment store.
-  STORE = Rails.root.join('public', DIRNAME)
+  STORE = Rails.root.join(DIRNAME)
 
   # Inits a new Attachment from a file. The file is stored in the
   # attachment store and new Attachment is returned... or nil on
