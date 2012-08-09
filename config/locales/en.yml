@@ -9,6 +9,15 @@ en:
     next: 'Next'
     print: 'Print'
 
+  degree:
+    bachelor: 'Bachelor'
+    master: 'Master'
+    phd: 'Ph.D.'
+
+  gender:
+    female: 'Female'
+    male: 'Male'
+
   label:
     admin: 'Admin'
     advanced_search: 'Advanced Search'
@@ -23,12 +32,10 @@ en:
     edit_user: 'Edit User'
     email: 'Email'
     experts: 'Experts'
-    female: 'Female'
     filter: 'Filter'
-    male: 'Male'
     name: 'Name'
     new_expert: 'New Expert'
-    married: 'Married'
+    none: 'None'
     new_user: 'New User'
     partners: 'Partners'
     password: 'Password'
@@ -39,7 +46,6 @@ en:
     references: 'References'
     registered_on: 'Registered on'
     search: 'Search'
-    single: 'Single'
     updated_at: 'Updated at %{date}'
     username: 'Username'
     users: 'Users'
