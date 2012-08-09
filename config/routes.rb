@@ -16,7 +16,8 @@ Silo::Application.routes.draw do
   get 'experts(/page/:page)' => 'experts#index', as: :experts
 
   resources :experts, except: [:index] do
-    resources :cvs, only: [:show, :create, :destroy]
+    resources :cvs,         only: [:show, :create, :destroy]
+    resources :attachments, only: [:show, :create, :destroy], controller: 'attachments/experts'
 
     member do
       get :documents

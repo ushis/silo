@@ -2,7 +2,7 @@
 
 <div id="main">
   <%= render 'details_header' %>
-  <div>
+  <div class="cvs">
     <ul>
       <% @expert.cvs.each do |cv| %>
         <li>
@@ -12,7 +12,6 @@
         </li>
       <% end %>
     </ul>
-
     <%= form_for Cv.new, url: expert_cvs_path(@expert) do |f| %>
       <p>
         <%= f.label :file %>
@@ -21,6 +20,30 @@
       <p>
         <%= f.label :language_id %>
         <%= f.collection_select :language_id, languages, :id, :human %>
+      </p>
+      <p>
+        <%= f.submit %>
+      </p>
+    <% end %>
+  </div>
+  <div class="attachments">
+    <ul>
+      <% @expert.attachments.each do |attachment| %>
+        <li>
+          <%= link_to attachment.title, [@expert, attachment] %>
+          <%= l attachment.created_at, format: :long %>
+          <%= button_to 'x', [@expert, attachment], method: :delete %>
+        </li>
+      <% end %>
+    </ul>
+    <%= form_for Attachment.new, url: expert_attachments_path(@expert) do |f| %>
+      <p>
+        <%= f.label :file %>
+        <%= f.file_field :file %>
+      </p>
+      <p>
+        <%= f.label :title %>
+        <%= f.text_field :title %>
       </p>
       <p>
         <%= f.submit %>

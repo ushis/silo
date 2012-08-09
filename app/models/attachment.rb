@@ -25,7 +25,7 @@ class Attachment < ActiveRecord::Base
     attachment = Attachment.new
     attachment.store(file)
 
-    if title
+    if ! title.blank?
       attachment.title = title
     elsif file.is_a? ActionDispatch::Http::UploadedFile
       attachment.title = file.original_filename
@@ -37,6 +37,12 @@ class Attachment < ActiveRecord::Base
   rescue
     attachment.destroy
     nil
+  end
+
+  # An alias for Attachment.from_file. But it is taking a hash as argument.
+  # The hash should include a _file_ and a _title_ key.
+  def self.from_upload(params)
+    from_file(params[:file], params[:title])
   end
 
   # Returns the file extension of the stored file.
