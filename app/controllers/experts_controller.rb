@@ -24,6 +24,11 @@ class ExpertsController < ApplicationController
     @title = @expert.full_name_with_degree
   end
 
+  def contact
+    @expert = Expert.includes(:addresses, :contact).find(params[:id])
+    @title = @expert.full_name_with_degree
+  end
+
   def documents
     @expert = Expert.includes(:attachments, :cvs, :user).find(params[:id])
     @title = @expert.full_name_with_degree

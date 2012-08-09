@@ -1,0 +1,41 @@
+<%= render 'sidebar' %>
+
+<div id="main">
+  <%= render 'details_header' %>
+  <div class="addresses">
+    <h4>
+      <%= t('label.addresses') %>
+    </h4>
+  </div>
+  <div class="contacts">
+    <h4>
+      <%= t('label.contacts') %>
+    </h4>
+    <% Contact::FIELDS.each do |field| %>
+      <% unless (values = @expert.contact.send(field)).empty? %>
+        <h5>
+          <%= t(field.to_s.singularize, scope: :label) %>
+        </h5>
+        <ul>
+          <% values.each do |val| %>
+            <li>
+              <%= val %>
+              <%= delete_contact_button 'x', expert_contact_path(@expert.contact), field, val %>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+    <% end %>
+    <%= form_tag expert_contacts_path(@expert) do %>
+      <p>
+        <%= select_tag 'contact[field]', list_contact_fields %>
+      </p>
+      <p>
+        <%= text_field_tag 'contact[contact]' %>
+      </p>
+      <p>
+        <%= submit_tag t('action.add_contact') %>
+      </p>
+    <% end %>
+  </div>
+</div>
