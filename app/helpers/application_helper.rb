@@ -13,21 +13,39 @@ module ApplicationHelper
     end.html_safe
   end
 
+  #
   def languages
     @language_collection ||= Language.all
   end
 
+  #
   def language_select(lang)
     fields_for lang do |f|
       f.collection_select :id, languages, :id, :human, {}, name: 'languages[]'
     end.html_safe
   end
 
+  #
   def language_selects(langs)
     if langs.empty?
       language_select Language.first
     else
       langs.collect { |lang| language_select lang }.join('').html_safe
+    end
+  end
+
+  #
+  def list_contact_fields
+    Contact::FIELDS.collect do |f|
+      content_tag :option, t(f.to_s.singularize, scope: :label), value: f
+    end.join('').html_safe
+  end
+
+  def delete_contact_button(txt, url, field, contact)
+    form_tag url, method: :delete, class: 'button_to' do
+      [ hidden_field_tag('contact[field]', field),
+        hidden_field_tag('contact[contact]', contact),
+        submit_tag(txt, class: 'delete') ].join('').html_safe
     end
   end
 

@@ -20,6 +20,8 @@
 class Contact < ActiveRecord::Base
   serialize :contacts, JSON
 
+  before_save :remove_blanks
+
   belongs_to :contactable, polymorphic: true
 
   after_initialize :init_contacts
@@ -35,5 +37,12 @@ class Contact < ActiveRecord::Base
   # Initializes the contacts hash.
   def init_contacts
     self.contacts ||= {}
+  end
+
+  # Removes all blank values from the contact hash.
+  def remove_blanks
+    FIELDS.each do |f|
+      send(f).delete_if { |val| val.blank? }
+    end
   end
 end
