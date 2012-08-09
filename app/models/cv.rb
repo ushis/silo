@@ -21,11 +21,11 @@ class Cv < ActiveRecord::Base
     cv = Cv.new
 
     if (cv.attachment = Attachment.from_file(document)) && cv.load_document
-      cv
-    else
-      cv.destroy
-      nil
+      return cv
     end
+
+    cv.destroy
+    nil
   end
 
   # Adds a fulltext search condition to the database query.

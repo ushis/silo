@@ -12,7 +12,6 @@ require 'eu'
 # - *name* string
 # - *prename* string
 # - *gender* string
-# - *birthname* string
 # - *birthday* string
 # - *birthplace* string
 # - *citizenship* string
@@ -20,12 +19,12 @@ require 'eu'
 # - *former_collaboration* boolean
 # - *fee* string
 # - *company* string
+# - *job* string
 # - *created_at* datetime
 # - *updated_at* datetime
 class Expert < ActiveRecord::Base
-  attr_accessible(:name, :prename, :gender, :birthname, :birthday, :fee,
-                  :birthplace, :citizenship, :degree, :former_collaboration,
-                  :company)
+  attr_accessible(:name, :prename, :gender, :birthday, :fee, :birthplace,
+                  :citizenship, :degree, :former_collaboration, :company, :job)
 
   has_one    :contact,     autosave: true, dependent: :destroy, as: :contactable
   has_one    :comment,     autosave: true, dependent: :destroy, as: :commentable
@@ -37,7 +36,10 @@ class Expert < ActiveRecord::Base
   belongs_to :user
 
   # Set of vailable genders.
-  GENDERS = Set.new([:female, :male])
+  GENDERS = [:female, :male].to_set
+
+  # Set of available degrees.
+  DEGREES = [:bachelor, :master, :phd].to_set
 
   # Returns a valid gender symbol using the GENDERS list.
   #
@@ -48,6 +50,12 @@ class Expert < ActiveRecord::Base
   def self.gender(gender)
     g = gender.try(:to_sym)
     GENDERS.include?(g) ? g : GENDERS.first
+  end
+
+  # Returns a valid degree symbol or nil for invalid values.
+  def self.degree(degree)
+    d = degree.try(:to_sym)
+    DEGREES.include?(d) ? d : nil
   end
 
   # Initializes the contact on access, if not already initalized.
@@ -68,7 +76,17 @@ class Expert < ActiveRecord::Base
   # Sets the experts gender. If the given gender is invalid, a default value
   # is assigned.
   def gender=(gender)
-    super(Expert.gender(gender).to_s)
+    super(Expert.gender(gender))
+  end
+
+  # Returns the experts degree
+  def degree
+    Expert.degree(super)
+  end
+
+  # Sets the experts degree. If the given value is invalid, nil is assigned.
+  def degree=(degree)
+    super(Expert.degree(degree))
   end
 
   # Sets the experts languages. So we can do things like:

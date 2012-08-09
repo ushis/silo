@@ -37,6 +37,8 @@ namespace :experts do
       'Vietnam'                          => 'VN'
     }.inject({}) { |c, t| c[t[0]] = Carmen::Country.coded(t[1]); c }
 
+    degrees = { master: ['m'], phd: ['dr', 'prof', 'mag', 'dvm'] }
+
     File.open(args[:filename]) do |f|
       user = User.first
       experts = Hash.from_xml(f.read)['dataroot']['Adressen']
@@ -59,10 +61,14 @@ namespace :experts do
           e.gender = :female
         end
 
-        e.birthname = data['Geburtsname']
         e.birthday = data['Geburtsdatum'].try(:to_datetime) || nil
         e.birthplace = data['Geburtsort']
-        e.degree = data['Titel']
+        e.job = data['FirmaT']
+
+        if (d = data['Titel'])
+          d = d.strip.downcase.split(/\.| /).first
+          e.degree = degrees.find { |s, l| l.include?(d) }.try(:first)
+        end
 
         e.company = ['Firma1', 'Firma2'].collect do |f|
           data[f] || ''

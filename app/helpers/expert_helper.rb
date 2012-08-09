@@ -6,7 +6,14 @@ module ExpertHelper
   #   list_genders
   #   #=> [['Female', :female], ['Male', :male]]
   def list_genders
-    Expert::GENDERS.collect { |g| [t(g, scope: :label), g] }
+    Expert::GENDERS.collect { |g| [t(g, scope: :gender), g] }
+  end
+
+  # Returns all available degrees in a select box friendly format.
+  def list_degrees
+    Expert::DEGREES.collect do |d|
+      [t(d, scope: :degree), d]
+    end.unshift([t(:none, scope: :label), nil])
   end
 
   # Returns a string containing links to the CV downloads.
