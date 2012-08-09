@@ -21,4 +21,12 @@ module UserHelper
   def list_locales
     User::LOCALES.collect { |l| [t(l, scope: :language), l] }
   end
+
+  # Returns the user's fullname and its username in brackets.
+  def full_user_link(user)
+    link_to edit_user_path(user) do
+      ret = content_tag :strong, "#{user.prename} #{user.name}"
+      ret << " (#{user.username})"
+    end
+  end
 end

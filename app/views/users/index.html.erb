@@ -1,16 +1,13 @@
 <%= render 'sidebar' %>
 
 <div id="main">
-  <h2>
-    <%= @title %>
-  </h2>
   <table class="users">
     <tbody>
       <% @users.each do |user| %>
         <tr>
           <td>
             <p>
-              <strong><%= user.full_name %></strong> (<%= user.username%>)
+              <%= full_user_link(user) %>
             </p>
             <p>
               <%= mail_to user.email %>

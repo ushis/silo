@@ -61,25 +61,28 @@ do($ = jQuery) ->
   # Wraps adds a click away x the all elements.
   $.fn.siloClickAway = (options) ->
     settings = $.extend {
-      text: '⨯'
+      text: 'x'
+      class: 'delete'
     }, options
 
     @each ->
       $(@).wrap('<div>').parent().append ->
-        $('<span>').text(settings.text).click ->
+        $('<span>').addClass(settings.class).text(settings.text).click ->
           $(@).closest('div').remove()
+
 
   # Adds a click and clone + to an element.
   $.fn.siloClickAndClone = (options) ->
     settings = $.extend {
-      text: '+'
+      text: 'more'
       selector: 'div'
+      class: 'more'
     }, options
 
     @each ->
       do (el = $(@)) ->
         el.append ->
-          $('<span>').text(settings.text).click ->
+          $('<span>').addClass(settings.class).text(settings.text).click ->
             $(@).before ->
               el.find(settings.selector).last().clone(true)
 
