@@ -9,6 +9,7 @@ en:
     logout: 'Logout'
     next: 'Next'
     print: 'Print'
+    save: 'Save'
 
   degree:
     bachelor: 'Bachelor'

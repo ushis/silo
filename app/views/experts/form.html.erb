@@ -1,72 +1,89 @@
 <%= render 'sidebar' %>
 
 <div id="main">
-  <h2>
-    <%= @title %>
-  </h2>
-  <div class="form-wrapper">
-    <%= form_for @expert do |f| %>
-      <p>
-        <%= f.label :degree %>
-        <%= f.text_field :degree %>
-      </p>
-      <p>
-        <%= f.label :prename %>
-        <%= f.text_field :prename %>
-      </p>
-      <p>
-        <%= f.label :name %>
-        <%= f.text_field :name %>
-      </p>
-      <p>
-        <%= f.label :birthname %>
-        <%= f.text_field :birthname %>
-      </p>
-      <p>
-        <%= f.label :birthday %>
-        <%= f.date_select :birthday, start_year: 1901, end_year: Time.now.year %>
-      </p>
-      <p>
-        <%= f.label :birthplace %>
-        <%= f.text_field :birthplace %>
-      </p>
-      <p>
-        <%= f.label :gender %>
-        <%= f.select :gender, list_genders %>
-      </p>
-      <p>
-        <%= f.label :citizenship %>
-        <%= f.country_select :citizenship %>
-      </p>
-      <p class="multi-lang">
-        <%= f.label :languages %>
-        <%= language_selects @expert.languages %>
-      </p>
-      <p>
-        <%= f.label :former_collaboration %>
-        <%= f.check_box :former_collaboration %>
-      </p>
-      <p>
-        <%= f.label :fee %>
-        <%= f.text_field :fee %>
-      </p>
-      <p>
-        <%= f.label :company %>
-        <%= f.text_field :company %>
-      </p>
-      <%= f.fields_for @expert.comment do |fields| %>
-        <p>
-          <%= fields.label :comment %>
-          <%= fields.text_area :comment %>
-        </p>
+  <div>
+    <div class="form-wrapper">
+      <h2>
+        <%= @title %>
+      </h2>
+      <%= form_for @expert do |f| %>
+        <div class="row main">
+          <div class="gender">
+            <%= f.label :gender %>
+            <%= f.select :gender, list_genders %>
+          </div>
+          <div class="degree">
+            <%= f.label :degree %>
+            <%= f.text_field :degree %>
+          </div>
+          <div class="prename">
+            <%= f.label :prename %>
+            <%= f.text_field :prename %>
+          </div>
+          <div class="name">
+            <%= f.label :name %>
+            <%= f.text_field :name %>
+          </div>
+        </div>
+        <div class="row birth">
+          <div class="citizenship">
+            <%= f.label :citizenship %>
+            <%= f.country_select :citizenship %>
+          </div>
+          <div class="birthday">
+            <%= f.label :birthday %>
+            <%= f.date_select :birthday, start_year: 1901, end_year: Time.now.year %>
+          </div>
+          <div class="birthplace">
+            <%= f.label :birthplace %>
+            <%= f.text_field :birthplace %>
+          </div>
+        </div>
+        <div class="row lang">
+          <div class="languages">
+            <%= f.label :languages %>
+            <div class="multi-lang">
+              <%= language_selects @expert.languages %>
+            </div>
+          </div>
+        </div>
+        <div class="row business">
+          <div class="company">
+            <%= f.label :company %>
+            <%= f.text_field :company %>
+          </div>
+          <div class="job">
+            <%= label_tag :job %>
+            <%= text_field_tag :job, nil %>
+          </div>
+          <div class="former_collaboration">
+            <%= f.label :former_collaboration %>
+            <%= f.check_box :former_collaboration %>
+          </div>
+          <div class="fee">
+            <%= f.label :fee %>
+            <%= f.text_area :fee, rows: "3" %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="comment">
+            <%= f.fields_for @expert.comment do |fields| %>
+              <div>
+                <%= fields.label :comment %>
+                <%= fields.text_area :comment, rows: "5" %>
+              </div>
+            <% end %>
+          </div>
+          <div>
+            <%= f.submit t('action.save'), class: 'button' %>
+          </div>
+        </div>
       <% end %>
-      <p>
-        <%= f.submit %>
-      </p>
-    <% end %>
+    </div>
   </div>
+  <div class="clear"></div>
 </div>
 
 <script>
-  $('p.multi-lang select').siloClickAway().parent().parent().siloClickAndClone();
+  $('div.multi-lang select').siloClickAway().parent().parent().siloClickAndClone();
 </script>

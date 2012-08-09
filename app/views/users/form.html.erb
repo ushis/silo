@@ -1,82 +1,60 @@
 <%= render 'sidebar' %>
 
 <div id="main">
-  <h2>
-    <%= @title %>
-  </h2>
   <div class="form-wrapper">
+    <h2>
+      <%= @title %>
+    </h2>
     <%= form_for @user do |f| %>
-      <div class="field-box base left">
-        <p>
-          <%= f.label :username %>
-          <%= f.text_field :username %>
-        </p>
-        <p>
-          <%= f.label :email %>
-          <%= f.text_field :email %>
-        </p>
-        <table>
-          <tr>
-            <td>
-              <%= f.label :password %>
-            </td>
-            <td>
-               <%= f.label :password_confirmation %>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <%= f.password_field :password %>
-            </td>
-            <td>
-               <%= f.password_field :password_confirmation %>
-            </td>
-          </tr>
-        </table>
-      </div>
-      <div class="field-box more right">
-        <table>
-          <tr>
-            <td>
-              <%= f.label :prename %>
-            </td>
-            <td>
-               <%= f.label :name %>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <%= f.text_field :prename %>
-            </td>
-            <td>
-               <%= f.text_field :name %>
-            </td>
-          </tr>
-        </table>
-        <p>
-          <%= f.label :locale, class: 'select-box-label' %>
-          <%= f.select :locale, list_locales %>
-        </p>
-      </div>
-      <div class="field-box more right <%= ' disabled' if current_user?(@user) %>">
-        <%= fields_for @user.privilege do |p| %>
-          <p>
-            <%= f.label :privileges %>
-            <%= p.check_box :admin, disabled: current_user?(@user) %>
-            <%= p.label :admin, class: 'check-box-label' %>
-            <% Privilege::SECTIONS.each do |section| %>
-              <%= p.check_box section, disabled: current_user?(@user) %>
-              <%= p.label section, class: 'check-box-label' %>
+      <div class="row main">
+        <ul>
+          <li>
+            <%= f.label :username %>
+            <%= f.text_field :username %>
+          </li>
+          <li>
+            <%= f.label :email %>
+            <%= f.text_field :email %>
+          </li>
+          <li>
+            <%= f.label :password %>
+            <%= f.password_field :password %>
+          </li>
+          <li>
+            <%= f.label :password_confirmation %>
+            <%= f.password_field :password_confirmation %>
+          </li>
+        </ul>
+        <ul>
+          <li>
+            <%= f.label :prename %>
+            <%= f.text_field :prename %>
+          </li>
+          <li>
+            <%= f.label :name %>
+            <%= f.text_field :name %>
+          </li>
+          <li>
+            <%= f.label :locale %>
+            <%= f.select :locale, list_locales %>
+          </li>
+          <li class="privileges <%= ' disabled' if current_user?(@user) %>">
+            <%= fields_for @user.privilege do |p| %>
+              <%= f.label :privileges %>
+              <% Privilege::SECTIONS.each do |section| %>
+                <%= p.check_box section, disabled: current_user?(@user) %>
+                <%= p.label section, class: 'check-box-label' %>
+              <% end %>
+              <%= p.check_box :admin, disabled: current_user?(@user) %>
+              <%= p.label :admin, class: 'check-box-label' %>
             <% end %>
-          </p>
-        <% end %>
+          </li>
+        </ul>
       </div>
-      <div class="field-box buttons">
-        <p>
-          <%= f.submit %>
-        </p>
-        <br/>
-      </div>
+      
+      <%= f.submit %>
+
     <% end %>
   </div>
+  <div class="clear"></div>
 </div>
