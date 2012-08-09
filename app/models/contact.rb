@@ -25,7 +25,7 @@ class Contact < ActiveRecord::Base
   after_initialize :init_contacts
 
   # List of contact fields. See model description above for more info.
-  FIELDS = [:emails, :faxes, :phones, :skypes, :websites]
+  FIELDS = [:emails, :phones, :faxes, :skypes, :websites]
 
   # Defines an access method for each field in the FIELDS array.
   FIELDS.each do |method|

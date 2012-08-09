@@ -1,6 +1,8 @@
+require 'prawn'
+
 # The ExpertsController provides basic CRUD actions for the experts data.
 class ExpertsController < ApplicationController
-  before_filter :authorize, except: [:index, :show]
+  before_filter :authorize, except: [:index, :show, :documents, :report]
 
   #
   def authorize
@@ -25,6 +27,15 @@ class ExpertsController < ApplicationController
   def documents
     @expert = Expert.includes(:attachments, :cvs, :user).find(params[:id])
     @title = @expert.full_name_with_degree
+  end
+
+  #
+  def report
+    e = Expert.includes(:contact).find(params[:id])
+    send_data make_report(e),
+              filename: "report-#{e.full_name.parameterize}.pdf",
+              type: 'application/pdf',
+              disposition: 'inline'
   end
 
   # Servers a blank experts form
@@ -97,9 +108,32 @@ class ExpertsController < ApplicationController
   	redirect_to experts_url
   end
 
+  protected
+
   #
   def not_found
     flash[:alert] = t('msg.expert_not_found')
     redirect_to experts_url
+  end
+
+  #
+  def make_report(e)
+    data = [:gender, :degree].collect do |a|
+      [t(a, scope: :label), e.send(a) && t(e.send(a), scope: a)]
+    end
+
+    data += [:prename, :name, :birthplace].collect do |a|
+      [t(a, scope: :label), e.send(a)]
+    end
+
+    data << [t('label.birthday'), l(e.birthday, format: :short)]
+
+    data += Contact::FIELDS.collect do |f|
+      [t(f, scope: :label), e.contact.send(f).join(', ')]
+    end
+
+    Prawn::Document.new do |pdf|
+      pdf.table(data, cell_style: { borders: [] })
+    end.render
   end
 end
