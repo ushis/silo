@@ -40,8 +40,12 @@ class Cv < ActiveRecord::Base
   #   cv.public_filname
   #   #=> 'cv-arthur-hoffmann-en.doc'
   def public_filename
-    "cv #{expert.prename} #{expert.name} #{language.language}".parameterize +
-      attachment.try(:ext)
+    "cv #{expert.full_name} #{language.language}".parameterize + ext
+  end
+
+  # Returns the documents file extension.
+  def ext
+    attachment.try(:ext)
   end
 
   # Returns the absolute path to the stored cv document.
