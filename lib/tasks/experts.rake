@@ -8,34 +8,72 @@ namespace :experts do
     puts "Importing experts data from XML file: #{args[:filename]}"
 
     countries = {
+      'Aouth Africa'                     => 'ZA',
+      'Austrialia'                       => 'AU',
+      'Australia 3149'                   => 'AU',
+      'Australia 4350'                   => 'AU',
       'Bosnia And Herzegovina'           => 'BA',
       'Bolivia'                          => 'BO',
+      'Canada B0 J 2 C0'                 => 'CA',
+      'Canada J4 Z 1 G5'                 => 'CA',
+      'Colombia 8'                       => 'CO',
+      'Costa Rica C.A.'                  => 'CR',
       'CÔte D’Ivoire'                    => 'CI',
       'French'                           => 'FR',
+      'Guatemala 01010'                  => 'GT',
       'Guinea Bissau'                    => 'GW',
+      'India 400 058'                    => 'IN',
       'Iran'                             => 'IR',
+      'Kazakhstan, 480002'               => 'KZ',
+      'Kazakhstan 480090'                => 'KZ',
       'Kosovar Albanian'                 => 'AL',
       'Kosovo Albania'                   => 'AL',
       'Kosovo'                           => 'AL',
+      'Kosova'                           => 'AL',
+      'Lao Pdr'                          => 'LA',
+      'Laos'                             => 'LA',
       'Macedonia'                        => 'MK',
+      'Mocambique'                       => 'MZ',
       'Moldova'                          => 'MD',
+      'North Ireland'                    => 'IE',
       'Palestinian'                      => 'PS',
       'Papua Neuguinea'                  => 'PG',
       'Russia'                           => 'RU',
       'Saint Lucian'                     => 'LC',
       'Saint Vincent And The Grenadines' => 'VC',
+      'Scotland'                         => 'GB',
       'Sebien'                           => 'RS',
       'Serbien'                          => 'RS',
       'Simbabwe'                         => 'ZW',
+      'Spain, Canary Isles'              => 'ES',
       'St. Kitts & Nevis'                => 'KN',
       'Syria'                            => 'SY',
       'Tanzania'                         => 'TZ',
       'The Gambia'                       => 'GM',
       'Trinidad And Tobago'              => 'TT',
       'Trinidad & Tobago'                => 'TT',
+      'Tunisie'                          => 'TN',
+      'U.P. India'                       => 'IN',
+      'Usa 07450'                        => 'US',
       'Venezuela'                        => 'VE',
       'Vietnam'                          => 'VN'
     }.inject({}) { |c, t| c[t[0]] = Carmen::Country.coded(t[1]); c }
+
+    country_from_s = lambda do |s|
+      c = s.split('/')[0].gsub(/!|\?/, '').strip.titleize
+
+      unless (co = countries[c]) || (co = Carmen::Country.named(c))
+        puts "Country Code for: \"#{c}\""
+
+        begin
+          code = STDIN.gets.chomp
+        end while ! (co = Carmen::Country.coded(code))
+
+        countries[c] = co
+      end
+
+      co
+    end
 
     degrees = { master: ['m'], phd: ['dr', 'prof', 'mag', 'dvm'] }
 
@@ -74,20 +112,9 @@ namespace :experts do
           data[f] || ''
         end.join(' ')
 
+        # Citizenship
         if (c = data['Staatsb'])
-          c = c.split('/')[0].gsub(/!|\?/, '').strip.titleize
-
-          unless (co = countries[c]) || (co = Carmen::Country.named(c))
-            puts "Country Code for: \"#{c}\""
-
-            begin
-              code = STDIN.gets.chomp
-            end while ! (co = Carmen::Country.coded(code))
-
-            countries[c] = co
-          end
-
-          e.citizenship = co.code
+          e.citizenship = country_from_s.call(c).code
         end
 
         # Contact data
@@ -108,11 +135,21 @@ namespace :experts do
         end
 
         # First address
-        if (st = data['Stra']) || (ci = data['Wohnort']) || (co = data['Land'])
-          address = { street: st || '', city: ci || '', country: co }
-          e.addresses << Address.new(address)
+        address_keys = ['Stra', 'Wohnort', 'Land']
+
+        if address_keys.any? { |v| ! data[v].blank? }
+          address = Address.new
+          address.street = data['Stra'].to_s
+          address.city = data['Wohnort'].to_s
+
+          if (c = data['Land'])
+            address.country = country_from_s.call(c).code
+          end
+
+          e.addresses << address
         end
 
+        # Yay!
         unless e.save
           puts "Could not save dataset of #{data['Vorname1']} #{data['Name']}."
           err += 1

@@ -2,7 +2,8 @@
 class LoginController < ApplicationController
   layout 'login'
 
-  skip_before_filter :authenticate, except: [:logout]
+  skip_before_filter :authenticate, only: [:welcome, :login]
+  skip_before_filter :authorize,    only: [:welcome, :login, :logout]
 
   before_filter :forward, except: [:logout]
 

@@ -2,14 +2,11 @@ require 'prawn'
 
 # The ExpertsController provides basic CRUD actions for the experts data.
 class ExpertsController < ApplicationController
-  before_filter :authorize, except: [:index, :show, :documents, :report]
+  skip_before_filter :authorize, only: [:index, :show, :contact, :documents, :report]
 
-  #
+  # Checks if the user has access to the experts section.
   def authorize
-    unless current_user.access?(:experts)
-      flash[:alert] = t('msg.access_denied')
-      redirect_to experts_url
-    end
+    super(:experts, experts_url)
   end
 
   # Serves a paginated table of all experts.
@@ -18,23 +15,25 @@ class ExpertsController < ApplicationController
     @title = t('label.experts')
   end
 
-  #
+  # Serves the experts details page.
   def show
     @expert = Expert.includes(:user).find(params[:id])
     @title = @expert.full_name_with_degree
   end
 
+  # Serves an addresses and contacts page.
   def contact
     @expert = Expert.includes(:addresses, :contact).find(params[:id])
     @title = @expert.full_name_with_degree
   end
 
+  # Serves the experts documents page.
   def documents
     @expert = Expert.includes(:attachments, :cvs, :user).find(params[:id])
     @title = @expert.full_name_with_degree
   end
 
-  #
+  # Sends a generated pdf including the experts deatils.
   def report
     e = Expert.includes(:contact).find(params[:id])
     send_data make_report(e),
@@ -100,28 +99,28 @@ class ExpertsController < ApplicationController
     render :form
   end
 
-  #
+  # Deletes the expert and redirects to the experts index page.
   def destroy
     expert = Expert.find(params[:id])
 
     if expert.destroy
       flash[:notice] = t('msg.deleted_expert', expert: expert.name)
+  	  redirect_to experts_url
     else
       flash[:alert] = t('msg.could_not_delete_expert')
+      redirect_to expert_url(expert)
     end
-
-  	redirect_to experts_url
   end
 
   protected
 
-  #
+  # Sets a not found flash and redirects to the experts index page.
   def not_found
     flash[:alert] = t('msg.expert_not_found')
     redirect_to experts_url
   end
 
-  #
+  # Generates a pdf including the experts details.
   def make_report(e)
     data = [:gender, :degree].collect do |a|
       [t(a, scope: :label), e.send(a) && t(e.send(a), scope: a)]

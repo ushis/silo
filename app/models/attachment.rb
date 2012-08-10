@@ -1,7 +1,19 @@
 require 'pathname'
 require 'securerandom'
 
-# The Attachment model.
+# The Attachment model provides the ability to store uploaded files on
+# the file system. It can be connected to any arbitrary model through the
+# polymorphic _attachable_ association.
+#
+# Database scheme:
+#
+# - *id* integer
+# - *attachable_id* integer
+# - *attachable_type* string
+# - *filename* string
+# - *title* string
+# - *created_at* datetime
+# - *updated_at* datetime
 class Attachment < ActiveRecord::Base
   attr_accessible :title
 

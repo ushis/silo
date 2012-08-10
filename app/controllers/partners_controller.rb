@@ -1,14 +1,10 @@
 #
 class PartnersController < ApplicationController
-
-  before_filter :authorize, except: [:index, :show]
+  skip_before_filter :authorize, only: [:index, :show]
 
   #
   def authorize
-    unless current_user.access?(:partners)
-      flash[:alert] = t('msg.access_denied')
-      redirect_to partners_url
-    end
+    super(:partners, partners_url)
   end
 
   #

@@ -8,9 +8,9 @@ module UserHelper
   #   list_privileges(user)
   #   #=> '<span>experts</span><span class="checked">partners</span>'
   def list_privileges(user)
-    user.privileges.inject('') do |ret, item|
+    user.privileges.inject('') do |html, item|
       klass = 'checked' if item[1]
-      ret << content_tag(:span, t(item[0], scope: :label), class: klass)
+      html << content_tag(:span, t(item[0], scope: :label), class: klass)
     end.html_safe
   end
 
@@ -25,8 +25,8 @@ module UserHelper
   # Returns the user's fullname and its username in brackets.
   def full_user_link(user)
     link_to edit_user_path(user) do
-      ret = content_tag :strong, "#{user.prename} #{user.name}"
-      ret << " (#{user.username})"
+      html = content_tag :strong, "#{user.prename} #{user.name}"
+      html << " (#{user.username})"
     end
   end
 end

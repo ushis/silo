@@ -1,6 +1,15 @@
 require 'yomu'
 
-# The Cv model.
+# The Cv model provides the ability to add cvs to the Expert model. The
+# uploaded Cv is stored on the file system and its content is loaded into
+# the database (using the yomu gem) to allow fast fulltext search.
+#
+# Database scheme:
+#
+# - *id* intger
+# - *expert_id* integer
+# - *language_id* integer
+# - *cv* text
 class Cv < ActiveRecord::Base
   has_one    :attachment, autosave: true, dependent: :destroy, as: :attachable
   belongs_to :expert
@@ -40,8 +49,12 @@ class Cv < ActiveRecord::Base
   #   cv.public_filname
   #   #=> 'cv-arthur-hoffmann-en.doc'
   def public_filename
-    "cv #{expert.prename} #{expert.name} #{language.language}".parameterize +
-      attachment.try(:ext)
+    "cv #{expert.full_name} #{language.language}".parameterize + ext
+  end
+
+  # Returns the documents file extension.
+  def ext
+    attachment.try(:ext)
   end
 
   # Returns the absolute path to the stored cv document.

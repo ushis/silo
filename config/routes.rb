@@ -19,6 +19,7 @@ Silo::Application.routes.draw do
     resources :cvs,         only: [:show, :create, :destroy]
     resources :attachments, only: [:show, :create, :destroy], controller: 'attachments/experts'
     resources :contacts,    only: [:create, :destroy],        controller: 'contacts/experts'
+    resources :addresses,   only: [:create, :destroy],        controller: 'addresses/experts'
 
     member do
       get :documents
