@@ -2,7 +2,7 @@
 #
 # Use it like this:
 #
-#   class Bernd < ActiveRecord::Migration
+#   class Bernd < ActiveRecord::Base
 #     has_many :langs,     as: langable
 #     has_many :languages, through: :langs
 #   end
