@@ -1,17 +1,20 @@
-#
+# The CvsController provides actions to upload/download and destroy Cvs.
 class CvsController < ApplicationController
   skip_before_filter :authorize, only: [:show]
 
+  # Checks, if the user has access to the experts section.
   def authorize
     super(:experts, expert_url(params[:expert_id]))
   end
 
-  #
+  # Sends the stored Cv document.
   def show
     cv = Cv.includes(:expert).find(params[:id])
     send_file cv.absolute_path, filename: cv.public_filename
   end
 
+  # Creates a new Cv by storing an uploaded file and loading it's content into the
+  # database.
   def create
     begin
       expert = Expert.find(params[:expert_id])
@@ -40,6 +43,7 @@ class CvsController < ApplicationController
     redirect_to documents_expert_url(expert)
   end
 
+  # Destroys a Cv.
   def destroy
     cv = Cv.find(params[:id])
 
@@ -55,6 +59,6 @@ class CvsController < ApplicationController
   # Sets an alert flash and redirect to the experts detail page.
   def not_found
     flash[:alert] = t('msg.cv_not_found')
-    redirect_to expert_url(params[:expert_id])
+    redirect_to documents_expert_url(params[:expert_id])
   end
 end

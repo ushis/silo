@@ -2,7 +2,7 @@
 # data. It uses the polymorphic association _contactable_ and stores the
 # data serialized as JSON.
 #
-# Every field described in the _FIELDS_ list is accessible through
+# Every field described in the FIELDS list is accessible through
 # a method with the same name and returns a list.
 #
 # Example:
@@ -17,6 +17,13 @@
 #   user.contact.emails << 'mail@server.net'
 #   #=> ['mail@example.com', 'mail@server.net']
 #   user.save
+#
+# Database scheme:
+#
+# - *id* integer
+# - *contactable_id* integer
+# - *contactable_type* string
+# - *contact* text
 class Contact < ActiveRecord::Base
   serialize :contacts, JSON
 

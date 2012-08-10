@@ -1,5 +1,6 @@
+# The Privilege model is used to hold User permissions.
 #
-# *Scheme*
+# Database Scheme:
 #
 # - *user_id* integer
 # - *amdin* boolean
@@ -7,6 +8,7 @@
 # - *partners* boolean
 # - *references* boolean
 #
+# This is not very fancy.
 class Privilege < ActiveRecord::Base
   belongs_to :user
 
@@ -24,7 +26,7 @@ class Privilege < ActiveRecord::Base
     if admin
       { admin: true }
     else
-      SECTIONS.inject({}) { |p, section| p[section] = send(section); p }
+      Hash[SECTIONS.collect { |s| [s, send(s)] }]
     end
   end
 end

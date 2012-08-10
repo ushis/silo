@@ -1,6 +1,7 @@
 require 'carmen'
 
-# The Address model
+# The Address model provides the ability to store addresses and connect
+# the to other models through the polymorphic association _addressable_.
 #
 # Database scheme:
 #
