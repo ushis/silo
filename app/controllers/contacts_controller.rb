@@ -9,12 +9,14 @@ class ContactsController < ApplicationController
     end
   end
 
+  protected
+
   def add_to(model, url)
     c = params[:contact]
 
     raise 'I am not going to save blank contacts!' if c[:contact].blank?
 
-    model.contact.send(c[:field]) << c[:contact]
+    model.contact.send(c[:field]) << c[:contact].strip
 
     if model.contact.save
       flash[:notice] = t('msg.saved_contact')
