@@ -4,7 +4,7 @@
   </h2>
   <h3>
     <%= t 'label.updated_at', date: l(@expert.updated_at, format: :short) %>
-    <%= t 'label.by', name: @expert.user.full_name %>
+    <%= t 'label.by', name: @expert.user.try(:full_name) %>
   </h3>
   <ul class="tabs">
     <li>
