@@ -14,7 +14,7 @@
           </div>
           <div class="degree">
             <%= f.label :degree %>
-            <%= f.text_field :degree %>
+            <%= f.select :degree, list_degrees %>
           </div>
           <div class="prename">
             <%= f.label :prename %>
@@ -62,7 +62,7 @@
           </div>
           <div class="fee">
             <%= f.label :fee %>
-            <%= f.text_area :fee, rows: "3" %>
+            <%= f.text_field :fee %>
           </div>
         </div>
         <div class="row">
