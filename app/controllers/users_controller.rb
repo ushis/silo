@@ -40,10 +40,9 @@ class UsersController < ApplicationController
     @title = t('label.all_users')
   end
 
-  # Servers a blank user form.
+  # Serves a blank user form.
   def new
     @user = User.new
-    @user.privilege = Privilege.new
     @title = t('label.new_user')
     render :form
   end
@@ -51,18 +50,19 @@ class UsersController < ApplicationController
   # Creates a new user and redirects to the new users edit page.
   def create
     username = params[:user].delete(:username)
+
     @user = User.new(params[:user])
     @user.username = username
     @user.privileges = params[:privilege]
 
     if @user.save
       flash[:notice] = t('msg.created_user', user: @user.username)
-      redirect_to edit_user_url(@user)
-    else
-      @title = t('label.new_user')
-      flash.now[:alert] = t('msg.could_not_create_user')
-      render :form
+      redirect_to users_url and return
     end
+
+    @title = t('label.new_user')
+    flash.now[:alert] = t('msg.could_not_create_user')
+    render :form
   end
 
   # Serves an edit form, populated with the users data.
@@ -87,12 +87,11 @@ class UsersController < ApplicationController
     end
 
     if @user.save
-      I18n.locale = @user.locale if @user == current_user
-      flash.now[:notice] = t('msg.saved_changes')
-    else
-      flash.now[:alert] = t('msg.could_not_save_changes')
+      flash[:notice] = t('msg.saved_changes')
+      redirect_to users_url and return
     end
 
+    flash.now[:alert] = t('msg.could_not_save_changes')
     @title = t('label.edit_user')
     render :form
   end

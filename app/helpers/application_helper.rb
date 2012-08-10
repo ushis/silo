@@ -8,8 +8,8 @@ module ApplicationHelper
   #   flash_all
   #   #=> '<div class="flash alert">Something happend!</div>'
   def flash_all
-    flash.inject('') do |ret, item|
-      ret << content_tag(:div, item[1], class: "flash #{item[0].to_s}")
+    flash.inject('') do |html, item|
+      html << content_tag(:div, item[1], class: "flash #{item[0].to_s}")
     end.html_safe
   end
 
@@ -46,9 +46,10 @@ module ApplicationHelper
   #   delete_contact_button('x', contact_url(contact), :emails, 'alf@aol.com')
   def delete_contact_button(txt, url, field, contact)
     form_tag url, method: :delete, class: 'button_to' do
-      [ hidden_field_tag('contact[field]', field),
-        hidden_field_tag('contact[contact]', contact),
-        submit_tag(txt, class: 'delete') ].join('').html_safe
+      html = hidden_field_tag('contact[field]', field),
+      html << hidden_field_tag('contact[contact]', contact),
+      html << submit_tag(txt, class: 'delete')
+      html.html_safe
     end
   end
 
@@ -58,7 +59,8 @@ module ApplicationHelper
   #   #=> '<ul><li><span>1</span></li><li><a>2</a></li></ul>'
   def paginate(collection)
     if collection
-      will_paginate collection, outer_window: 0, inner_window: 2, renderer: SiloPageLinks::Renderer
+      will_paginate(collection, { outer_window: 0, inner_window: 2,
+                                  renderer: SiloPageLinks::Renderer } )
     end
   end
 end

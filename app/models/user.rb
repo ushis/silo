@@ -32,7 +32,7 @@ class User < ActiveRecord::Base
   has_secure_password
 
   validates :password,   presence: true,  on: :create
-  validates :username,   presence: true,  uniqueness: true
+  validates :username,   presence: true,  uniqueness: true, format: /\A[a-z0-9]+\z/
   validates :email,      presence: true,  uniqueness: true
   validates :login_hash, allow_nil: true, uniqueness: true
   validates :name,       presence: true
@@ -115,11 +115,10 @@ class User < ActiveRecord::Base
   #
   # If the _admin_ is set to true, all sections will be set to true.
   def privileges=(privileges)
-    self.privilege ||= Privilege.new
     self.privilege.admin = privileges[:admin]
 
     Privilege::SECTIONS.each do |section|
-      self.privilege.send("#{section}=".to_s, admin? || privileges[section])
+      self.privilege.send("#{section}=", admin? || privileges[section])
     end
   end
 
