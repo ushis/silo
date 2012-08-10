@@ -1,13 +1,5 @@
 #
 class ContactsController < ApplicationController
-  before_filter :authorize
-
-  def authorize
-    unless current_user.admin?
-      t('msg.access_denied')
-      redirect_to root_url
-    end
-  end
 
   protected
 

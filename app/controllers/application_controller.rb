@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   before_filter :authenticate
+  before_filter :authorize
   before_filter :set_locale
   before_filter :body_class
 
@@ -36,6 +37,15 @@ class ApplicationController < ActionController::Base
   # Sets the users preffered locale.
   def set_locale
     I18n.locale = current_user.locale if current_user
+  end
+
+  # Authorizes the user (or not) to complete a request. If the the user has not the
+  # corresponding permissions, a flash message is set and the user is redirected.
+  def authorize(section = nil, url = root_url)
+    unless (section ? current_user.access?(section) : current_user.admin?)
+      flash[:alert] = t('msg.access_denied')
+      redirect_to url
+    end
   end
 
   # Redirects the user to the login, unless he/she is already logged in.

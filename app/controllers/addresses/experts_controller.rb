@@ -2,10 +2,7 @@
 class Addresses::ExpertsController < AddressesController
 
   def authorize
-    unless current_user.admin?
-      flash[:alert] = t('msg.access_denied')
-      redirect_to experts_url
-    end
+    super(:experts, experts_url)
   end
 
   def create

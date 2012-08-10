@@ -1,5 +1,5 @@
 class AttachmentsController < ApplicationController
-  before_filter :authorize, except: [:show]
+  skip_before_filter :authorize, only: [:show]
 
   def show
     a = Attachment.find(params[:id])

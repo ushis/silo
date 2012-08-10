@@ -1,14 +1,10 @@
 #
 class ReferencesController < ApplicationController
-
-  before_filter :authorize, except: [:index, :show]
+  skip_before_filter :authorize, only: [:index, :show]
 
   #
   def authorize
-    unless current_user.access?(:references)
-      flash[:alert] = t('msg.access_denied')
-      redirect_to references_url
-    end
+    super(:references, references_url)
   end
 
   #

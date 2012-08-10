@@ -1,13 +1,5 @@
 #
 class AddressesController < ApplicationController
-  before_filter :authorize
-
-  def authorize
-    if current_user.admin?
-      flash[:alert] = t('msg.access_denied')
-      redirect_to root_url
-    end
-  end
 
   protected
 

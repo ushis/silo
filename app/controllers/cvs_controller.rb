@@ -1,13 +1,9 @@
 #
 class CvsController < ApplicationController
-  before_filter :authorize, except: [:show]
+  skip_before_filter :authorize, only: [:show]
 
-  #
   def authorize
-    unless current_user.access?(:experts)
-      flash[:alert] = t('msg.access_denied')
-      redirect_to expert_url(params[:expert_id])
-    end
+    super(:experts, expert_url(params[:expert_id]))
   end
 
   #

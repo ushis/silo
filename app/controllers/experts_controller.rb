@@ -2,14 +2,11 @@ require 'prawn'
 
 # The ExpertsController provides basic CRUD actions for the experts data.
 class ExpertsController < ApplicationController
-  before_filter :authorize, except: [:index, :show, :documents, :report]
+  skip_before_filter :authorize, only: [:index, :show, :contact, :documents, :report]
 
   #
   def authorize
-    unless current_user.access?(:experts)
-      flash[:alert] = t('msg.access_denied')
-      redirect_to experts_url
-    end
+    super(:experts, experts_url)
   end
 
   # Serves a paginated table of all experts.

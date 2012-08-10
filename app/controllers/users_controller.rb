@@ -2,22 +2,11 @@
 # accessibles as admin only. Exceptions are the methods _profile_ and
 # _update_profile_.
 class UsersController < ApplicationController
-  before_filter :authorize, except: [:profile, :update_profile]
-
-  # Checks the user for admin privileges and redirects to the root url,
-  # if he/she is no admin.
-  def authorize
-    unless current_user.admin?
-      flash[:alert] = t('msg.access_denied')
-      redirect_to root_url
-    end
-  end
+  skip_before_filter :authorize, only: [:profile, :update_profile]
 
   # Serves the users profile. Admins are redirected to their edit page.
   def profile
-    if current_user.admin?
-      redirect_to edit_user_url(current_user)
-    end
+    redirect_to edit_user_url(current_user) if current_user.admin?
 
     @user = current_user
     @title = t('label.profile')
