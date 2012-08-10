@@ -2,52 +2,66 @@
 
 <div id="main">
   <%= render 'details_header' %>
-  <div class="cvs">
-    <ul>
+  <div class="documents">
+
+    <div class="cvs">
       <% @expert.cvs.each do |cv| %>
-        <li>
+        <div class="file">
           <%= link_to cv.language.human, [@expert, cv] %>
-          <%= l cv.created_at, format: :long %>
           <%= button_to 'x', [@expert, cv], method: :delete %>
-        </li>
+          <p>
+            <%= l cv.created_at, format: :long %>
+          </p>
+        </div>
       <% end %>
-    </ul>
-    <%= form_for Cv.new, url: expert_cvs_path(@expert) do |f| %>
-      <p>
-        <%= f.label :file %>
-        <%= f.file_field :file %>
-      </p>
-      <p>
-        <%= f.label :language_id %>
-        <%= f.collection_select :language_id, languages, :id, :human %>
-      </p>
-      <p>
-        <%= f.submit %>
-      </p>
-    <% end %>
-  </div>
-  <div class="attachments">
-    <ul>
+    </div>
+    <div class="attachments">
       <% @expert.attachments.each do |attachment| %>
-        <li>
+        <div class="file">
           <%= link_to attachment.title, [@expert, attachment] %>
-          <%= l attachment.created_at, format: :long %>
           <%= button_to 'x', [@expert, attachment], method: :delete %>
-        </li>
+          <p>
+            <%= l attachment.created_at, format: :long %>
+          </p>
+        </div>
       <% end %>
-    </ul>
-    <%= form_for Attachment.new, url: expert_attachments_path(@expert) do |f| %>
-      <p>
-        <%= f.label :file %>
-        <%= f.file_field :file %>
-      </p>
-      <p>
-        <%= f.label :title %>
-        <%= f.text_field :title %>
-      </p>
-      <p>
+    </div>
+
+    <div class="form-wrapper cvs-form">
+      <h3>
+        Add a CV
+      </h3>
+      <%= form_for Cv.new, url: expert_cvs_path(@expert) do |f| %>
+        <div>
+          <%= f.label :file %>
+          <%= f.file_field :file %>
+        </div>
+        <div>
+          <%= f.label :language_id %>
+          <%= f.collection_select :language_id, languages, :id, :human %>
+        </div>
         <%= f.submit %>
-      </p>
-    <% end %>
+      <% end %>
+    </div>
+    <div class="form-wrapper attachments-form">
+      <h3>
+        Add an Attachment
+      </h3>
+      <%= form_for Attachment.new, url: expert_attachments_path(@expert) do |f| %>
+        <div>
+          <%= f.label :file %>
+          <%= f.file_field :file %>
+        </div>
+        <div>
+          <%= f.label :title %>
+          <%= f.text_field :title %>
+        </div>
+        <%= f.submit %>
+      <% end %>
+    </div>
+
   </div>
+
+
+  <div class="clear"></div>
 </div>
