@@ -425,7 +425,7 @@ body.users #main table td.icons ul li:last-child {
 }
 
 body.experts.show #main div.header,
-body.experts.contacts #main div.header,
+body.experts.contact #main div.header,
 body.experts.documents #main div.header {
   min-height: 80px;
 }
@@ -438,10 +438,10 @@ body.experts.show #main div.header ul.tabs li:first-child a {
   text-shadow: none;
 }
 
-body.experts.contacts #main div.header ul.tabs li:nth-child(2) {
+body.experts.contact #main div.header ul.tabs li:nth-child(2) {
   background: #f9f9f9;
 }
-body.experts.contacts #main div.header ul.tabs li:nth-child(2) a {
+body.experts.contact #main div.header ul.tabs li:nth-child(2) a {
   color: #3b3b3b;
   text-shadow: none;
 }
@@ -760,7 +760,6 @@ body.users #main div.form-wrapper form input[type=submit] {
   float: left;
   position: relative;
   padding-bottom: 10px;
-  border-radius: 4px;
   margin-bottom: 10px;
   border-bottom: 1px solid #BBB;
   box-shadow: 0 1px 0px #EFEFEF;
@@ -781,11 +780,11 @@ body.users #main div.form-wrapper form input[type=submit] {
   -moz-box-sizing: border-box;
 }
 
-body.experts div.form-wrapper div.row > div:first-child {
+#main div.form-wrapper div.row > div:first-child {
   padding-left: 0;
 }
 
-body.experts div.form-wrapper div.row > div:last-child {
+#main div.form-wrapper div.row > div:last-child {
   padding-right: 0;
 }
 
@@ -806,8 +805,8 @@ body.experts div.form-wrapper div.degree {
   left: 90px;
 }
 body.experts div.form-wrapper div.prename {
-  width: 300px;
-  left: 260px;
+  width: 360px;
+  left: 200px;
 }
 body.experts div.form-wrapper div.name {
   width: 100%;
@@ -850,10 +849,10 @@ body.experts div.form-wrapper div.company {
   left: 0;
   width: 560px;
 }
-body.experts div.form-wrapper div.row > div.job {
+body.experts #main div.form-wrapper div.row > div.job {
   position: absolute;
   left: 0;
-  top: 61px;
+  top: 55px;
   width: 560px;
   padding-left: 0;
 }
@@ -862,14 +861,22 @@ body.experts div.form-wrapper div.former_collaboration input[type=checkbox] {
   float: left;
 }
 
+body.experts div.form-wrapper div.former_collaboration input[type=checkbox] {
+  margin-left: 10px;
+}
+
 body.experts div.form-wrapper div.former_collaboration,
 body.experts div.form-wrapper div.fee {
   float: left;
   width: 100%;
 }
 
+body.experts div.form-wrapper div.former_collaboration {
+  margin-top: 27px;
+}
+
 body.experts div.form-wrapper div.fee {
-  margin-top: 10px;
+  margin-top: 7px;
 }
 
 body.experts div.form-wrapper div.comment {
