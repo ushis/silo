@@ -46,8 +46,8 @@ module ApplicationHelper
   #   delete_contact_button('x', contact_url(contact), :emails, 'alf@aol.com')
   def delete_contact_button(txt, url, field, contact)
     form_tag url, method: :delete, class: 'button_to' do
-      html = hidden_field_tag('contact[field]', field),
-      html << hidden_field_tag('contact[contact]', contact),
+      html = hidden_field_tag('contact[field]', field)
+      html << hidden_field_tag('contact[contact]', contact)
       html << submit_tag(txt, class: 'delete')
       html.html_safe
     end
