@@ -1,4 +1,4 @@
-<div id="experts_header" class="header">
+<div class="header">
   <h2>
     <%= @expert.full_name_with_degree %>
   </h2>
@@ -6,6 +6,14 @@
     <%= t 'label.updated_at', date: l(@expert.updated_at, format: :short) %>
     <%= t 'label.by', name: @expert.user.try(:full_name) %>
   </h3>
+  <ul class="tools">
+    <li>
+      <%= link_to t('action.print'), report_expert_path(@expert), class: "print" %>
+    </li>
+    <li>
+      <%= link_to t('action.edit'), edit_expert_path(@expert), class: "edit" %>
+    </li>
+  </ul>
   <ul class="tabs">
     <li>
       <%= link_to t('label.personal'), expert_path(@expert) %>
