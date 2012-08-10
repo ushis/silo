@@ -53,7 +53,7 @@
               <%= link_to expert.prename, expert_path(expert) %>
             </td>
             <td>
-              <%= expert.degree %>
+              <%= expert.degree && t(expert.degree, scope: :degree) %>
             </td>
             <td>
               <%= expert.age %>
