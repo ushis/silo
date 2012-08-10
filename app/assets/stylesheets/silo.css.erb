@@ -271,8 +271,21 @@ body.index #main {
   padding: 10px 0 0 10px;
 }
 
-body.experts.new #main div.form-wrapper h2,
-body.users.new #main div.form-wrapper h2 {
+body.experts.edit #main h2,
+body.users.edit #main h2 {
+  padding: 0 0 20px 32px;
+}
+
+body.experts.edit #main h2 {
+  background: transparent url(<%= asset_data_uri('icon_expert_edit.png') %>) left 7px no-repeat;
+}
+
+body.users.edit #main h2 {
+  background: transparent url(<%= asset_data_uri('icon_user_edit.png') %>) left 7px no-repeat;
+}
+
+body.experts.new #main h2,
+body.users.new #main h2 {
   display: none;
 }
 
@@ -283,6 +296,35 @@ body.users.new #main div.form-wrapper h2 {
   line-height: 1em;
   text-shadow: 1px 1px 0px #efefef;
   margin-bottom: 10px;
+}
+
+#main div.header ul.tools {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  font-size: .8em;
+  color: #666;
+}
+
+#main div.header ul.tools li {
+  float: left;
+  margin-left: 15px;
+}
+
+#main div.header ul.tools li a {
+  float: left;
+  padding: 2px 0 0 18px;
+  color: #444;
+  text-shadow: 1px 1px 0 #efefef;
+  font-size: 1em;
+}
+
+#main div.header ul.tools li a.edit {
+  background: url(<%= asset_data_uri('icon_edit.png') %>) left center no-repeat;
+}
+
+#main div.header ul.tools li a.print {
+  background: url(<%= asset_data_uri('icon_print.png') %>) left center no-repeat;
 }
 
 #main div.header ul.tabs {
@@ -364,7 +406,6 @@ body.users.new #main div.form-wrapper h2 {
 
 #main table td:last-child {
   border-radius: 0 4px 4px 0;
-  background: #f7f7f7;
 }
 
 #main table td a {
@@ -414,6 +455,7 @@ body.users #main table.users td.privileges span.checked {
 
 body.users #main table td.icons {
   width: 10px;
+  background: #f5f5f5;
 }
 
 body.users #main table td.icons ul li {
@@ -540,17 +582,22 @@ body.experts #main table.experts td:nth-child(3) {
 
 body.experts #main table td:last-child {
   border-radius: 0 4px 4px 0;
-  background: #efefef;
 }
 
-body.experts #main table td.cvs {
-  
+body.experts #main table td.icons {
+  width: 10px;
+  background: #f7f7f7;
+  position: relative;
+}
+
+body.experts #main table td.icons a {
+  height: 15px;
 }
 
 body.experts #main table td.cvs a {
   background:  url(<%= asset_data_uri('icon_cv.png') %>) left center no-repeat;
   border-radius: 2px;
-  padding: 7px 0 3px 16px;
+  padding: 6px 0 3px 16px;
   margin-right: 8px;
   display: inline;
   text-transform: uppercase;
@@ -1192,4 +1239,81 @@ body.login div.flash:after {
   margin: -2px -2px 0 0;
   border-width: 5px;
   border-bottom-color: #3A3A3A;
+}
+
+/* Documents */
+
+body.experts #main div.documents {
+  width: 100%;
+  float: left;
+  position: relative;
+}
+
+body.experts #main div.documents div.form-wrapper {
+  width: 400px;
+  position: absolute;
+  right: -10px;
+  margin-top: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+body.experts #main div.documents div.form-wrapper.cvs-form {
+  top: -34px;
+}
+body.experts #main div.documents div.form-wrapper.attachments-form {
+  top: 115px;
+  border-radius: 0 0 4px 4px;
+}
+
+body.experts #main div.cvs,
+body.experts #main div.attachments {
+  width: 100%;
+  float: left;
+  position: relative;
+  padding-right: 425px;
+  box-sizing: border-box;
+}
+
+body.experts #main div.cvs {
+  margin-bottom: 30px;
+}
+
+body.experts #main div.cvs div.file,
+body.experts #main div.attachments div.file {
+  width: 120px;
+  height: 120px;
+  float: left;
+  position: relative;
+  margin: 0 0 15px 15px;
+  padding: 5px;
+  border-radius: 3px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  background: #efefef url(<%= asset_data_uri('icon_cv_big.png') %>) center center no-repeat;
+}
+
+body.experts #main div.file a {
+  float: left;
+  color: #444;
+  font-size: .8em;
+}
+
+body.experts #main div.file input[type=submit] {
+  float: right;
+  position: absolute;
+  top: 0;
+  right: 5px;
+  color: #444;
+  padding: 0;
+  background: none;
+  box-shadow: none;
+  text-shadow: none;
+}
+
+body.experts #main div.file p {
+  position: absolute;
+  bottom: 0;
+  color: #444;
+  font-size: .7em;
 }

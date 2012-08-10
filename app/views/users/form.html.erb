@@ -1,10 +1,10 @@
 <%= render 'sidebar' %>
 
 <div id="main">
+  <h2>
+    <%= @title %>
+  </h2>
   <div class="form-wrapper">
-    <h2>
-      <%= @title %>
-    </h2>
     <%= form_for @user do |f| %>
       <div class="row main">
         <ul>
@@ -34,10 +34,6 @@
             <%= f.label :name %>
             <%= f.text_field :name %>
           </li>
-          <li>
-            <%= f.label :locale %>
-            <%= f.select :locale, list_locales %>
-          </li>
           <li class="privileges <%= ' disabled' if current_user?(@user) %>">
             <%= fields_for @user.privilege do |p| %>
               <%= f.label :privileges %>
@@ -49,11 +45,13 @@
               <%= p.label :admin, class: 'check-box-label' %>
             <% end %>
           </li>
+          <li>
+            <%= f.label :locale %>
+            <%= f.select :locale, list_locales %>
+            <%= f.submit %>
+          </li>
         </ul>
       </div>
-      
-      <%= f.submit %>
-
     <% end %>
   </div>
   <div class="clear"></div>
