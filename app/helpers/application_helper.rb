@@ -15,7 +15,7 @@ module ApplicationHelper
 
   # Returns a collection of all languages
   def languages
-    @language_collection ||= Rails.cache.fetch("languages_#{I18n.locale}") do
+    @languages ||= Rails.cache.fetch("languages_#{I18n.locale}") do
       Language.all.sort { |x, y| x.human <=> y.human }
     end
   end
