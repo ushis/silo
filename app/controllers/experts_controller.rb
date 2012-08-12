@@ -36,7 +36,7 @@ class ExpertsController < ApplicationController
   # Sends a generated pdf including the experts deatils.
   def report
     e = Expert.includes(:contact).find(params[:id])
-    send_data make_report(e),
+    send_data ExpertsReport.for_expert(e).render,
               filename: "report-#{e.full_name.parameterize}.pdf",
               type: 'application/pdf',
               disposition: 'inline'
@@ -112,32 +112,9 @@ class ExpertsController < ApplicationController
     end
   end
 
-  protected
-
   # Sets a not found flash and redirects to the experts index page.
   def not_found
     flash[:alert] = t('msg.expert_not_found')
     redirect_to experts_url
-  end
-
-  # Generates a pdf including the experts details.
-  def make_report(e)
-    data = [:gender, :degree].collect do |a|
-      [t(a, scope: :label), e.send(a) && t(e.send(a), scope: a)]
-    end
-
-    data += [:prename, :name, :birthplace].collect do |a|
-      [t(a, scope: :label), e.send(a)]
-    end
-
-    data << [t('label.birthday'), l(e.birthday, format: :short)]
-
-    data += Contact::FIELDS.collect do |f|
-      [t(f, scope: :label), e.contact.send(f).join(', ')]
-    end
-
-    Prawn::Document.new do |pdf|
-      pdf.table(data, cell_style: { borders: [] })
-    end.render
   end
 end
