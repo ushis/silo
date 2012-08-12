@@ -1,7 +1,7 @@
 require 'prawn'
 
 class ApplicationReport < Prawn::Document
-  include ActionView::Helpers::TranslationHelper
+  include AbstractController::Translation
 
   def initialize(title)
     super({})
