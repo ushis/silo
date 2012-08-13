@@ -1,6 +1,7 @@
 # English localization file
 en:
   action:
+    add_address: 'Add Address'
     add_contact: 'Add Contact'
     back: 'Back'
     delete: 'Delete'
@@ -102,6 +103,7 @@ en:
     deleted_contact: 'Deleted contact.'
     deleted_cv: 'Deleted CV.'
     deleted_expert: 'Deleted expert: %{expert}'
+    deleted_address: 'Deleted Address.'
     deleted_user: 'Deleted user: %{user}'
     expert_not_found: 'Expert not found.'
     file_not_found: 'File not found.'

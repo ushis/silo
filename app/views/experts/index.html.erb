@@ -14,7 +14,45 @@
         <%= paginate @experts %>
       </div>
       <div id="filter">
-        Filter Form
+        <%= form_tag search_experts_path, method: :get do %>
+          <ul>
+            <li>
+              <%= label_tag :name %>
+              <%= text_field_tag :name %>
+            </li>
+            <li>
+              <%= label_tag :citizenship %>
+              <%= country_select :citizenship, nil, include_blank: true %>
+            </li>
+          </ul>
+          <ul>
+            <li>
+              <table>
+                <tr>
+                  <td width="70%">
+                    <%= label_tag :language %>
+                  </td>
+                  <td>
+                    <%= label_tag :degree %>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <%= language_select Language.new, include_blank: true %>
+                  </td>
+                  <td>
+                    <%= degree_select :degree %>
+                  </td>
+                </tr>
+              </table>
+            </li>
+            <li>
+              <%= label_tag :q %>
+              <%= text_field_tag :q %>
+              <%= submit_tag 'Search' %>
+            </li>
+          </ul>
+        <% end %>
       </div>
     </div>
     <table class="experts">
