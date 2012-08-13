@@ -1,12 +1,18 @@
-
+# The ExpertsReport provides report rendering of the reports for a single
+# Expert and a colltion of mutliple experts.
 class ExpertsReport < ApplicationReport
 
+  # Creates a report for a single Expert.
+  #
+  #   send_data ExpertsReport.for_expert(Expert.find(1)).render,
+  #             filename: 'report.pdf'
   def self.for_expert(expert)
     report = ExpertsReport.new(expert.full_name_with_degree)
     report.add_expert(expert)
     report
   end
 
+  # Adds an expert to a report.
   def add_expert(e)
     data = [
       [t('label.name'), e.name],
