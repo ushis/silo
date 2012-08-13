@@ -2,6 +2,7 @@ require 'silo_page_links'
 
 # Contains several generic helper methods.
 module ApplicationHelper
+  require_dependency 'language'
 
   # Returns all flash messages in separate div boxes.
   #

@@ -92,6 +92,21 @@ do($ = jQuery) ->
             $(@).before ->
               el.find(settings.selector).last().clone(true)
 
+  # Defines a master box and several slave boxes. If the master box is
+  # checked, all slaves get checked too. If one slave is unchecked, the
+  # master gets unchecked.
+  $.fn.siloMasterBox = (options) ->
+    settings = $.extend {
+      masterClass: 'master'
+    }, options
+
+    do (el = $(@)) ->
+      do (master = el.filter(".#{settings.masterClass}")) ->
+        master.change ->
+          el.prop('checked', true) if $(@).is(':checked')
+        el.not(".#{settings.masterClass}").change ->
+          master.prop('checked', false) if $(@).not(':checked')
+
 
   # Adds a delete confirmation field to the selector
   $.fn.siloConfirmDelete = (options) ->

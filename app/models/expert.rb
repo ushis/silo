@@ -58,7 +58,17 @@ class Expert < ActiveRecord::Base
     DEGREES.include?(d) ? d : nil
   end
 
-  # Searches the experts table.
+  # Searches for experts. Takes a hash with condtions:
+  #
+  # - *:name* A (partial) name used to search _name_ and _prename_
+  # - *:citizenship* A valid country code
+  # - *:degree* A valid _degree_
+  # - *:language* A valid _language_id_
+  # - *:q* A arbitrary string used for a fulltext search in the _comment_ and
+  #   the _cv_
+  #
+  # The results are ordered by name. If _:q_ is present, the results are
+  # ordered by relevance.
   def self.search(params)
     s = self
 

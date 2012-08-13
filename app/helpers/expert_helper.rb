@@ -1,12 +1,22 @@
 # Provides expert specific helpers.
 module ExpertHelper
 
+  # Returns a gender select box
+  def gender_select(name, opt = {})
+    select_tag name, options_for_select(list_genders), opt
+  end
+
   # Returns all available genders in a select box freindly format.
   #
   #   list_genders
   #   #=> [['Female', :female], ['Male', :male]]
   def list_genders
     Expert::GENDERS.collect { |g| [t(g, scope: :gender), g] }
+  end
+
+  # Returns a degree select box.
+  def degree_select(name, opt = {})
+    select_tag name, options_for_select(list_degrees), opt
   end
 
   # Returns all available degrees in a select box friendly format.
