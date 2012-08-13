@@ -2,44 +2,52 @@
 
 <div id="main">
   <%= render 'details_header' %>
+
   <div class="addresses">
     <h4>
       <%= t('label.addresses') %>
     </h4>
     <% @expert.addresses.each do |address| %>
-      <%= button_to 'x', [@expert, address], method: :delete %>
       <address>
+        <%= button_to 'x', [@expert, address], method: :delete %>
         <%= address.street %><br/>
         <%= address.zipcode %> <%= address.city %><br/>
         <%= address.human_country %><br/>
         <%= address.more %>
       </address>
     <% end %>
-    <%= form_for Address.new, url: expert_addresses_path(@expert) do |f| %>
-      <p>
-        <%= f.label :street %>
-        <%= f.text_field :street %>
-      </p>
-      <p>
-        <%= f.label :zipcode %>
-        <%= f.text_field :zipcode %>
-      </p>
-      <p>
-        <%= f.label :city %>
-        <%= f.text_field :city %>
-      </p>
-      <p>
-        <%= f.country_select :country %>
-      </p>
-      <p>
-        <%= f.label :more %>
-        <%= f.text_field :more %>
-      </p>
-      <p>
-        <%= f.submit %>
-      </p>
-    <% end %>
+    <div class="form-wrapper">
+      <h5>
+        <%= t 'action.add_address' %>
+      </h5>
+      <%= form_for Address.new, url: expert_addresses_path(@expert) do |f| %>
+        <p>
+          <%= f.label :street %>
+          <%= f.text_field :street %>
+        </p>
+        <p>
+          <%= f.label :zipcode %>
+          <%= f.text_field :zipcode %>
+        </p>
+        <p>
+          <%= f.label :city %>
+          <%= f.text_field :city %>
+        </p>
+        <p>
+          <%= f.label :country %>
+          <%= f.country_select :country %>
+        </p>
+        <p>
+          <%= f.label :more %>
+          <%= f.text_field :more %>
+        </p>
+        <p>
+          <%= f.submit t('action.add_address') %>
+        </p>
+      <% end %>
+    </div>
   </div>
+
   <div class="contacts">
     <h4>
       <%= t('label.contacts') %>
@@ -53,22 +61,29 @@
           <% values.each do |val| %>
             <li>
               <%= val %>
-              <%= delete_contact_button 'x', expert_contact_path(@expert.contact), field, val %>
+              <%= delete_contact_button('x', expert_contact_path(@expert.contact), field, val) if current_user.access?(:experts) %>
             </li>
           <% end %>
         </ul>
       <% end %>
     <% end %>
-    <%= form_tag expert_contacts_path(@expert) do %>
-      <p>
-        <%= select_tag 'contact[field]', list_contact_fields %>
-      </p>
-      <p>
-        <%= text_field_tag 'contact[contact]' %>
-      </p>
-      <p>
-        <%= submit_tag t('action.add_contact') %>
-      </p>
-    <% end %>
+    <div class="form-wrapper">
+      <h5>
+        <%= t 'action.add_contact' %>
+      </h5>
+      <%= form_tag expert_contacts_path(@expert) do %>
+        <p>
+          <%= select_tag 'contact[field]', list_contact_fields %>
+        </p>
+        <p>
+          <%= text_field_tag 'contact[contact]' %>
+        </p>
+        <p>
+          <%= submit_tag t('action.add_contact') %>
+        </p>
+      <% end %>
+    </div>
   </div>
+  
+  <div class="clear"></div>
 </div>

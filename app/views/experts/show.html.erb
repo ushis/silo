@@ -2,5 +2,65 @@
 
 <div id="main">
   <%= render 'details_header' %>
+  <div class="personal">
+  	<dl>
+  	  <dt>
+  	  	<%= t 'label.citizenship' %>
+  	  </dt>
+  	  <dd>
+  		<%= @expert.human_citizenship %>
+  	  </dd>
+  	  <dt>
+  	  	<%= t 'label.birthday' %>
+  	  </dt>
+  	  <dd>
+  		<%= l @expert.birthday, format: :short %>
+  	  </dd>
+  	  <dt>
+  	  	<%= t 'label.birthplace' %>
+  	  </dt>
+  	  <dd>
+  		<%= @expert.birthplace %>
+  	  </dd>
+  	  <dt>
+  	  	<%= t 'label.language' %>
+  	  </dt>
+  	  <dd>
+	  	<% @expert.languages.each do |language| %>
+		  <%= @expert.language.human %>
+		<% end %>
+  	  </dd>
+  	  <dt>
+  	  	<%= t 'label.company' %>
+  	  </dt>
+  	  <dd>
+  		<%= @expert.company %>
+  	  </dd>
+  	  <dt>
+  	  	<%= t 'label.job' %>
+  	  </dt>
+  	  <dd>
+  		<%= @expert.job %>
+  	  </dd>
+  	  <dt>
+  	  	<%= t 'label.former_collaboration' %>
+  	  </dt>
+  	  <dd>
+  		<%= t @expert.former_collaboration.to_s, scope: :label %>
+  	  </dd>
+  	  <dt>
+  	  	<%= t 'label.fee' %>
+  	  </dt>
+  	  <dd>
+  		<%= @expert.fee %>
+  	  </dd>
+  	  <dt>
+  	  	<%= t 'label.comment' %>
+  	  </dt>
+  	  <dd>
+  		<%= @expert.comment.comment %>
+  	  </dd>
+  	</dl>
+  </div>
   <div class="clear"></div>
 </div>

@@ -377,7 +377,6 @@ body.users.create #main h2 {
   background: -o-linear-gradient(top,  #515151 0%,#464646 100%);
   background: -ms-linear-gradient(top,  #515151 0%,#464646 100%);
   background: linear-gradient(to bottom,  #515151 0%,#464646 100%);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
 }
 
 #main div.header input.button {
@@ -532,7 +531,55 @@ body.experts #main div.header #quicksearch input[type=submit] {
 body.experts #main div.header #filter {
   display: none;
   clear: both;
-  padding-top: 20px;
+}
+
+body.experts #main div.header #filter form {
+  margin: 0;
+  padding: 0;
+}
+
+body.experts #main div.header #filter form label {
+  margin: 10px 0 0 0;
+  padding: 0;
+  float: left;
+  display: block;
+  width: 100%;
+}
+
+body.experts #main div.header #filter form input[type=text] {
+  margin: 0;
+  float: left;
+  display: block;
+  width: 100%;
+}
+
+body.experts #main div.header #filter form select {
+  margin: 5px 0;
+  float: left;
+  display: block;
+  clear: left;
+  width: 100%;
+}
+
+body.experts #main div.header #filter form input[type=submit] {
+  margin: 10px 0;
+  padding: 6px 10px;
+  float: right;
+  clear: left;
+}
+
+body.experts #main div.header #filter ul {
+  float: left;
+  width: 32%;
+}
+
+body.experts #main div.header #filter ul:last-child {
+  margin-left: 20px;
+}
+
+body.experts #main div.header #filter ul table {
+  margin: 0;
+  padding: 0;
 }
 
 body.experts #main table.experts {
@@ -1247,7 +1294,134 @@ body.login div.flash:after {
   border-bottom-color: #3A3A3A;
 }
 
+/* Personal */
+
+body.experts.show #main dl dt {
+  display: block;
+  color: #888;
+  font-size: .7em;
+  font-weight: bold;
+  text-shadow: 1px 1px 0 #EEE;
+  margin-right: 20px;
+}
+
+body.experts.show #main dl dd {
+  display: block;
+  color: #444;
+  font-size: .9em;
+  margin: 0 0 10px 0;
+}
+
+
+/* Contacts */
+body.experts.contact #main div.addresses {
+  float: left;
+  width: 49%;
+}
+
+body.experts.contact #main div.contacts {
+  float: right;
+  width: 49%;
+}
+
+body.experts.contact #main div.contacts {
+  margin-left: 15px;
+  color: #444;
+}
+
+body.experts.contact #main h4 {
+  font-size: 1em;
+  margin-bottom: 20px;
+}
+
+body.experts.contact #main div.contacts > h5 {
+  margin-bottom: 5px;
+  font-size: .95em;
+  color: #888;
+  text-shadow: 1px 1px 0 rgb(255,255,255,1);
+}
+
+body.experts.contact #main div.addresses address {
+  width: 100%;
+  background: #efefef;
+  padding: 10px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  position: relative;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  font-size: .9em;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+}
+
+body.experts.contact #main div.addresses address input[type=submit] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 2px 8px 5px 8px;
+}
+
+body.experts.contact #main div.contacts ul li {
+  position: relative;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  background: #efefef;
+  border-radius: 4px;
+  font-size: .9em;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+body.experts.contact #main div.contacts ul li form {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+body.experts.contact #main div.contacts ul li input[type=submit] {
+  padding: 2px 8px 5px 8px;
+}
+
+body.experts.contact #main div.form-wrapper {
+  padding: 0;
+  margin: 0;
+}
+
+body.experts.contact #main div.form-wrapper h5 {
+  font-size: .9em;
+  color: #444;
+  text-shadow: 1px 1px 0px #efefef;
+  padding: 10px 0 0 10px;
+}
+
+body.experts.contact #main div.form-wrapper form input[type=submit] {
+  position: relative;
+  float: right;
+  margin: 15px 0;
+}
+
+body.experts.contact #main div.form-wrapper form p {
+  padding: 0;
+}
+
+body.experts.contact #main form label {
+  float: none;
+  display: block;
+}
+
+body.experts.contact #main form input[type=text] {
+  width: 100%;
+  display: block;
+  margin-bottom: 10px;
+}
+
 /* Documents */
+
+body.experts.documents #main {
+  min-height: 368px;
+}
 
 body.experts #main div.documents {
   width: 100%;
