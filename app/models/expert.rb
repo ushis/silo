@@ -77,7 +77,7 @@ class Expert < ActiveRecord::Base
     end
 
     if ! params[:q].blank? && ! (ids = search_fulltext(params[:q])).empty?
-      return s.where(id: ids).order('FIELD (experts.id, %s)' % ids.join(', '))
+      return s.where(id: ids).order('FIELD(experts.id, %s)' % ids.join(', '))
     end
 
     s.order(:name)
