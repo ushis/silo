@@ -32,13 +32,16 @@
         Add a CV
       </h3>
       <%= form_for Cv.new, url: expert_cvs_path(@expert) do |f| %>
-        <div>
-          <%= f.label :file %>
+        <div class="upload">
+          <%= f.label :file, t('action.select_file'), class: 'fakefield' %>
+          <div class="filename">
+            <%= t 'label.no_file_selected' %>
+          </div>
           <%= f.file_field :file %>
-        </div>
-        <div>
-          <%= f.label :language_id %>
-          <%= f.collection_select :language_id, languages, :id, :human %>
+          <div class="languages">
+            <%= f.label :language_id, class: "select-box-label" %>
+            <%= f.collection_select :language_id, languages, :id, :human %>
+          </div>
         </div>
         <%= f.submit %>
       <% end %>
@@ -48,13 +51,16 @@
         Add an Attachment
       </h3>
       <%= form_for Attachment.new, url: expert_attachments_path(@expert) do |f| %>
-        <div>
-          <%= f.label :file %>
+        <div class="upload">
+          <%= f.label :file, t('action.select_file'), class: 'fakefield' %>
+          <div class="filename">
+            <%= t 'label.no_file_selected' %>
+          </div>
           <%= f.file_field :file %>
-        </div>
-        <div>
-          <%= f.label :title %>
-          <%= f.text_field :title %>
+          <div class="title">
+            <%= f.label :title %>
+            <%= f.text_field :title %>
+          </div>
         </div>
         <%= f.submit %>
       <% end %>
@@ -65,3 +71,11 @@
 
   <div class="clear"></div>
 </div>
+
+
+<script>
+  var filefield = $(':file');
+  filefield.change(function(){
+    $(this).parent().children('div.filename').text($(this).val().split("\\").pop());
+  });
+</script>
