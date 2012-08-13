@@ -10,6 +10,7 @@ en:
     next: 'Next'
     print: 'Print'
     save: 'Save'
+    select_file: 'Select a file'
 
   degree:
     bachelor: 'Bachelor'
@@ -43,8 +44,9 @@ en:
     gender: 'Gender'
     name: 'Name'
     new_expert: 'New Expert'
-    none: 'None'
     new_user: 'New User'
+    no_file_selected: 'No File Selected'
+    none: 'None'
     partners: 'Partners'
     password: 'Password'
     phone: 'Phone'
