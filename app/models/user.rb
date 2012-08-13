@@ -92,7 +92,7 @@ class User < ActiveRecord::Base
   #
   # Returns true if access is granted, else false.
   def access?(section)
-    admin? || privilege.send(section)
+    admin? || (privilege.respond_to?(section) && privilege.send(section))
   end
 
   # Alias for Privilege#privileges.

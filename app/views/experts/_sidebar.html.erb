@@ -4,7 +4,7 @@
       <%= link_to t('label.all_experts'), experts_path %>
     </li>
     <li class="new">
-      <%= link_to t('label.new_expert'), new_expert_path %>
+      <%= restricted_link_to t('label.new_expert'), new_expert_path, :experts %>
     </li>
   </ul>
 </nav>

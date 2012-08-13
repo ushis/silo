@@ -13,8 +13,8 @@ class CvsController < ApplicationController
     send_file cv.absolute_path, filename: cv.public_filename
   end
 
-  # Creates a new Cv by storing an uploaded file and loading it's content into the
-  # database.
+  # Creates a new Cv by storing an uploaded file and loading it's content
+  # into the database.
   def create
     begin
       expert = Expert.find(params[:expert_id])
@@ -45,9 +45,7 @@ class CvsController < ApplicationController
 
   # Destroys a Cv.
   def destroy
-    cv = Cv.find(params[:id])
-
-    if cv.destroy
+    if Cv.find(params[:id]).destroy
       flash[:notice] = t('msg.deleted_cv')
     else
       flash[:alert] = t('msg.could_not_delete_cv')

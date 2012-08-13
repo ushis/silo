@@ -8,11 +8,13 @@
   </h3>
   <ul class="tools">
     <li>
-      <%= link_to t('action.print'), report_expert_path(@expert), class: "print" %>
+      <%= link_to t('action.print'), report_expert_path(@expert), class: 'print' %>
     </li>
-    <li>
-      <%= link_to t('action.edit'), edit_expert_path(@expert), class: "edit" %>
-    </li>
+    <% if current_user.access?(:experts) %>
+      <li>
+        <%= link_to t('action.edit'), edit_expert_path(@expert), class: 'edit' %>
+      </li>
+    <% end %>
   </ul>
   <ul class="tabs">
     <li>

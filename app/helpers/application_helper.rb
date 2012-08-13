@@ -13,15 +13,30 @@ module ApplicationHelper
     end.html_safe
   end
 
+  # Checks if the current user has access to the section and adds a
+  # 'disabled' class to the link if not.
+  #
+  #   resctricted_link_to 'secure stuff', url, :experts
+  #   #=> '<a href="#" class="disabled">secure stuff</a>'
+  def restricted_link_to(txt, path, section, opt = {})
+    unless current_user.access?(section)
+      opt[:class] = opt[:class].to_s << ' disabled'
+    end
+
+    link_to(txt, path, opt)
+  end
+
   # Returns a collection of all languages
   def languages
-    @language_collection ||= Language.all.sort { |x, y| x.human <=> y.human }
+    @languages ||= Rails.cache.fetch("languages_#{I18n.locale}") do
+      Language.all.sort { |x, y| x.human <=> y.human }
+    end
   end
 
   # Returns a single language select boxes.
-  def language_select(lang = Language.new)
+  def language_select(lang = Language.new, opt = {})
     fields_for lang do |f|
-      f.collection_select :id, languages, :id, :human, {}, name: 'languages[]'
+      f.collection_select :id, languages, :id, :human, opt, name: 'languages[]'
     end.html_safe
   end
 
@@ -46,8 +61,8 @@ module ApplicationHelper
   #   delete_contact_button('x', contact_url(contact), :emails, 'alf@aol.com')
   def delete_contact_button(txt, url, field, contact)
     form_tag url, method: :delete, class: 'button_to' do
-      html = hidden_field_tag('contact[field]', field),
-      html << hidden_field_tag('contact[contact]', contact),
+      html = hidden_field_tag('contact[field]', field)
+      html << hidden_field_tag('contact[contact]', contact)
       html << submit_tag(txt, class: 'delete')
       html.html_safe
     end
@@ -58,7 +73,7 @@ module ApplicationHelper
   #   paginate(@experts)
   #   #=> '<ul><li><span>1</span></li><li><a>2</a></li></ul>'
   def paginate(collection)
-    if collection
+    if collection && collection.respond_to?(:total_pages)
       will_paginate(collection, { outer_window: 0, inner_window: 2,
                                   renderer: SiloPageLinks::Renderer } )
     end

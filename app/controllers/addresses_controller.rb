@@ -19,9 +19,7 @@ class AddressesController < ApplicationController
 
   # Destroys an Address.
   def destroy
-    a = Address.find(params[:id])
-
-    if a.destroy
+    if Address.find(params[:id]).destroy
       flash[:notice] = t('msg.deleted_address')
     else
       flash[:alert] = t('msf.could_not_delete_address')

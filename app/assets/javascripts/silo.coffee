@@ -48,6 +48,10 @@ do($ = jQuery) ->
         el.toggleClass settings.class, settings.duration, ->
           el.toggleClass settings.class, settings.duration
 
+  # Disables links
+  $.fn.siloDisabledLinks = ->
+    @each -> $(@).click -> false
+
   # Animates a toggle slide for the given selector.
   $.fn.siloToggler = (selector, options) ->
     settings = $.extend {
@@ -63,20 +67,22 @@ do($ = jQuery) ->
     settings = $.extend {
       text: 'x'
       class: 'delete'
+      divClass: 'click-away'
     }, options
 
     @each ->
-      $(@).wrap('<div>').parent().append ->
+      $(@).wrap('<div>').parent().addClass(settings.divClass).append ->
         $('<span>').addClass(settings.class).text(settings.text).click ->
-          $(@).closest('div').remove()
-
+          do (el = $(@).closest('div')) ->
+            if el.parent().children("div.#{settings.divClass}").length > 1
+              el.remove()
 
   # Adds a click and clone + to an element.
   $.fn.siloClickAndClone = (options) ->
     settings = $.extend {
       text: 'more'
-      selector: 'div'
       class: 'more'
+      selector: 'div.click-away'
     }, options
 
     @each ->

@@ -58,6 +58,56 @@ class Expert < ActiveRecord::Base
     DEGREES.include?(d) ? d : nil
   end
 
+  # Searches the experts table.
+  def self.search(params)
+    s = self
+
+    unless params[:name].blank?
+      s = s.where('name LIKE :n OR prename LIKE :n', n: "%#{params[:name]}%")
+    end
+
+    [:citizenship, :degree].each do |field|
+      unless params[field].blank?
+        s = s.where(field => params[field])
+      end
+    end
+
+    unless (language = params[:language]).blank?
+      s = s.includes(:languages).where('languages.id = ?', language)
+    end
+
+    if ! params[:q].blank? && ! (ids = search_fulltext(params[:q])).empty?
+      return s.where(id: ids).order('FIELD(experts.id, %s)' % ids.join(', '))
+    end
+
+    s.order(:name)
+  end
+
+  # Searches the culltext associations, such as Comment and CV.
+  #
+  #  Expert.search_fulltext('hello')
+  #  #=> [5, 23, 34, 1, 4]
+  #
+  # Returns an array of expert ids ordered by relevance.
+  def self.search_fulltext(query)
+    sql = <<-SQL
+      ( SELECT comments.commentable_id AS expert_id,
+          MATCH (comments.comment) AGAINST (:q) AS score
+        FROM comments
+        WHERE comments.commentable_type = 'Expert'
+          AND MATCH (comments.comment) AGAINST (:q) )
+      UNION
+      ( SELECT cvs.expert_id, MATCH (cvs.cv) AGAINST (:q) AS score
+        FROM cvs
+        WHERE MATCH (cvs.cv) AGAINST (:q) )
+      ORDER BY score DESC
+    SQL
+
+    connection.select_all(sanitize_sql([sql, q: query])).collect do |i|
+      i['expert_id']
+    end
+  end
+
   # Initializes the contact on access, if not already initalized.
   def contact
     super || self.contact = Contact.new

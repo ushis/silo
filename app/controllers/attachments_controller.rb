@@ -33,9 +33,7 @@ class AttachmentsController < ApplicationController
 
   # Destroys an Attachment from database and file system.
   def destroy
-    a = Attachment.find(params[:id])
-
-    if a.destroy
+    if Attachment.find(params[:id]).destroy
       flash[:notice] = t('msg.deleted_attachment')
     else
       flash[:alert] = t('msg.could_not_delete_attachment')

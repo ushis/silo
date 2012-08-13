@@ -33,4 +33,9 @@ class Comment < ActiveRecord::Base
   def init_comment
     self.comment ||= ''
   end
+
+  # Returns the comment.
+  def to_s
+    comment
+  end
 end
