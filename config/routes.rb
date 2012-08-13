@@ -21,6 +21,10 @@ Silo::Application.routes.draw do
     resources :contacts,    only: [:create, :destroy],        controller: 'contacts/experts'
     resources :addresses,   only: [:create, :destroy],        controller: 'addresses/experts'
 
+    collection do
+      get 'search(/page/:page)' => 'experts#search', as: :search
+    end
+
     member do
       get :documents
       get :contact

@@ -21,9 +21,9 @@ module ApplicationHelper
   end
 
   # Returns a single language select boxes.
-  def language_select(lang = Language.new)
+  def language_select(lang = Language.new, opt = {})
     fields_for lang do |f|
-      f.collection_select :id, languages, :id, :human, {}, name: 'languages[]'
+      f.collection_select :id, languages, :id, :human, opt, name: 'languages[]'
     end.html_safe
   end
 
@@ -60,7 +60,7 @@ module ApplicationHelper
   #   paginate(@experts)
   #   #=> '<ul><li><span>1</span></li><li><a>2</a></li></ul>'
   def paginate(collection)
-    if collection
+    if collection && collection.respond_to?(:total_pages)
       will_paginate(collection, { outer_window: 0, inner_window: 2,
                                   renderer: SiloPageLinks::Renderer } )
     end
