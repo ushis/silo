@@ -289,7 +289,9 @@ body.users.edit #main h2 {
 }
 
 body.experts.new #main h2,
-body.users.new #main h2 {
+body.experts.create #main h2,
+body.users.new #main h2,
+body.users.create #main h2 {
   display: none;
 }
 
@@ -1258,16 +1260,85 @@ body.experts #main div.documents div.form-wrapper {
   position: absolute;
   right: -10px;
   margin-top: 0;
-  border-radius: 0;
+  padding: 5px 10px 10px 10px;
   box-shadow: none;
 }
 
 body.experts #main div.documents div.form-wrapper.cvs-form {
-  top: -34px;
+  top: -20px;
+  border-radius: 4px 4px 0 0;
 }
 body.experts #main div.documents div.form-wrapper.attachments-form {
-  top: 115px;
+  top: 98px;
   border-radius: 0 0 4px 4px;
+}
+
+body.experts #main div.documents div.form-wrapper h3 {
+  padding-top: 5px;
+  font-size: .9em;
+}
+
+body.experts #main div.documents div.form-wrapper.attachments-form h3 {
+  padding-top: 15px;
+  border-top: 1px solid #EFEFEF;
+  text-shadow: 1px 1px 0px rgba(255, 255, 255, .5);
+  box-shadow: 0 -1px 0 rgba(0, 0, 0, .2);
+}
+
+body.experts #main div.documents div.form-wrapper form {
+  padding: 10px 0 0 0;
+  width: 100%;
+  float: left;
+}
+
+body.experts #main div.documents div.form-wrapper input[type=file] {
+  display: none;
+}
+
+body.experts #main div.documents div.form-wrapper form  div.upload label.fakefield {
+  cursor: pointer;
+  display: inline;
+  float: left;
+  padding: 7px 15px 6px 30px;
+  margin: 0;
+  background: #f0f0f0;
+  border-radius: 3px 0 0 3px;
+  border: 1px solid #bbb;
+  text-shadow: none;
+  color: #444;
+}
+
+body.experts #main div.documents div.form-wrapper form  div.upload div.filename {
+  display: block;
+  float: left;
+  position: relative;
+  padding: 7px 15px 6px 15px;
+  margin: 0 0 0 -5px;
+  background: #f0f0f0;
+  border-radius: 0 3px 3px 0;
+  border: 1px solid #bbb;
+  text-shadow: none;
+  color: #444;
+  font-size: .7em;
+}
+
+body.experts #main div.documents div.form-wrapper form div.upload div.languages,
+body.experts #main div.documents div.form-wrapper form div.upload div.title {
+  display: inline;
+  float: left;
+  clear: both;
+  margin-top: 10px;
+}
+
+body.experts #main div.documents div.form-wrapper form div.upload label.select-box-label {
+  display: inline;
+  float: left;
+  margin: 3px 10px 0 0;
+}
+
+body.experts #main div.documents div.form-wrapper form div.upload select {
+  display: inline;
+  float: left;
 }
 
 body.experts #main div.cvs,
@@ -1294,7 +1365,7 @@ body.experts #main div.attachments div.file {
   border-radius: 3px;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
-  background: #efefef url(<%= asset_data_uri('icon_cv_big.png') %>) center center no-repeat;
+  background: #f0f0f0 url(<%= asset_data_uri('icon_cv_big.png') %>) center center no-repeat;
 }
 
 body.experts #main div.file a {
