@@ -48,6 +48,10 @@ do($ = jQuery) ->
         el.toggleClass settings.class, settings.duration, ->
           el.toggleClass settings.class, settings.duration
 
+  # Disables links
+  $.fn.siloDisabledLinks = ->
+    @each -> $(@).click -> false
+
   # Animates a toggle slide for the given selector.
   $.fn.siloToggler = (selector, options) ->
     settings = $.extend {

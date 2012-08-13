@@ -13,6 +13,19 @@ module ApplicationHelper
     end.html_safe
   end
 
+  # Checks if the current user has access to the section and adds a
+  # 'disabled' class to the link if not.
+  #
+  #   resctricted_link_to 'secure stuff', url, :experts
+  #   #=> '<a href="#" class="disabled">secure stuff</a>'
+  def restricted_link_to(txt, path, section, opt = {})
+    unless current_user.access?(section)
+      opt[:class] = opt[:class].to_s << ' disabled'
+    end
+
+    link_to(txt, path, opt)
+  end
+
   # Returns a collection of all languages
   def languages
     @languages ||= Rails.cache.fetch("languages_#{I18n.locale}") do
