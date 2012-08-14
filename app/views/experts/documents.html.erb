@@ -3,79 +3,80 @@
 <div id="main">
   <%= render 'details_header' %>
   <div class="documents">
-
     <div class="cvs">
-      <% @expert.cvs.each do |cv| %>
-        <div class="file">
-          <%= link_to cv.language.human, [@expert, cv] %>
-          <%= button_to 'x', [@expert, cv], method: :delete %>
-          <p>
-            <%= l cv.created_at, format: :long %>
-          </p>
-        </div>
-      <% end %>
-    </div>
+      <h4>
+        <%= t('label.cvs') %>
+      </h4>
+      <table>
+        <tbody>
+          <% @expert.cvs.each do |cv| %>
+            <tr>
+              <td>
+                <%= link_to cv.language.human, [@expert, cv] %>
+              </td>
+              <td>
+                <%= cv.ext %>
+              </td>
+              <td>
+                <%= l cv.created_at, format: :long %>
+              </td>
+              <% if current_user.access?(:experts) %>
+                <td class="del">
+                  <%= button_to('x', [@expert, cv], method: :delete,
+                                                    class: 'del') %>
+                </td>
+              <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div><!-- cvs -->
     <div class="attachments">
-      <% @expert.attachments.each do |attachment| %>
-        <div class="file">
-          <%= link_to attachment.title, [@expert, attachment] %>
-          <%= button_to 'x', [@expert, attachment], method: :delete %>
-          <p>
-            <%= l attachment.created_at, format: :long %>
-          </p>
-        </div>
-      <% end %>
-    </div>
-
-    <div class="form-wrapper cvs-form">
-      <h3>
-        Add a CV
-      </h3>
-      <%= form_for Cv.new, url: expert_cvs_path(@expert) do |f| %>
-        <div class="upload">
-          <%= f.label :file, t('action.select_file'), class: 'fakefield' %>
-          <div class="filename">
-            <%= t 'label.no_file_selected' %>
-          </div>
-          <%= f.file_field :file %>
-          <div class="languages">
-            <%= f.label :language_id, class: "select-box-label" %>
+      <h4>
+        <%= t('label.attachments') %>
+      </h4>
+      <table>
+        <tbody>
+          <% @expert.attachments.each do |attachment| %>
+            <tr>
+              <td>
+                <%= link_to attachment.title, [@expert, attachment] %>
+              </td>
+              <td>
+                <%= attachment.ext %>
+              </td>
+              <td>
+                <%= l attachment.created_at, format: :long %>
+              </td>
+              <% if current_user.access?(:experts) %>
+                <td class="del">
+                  <%= button_to('x', [@expert, attachment], method: :delete,
+                                                            class: 'del') %>
+                </td>
+              <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div><!-- attachments -->
+    <% if current_user.access?(:experts) %>
+      <div class="forms">
+        <%= form_for Cv.new, url: expert_cvs_path(@expert) do |f| %>
+          <div>
+            <%= f.file_field :file %>
             <%= f.collection_select :language_id, languages, :id, :human %>
+            <%= f.submit t('action.add') %>
           </div>
-        </div>
-        <%= f.submit %>
-      <% end %>
-    </div>
-    <div class="form-wrapper attachments-form">
-      <h3>
-        Add an Attachment
-      </h3>
-      <%= form_for Attachment.new, url: expert_attachments_path(@expert) do |f| %>
-        <div class="upload">
-          <%= f.label :file, t('action.select_file'), class: 'fakefield' %>
-          <div class="filename">
-            <%= t 'label.no_file_selected' %>
+        <% end %>
+        <%= form_for Attachment.new, url: expert_attachments_path(@expert) do |f| %>
+          <div>
+            <%= f.file_field :file %>
+            <%= f.text_field :title, placeholder: t('label.title') %>
+            <%= f.submit t('action.add') %>
           </div>
-          <%= f.file_field :file %>
-          <div class="title">
-            <%= f.label :title %>
-            <%= f.text_field :title %>
-          </div>
-        </div>
-        <%= f.submit %>
-      <% end %>
-    </div>
-
+        <% end %>
+      </div><!-- forms -->
+    <% end %>
+    <div class="clear"></div>
   </div>
-
-
-  <div class="clear"></div>
 </div>
-
-
-<script>
-  var filefield = $(':file');
-  filefield.change(function(){
-    $(this).parent().children('div.filename').text($(this).val().split("\\").pop());
-  });
-</script>
