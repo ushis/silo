@@ -88,10 +88,10 @@ namespace :experts do
         e.user = user
 
         # Base data
-        e.name = data.fetch('Name', '')
+        e.name = data.fetch('Name', '').strip
 
         prename = "#{data.fetch('Vorname1', '')} #{data.fetch('Vorname2', '')}"
-        e.prename = prename.split(/\s+/).join(' ')
+        e.prename = prename.split(/\s+/).join(' ').strip
 
         if data['m'] == '1'
           e.gender = :male
@@ -110,7 +110,7 @@ namespace :experts do
 
         e.company = ['Firma1', 'Firma2'].collect do |f|
           data[f] || ''
-        end.join(' ')
+        end.join(' ').strip
 
         # Citizenship
         if (c = data['Staatsb'])
@@ -139,8 +139,8 @@ namespace :experts do
 
         if address_keys.any? { |v| ! data[v].blank? }
           address = Address.new
-          address.street = data['Stra'].to_s
-          address.city = data['Wohnort'].to_s
+          address.street = data['Stra'].to_s.strip
+          address.city = data['Wohnort'].to_s.strip
 
           if (c = data['Land'])
             address.country = country_from_s.call(c).code

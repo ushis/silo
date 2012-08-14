@@ -23,7 +23,7 @@
             <li>
               <%= label_tag :citizenship %>
               <%= country_select(:citizenship, nil,
-                                 { include_blank: true },
+                                 { prompt: t('label.citizenship') },
                                  { name: 'citizenship' }) %>
             </li>
           </ul>
@@ -41,7 +41,7 @@
                 <tr>
                   <td>
                     <%= language_select(Language.new,
-                                        { include_blank: true },
+                                        { prompt: t('label.language') },
                                         { name: 'language'}) %>
                   </td>
                   <td>
