@@ -35,19 +35,19 @@ module ApplicationHelper
   end
 
   # Returns a single language select boxes.
-  def language_select(lang = Language.new, opt = {})
+  def language_select(lang, opt = {}, html_opt = {})
     fields_for lang do |f|
-      f.collection_select :id, languages, :id, :human, opt, name: 'languages[]'
+      f.collection_select :id, languages, :id, :human, opt, html_opt
     end.html_safe
   end
 
   # Returns multiple language select boxes.
   def language_selects(langs)
-    if langs.empty?
-      language_select
-    else
-      langs.collect { |lang| language_select lang }.join('').html_safe
-    end
+    langs = [Language.new] if langs.empty?
+
+    langs.collect do |lang|
+      language_select lang, {}, name: 'languages[]'
+    end.join('').html_safe
   end
 
   # Returns select box options with all possible contact fields.

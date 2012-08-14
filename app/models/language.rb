@@ -31,4 +31,9 @@ class Language < ActiveRecord::Base
   def human
     I18n.t(language, scope: :language)
   end
+
+  # Return the localized language.
+  def to_s
+    human
+  end
 end
