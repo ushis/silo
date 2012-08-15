@@ -51,7 +51,6 @@ class Expert < ActiveRecord::Base
   #
   # - *:name* A (partial) name used to search _name_ and _prename_
   # - *:citizenship* A valid country code
-  # - *:degree* A valid _degree_
   # - *:language* A valid _language_id_
   # - *:q* A arbitrary string used for a fulltext search in the _comment_ and
   #   the _cv_
@@ -65,10 +64,8 @@ class Expert < ActiveRecord::Base
       s = s.where('name LIKE :n OR prename LIKE :n', n: "%#{params[:name]}%")
     end
 
-    [:citizenship, :degree].each do |field|
-      unless params[field].blank?
-        s = s.where(field => params[field])
-      end
+    unless params[:citizenship].blank?
+      s = s.where(citizenship:  params[:citizenship])
     end
 
     unless (language = params[:language]).blank?
