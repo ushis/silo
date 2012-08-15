@@ -121,11 +121,9 @@ namespace :experts do
         end
 
         # Contact data
-        ['Handy', 'TelefonP', 'TelefonD'].each do |phone|
-          if (number = data[phone])
-            e.contact.phones << number
-          end
-        end
+        e.contact.m_phones << data['Handy'] if data['Handy']
+        e.contact.p_phones << data['TelefonP'] if data['TelefonP']
+        e.contact.b_phones << data['TelefonD'] if data['TelefonD']
 
         if (email = data['E_Mail'])
           unless (parts = email.strip.split(/\s+|#/)).empty?
