@@ -1,4 +1,4 @@
-<div class="header">
+<div class="header details">
   <h2>
     <%= @expert.full_name_with_degree %>
   </h2>
@@ -17,13 +17,13 @@
     <% end %>
   </ul>
   <ul class="tabs">
-    <li>
+    <li class="show">
       <%= link_to t('label.personal'), expert_path(@expert) %>
     </li>
-    <li>
+    <li class="contact">
       <%= link_to t('label.contact'), contact_expert_path(@expert) %>
     </li>
-    <li>
+    <li class="documents">
       <%= link_to t('label.documents'), documents_expert_path(@expert) %>
     </li>
   </ul>

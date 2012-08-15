@@ -337,6 +337,7 @@ body.users.create #main h2 {
   background: url(<%= asset_data_uri('icon_print.png') %>) left center no-repeat;
 }
 
+/* Experts Tabs */
 #main div.header ul.tabs {
   position: absolute;
   bottom: 0;
@@ -362,36 +363,24 @@ body.users.create #main h2 {
   padding: 2px 15px 2px 15px;
 }
 
-#main div.header div.button,
-#main div.header a.button,
-#main div.header input.button,
-#main input[type=submit] {
-  float: left;
-  cursor: pointer;
-  padding: 4px 10px 4px 10px;
-  margin-left: 5px;
-  font-size: .75em;
-  color: #d0d0d0;
-  text-shadow: 1px 1px 0px rgba(0, 0, 0, .5);
-  border: none;
-  border-top: 1px solid rgba(255, 255, 255, .1);
-  border-radius: 3px;
-  background: -moz-linear-gradient(top,  #515151 0%, #464646 100%);
-  background: -webkit-linear-gradient(top,  #515151 0%,#464646 100%);
-  background: -o-linear-gradient(top,  #515151 0%,#464646 100%);
-  background: -ms-linear-gradient(top,  #515151 0%,#464646 100%);
-  background: linear-gradient(to bottom,  #515151 0%,#464646 100%);
+body.experts #main div.header.details {
+  min-height: 80px;
 }
 
-#main div.header input.button {
-  padding: 6px 10px 8px 10px;
+body.experts.show #main div.header ul.tabs li.show,
+body.experts.contact #main div.header ul.tabs li.contact,
+body.experts.documents #main div.header ul.tabs li.documents {
+  background: #f9f9f9;
 }
 
-#main div.header input[type=text] {
-  width: 250px;
-  padding: 7px 30px 5px 10px;
+body.experts.show #main div.header ul.tabs li.show a,
+body.experts.contact #main div.header ul.tabs li.contact a,
+body.experts.documents #main div.header ul.tabs li.documents a {
+  color: #3b3b3b;
+  text-shadow: none;
 }
 
+/* Tables */
 #main table {
   width: 100%;
   color: #5b5b5b;
@@ -473,36 +462,6 @@ body.users #main table td.icons ul li {
 
 body.users #main table td.icons ul li:last-child {
   margin-bottom: 0;
-}
-
-body.experts.show #main div.header,
-body.experts.contact #main div.header,
-body.experts.documents #main div.header {
-  min-height: 80px;
-}
-
-body.experts.show #main div.header ul.tabs li:first-child {
-  background: #f9f9f9;
-}
-body.experts.show #main div.header ul.tabs li:first-child a {
-  color: #3b3b3b;
-  text-shadow: none;
-}
-
-body.experts.contact #main div.header ul.tabs li:nth-child(2) {
-  background: #f9f9f9;
-}
-body.experts.contact #main div.header ul.tabs li:nth-child(2) a {
-  color: #3b3b3b;
-  text-shadow: none;
-}
-
-body.experts.documents #main div.header ul.tabs li:nth-child(3) {
-  background: #f9f9f9;
-}
-body.experts.documents #main div.header ul.tabs li:nth-child(3) a {
-  color: #3b3b3b;
-  text-shadow: none;
 }
 
 /* Experts filter */
