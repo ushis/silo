@@ -12,9 +12,6 @@ class Attachments::ExpertsController < AttachmentsController
   def create
     expert = Expert.find(params[:expert_id])
     add_to expert, documents_expert_url(expert)
-  rescue
-    flash[:alert] = t('msg.expert_not_found')
-    redirect_to experts_url
   end
 
   # Destroys an Attachment and redirects the user to the experts documents
@@ -26,6 +23,6 @@ class Attachments::ExpertsController < AttachmentsController
 
   # Sets a not found flash message and redirects the user.
   def not_found
-    super documents_expert_url(id: params[:expert_id])
+    super(experts_url)
   end
 end

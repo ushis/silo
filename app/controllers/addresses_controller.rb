@@ -25,4 +25,10 @@ class AddressesController < ApplicationController
       flash[:alert] = t('msf.could_not_delete_address')
     end
   end
+
+  # Sets a flash message and redirect the user.
+  def not_found(url = root_url)
+    flash[:alert] = t('msg.address_not_found')
+    redirect_to url
+  end
 end

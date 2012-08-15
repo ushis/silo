@@ -61,7 +61,7 @@
           <% values.each do |val| %>
             <li>
               <%= val %>
-              <%= delete_contact_button('x', expert_contact_path(@expert.contact), field, val) if current_user.access?(:experts) %>
+              <%= delete_contact_button('x', [@expert, @expert.contact], field, val) if current_user.access?(:experts) %>
             </li>
           <% end %>
         </ul>
@@ -84,6 +84,6 @@
       <% end %>
     </div>
   </div>
-  
+
   <div class="clear"></div>
 </div>

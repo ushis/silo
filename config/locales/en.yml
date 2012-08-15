@@ -62,7 +62,7 @@ en:
     password: 'Password'
     phone: 'Phone'
     phones: 'Phones'
-    prename: 'Prename'
+    prename: 'First Name'
     privileges: 'Privileges'
     profile: 'Profile'
     quicksearch: 'Quicksearch'
@@ -84,6 +84,7 @@ en:
 
   msg:
     access_denied: 'Access denied.'
+    address_not_found: 'Address not found.'
     attachment_not_found: 'Attachment not found.'
     could_not_create_expert: 'Could not create expert.'
     could_not_create_user: 'Could not create user.'

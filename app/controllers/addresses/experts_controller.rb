@@ -21,7 +21,6 @@ class Addresses::ExpertsController < AddressesController
 
   # Sets a flash message and redirects the user.
   def not_found
-    flash[:alert] = t('msg.expert_not_found')
-    redirect_to experts_url
+    super(experts_url)
   end
 end
