@@ -1,5 +1,6 @@
-require 'silo_page_links'
 require 'carmen'
+require 'bluecloth'
+require 'silo_page_links'
 
 # Contains several generic helper methods.
 module ApplicationHelper
@@ -13,6 +14,11 @@ module ApplicationHelper
     flash.inject('') do |html, item|
       html << content_tag(:div, item[1], class: "flash #{item[0].to_s}")
     end.html_safe
+  end
+
+  # Renders markdown formatted text.
+  def markdown(txt)
+    BlueCloth.new(txt).to_html.html_safe
   end
 
   # Checks if the current user has access to the section and adds a

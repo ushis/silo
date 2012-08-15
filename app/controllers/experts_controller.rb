@@ -28,7 +28,7 @@ class ExpertsController < ApplicationController
 
   # Serves the experts details page.
   def show
-    @expert = Expert.includes(:user).find(params[:id])
+    @expert = Expert.includes(:user, :comment, :languages).find(params[:id])
     @title = @expert.full_name_with_degree
   end
 
