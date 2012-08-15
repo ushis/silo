@@ -24,6 +24,41 @@ class Language < ActiveRecord::Base
   has_many :langs,   dependent: :destroy
   has_many :experts, through:   :langs
 
+  # Polymorphic language finder. Can handle Language, Fixnum, Symbol and
+  # String arguments. Raises an ArgumentError in case of invalid input.
+  #
+  #   Language.find_language(1)
+  #   #=> #<Language id: 1, language: "af">
+  #
+  #   Language.find_language(:en)
+  #   #=> #<Language id: 12, language: "en">
+  #
+  #   Language.find_language("de")
+  #   #=> #<Language id: 10, language: "de">
+  #
+  #   Language.find_language("43")
+  #   #=> #<Language id: 43, language: "mt">
+  #
+  # Returns nil, if no language could be found.
+  def self.find_language(language)
+    case language
+    when Language
+      language
+    when Fixnum
+      find_by_id(language)
+    when Symbol
+      find_by_language(language)
+    when String
+      if (id = language.to_i) > 0
+        find_by_id(id)
+      else
+        find_by_language(language)
+      end
+    else
+      raise ArgumentError, 'Argument is nor Language, Fixnum, Symbol or String'
+    end
+  end
+
   # Returns the localized language.
   #
   #   cv.language.human

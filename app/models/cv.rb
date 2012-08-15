@@ -20,19 +20,21 @@ class Cv < ActiveRecord::Base
   # Inits a new Cv from a file. The file is stored on the filesystem and the
   # contents is stored in the _cv_ attribute.
   #
-  #   if (cv = Cv.from_file(upload))
-  #     cv.language = Language.find_by_language('en')
+  #   if (cv = Cv.from_file(upload, language))
   #     expert.cvs << cv
   #   end
   #
   # Returns a new Cv object or nil on error.
-  def self.from_file(document)
+  def self.from_file(document, language = nil)
     cv = Cv.new
 
-    if (cv.attachment = Attachment.from_file(document)) && cv.load_document
-      return cv
+    unless (cv.attachment = Attachment.from_file(document)) && cv.load_document
+      raise 'Invalid CV.'
     end
 
+    cv.language = Language.find_language(language) if language
+    cv
+  rescue
     cv.destroy
     nil
   end

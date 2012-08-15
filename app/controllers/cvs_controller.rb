@@ -23,15 +23,10 @@ class CvsController < ApplicationController
       redirect_to experts_url and return
     end
 
-    unless (cv = Cv.from_file(params[:cv][:file]))
-      flash[:alert] = t('msg.could_not_store_cv')
-      redirect_to document_expert_url(expert) and return
-    end
+    data = params[:cv]
 
-    begin
-      cv.language = Language.find(params[:cv][:language_id])
-    rescue
-      flash[:alert] = t('msg.language_not_found')
+    unless (cv = Cv.from_file(data[:file], data[:language_id]))
+      flash[:alert] = t('msg.could_not_store_cv')
       redirect_to document_expert_url(expert) and return
     end
 
