@@ -2,8 +2,8 @@
 module ExpertHelper
 
   # Returns a gender select box
-  def gender_select(name, opt = {})
-    select_tag name, options_for_select(list_genders), opt
+  def gender_select_tag(name, val = nil, opt = {})
+    select_tag name, options_for_select(list_genders, val), opt
   end
 
   # Returns all available genders in a select box freindly format.
@@ -15,15 +15,15 @@ module ExpertHelper
   end
 
   # Returns a degree select box.
-  def degree_select(name, opt = {})
-    select_tag name, options_for_select(list_degrees), opt
+  def degree_select_tag(name, val = nil, opt = {})
+    select_tag name, options_for_select(list_degrees(!opt[:prompt]), val), opt
   end
 
   # Returns all available degrees in a select box friendly format.
-  def list_degrees
-    Expert::DEGREES.collect do |d|
-      [t(d, scope: :degree), d]
-    end.unshift([t(:none, scope: :label), nil])
+  def list_degrees(none = true)
+    degrees = Expert::DEGREES.collect { |d| [t(d, scope: :degree), d] }
+    degrees.unshift([t(:none, scope: :label), nil]) if none
+    degrees
   end
 
   # Returns a string containing links to the CV downloads.

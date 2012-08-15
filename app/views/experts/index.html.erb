@@ -22,9 +22,8 @@
             </li>
             <li>
               <%= label_tag :citizenship %>
-              <%= country_select(:citizenship, nil,
-                                 { prompt: t('label.citizenship') },
-                                 { name: 'citizenship' }) %>
+              <%= country_select_tag(:citizenship, params[:citizenship],
+                                     prompt: t('label.citizenship')) %>
             </li>
           </ul>
           <ul>
@@ -40,12 +39,12 @@
                 </tr>
                 <tr>
                   <td>
-                    <%= language_select(Language.new,
-                                        { prompt: t('label.language') },
-                                        { name: 'language'}) %>
+                    <%= language_select_tag(:language, params[:language],
+                                            prompt: t('label.language')) %>
                   </td>
                   <td>
-                    <%= degree_select :degree %>
+                    <%= degree_select_tag(:degree, params[:degree],
+                                          prompt: t('label.degree')) %>
                   </td>
                 </tr>
               </table>

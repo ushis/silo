@@ -1,4 +1,5 @@
 require 'silo_page_links'
+require 'carmen'
 
 # Contains several generic helper methods.
 module ApplicationHelper
@@ -34,20 +35,34 @@ module ApplicationHelper
     end
   end
 
-  # Returns a single language select boxes.
-  def language_select(lang, opt = {}, html_opt = {})
-    fields_for lang do |f|
-      f.collection_select :id, languages, :id, :human, opt, html_opt
-    end.html_safe
+  # Returns a language select box.
+  def language_select_tag(name, val = nil, opt = {})
+    val = val.id if val.is_a? Language
+    opts = options_for_select(languages.collect { |l| [l.human, l.id] }, val)
+    select_tag name, opts, opt
   end
 
   # Returns multiple language select boxes.
-  def language_selects(langs)
-    langs = [Language.new] if langs.empty?
+  def language_select_tags(langs)
+    langs = [nil] if langs.empty?
 
     langs.collect do |lang|
-      language_select lang, {}, name: 'languages[]'
+      language_select_tag 'languages[]', lang
     end.join('').html_safe
+  end
+
+  # Returns all countries in a select box friendly format.
+  def list_countries
+    @countries ||= Rails.cache.fetch("countries_#{I18n.locale}") do
+      Carmen::Country.all.sort { |x, y| x.name <=> y.name }.collect do |c|
+        [c.name, c.code]
+      end
+    end
+  end
+
+  # Returns a country select box.
+  def country_select_tag(name, val = nil, opt = {})
+    select_tag name, options_for_select(list_countries, val), opt
   end
 
   # Returns select box options with all possible contact fields.
