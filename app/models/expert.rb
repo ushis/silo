@@ -29,7 +29,7 @@ class Expert < ActiveRecord::Base
   has_many   :attachments, autosave: true, dependent: :destroy, as: :attachable
   has_many   :addresses,   autosave: true, dependent: :destroy, as: :addressable
   has_many   :langs,       autosave: true, dependent: :destroy, as: :langable
-  has_many   :cvs,         autosave: true, dependent: :destroy
+  has_many   :cvs,         autosave: true, dependent: :destroy, order: :language_id
   has_many   :languages,   through: :langs
   belongs_to :user
 
