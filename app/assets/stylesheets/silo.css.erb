@@ -1418,151 +1418,67 @@ body.experts.contact #main form input[type=text] {
 }
 
 /* Documents */
-
-body.experts.documents #main {
-  min-height: 368px;
-}
-
-body.experts #main div.documents {
-  width: 100%;
+body.experts.documents #main div.cvs,
+body.experts.documents #main div.attachments,
+body.experts.documents #main div.forms form {
+  width: 49%;
   float: left;
-  position: relative;
 }
 
-body.experts #main div.documents div.form-wrapper {
-  width: 400px;
-  position: absolute;
-  right: -10px;
-  margin-top: 0;
-  padding: 5px 10px 10px 10px;
-  box-shadow: none;
+body.experts.documents #main div.attachments,
+body.experts.documents #main div.forms form.new_attachment {
+  float: right;
 }
 
-body.experts #main div.documents div.form-wrapper.cvs-form {
-  top: -20px;
-  border-radius: 4px 4px 0 0;
-}
-body.experts #main div.documents div.form-wrapper.attachments-form {
-  top: 98px;
-  border-radius: 0 0 4px 4px;
-}
-
-body.experts #main div.documents div.form-wrapper h3 {
-  padding-top: 5px;
+body.experts.documents #main h4 {
+  color: #555;
   font-size: .9em;
 }
 
-body.experts #main div.documents div.form-wrapper.attachments-form h3 {
-  padding-top: 15px;
-  border-top: 1px solid #EFEFEF;
-  text-shadow: 1px 1px 0px rgba(255, 255, 255, .5);
-  box-shadow: 0 -1px 0 rgba(0, 0, 0, .2);
+body.experts.documents #main div table td.del {
+  width: 24px;
 }
 
-body.experts #main div.documents div.form-wrapper form {
-  padding: 10px 0 0 0;
-  width: 100%;
-  float: left;
-}
-
-body.experts #main div.documents div.form-wrapper input[type=file] {
-  display: none;
-}
-
-body.experts #main div.documents div.form-wrapper form  div.upload label.fakefield {
-  cursor: pointer;
-  display: inline;
-  float: left;
-  padding: 7px 15px 6px 30px;
-  margin: 0;
-  background: #f0f0f0;
-  border-radius: 3px 0 0 3px;
-  border: 1px solid #bbb;
-  text-shadow: none;
-  color: #444;
-}
-
-body.experts #main div.documents div.form-wrapper form  div.upload div.filename {
+body.experts.documents #main div table input.del {
   display: block;
-  float: left;
-  position: relative;
-  padding: 7px 15px 6px 15px;
-  margin: 0 0 0 -5px;
-  background: #f0f0f0;
-  border-radius: 0 3px 3px 0;
-  border: 1px solid #bbb;
-  text-shadow: none;
-  color: #444;
-  font-size: .7em;
+  width: 11px;
+  height: 12px;
+  padding: 0;
+  text-indent: -9999px;
+  background: transparent url('<%= asset_data_uri 'icon_delete.png' %>') center center no-repeat;
 }
 
-body.experts #main div.documents div.form-wrapper form div.upload div.languages,
-body.experts #main div.documents div.form-wrapper form div.upload div.title {
-  display: inline;
-  float: left;
+body.experts.documents #main div.forms {
   clear: both;
-  margin-top: 10px;
+  padding-top: 20px;
 }
 
-body.experts #main div.documents div.form-wrapper form div.upload label.select-box-label {
-  display: inline;
-  float: left;
-  margin: 3px 10px 0 0;
-}
-
-body.experts #main div.documents div.form-wrapper form div.upload select {
-  display: inline;
-  float: left;
-}
-
-body.experts #main div.cvs,
-body.experts #main div.attachments {
-  width: 100%;
-  float: left;
-  position: relative;
-  padding-right: 425px;
-  box-sizing: border-box;
-}
-
-body.experts #main div.cvs {
-  margin-bottom: 30px;
-}
-
-body.experts #main div.cvs div.file,
-body.experts #main div.attachments div.file {
-  width: 120px;
-  height: 120px;
-  float: left;
-  position: relative;
-  margin: 0 0 15px 15px;
-  padding: 5px;
-  border-radius: 3px;
+body.experts.documents #main div.forms form {
+  padding: 6px 4px;
+  background: #e8e8e8;
+  border-radius: 4px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, .2);
   box-sizing: border-box;
   -moz-box-sizing: border-box;
-  background: #f0f0f0 url(<%= asset_data_uri('icon_cv_big.png') %>) center center no-repeat;
 }
 
-body.experts #main div.file a {
-  float: left;
-  color: #444;
-  font-size: .8em;
+body.experts.documents #main div.forms form input,
+body.experts.documents #main div.forms form select {
+  display: inline;
+  float: none;
+  margin: 0 4px;
+  color: #222;
 }
 
-body.experts #main div.file input[type=submit] {
+body.experts.documents #main div.forms form input[type=text] {
+  width: 170px;
+}
+
+body.experts.documents #main div.forms form input[type=file] {
+  font-size: .76em;
+}
+
+body.experts.documents #main div.forms form input[type=submit] {
   float: right;
-  position: absolute;
-  top: 0;
-  right: 5px;
-  color: #444;
-  padding: 0;
-  background: none;
-  box-shadow: none;
-  text-shadow: none;
-}
-
-body.experts #main div.file p {
-  position: absolute;
-  bottom: 0;
-  color: #444;
-  font-size: .7em;
+  color: #d0d0d0;
 }
