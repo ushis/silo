@@ -10,10 +10,8 @@
     <% @expert.addresses.each do |address| %>
       <address>
         <%= button_to 'x', [@expert, address], method: :delete %>
-        <%= address.street %><br/>
-        <%= address.zipcode %> <%= address.city %><br/>
+        <%= address.address %><br/>
         <%= address.human_country %><br/>
-        <%= address.more %>
       </address>
     <% end %>
     <div class="form-wrapper">
@@ -22,24 +20,12 @@
       </h5>
       <%= form_for Address.new, url: expert_addresses_path(@expert) do |f| %>
         <p>
-          <%= f.label :street %>
-          <%= f.text_field :street %>
-        </p>
-        <p>
-          <%= f.label :zipcode %>
-          <%= f.text_field :zipcode %>
-        </p>
-        <p>
-          <%= f.label :city %>
-          <%= f.text_field :city %>
+          <%= f.label :address %>
+          <%= f.text_area :address %>
         </p>
         <p>
           <%= f.label :country %>
           <%= f.country_select :country %>
-        </p>
-        <p>
-          <%= f.label :more %>
-          <%= f.text_field :more %>
         </p>
         <p>
           <%= f.submit t('action.add_address') %>

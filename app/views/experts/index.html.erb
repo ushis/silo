@@ -14,10 +14,6 @@
       <%= form_tag search_experts_path, method: :get do %>
         <ul>
           <li>
-            <%= degree_select_tag(:degree, params[:degree],
-              prompt: t('label.degree')) %>
-          </li>
-          <li>
             <%= language_select_tag(:language, params[:language],
                                     prompt: t('label.language')) %>
           </li>
@@ -74,7 +70,7 @@
               <%= link_to expert.prename, expert_path(expert) %>
             </td>
             <td>
-              <%= expert.degree && t(expert.degree, scope: :degree) %>
+              <%= expert.degree %>
             </td>
             <td>
               <%= expert.age %>

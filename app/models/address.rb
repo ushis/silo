@@ -8,13 +8,10 @@ require 'carmen'
 # - *id* integer
 # - *addressable_id* integer
 # - *addressable_type* string
-# - *street* string
-# - *zipcode* string
-# - *city* string
+# - *address* text
 # - *country* string
-# - *more* string
 class Address < ActiveRecord::Base
-  attr_accessible :street, :zipcode, :city, :country, :more
+  attr_accessible :address, :country
 
   belongs_to :addressable, polymorphic: true
 

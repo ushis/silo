@@ -20,13 +20,11 @@ class ExpertsReport < ApplicationReport
       [t('label.gender'), t(e.gender, scope: :gender)],
       [''],
       [t('label.birthday'), l(e.birthday, format: :short)],
-      [t('label.birthplace'), e.birthplace],
       [t('label.citizenship'), e.human_citizenship],
       [''],
       [t('label.job'), e.job],
-      [t('label.company'), e.company],
       [''],
-      [t('label.degree'), e.degree && t(e.degree, scope: :degree)],
+      [t('label.degree'), e.degree],
       [t('label.languages'), e.languages.collect { |l| l.human }.join(', ')],
       [''],
       [t('label.former_collaboration'), t(e.former_collaboration.to_s, scope: :label)],
@@ -42,11 +40,8 @@ class ExpertsReport < ApplicationReport
 
     e.addresses.each_with_index do |address, i|
       data << ['']
-      data << ["#{i + 1}. #{t('label.address')}"]
-      data << [t('label.street'), address.street]
-      data << [t('label.city'), "#{address.zipcode} #{address.city}"]
-      data << [t('label.country'), address.human_country]
-      data << [t('label.more'), address.more] unless address.more.blank?
+      data << ["#{i + 1}. #{t('label.address')}", address.address]
+      data << ['', address.human_country]
     end
 
     table(data, cell_style: { borders: [], padding: 5 })

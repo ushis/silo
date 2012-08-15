@@ -14,7 +14,7 @@
           </div>
           <div class="degree">
             <%= f.label :degree %>
-            <%= f.select :degree, list_degrees %>
+            <%= f.text_field :degree %>
           </div>
           <div class="prename">
             <%= f.label :prename %>
@@ -34,10 +34,6 @@
             <%= f.label :birthday %>
             <%= f.date_select :birthday, start_year: 1901, end_year: Time.now.year %>
           </div>
-          <div class="birthplace">
-            <%= f.label :birthplace %>
-            <%= f.text_field :birthplace %>
-          </div>
         </div>
         <div class="row lang">
           <div class="languages">
@@ -48,10 +44,6 @@
           </div>
         </div>
         <div class="row business">
-          <div class="company">
-            <%= f.label :company %>
-            <%= f.text_field :company %>
-          </div>
           <div class="job">
             <%= f.label :job %>
             <%= f.text_field :job %>

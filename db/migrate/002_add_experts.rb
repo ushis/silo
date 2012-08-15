@@ -5,13 +5,11 @@ class AddExperts < ActiveRecord::Migration
       t.string      :name,                 null: false
       t.string      :prename,              null: false
       t.string      :gender,               null: false
-      t.datetime    :birthday,             null: true
-      t.string      :birthplace,           null: true
+      t.date        :birthday,             null: true
       t.string      :citizenship,          null: true
       t.string      :degree,               null: true
       t.boolean     :former_collaboration, null: false, default: false
       t.string      :fee,                  null: true
-      t.string      :company,              null: true
       t.string      :job,                  null: true
       t.timestamps
     end
@@ -29,15 +27,10 @@ class AddExperts < ActiveRecord::Migration
 
     create_table :addresses do |t|
       t.references :addressable, polymorphic: true
-      t.string     :street,      null: false
-      t.string     :city,        null: false
-      t.string     :zipcode,     null: true
+      t.text       :address,     null: false
       t.string     :country,     null: true
-      t.string     :more,        null: true
     end
 
-    add_index :addresses, :zipcode
-    add_index :addresses, :city
     add_index :addresses, [:addressable_id, :addressable_type]
   end
 

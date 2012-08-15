@@ -14,11 +14,6 @@ en:
     save: 'Save'
     select_file: 'Select a file'
 
-  degree:
-    bachelor: 'Bachelor'
-    master: 'Master'
-    phd: 'Ph.D.'
-
   gender:
     female: 'Female'
     male: 'Male'
@@ -34,8 +29,6 @@ en:
     birthplace: 'Place of birth'
     by: 'by %{name}'
     citizenship: 'Citizenship'
-    city: 'City'
-    company: 'Company'
     country: 'Country'
     cv: 'CV'
     degree: 'Degree'
@@ -71,7 +64,6 @@ en:
     search: 'Search'
     skype: 'Skype'
     skypes: 'Skypes'
-    street: 'Street'
     title: 'Title'
     'true': 'Yes'
     updated_at: 'Updated at %{date}'
@@ -80,7 +72,6 @@ en:
     website: 'Website'
     websites: 'Websites'
     welcome: 'Welcome'
-    zipcode: 'Zipcode'
 
   msg:
     access_denied: 'Access denied.'
@@ -129,3 +120,7 @@ en:
     formats:
       short: '%B %e, %Y'
       long: '%Y/%m/%d %H:%M'
+
+  date:
+    formats:
+      short: '%B %e, %Y'

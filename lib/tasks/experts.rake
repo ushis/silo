@@ -75,8 +75,6 @@ namespace :experts do
       co
     end
 
-    degrees = { master: ['m'], phd: ['dr', 'prof', 'mag', 'dvm'] }
-
     File.open(args[:filename]) do |f|
       user = User.first
       experts = Hash.from_xml(f.read)['dataroot']['Adressen']
@@ -100,17 +98,22 @@ namespace :experts do
         end
 
         e.birthday = data['Geburtsdatum'].try(:to_datetime) || nil
-        e.birthplace = data['Geburtsort']
-        e.job = data['FirmaT']
+        e.degree = data.fetch('Titel', '').strip
 
-        if (d = data['Titel'])
-          d = d.strip.downcase.split(/\.| /).first
-          e.degree = degrees.find { |s, l| l.include?(d) }.try(:first)
-        end
+        # Job
+        job = data['FirmaT'].try(:strip)
 
-        e.company = ['Firma1', 'Firma2'].collect do |f|
-          data[f] || ''
+        company = ['Firma1', 'Firma2'].collect do |f|
+          data[f].try(:strip) || ''
         end.join(' ').strip
+
+        if job.blank?
+          e.job = company
+        elsif company.blank?
+          e.job = job
+        else
+          e.job = [job, company].join(' - ')
+        end
 
         # Citizenship
         if (c = data['Staatsb'])
@@ -130,17 +133,13 @@ namespace :experts do
           end
         end
 
-        if (fax = data['Fax'])
-          e.contact.faxes << data['Fax']
-        end
-
         # First address
-        address_keys = ['Stra', 'Wohnort', 'Land']
-
-        if address_keys.any? { |v| ! data[v].blank? }
+        if ['Stra', 'Wohnort', 'Land'].any? { |v| ! data[v].blank? }
           address = Address.new
-          address.street = data['Stra'].to_s.strip
-          address.city = data['Wohnort'].to_s.strip
+
+          address.address = [data['Stra'], data['Wohnort']].delete_if do |f|
+            f.blank?
+          end.join("\n")
 
           if (c = data['Land'])
             address.country = country_from_s.call(c).code
