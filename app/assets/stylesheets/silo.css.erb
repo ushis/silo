@@ -528,60 +528,39 @@ body.experts #main div.header #quicksearch input[type=submit] {
   box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
 }
 
-body.experts #main div.header #filter {
-  display: none;
-  clear: both;
-}
-
-body.experts #main div.header #filter form {
-  margin: 0;
+/* Experts filter */
+body.experts #filter {
+  margin: -10px 0 20px 0;
   padding: 0;
+  background-color: #e5e5e5;
 }
 
-body.experts #main div.header #filter form label {
-  margin: 10px 0 0 0;
-  padding: 0;
+body.experts #main #filter form {
+  padding: 4px 8px;
+}
+
+body.experts #filter ul li {
   float: left;
-  display: block;
-  width: 100%;
+  margin: 6px;
 }
 
-body.experts #main div.header #filter form input[type=text] {
-  margin: 0;
-  float: left;
-  display: block;
-  width: 100%;
-}
-
-body.experts #main div.header #filter form select {
-  margin: 5px 0;
-  float: left;
-  display: block;
-  clear: left;
-  width: 100%;
-}
-
-body.experts #main div.header #filter form input[type=submit] {
-  margin: 10px 0;
-  padding: 6px 10px;
-  float: right;
+body.experts #filter ul li.name {
   clear: left;
 }
 
-body.experts #main div.header #filter ul {
-  float: left;
-  width: 32%;
+body.experts #filter ul li.name input {
+  width: 200px;
 }
 
-body.experts #main div.header #filter ul:last-child {
-  margin-left: 20px;
+body.experts #filter ul li.q input {
+  width: 400px;
 }
 
-body.experts #main div.header #filter ul table {
-  margin: 0;
-  padding: 0;
+body.experts #filter ul li input[type=submit] {
+  position: static;
 }
 
+/* Experts table */
 body.experts #main table.experts {
   position: relative;
 }
