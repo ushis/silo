@@ -107,6 +107,8 @@ en:
     deleted_expert: 'Deleted expert: %{expert}'
     deleted_address: 'Deleted Address.'
     deleted_user: 'Deleted user: %{user}'
+    expert_has_no_attachments: 'This expert has no attachments.'
+    expert_has_no_cvs: 'This expert has no CVs.'
     expert_not_found: 'Expert not found.'
     file_not_found: 'File not found.'
     generic_error: 'Sorry, but something went wrong.'

@@ -9,24 +9,32 @@
       </h4>
       <table>
         <tbody>
-          <% @expert.cvs.each do |cv| %>
+          <% if @expert.cvs.empty? %>
             <tr>
               <td>
-                <%= link_to cv.language.human, [@expert, cv] %>
+                <%= t('msg.expert_has_no_cvs') %>
               </td>
-              <td>
-                <%= cv.ext %>
-              </td>
-              <td>
-                <%= l cv.created_at, format: :long %>
-              </td>
-              <% if current_user.access?(:experts) %>
-                <td class="del">
-                  <%= button_to('x', [@expert, cv], method: :delete,
-                                                    class: 'del') %>
-                </td>
-              <% end %>
             </tr>
+          <% else %>
+            <% @expert.cvs.each do |cv| %>
+              <tr>
+                <td>
+                  <%= link_to cv.language.human, [@expert, cv] %>
+                </td>
+                <td>
+                  <%= cv.ext %>
+                </td>
+                <td>
+                  <%= l cv.created_at, format: :long %>
+                </td>
+                <% if current_user.access?(:experts) %>
+                  <td class="del">
+                    <%= button_to('x', [@expert, cv], method: :delete,
+                                                      class: 'del') %>
+                  </td>
+                <% end %>
+              </tr>
+            <% end %>
           <% end %>
         </tbody>
       </table>
@@ -37,44 +45,66 @@
       </h4>
       <table>
         <tbody>
-          <% @expert.attachments.each do |attachment| %>
+          <% if @expert.attachments.empty? %>
             <tr>
               <td>
-                <%= link_to attachment.title, [@expert, attachment] %>
+                <%= t('msg.expert_has_no_attachments') %>
               </td>
-              <td>
-                <%= attachment.ext %>
-              </td>
-              <td>
-                <%= l attachment.created_at, format: :long %>
-              </td>
-              <% if current_user.access?(:experts) %>
-                <td class="del">
-                  <%= button_to('x', [@expert, attachment], method: :delete,
-                                                            class: 'del') %>
-                </td>
-              <% end %>
             </tr>
+          <% else %>
+            <% @expert.attachments.each do |attachment| %>
+              <tr>
+                <td>
+                  <%= link_to attachment.title, [@expert, attachment] %>
+                </td>
+                <td>
+                  <%= attachment.ext %>
+                </td>
+                <td>
+                  <%= l attachment.created_at, format: :long %>
+                </td>
+                <% if current_user.access?(:experts) %>
+                  <td class="del">
+                    <%= button_to('x', [@expert, attachment], method: :delete,
+                                                              class: 'del') %>
+                  </td>
+                <% end %>
+              </tr>
+            <% end %>
           <% end %>
         </tbody>
       </table>
     </div><!-- attachments -->
     <% if current_user.access?(:experts) %>
       <div class="forms">
-        <%= form_for Cv.new, url: expert_cvs_path(@expert) do |f| %>
-          <div>
-            <%= f.file_field :file %>
-            <%= f.collection_select :language_id, languages, :id, :human %>
-            <%= f.submit t('action.add') %>
-          </div>
-        <% end %>
-        <%= form_for Attachment.new, url: expert_attachments_path(@expert) do |f| %>
-          <div>
-            <%= f.file_field :file %>
-            <%= f.text_field :title, placeholder: t('label.title') %>
-            <%= f.submit t('action.add') %>
-          </div>
-        <% end %>
+        <div class="cv">
+          <h4>
+            <%= t('label.new_cv') %>
+          </h4>
+          <%= form_for Cv.new, url: expert_cvs_path(@expert) do |f| %>
+            <div>
+              <%= f.collection_select :language_id, languages, :id, :human %>
+            </div>
+            <div>
+              <%= f.file_field :file %>
+              <%= f.submit t('action.add') %>
+            </div>
+          <% end %>
+        </div>
+        <div class="attachment">
+          <h4>
+            <%= t('label.new_attachment') %>
+          </h4>
+          <%= form_for Attachment.new, url: expert_attachments_path(@expert) do |f| %>
+            <div>
+              <%= f.text_field :title, placeholder: t('label.title') %>
+            </div>
+            <div>
+              <%= f.file_field :file %>
+              <%= f.submit t('action.add') %>
+            </div>
+          <% end %>
+        </div>
       </div><!-- forms -->
     <% end %>
     <div class="clear"></div>
