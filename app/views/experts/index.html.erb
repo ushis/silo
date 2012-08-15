@@ -3,60 +3,40 @@
 <div id="main">
   <div>
     <div class="header">
-      <div id="quicksearch">
-        <%= text_field_tag :search, nil, placeholder: t('label.quicksearch') %>
-        <%= submit_tag t('label.search') %>
-      </div>
-      <div id="toggle_filter_button" class="button">
-        <%= t('label.advanced_search') %>
-      </div>
+      <h2>
+        <%= @title %>
+      </h2>
       <div class="pagination">
         <%= paginate @experts %>
       </div>
-      <div id="filter">
-        <%= form_tag search_experts_path, method: :get do %>
-          <ul>
-            <li>
-              <%= label_tag :name %>
-              <%= text_field_tag :name %>
-            </li>
-            <li>
-              <%= label_tag :citizenship %>
-              <%= country_select_tag(:citizenship, params[:citizenship],
-                                     prompt: t('label.citizenship')) %>
-            </li>
-          </ul>
-          <ul>
-            <li>
-              <table>
-                <tr>
-                  <td width="70%">
-                    <%= label_tag :language %>
-                  </td>
-                  <td>
-                    <%= label_tag :degree %>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <%= language_select_tag(:language, params[:language],
-                                            prompt: t('label.language')) %>
-                  </td>
-                  <td>
-                    <%= degree_select_tag(:degree, params[:degree],
-                                          prompt: t('label.degree')) %>
-                  </td>
-                </tr>
-              </table>
-            </li>
-            <li>
-              <%= label_tag :q %>
-              <%= text_field_tag :q %>
-              <%= submit_tag 'Search' %>
-            </li>
-          </ul>
-        <% end %>
-      </div>
+    </div>
+    <div id="filter" class="form-wrapper">
+      <%= form_tag search_experts_path, method: :get do %>
+        <ul>
+          <li>
+            <%= degree_select_tag(:degree, params[:degree],
+              prompt: t('label.degree')) %>
+          </li>
+          <li>
+            <%= language_select_tag(:language, params[:language],
+                                    prompt: t('label.language')) %>
+          </li>
+          <li>
+            <%= country_select_tag(:citizenship, params[:citizenship],
+                                   prompt: t('label.citizenship')) %>
+          </li>
+          <li class="name">
+            <%= text_field_tag :name, params[:name], placeholder: t('label.name') %>
+          </li>
+          <li class="q">
+            <%= text_field_tag :q, params[:q], placeholder: 'CVs & Comments' %>
+          </li>
+          <li>
+            <%= submit_tag 'Search' %>
+          </li>
+        </ul>
+        <div class="clear"></div>
+      <% end %>
     </div>
     <table class="experts">
       <thead>
@@ -114,9 +94,3 @@
     </div>
   </div>
 </div>
-
-<script>
-$(document).ready(function(){
-  $('#toggle_filter_button').siloToggler('#filter');
-});
-</script>
