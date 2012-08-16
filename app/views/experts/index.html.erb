@@ -56,6 +56,7 @@
           <th>
             <%= t 'label.cv' %><span></span>
           </th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -80,6 +81,11 @@
             </td>
             <td class="cvs">
               <%= list_cvs expert %>
+            </td>
+            <td class="attachments">
+              <% unless expert.attachments.empty? %>
+                <%= link_to t('label.documents'), documents_expert_path(expert) %>
+              <% end %>
             </td>
           </tr>
         <% end %>

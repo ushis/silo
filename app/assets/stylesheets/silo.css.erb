@@ -552,16 +552,6 @@ body.experts #main table td:last-child {
   border-radius: 0 4px 4px 0;
 }
 
-body.experts #main table td.icons {
-  width: 10px;
-  background: #f7f7f7;
-  position: relative;
-}
-
-body.experts #main table td.icons a {
-  height: 15px;
-}
-
 body.experts #main table td.cvs a {
   background:  url(<%= asset_data_uri('icon_cv.png') %>) left center no-repeat;
   border-radius: 2px;
@@ -572,6 +562,13 @@ body.experts #main table td.cvs a {
   color: #444;
   font-size: .9em;
   text-shadow: 1px 1px 0px #f5f5f5;
+}
+
+body.experts #main table td.attachments a {
+  display: block;
+  width: 13px;
+  text-indent: -9999px;
+  background: transparent url('<%= asset_data_uri 'icon_attachment.png' %>') center center no-repeat;
 }
 
 body.experts #main table td a {
