@@ -721,11 +721,12 @@ body.experts div.confirm-delete div:hover {
 }
 
 #main div.form-wrapper div.row {
-  width: 100%;
+  width: 721px;
   float: left;
   position: relative;
   padding-bottom: 10px;
   margin-bottom: 10px;
+  margin-right: 100%;
   border-bottom: 1px solid #BBB;
   box-shadow: 0 1px 0px #EFEFEF;
   box-sizing: border-box;
@@ -828,7 +829,11 @@ body.experts #main div.form-wrapper div.degree input {
 body.experts #main div.form-wrapper div.name input,
 body.experts #main div.form-wrapper div.business input[type=text],
 body.experts #main div.form-wrapper div.citizenship select {
-  width: 340px;
+  width: 350px;
+}
+
+body.experts #main div.form-wrapper div:last-child {
+  margin-right: 0;
 }
 
 body.experts #main div.form-wrapper div.fee {
@@ -845,8 +850,8 @@ body.experts #main div.form-wrapper div.former-collaboration input + label {
 }
 
 body.experts #main div.comment textarea {
-  width: 500px;
-  height: 200px;
+  width: 720px;
+  height: 150px;
 }
 
 body.experts #main div.form-wrapper div.multi-lang {
@@ -855,7 +860,6 @@ body.experts #main div.form-wrapper div.multi-lang {
 
 body.experts #main div.form-wrapper div.multi-lang > div {
   float: left;
-  margin: 0 0 8px 0;
 }
 
 body.experts #main form div.multi-lang span.more,
@@ -900,6 +904,16 @@ body.experts #main form div.multi-lang span.delete:before {
   margin-top: -4px;
   border-width: 4px;
   border-right-color: #4f4f4f;
+}
+
+body.experts #main div.form-wrapper form div.submit {
+  width: 100%;
+}
+
+body.experts #main div.form-wrapper form input[type=submit] {
+  position: relative;
+  float: right;
+  margin: 0;
 }
 
 /* Login */
@@ -1135,61 +1149,75 @@ body.experts.show #main dl dd {
 
 
 /* Contacts */
-body.experts.contact #main div.addresses {
+body.experts.contact #main div.addresses,
+body.experts.contact #main div.contacts {
   float: left;
   width: 49%;
+  color: #444;
+  padding: 0;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
 }
 
 body.experts.contact #main div.contacts {
   float: right;
-  width: 49%;
-}
-
-body.experts.contact #main div.contacts {
-  margin-left: 15px;
-  color: #444;
 }
 
 body.experts.contact #main h4 {
   font-size: 1em;
-  margin-bottom: 20px;
+  padding: 3px 0 0 22px;
+  margin: 0 0 20px 3px;
 }
 
+body.experts.contact #main div.addresses h4 {
+  background: transparent url(<%= asset_data_uri 'icon_addresses.png' %>) left center no-repeat;
+}
+
+body.experts.contact #main div.contacts h4 {
+  background: transparent url(<%= asset_data_uri 'icon_addresses.png' %>) left center no-repeat;
+}
+
+
 body.experts.contact #main div.contacts > h5 {
-  margin-bottom: 5px;
-  font-size: .95em;
   color: #888;
-  text-shadow: 1px 1px 0 rgba(255, 255, 255, 1);
+  font-size: .7em;
+  padding: 0 2px 4px 2px;
+  font-weight: bold;
+  text-shadow: 1px 1px 0 #fff;
 }
 
 body.experts.contact #main div.addresses address {
   width: 100%;
   background: #efefef;
   padding: 10px;
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
   position: relative;
   border-radius: 4px;
-  margin-bottom: 15px;
-  font-size: .9em;
+  margin-bottom: 10px;
+  font-size: .8em;
   box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
 }
 
-body.experts.contact #main div.addresses address input[type=submit] {
+body.experts.contact #main div.addresses address input[type=submit],
+body.experts.contact #main div.contacts input[type=submit].delete {
   position: absolute;
-  top: 0;
+  top: 5px;
   right: 0;
-  padding: 2px 8px 5px 8px;
+  height: 12px;
+  width: 12px;
+  text-indent: -99999px;
+  background: transparent url(<%= asset_data_uri 'icon_delete.png' %>) center center no-repeat;
 }
 
 body.experts.contact #main div.contacts ul li {
   position: relative;
   width: 100%;
   padding: 10px;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   background: #efefef;
   border-radius: 4px;
-  font-size: .9em;
+  font-size: .8em;
   box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
   box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -1207,7 +1235,7 @@ body.experts.contact #main div.contacts ul li input[type=submit] {
 
 body.experts.contact #main div.form-wrapper {
   padding: 0;
-  margin: 0;
+  margin: 20px 0 0 0;
 }
 
 body.experts.contact #main div.form-wrapper h5 {
@@ -1223,8 +1251,19 @@ body.experts.contact #main div.form-wrapper form input[type=submit] {
   margin: 15px 0;
 }
 
-body.experts.contact #main div.form-wrapper form p {
+body.experts.contact #main div.form-wrapper form div {
+  float: left;
+  width: 100%;
+  margin-bottom: 10px;
   padding: 0;
+}
+
+body.experts.contact #main div.form-wrapper form div.submit {
+  margin: 0;
+}
+
+body.experts.contact #main div.form-wrapper form div.submit input[type=submit] {
+  margin-top: 0;
 }
 
 body.experts.contact #main form label {

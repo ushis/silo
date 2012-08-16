@@ -19,17 +19,17 @@
         <%= t 'action.add_address' %>
       </h5>
       <%= form_for Address.new, url: expert_addresses_path(@expert) do |f| %>
-        <p>
+        <div>
           <%= f.label :address %>
-          <%= f.text_area :address %>
-        </p>
-        <p>
+          <%= f.text_area :address, rows: 6 %>
+        </div>
+        <div>
           <%= f.label :country %>
           <%= f.country_select :country %>
-        </p>
-        <p>
+        </div>
+        <div class="submit">
           <%= f.submit t('action.add_address') %>
-        </p>
+        </div>
       <% end %>
     </div>
   </div>
@@ -58,15 +58,15 @@
         <%= t 'action.add_contact' %>
       </h5>
       <%= form_tag expert_contacts_path(@expert) do %>
-        <p>
+        <div>
           <%= select_tag 'contact[field]', list_contact_fields %>
-        </p>
-        <p>
+        </div>
+        <div>
           <%= text_field_tag 'contact[contact]' %>
-        </p>
-        <p>
+        </div>
+        <div class="submit">
           <%= submit_tag t('action.add_contact') %>
-        </p>
+        </div>
       <% end %>
     </div>
   </div>
