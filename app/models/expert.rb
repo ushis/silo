@@ -152,12 +152,10 @@ class Expert < ActiveRecord::Base
   #
   #   expert.full_name_with_degree
   #   #=> "Alan Turing, Ph.D."
+  #
+  # If degree is blank, Expert#full_name is returned.
   def full_name_with_degree
-    if degree
-      "#{full_name}, #{degree}"
-    else
-      full_name
-    end
+    degree.blank? ? full_name : "#{full_name}, #{degree}"
   end
 
   # Returns the experts age or nil if the birthday is unknown.
