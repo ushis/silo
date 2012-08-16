@@ -4,36 +4,39 @@
   <div>
     <div class="header">
       <h2>
-        <%= @title %>
+        <%= t 'label.search' %>
       </h2>
+      <div id="filter" class="form-wrapper">
+        <%= form_tag search_experts_path, method: :get do %>
+          <div class="row">
+            <div class="name">
+              <%= text_field_tag :name, params[:name], placeholder: t('label.name') %>
+            </div>
+            <div class="q">
+              <%= text_field_tag :q, params[:q], placeholder: 'CVs & Comments' %>
+            </div>
+          </div>
+          <div class="row">
+            <div>
+              <%= language_select_tag(:language, params[:language],
+                                      prompt: t('label.language')) %>
+            </div>
+            <div>
+              <%= country_select_tag(:citizenship, params[:citizenship],
+                                     prompt: t('label.citizenship')) %>
+            </div>
+            <div>
+              <%= submit_tag 'Search' %>
+            </div>
+          </div>
+          <div class="clear"></div>
+        <% end %>
+      </div>
       <div class="pagination">
         <%= paginate @experts %>
       </div>
     </div>
-    <div id="filter" class="form-wrapper">
-      <%= form_tag search_experts_path, method: :get do %>
-        <ul>
-          <li>
-            <%= language_select_tag(:language, params[:language],
-                                    prompt: t('label.language')) %>
-          </li>
-          <li>
-            <%= country_select_tag(:citizenship, params[:citizenship],
-                                   prompt: t('label.citizenship')) %>
-          </li>
-          <li class="name">
-            <%= text_field_tag :name, params[:name], placeholder: t('label.name') %>
-          </li>
-          <li class="q">
-            <%= text_field_tag :q, params[:q], placeholder: 'CVs & Comments' %>
-          </li>
-          <li>
-            <%= submit_tag 'Search' %>
-          </li>
-        </ul>
-        <div class="clear"></div>
-      <% end %>
-    </div>
+    
     <table class="experts">
       <thead>
         <tr>

@@ -8,7 +8,7 @@
  */
 body {
   background-color: #3a3a3a;
-  min-width: 1000px;
+  min-width: 1100px;
 }
 
 a, form.button_to input[type=submit] {
@@ -443,35 +443,40 @@ body.users #main table td.icons ul li:last-child {
 }
 
 /* Experts filter */
+body.experts #main div.header {
+  overflow: hidden;
+}
+
 body.experts #filter {
-  margin: -10px 0 20px 0;
+  margin: 0 0 -32px -10px;
   padding: 0;
-  background-color: #e5e5e5;
+  background: transparent;
+  box-shadow: none;
 }
 
-body.experts #main #filter form {
-  padding: 4px 8px;
-}
-
-body.experts #filter ul li {
+body.experts #main div.form-wrapper#filter div.row {
   float: left;
-  margin: 6px;
+  width: 550px;
+  height: 40px;
+  margin-right: 20px;
 }
 
-body.experts #filter ul li.name {
-  clear: left;
+body.experts #main div.form-wrapper#filter div.row:nth-child(3) {
+  margin-right: 360px;
 }
 
-body.experts #filter ul li.name input {
-  width: 200px;
+body.experts #main div.form-wrapper#filter div.row div.name,
+body.experts #main div.form-wrapper#filter div.row div.q {
+  float: left;
+  width: 265px;
+  box-sizing: border-box;
 }
 
-body.experts #filter ul li.q input {
-  width: 400px;
-}
-
-body.experts #filter ul li input[type=submit] {
-  position: static;
+body.experts #main div.form-wrapper#filter div.row div.name input,
+body.experts #main div.form-wrapper#filter div.row div.q input {
+  float: left;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Experts table */
