@@ -84,7 +84,8 @@
             </td>
             <td class="attachments">
               <% unless expert.attachments.empty? %>
-                <%= link_to t('label.documents'), documents_expert_path(expert) %>
+                <%= link_to(t('label.documents'), documents_expert_path(expert),
+                            class: 'icon-attachment')%>
               <% end %>
             </td>
           </tr>
