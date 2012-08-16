@@ -36,7 +36,7 @@ class ExpertsController < ApplicationController
 
   # Serves the experts documents page.
   def documents
-    @expert = Expert.includes(:attachments, :cvs, :user).find(params[:id])
+    @expert = Expert.includes(:attachments, {cvs: :attachment}, :user).find(params[:id])
     @title = @expert.full_name_with_degree
   end
 
