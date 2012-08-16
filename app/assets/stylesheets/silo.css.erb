@@ -4,6 +4,7 @@
  * Main silo stylesheet
  *
  * =require reset
+ * =require icons
  */
 body {
   background-color: #3a3a3a;
@@ -76,7 +77,6 @@ div.clear {
 #header h1 a {
   display: block;
   width: 83px;
-  background: transparent url(<%= asset_data_uri 'logo.png' %>) center left no-repeat;
 }
 
 #header #user-tools {
@@ -114,9 +114,6 @@ div.clear {
 
 #header #user-tools li input[type=submit] {
   padding-right: 26px;
-  background-position: right center;
-  background-image: url(<%= asset_data_uri 'icon_logout.png' %>);
-  background-repeat: no-repeat;
 }
 
 /* Navigation */
@@ -206,26 +203,11 @@ body.users #nav li.users a {
 #sidebar ul li a {
   display: block;
   padding-top: 22px;
-  color: #333;
+  color: #222;
   text-align: center;
   background-color: transparent;
   background-position: center top;
   background-repeat: no-repeat;
-}
-
-body.users #sidebar ul li.index a,
-body.experts #sidebar ul li.index a {
-  color: #222;
-  background-image: url(<%= asset_data_uri 'icon_list.png' %>);
-}
-
-body.users #sidebar ul li.new a {
-  color: #222;
-  background-image: url(<%= asset_data_uri 'icon_user_add.png' %>);
-}
-
-body.experts #sidebar ul li.new a {
-  background-image: url(<%= asset_data_uri 'icon_expert_add.png' %>);
 }
 
 body.index #sidebar ul li.index,
@@ -329,14 +311,6 @@ body.users.create #main h2 {
   font-size: 1em;
 }
 
-#main div.header ul.tools li a.edit {
-  background: url(<%= asset_data_uri('icon_edit.png') %>) left center no-repeat;
-}
-
-#main div.header ul.tools li a.print {
-  background: url(<%= asset_data_uri('icon_print.png') %>) left center no-repeat;
-}
-
 /* Experts Tabs */
 #main div.header ul.tabs {
   position: absolute;
@@ -425,21 +399,12 @@ body.experts.documents #main div.header ul.tabs li.documents a {
   background-repeat: no-repeat;
 }
 
-#main table td.icons a.edit {
-  background-image: url(<%= asset_data_uri 'icon_edit.png' %>);
-}
-
 #main table td.icons input[type=submit].delete {
   padding: 0;
   margin: 0;
   text-shadow: none;
   box-shadow: none;
   background-image: url(<%= asset_data_uri 'icon_delete.png' %>);
-}
-
-#main table td.icons form.pending input[type=submit].delete {
-  background-image: url(<%= asset_data_uri 'loading.gif' %>);
-  cursor: auto;
 }
 
 body.users #main table.users td:first-child {
