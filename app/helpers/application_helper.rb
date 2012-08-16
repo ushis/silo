@@ -4,7 +4,6 @@ require 'silo_page_links'
 
 # Contains several generic helper methods.
 module ApplicationHelper
-  require_dependency 'language'
 
   # Returns all flash messages in separate div boxes.
   #
@@ -34,17 +33,10 @@ module ApplicationHelper
     link_to(txt, path, opt)
   end
 
-  # Returns a collection of all languages
-  def languages
-    @languages ||= Rails.cache.fetch("languages_#{I18n.locale}") do
-      Language.all.sort { |x, y| x.human <=> y.human }
-    end
-  end
-
   # Returns a language select box.
   def language_select_tag(name, val = nil, opt = {})
     val = val.id if val.is_a? Language
-    opts = options_for_select(languages.collect { |l| [l.human, l.id] }, val)
+    opts = options_for_select(Language.select_box_friendly, val)
     select_tag name, opts, opt
   end
 

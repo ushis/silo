@@ -1,3 +1,5 @@
+require 'set'
+
 # The Language model provides access to a bunge of language codes.
 #
 # Database scheme:
@@ -23,6 +25,9 @@ class Language < ActiveRecord::Base
   has_one  :cv
   has_many :langs,   dependent: :destroy
   has_many :experts, through:   :langs
+
+  # A set of prioritized language codes.
+  PRIORITIES = [:de, :en, :es, :fr].to_set
 
   # Polymorphic language finder. Can handle Language, Fixnum, Symbol and
   # String arguments. Raises an ArgumentError in case of invalid input.
@@ -53,6 +58,35 @@ class Language < ActiveRecord::Base
     else
       raise ArgumentError, 'Argument is nor Language, Fixnum, Symbol or String'
     end
+  end
+
+  # Returns a collection of all languages ordered by priority and localized
+  # lagnuage name.
+  def self.priority_ordered
+    @priority_ordered ||= Rails.cache.fetch("languages_#{I18n.locale}") do
+      all.sort do |x, y|
+        if x.prioritized? == y.prioritized?
+          x.human <=> y.human
+        else
+          x.prioritized? ? -1 : 1
+        end
+      end
+    end
+  end
+
+  # Returns an array of all priority ordered ordered languages in a select
+  # box friendly format:
+  #
+  #   Language.select_box_friendly
+  #   #=> [['English', 12], ['German', 6], ['Arabic', 78], ...]
+  def self.select_box_friendly
+    priority_ordered.collect { |lang| [lang.human, lang.id] }
+  end
+
+  # Returns true if the language has priority, else false. The PRIORITIES
+  # constant is used to determine the value.
+  def prioritized?
+    @prioritized ||= PRIORITIES.include?(language.to_sym)
   end
 
   # Returns the localized language.
