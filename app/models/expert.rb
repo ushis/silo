@@ -168,10 +168,7 @@ class Expert < ActiveRecord::Base
     now = Time.now.utc.to_date
     age = now.year - birthday.year
 
-    if now.month < birthday.month || (now.month == birthday.month && now.day < birthday.day)
-      age - 1
-    else
-      age
-    end
+    (now.month < birthday.month ||
+      (now.month == birthday.month && now.day < birthday.day)) ? age - 1 : age
   end
 end
