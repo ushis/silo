@@ -1,10 +1,23 @@
 /**
- * icons.css
+ * icons.css.erb
  *
  * Defines all icons.
  */
+
+.icon-addresses {
+  background: transparent url(<%= asset_data_uri 'icon_addresses.png' %>) left center no-repeat;
+}
+
 .icon-attachment {
   background: transparent url('<%= asset_data_uri 'icon_attachment.png' %>') center center no-repeat;
+}
+
+.icon-checkmark {
+  background: transparent url(<%= asset_data_uri 'icon_checkmark.png' %>) right center no-repeat;
+}
+
+.icon-cv {
+  background: transparent url(<%= asset_data_uri('icon_cv.png') %>) left center no-repeat;
 }
 
 .icon-delete {
@@ -29,6 +42,10 @@
 
 .icon-print {
   background: transparent url('<%= asset_data_uri 'icon_print.png' %>') left center no-repeat;
+}
+
+.icon-user {
+  background: transparent url(<%= asset_data_uri 'icon_user.png' %>) left center no-repeat;
 }
 
 .icon-user-add {

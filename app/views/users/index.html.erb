@@ -5,7 +5,7 @@
     <tbody>
       <% @users.each do |user| %>
         <tr>
-          <td>
+          <td class="icon-user">
             <p>
               <%= full_user_link(user) %>
             </p>
@@ -19,7 +19,7 @@
               <%= l user.created_at, format: :short  %>
             </p>
             <p>
-              <%= list_privileges(user) %>
+              <%= list_privileges(user, 'icon-checkmark') %>
             </p>
           </td>
           <td class="icons">

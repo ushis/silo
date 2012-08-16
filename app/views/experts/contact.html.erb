@@ -4,7 +4,7 @@
   <%= render 'details_header' %>
 
   <div class="addresses">
-    <h4>
+    <h4 class="icon-addresses">
       <%= t('label.addresses') %>
     </h4>
     <% @expert.addresses.each do |address| %>
@@ -35,7 +35,7 @@
   </div>
 
   <div class="contacts">
-    <h4>
+    <h4 class="icon-addresses">
       <%= t('label.contacts') %>
     </h4>
     <% Contact::FIELDS.each do |field| %>

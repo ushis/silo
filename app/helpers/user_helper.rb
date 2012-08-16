@@ -7,10 +7,10 @@ module UserHelper
   #
   #   list_privileges(user)
   #   #=> '<span>experts</span><span class="checked">partners</span>'
-  def list_privileges(user)
+  def list_privileges(user, klass)
     user.privileges.inject('') do |html, item|
-      klass = 'checked' if item[1]
-      html << content_tag(:span, t(item[0], scope: :label), class: klass)
+      opt = { class: klass } if item[1]
+      html << content_tag(:span, t(item[0], scope: :label), opt)
     end.html_safe
   end
 
