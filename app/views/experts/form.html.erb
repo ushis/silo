@@ -12,10 +12,6 @@
             <%= f.label :degree, t('label.degree') %>
             <%= f.text_field :degree %>
           </div>
-          <div class="gender">
-            <%= f.label :gender, t('label.gender') %>
-            <%= f.select :gender, list_genders %>
-          </div>
         </div>
         <div class="row name">
           <div>
@@ -36,6 +32,10 @@
             <%= f.label :birthday, t('label.birthday') %>
             <%= f.date_select(:birthday, start_year: 1901,
                               end_year: Time.now.year, prompt: true) %>
+          </div>
+          <div class="gender">
+            <%= f.label :gender, t('label.gender') %>
+            <%= f.select :gender, list_genders %>
           </div>
         </div>
         <div class="row lang">
