@@ -781,7 +781,7 @@ body.users #main li.privileges input[type="checkbox"] + label {
   display: block;
   padding: 6px 10px 5px 30px;
   margin-left: 10px;
-  background: transparent url(<%= asset_data_uri('icon_locked.png') %>) left center no-repeat;
+  background: transparent url('<%= asset_data_uri 'icon_locked.png' %>') left center no-repeat;
   border-radius: 3px;
   border: 1px solid #bbb;
 }
@@ -789,7 +789,7 @@ body.users #main li.privileges input[type="checkbox"] + label {
 body.users #main li.privileges input[type="checkbox"]:checked + label {
   color: #444;
   text-shadow: none;
-  background: #f0f0f0 url(<%= asset_data_uri('icon_unlocked.png') %>) left center no-repeat;
+  background: #f0f0f0 url('<%= asset_data_uri 'icon_unlocked.png' %>') left center no-repeat;
 }
 
 body.users #main li.privileges.disabled input[type="checkbox"] + label,

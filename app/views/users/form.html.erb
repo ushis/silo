@@ -9,34 +9,34 @@
       <div class="row main">
         <ul>
           <li>
-            <%= f.label :username %>
+            <%= f.label :username, t('label.username') %>
             <%= f.text_field :username %>
           </li>
           <li>
-            <%= f.label :email %>
+            <%= f.label :email, t('label.email') %>
             <%= f.text_field :email %>
           </li>
           <li>
-            <%= f.label :password %>
+            <%= f.label :password, t('label.password') %>
             <%= f.password_field :password %>
           </li>
           <li>
-            <%= f.label :password_confirmation %>
+            <%= f.label :password_confirmation, t('label.password_confirmation') %>
             <%= f.password_field :password_confirmation %>
           </li>
         </ul>
         <ul>
           <li>
-            <%= f.label :prename %>
+            <%= f.label :prename, t('label.prename') %>
             <%= f.text_field :prename %>
           </li>
           <li>
-            <%= f.label :name %>
+            <%= f.label :name, t('label.name') %>
             <%= f.text_field :name %>
           </li>
           <li class="privileges<%= ' disabled' if current_user?(@user) %>">
             <%= fields_for @user.privilege do |p| %>
-              <%= f.label :privileges %>
+              <%= f.label :privileges, t('label.privileges') %>
               <% Privilege::SECTIONS.each do |section| %>
                 <%= p.check_box section, disabled: current_user?(@user) %>
                 <%= p.label section, class: 'check-box-label' %>
@@ -46,7 +46,7 @@
             <% end %>
           </li>
           <li>
-            <%= f.label :locale %>
+            <%= f.label :locale, t('label.locale') %>
             <%= f.select :locale, list_locales %>
             <%= f.submit %>
           </li>
