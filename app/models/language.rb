@@ -49,11 +49,7 @@ class Language < ActiveRecord::Base
     when Symbol
       find_by_language(language)
     when String
-      if (id = language.to_i) > 0
-        find_by_id(id)
-      else
-        find_by_language(language)
-      end
+      (id = language.to_i) > 0 ? find_by_id(id) : find_by_language(language)
     else
       raise ArgumentError, 'Argument is nor Language, Fixnum, Symbol or String'
     end
