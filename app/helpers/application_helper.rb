@@ -33,10 +33,15 @@ module ApplicationHelper
     link_to(txt, path, opt)
   end
 
+  # Alias for Language.select_box_friendly
+  def list_languages
+    @list_languages ||= Language.select_box_friendly
+  end
+
   # Returns a language select box.
   def language_select_tag(name, val = nil, opt = {})
     val = val.id if val.is_a? Language
-    opts = options_for_select(Language.select_box_friendly, val)
+    opts = options_for_select(list_languages, val)
     select_tag name, opts, opt
   end
 
