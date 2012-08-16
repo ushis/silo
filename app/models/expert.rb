@@ -24,13 +24,17 @@ class Expert < ActiveRecord::Base
   attr_accessible(:name, :prename, :gender, :birthday, :fee, :job,
                   :citizenship, :degree, :former_collaboration)
 
-  has_one    :contact,     autosave: true, dependent: :destroy, as: :contactable
-  has_one    :comment,     autosave: true, dependent: :destroy, as: :commentable
-  has_many   :attachments, autosave: true, dependent: :destroy, as: :attachable
-  has_many   :addresses,   autosave: true, dependent: :destroy, as: :addressable
-  has_many   :langs,       autosave: true, dependent: :destroy, as: :langable
-  has_many   :cvs,         autosave: true, dependent: :destroy, order: :language_id
-  has_many   :languages,   through: :langs
+  has_one :contact, autosave: true, dependent: :destroy, as: :contactable
+  has_one :comment, autosave: true, dependent: :destroy, as: :commentable
+
+  has_many :attachments, autosave: true, dependent: :destroy, as: :attachable
+  has_many :addresses,   autosave: true, dependent: :destroy, as: :addressable
+  has_many :langs,       autosave: true, dependent: :destroy, as: :langable
+  has_many :languages,   through:  :langs
+
+  has_many :cvs, autosave: true, dependent: :destroy,
+           select: [:id, :expert_id, :language_id], order: :language_id
+
   belongs_to :user
 
   # Set of vailable genders.

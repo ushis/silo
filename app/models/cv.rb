@@ -15,7 +15,7 @@ class Cv < ActiveRecord::Base
   belongs_to :expert
   belongs_to :language
 
-  default_scope includes(:attachment, :language)
+  default_scope includes(:language)
 
   # Inits a new Cv from a file. The file is stored on the filesystem and the
   # contents is stored in the _cv_ attribute.
