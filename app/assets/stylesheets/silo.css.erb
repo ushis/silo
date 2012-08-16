@@ -135,6 +135,7 @@ div.clear {
 #nav ul li {
   float: left;
   width: 20%;
+  max-width: 290px;
   padding: 0 2px;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -231,6 +232,21 @@ body.new #sidebar li.new {
 
 body.index #main {
   border-top-left-radius: 0;
+}
+
+body.experts.new #main,
+body.experts.edit #main {
+  width: 740px;
+}
+
+body.users.edit #main,
+body.users.new #main {
+  width: 900px;
+}
+
+body.users.edit #main div.row,
+body.users.new #main div.row {
+  width: 860px;
 }
 
 #main div.header,
