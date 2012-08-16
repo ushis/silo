@@ -63,7 +63,9 @@ class Language < ActiveRecord::Base
   # Returns a collection of all languages ordered by priority and localized
   # lagnuage name.
   def self.priority_ordered
-    @priority_ordered ||= Rails.cache.fetch("languages_#{I18n.locale}") do
+    @p_order ||= {}
+
+    @p_order[I18n.locale] ||= Rails.cache.fetch("languages_#{I18n.locale}") do
       all.sort do |x, y|
         if x.prioritized? == y.prioritized?
           x.human <=> y.human
