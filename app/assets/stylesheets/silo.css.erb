@@ -643,39 +643,6 @@ body.experts div.confirm-delete div:hover {
   padding: 10px;
 }
 
-#main form div.field-box {
-  width: 49%;
-  padding: 0;
-  margin-bottom: 10px;
-  background-color: #efefef;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
-  border-radius: 4px;
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
-}
-
-#main form div.field-box.left {
-  float: left;
-  margin-right: 10px;
-}
-
-#main form div.field-box.right {
-  float: right;
-}
-
-#main form div.field-box.buttons {
-  clear: both;
-  width: 100%;
-  padding: 0;
-  margin: 0 0 10px 0;
-  background-color: transparent;
-  box-shadow: none;
-}
-
-#main form div.field-box.buttons input[type=submit] {
-  padding: 5px 10px 7px 10px;
-}
-
 #main form p, #main form table {
   margin: 10px 0;
   padding: 0 10px 10px 10px;
@@ -743,8 +710,42 @@ body.experts div.confirm-delete div:hover {
   padding: 0 2px 4px 2px;
   font-weight: bold;
   text-shadow: 1px 1px 0 #EEE;
+  cursor: pointer;
 }
 
+#main div.form-wrapper form textarea,
+#main div.form-wrapper form input[type=text],
+#main div.form-wrapper form input[type=password] {
+  margin: 0;
+  width: 100%;
+}
+
+#main div.form-wrapper div.row {
+  width: 100%;
+  float: left;
+  position: relative;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #BBB;
+  box-shadow: 0 1px 0px #EFEFEF;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+#main div.form-wrapper div.row:last-child {
+  border-bottom: 0;
+  box-shadow: none;
+  margin-bottom: 0;
+}
+
+#main div.form-wrapper div.row > div {
+  float: left;
+  margin-right: 20px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+/* Users form */
 body.users div.form-wrapper div.row ul {
   width: 48%;
   box-sizing: border-box;
@@ -779,205 +780,6 @@ body.users #main div.form-wrapper form input[type=submit] {
   position: relative;
   float: right;
   margin: 0;
-}
-
-#main div.form-wrapper form textarea,
-#main div.form-wrapper form input[type=text],
-#main div.form-wrapper form input[type=password] {
-  margin: 0;
-  width: 100%;
-}
-
-#main div.form-wrapper div.row {
-  width: 100%;
-  float: left;
-  position: relative;
-  padding-bottom: 10px;
-  margin-bottom: 10px;
-  border-bottom: 1px solid #BBB;
-  box-shadow: 0 1px 0px #EFEFEF;
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
-}
-
-#main div.form-wrapper div.row:last-child {
-  border-bottom: 0;
-  box-shadow: none;
-  margin-bottom: 0;
-}
-
-#main div.form-wrapper div.row > div {
-  float: left;
-  padding: 0 10px;
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
-}
-
-#main div.form-wrapper div.row > div:first-child {
-  padding-left: 0;
-}
-
-#main div.form-wrapper div.row > div:last-child {
-  padding-right: 0;
-}
-
-body.experts div.form-wrapper div.row.main {
-  padding-left: 550px;
-}
-body.experts div.form-wrapper div.gender,
-body.experts div.form-wrapper div.degree,
-body.experts div.form-wrapper div.prename {
-  position: absolute;
-}
-body.experts div.form-wrapper div.gender {
-  width: 80px;
-  left: 0;
-}
-body.experts div.form-wrapper div.degree {
-  width: 180px;
-  left: 90px;
-}
-body.experts div.form-wrapper div.prename {
-  width: 360px;
-  left: 200px;
-}
-body.experts div.form-wrapper div.name {
-  width: 100%;
-}
-
-body.experts div.form-wrapper div.row.birth {
-  padding-left: 550px;
-}
-body.experts div.form-wrapper div.citizenship,
-body.experts div.form-wrapper div.birthday {
-  position: absolute;
-}
-body.experts div.form-wrapper div.citizenship {
-  width: 300px;
-  left: 0;
-}
-body.experts div.form-wrapper div.birthday {
-  width: 235px;
-  left: 305px;
-}
-body.experts div.form-wrapper div.birthplace {
-  width: 100%;
-}
-
-body.experts div.form-wrapper div.row.languages {
-  width: 100%;
-}
-
-body.experts div.form-wrapper div.languages div {
-  float: left;
-  display: inline;
-}
-
-body.experts div.form-wrapper div.row.business {
-  padding-left: 550px;
-}
-
-body.experts div.form-wrapper div.company {
-  position: absolute;
-  left: 0;
-  width: 560px;
-}
-body.experts #main div.form-wrapper div.row > div.job {
-  position: absolute;
-  left: 0;
-  top: 55px;
-  width: 560px;
-  padding-left: 0;
-}
-body.experts div.form-wrapper div.former_collaboration label,
-body.experts div.form-wrapper div.former_collaboration input[type=checkbox] {
-  float: left;
-}
-
-body.experts div.form-wrapper div.former_collaboration input[type=checkbox] {
-  margin-left: 10px;
-}
-
-body.experts div.form-wrapper div.former_collaboration,
-body.experts div.form-wrapper div.fee {
-  float: left;
-  width: 100%;
-}
-
-body.experts div.form-wrapper div.former_collaboration {
-  margin-top: 27px;
-}
-
-body.experts div.form-wrapper div.fee {
-  margin-top: 7px;
-}
-
-body.experts div.form-wrapper div.comment {
-  width: 560px;
-}
-
-body.experts #main form div.multi-lang span.more {
-  float: right;
-  position: relative;
-  cursor: pointer;
-  margin: 3px 10px 0 -5px;
-  padding: 0 10px;
-  font-size: .75em;
-  color: #d0d0d0;
-  text-shadow: 1px 1px 0px rgba(0, 0, 0, .5);
-  border: none;
-  border-top: 1px solid rgba(255, 255, 255, .1);
-  border-radius: 3px;
-  background: -moz-linear-gradient(top,  #515151 0%, #464646 100%);
-  background: -webkit-linear-gradient(top,  #515151 0%,#464646 100%);
-  background: -o-linear-gradient(top,  #515151 0%,#464646 100%);
-  background: -ms-linear-gradient(top,  #515151 0%,#464646 100%);
-  background: linear-gradient(to bottom,  #515151 0%,#464646 100%);
-}
-
-body.experts #main form div.multi-lang span.more:before {
-  content: ' ';
-  position: absolute;
-  top: 48%;
-  right: 100%;
-  border: solid transparent;
-  width: 0;
-  height: 0;
-  margin-top: -4px;
-  border-width: 4px;
-  border-right-color: #4f4f4f;
-}
-
-body.experts #main form div.multi-lang span.delete {
-  float: right;
-  position: relative;
-  cursor: pointer;
-  padding: 0 8px 2px 8px;
-  margin: 3px 10px 0 5px;
-  font-size: .7em;
-  color: #d0d0d0;
-  text-shadow: 1px 1px 0px rgba(0, 0, 0, .5);
-  border: none;
-  border-top: 1px solid rgba(255, 255, 255, .1);
-  border-radius: 3px;
-  background: -moz-linear-gradient(top,  #515151 0%, #464646 100%);
-  background: -webkit-linear-gradient(top,  #515151 0%,#464646 100%);
-  background: -o-linear-gradient(top,  #515151 0%,#464646 100%);
-  background: -ms-linear-gradient(top,  #515151 0%,#464646 100%);
-  background: linear-gradient(to bottom,  #515151 0%,#464646 100%);
-}
-
-body.experts #main form div.multi-lang span.delete:before {
-  content: ' ';
-  position: absolute;
-  top: 48%;
-  right: 100%;
-  border: solid transparent;
-  width: 0;
-  height: 0;
-  margin-top: -4px;
-  border-width: 4px;
-  border-right-color: #4f4f4f;
 }
 
 body.users #main div.form-wrapper div.row {
@@ -1016,6 +818,88 @@ body.users #main li.privileges.disabled input[type="checkbox"]:checked + label {
 body.users #main li.privileges input[type="checkbox"] + label:last-child {
   float: left;
   margin-left: 0;
+}
+
+/* Experts Form */
+body.experts #main div.form-wrapper div.degree input {
+  width: 120px;
+}
+
+body.experts #main div.form-wrapper div.name input,
+body.experts #main div.form-wrapper div.business input[type=text],
+body.experts #main div.form-wrapper div.citizenship select {
+  width: 340px;
+}
+
+body.experts #main div.form-wrapper div.fee {
+  clear: left;
+  margin-top: 14px;
+}
+
+body.experts #main div.form-wrapper div.former-collaboration {
+  margin-top: 10px;
+}
+
+body.experts #main div.form-wrapper div.former-collaboration input + label {
+  display: inline;
+}
+
+body.experts #main div.comment textarea {
+  width: 500px;
+  height: 200px;
+}
+
+body.experts #main div.form-wrapper div.multi-lang {
+  width: 740px;
+}
+
+body.experts #main div.form-wrapper div.multi-lang > div {
+  float: left;
+  margin: 0 0 8px 0;
+}
+
+body.experts #main form div.multi-lang span.more,
+body.experts #main form div.multi-lang span.delete {
+  float: right;
+  position: relative;
+  cursor: pointer;
+  margin: 3px 10px 0 -5px;
+  padding: 0 10px;
+  font-size: .75em;
+  color: #d0d0d0;
+  text-shadow: 1px 1px 0px rgba(0, 0, 0, .5);
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, .1);
+  border-radius: 3px;
+  background: -moz-linear-gradient(top,  #515151 0%, #464646 100%);
+  background: -webkit-linear-gradient(top,  #515151 0%,#464646 100%);
+  background: -o-linear-gradient(top,  #515151 0%,#464646 100%);
+  background: -ms-linear-gradient(top,  #515151 0%,#464646 100%);
+  background: linear-gradient(to bottom,  #515151 0%,#464646 100%);
+}
+
+body.experts #main form div.multi-lang span.more {
+  float: left;
+}
+
+body.experts #main form div.multi-lang span.delete {
+  padding: 0 8px 2px 8px;
+  margin: 3px 10px 0 5px;
+  font-size: .7em;
+}
+
+body.experts #main form div.multi-lang span.more:before,
+body.experts #main form div.multi-lang span.delete:before {
+  content: ' ';
+  position: absolute;
+  top: 48%;
+  right: 100%;
+  border: solid transparent;
+  width: 0;
+  height: 0;
+  margin-top: -4px;
+  border-width: 4px;
+  border-right-color: #4f4f4f;
 }
 
 /* Login */
