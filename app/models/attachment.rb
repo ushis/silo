@@ -115,9 +115,10 @@ class Attachment < ActiveRecord::Base
   #   #=> <File:/path/to/store/e4b969da-10df-4374-afd7-648b15b09903.doc>
   def empty_document(suffix = nil)
     STORE.mkpath unless STORE.exist?
+    date = Date.today.to_formatted_s(:db)
 
     begin
-      path = STORE.join("#{SecureRandom.uuid}#{suffix}")
+      path = STORE.join("#{date}-#{SecureRandom.uuid}#{suffix}")
     end while path.exist?
 
     if block_given?
