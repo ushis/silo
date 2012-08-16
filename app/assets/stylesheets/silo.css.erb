@@ -412,6 +412,7 @@ body.experts.documents #main div.header ul.tabs li.documents a {
   margin: 0;
   text-shadow: none;
   box-shadow: none;
+  border: none;
   background-image: url(<%= asset_data_uri 'icon_delete.png' %>);
 }
 
@@ -598,19 +599,30 @@ body.experts div.confirm-delete div:hover {
 #main input[type=submit] {
   float: left;
   cursor: pointer;
-  padding: 4px 10px 4px 10px;
+  padding: 6px 14px 7px 14px;
   margin-left: 5px;
-  font-size: .75em;
-  color: #d0d0d0;
-  text-shadow: 1px 1px 0px rgba(0, 0, 0, .5);
+  font-size: .7em;
+  font-weight: bold;
+  color: #444;
   border: none;
-  border-top: 1px solid rgba(255, 255, 255, .1);
+  background: #f0f0f0;
+  text-shadow: 1px 1px 0px rgba(255, 255, 255, 1);
   border-radius: 3px;
-  background: -moz-linear-gradient(top,  #515151 0%, #464646 100%);
-  background: -webkit-linear-gradient(top,  #515151 0%,#464646 100%);
-  background: -o-linear-gradient(top,  #515151 0%,#464646 100%);
-  background: -ms-linear-gradient(top,  #515151 0%,#464646 100%);
-  background: linear-gradient(to bottom,  #515151 0%,#464646 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), 0 1px 1px rgba(0, 0, 0, .4);
+}
+
+#main input[type=submit]:hover {
+  color: #222;
+  text-shadow: 1px 1px 0px rgba(255, 255, 255, .2);
+  background: rgb(236,236,236);
+  background: -moz-linear-gradient(top,  rgba(236,236,236,1) 0%, rgba(227,227,227,1) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(236,236,236,1)), color-stop(100%,rgba(227,227,227,1))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  rgba(236,236,236,1) 0%,rgba(227,227,227,1) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  rgba(236,236,236,1) 0%,rgba(227,227,227,1) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  rgba(236,236,236,1) 0%,rgba(227,227,227,1) 100%); /* IE10+ */
+  background: linear-gradient(to bottom,  rgba(236,236,236,1) 0%,rgba(227,227,227,1) 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ececec', endColorstr='#e3e3e3',GradientType=0 ); /* IE6-9 */
+
 }
 
 #main div.form-wrapper > form {
@@ -771,17 +783,20 @@ body.users #main li.privileges input[type="checkbox"] + label {
   float: right;
   cursor: pointer;
   display: block;
+  color: #444;
   padding: 6px 10px 5px 30px;
   margin-left: 10px;
-  background: transparent url('<%= asset_data_uri 'icon_locked.png' %>') left center no-repeat;
+  background: #f0f0f0 url('<%= asset_data_uri 'icon_locked.png' %>') left center no-repeat;
   border-radius: 3px;
-  border: 1px solid #bbb;
+  text-shadow: 1px 1px 0px rgba(255, 255, 255, 1);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), 0 1px 1px rgba(0, 0, 0, .4);
 }
 
 body.users #main li.privileges input[type="checkbox"]:checked + label {
-  color: #444;
+  color: #000;
   text-shadow: none;
-  background: #f0f0f0 url('<%= asset_data_uri 'icon_unlocked.png' %>') left center no-repeat;
+  background: #bfbfbf url('<%= asset_data_uri 'icon_unlocked.png' %>') left center no-repeat;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.4);
 }
 
 body.users #main li.privileges.disabled input[type="checkbox"] + label,
@@ -1172,6 +1187,8 @@ body.experts.contact #main div.contacts input[type=submit].delete {
   height: 12px;
   width: 12px;
   text-indent: -99999px;
+  box-shadow: none;
+  padding: 0;
   background: transparent url(<%= asset_data_uri 'icon_delete.png' %>) center center no-repeat;
 }
 
@@ -1281,7 +1298,7 @@ body.experts.documents #main div.forms {
 body.experts.documents #main div.forms form {
   margin-top: 10px;
   padding: 2px 4px;
-  background: #e8e8e8;
+  background: #dbdbdb;
   border-radius: 4px;
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, .2);
   box-sizing: border-box;
@@ -1310,5 +1327,4 @@ body.experts.documents #main div.forms form input[type=file] {
 
 body.experts.documents #main div.forms form input[type=submit] {
   float: right;
-  color: #d0d0d0;
 }
