@@ -39,8 +39,10 @@
     <ul>
       <% @expert.addresses.each do |address| %>
         <li>
-          <%= button_to('x', [@expert, address], method: :delete,
-                        class: 'icon-delete') %>
+          <% if current_user.access?(:experts) %>
+            <%= button_to('x', [@expert, address], method: :delete,
+                          class: 'icon-delete') %>
+          <% end %>
           <address>
             <%= simple_format address.address %>
             <%= address.human_country %>
