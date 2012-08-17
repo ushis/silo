@@ -13,6 +13,8 @@ require 'carmen'
 class Address < ActiveRecord::Base
   attr_accessible :address, :country
 
+  validates :address, presence: true
+
   belongs_to :addressable, polymorphic: true
 
   # Returns a human readable country name.
