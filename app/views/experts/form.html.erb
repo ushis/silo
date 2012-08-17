@@ -5,42 +5,45 @@
     <h2 class="icon-expert-edit">
       <%= @title %>
     </h2>
+    <% unless @expert.errors.empty? %>
+      <%= render 'shared/validation_errors', model: @expert %>
+    <% end %>
     <div class="form-wrapper">
       <%= form_for @expert do |f| %>
         <div class="row main">
           <div class="degree">
-            <%= f.label :degree, t('label.degree') %>
+            <%= f.label :degree %>
             <%= f.text_field :degree %>
           </div>
         </div>
         <div class="row name">
           <div>
-            <%= f.label :prename, t('label.prename') %>
+            <%= f.label :prename %>
             <%= f.text_field :prename %>
           </div>
           <div>
-            <%= f.label :name, t('label.name') %>
+            <%= f.label :name %>
             <%= f.text_field :name %>
           </div>
         </div>
         <div class="row">
           <div class="citizenship">
-            <%= f.label :citizenship, t('label.citizenship') %>
+            <%= f.label :citizenship %>
             <%= f.country_select :citizenship %>
           </div>
           <div>
-            <%= f.label :birthday, t('label.birthday') %>
+            <%= f.label :birthday %>
             <%= f.date_select(:birthday, start_year: 1901,
                               end_year: Time.now.year, prompt: true) %>
           </div>
           <div class="gender">
-            <%= f.label :gender, t('label.gender') %>
+            <%= f.label :gender %>
             <%= f.select :gender, list_genders %>
           </div>
         </div>
         <div class="row lang">
           <div class="languages">
-            <%= f.label :languages, t('label.languages') %>
+            <%= f.label :languages %>
             <div class="multi-lang">
               <%= language_select_tags @expert.languages %>
             </div>
@@ -48,24 +51,24 @@
         </div>
         <div class="row business">
           <div class="job">
-            <%= f.label :job, t('label.job') %>
+            <%= f.label :job %>
             <%= f.text_field :job %>
           </div>
           <div class="fee">
-            <%= f.label :fee, t('label.fee') %>
+            <%= f.label :fee %>
             <%= f.text_field :fee %>
           </div>
           <div class="former-collaboration">
             <br/>
             <%= f.check_box :former_collaboration %>
-            <%= f.label :former_collaboration, t('label.former_collaboration') %>
+            <%= f.label :former_collaboration %>
           </div>
         </div>
         <div class="row">
           <div class="comment">
             <%= f.fields_for @expert.comment do |fields| %>
               <div>
-                <%= fields.label :comment, t('label.comment') %>
+                <%= fields.label :comment %>
                 <%= fields.text_area :comment %>
               </div>
             <% end %>
@@ -73,7 +76,7 @@
         </div>
         <div class="row">
           <div class="submit">
-            <%= f.submit t('action.save'), class: 'button' %>
+            <%= f.submit t('action.save') %>
           </div>
         </div>
       <% end %>

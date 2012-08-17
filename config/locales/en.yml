@@ -16,6 +16,18 @@ en:
 
   activerecord:
     attributes:
+      expert:
+        birthday: 'Date of birth'
+        citizenship: 'Citizenship'
+        comment: 'Comment'
+        degree: 'Degree'
+        fee: 'Fee'
+        former_collaboration: 'Former Collaboration'
+        gender: 'Gender'
+        job: 'Job'
+        languages: 'Languages'
+        name: 'Name'
+        prename: 'First Name'
       user:
         email: 'Email'
         locale: 'Locale'
