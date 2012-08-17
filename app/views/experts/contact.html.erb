@@ -10,23 +10,21 @@
     <table>
       <tbody>
         <% Contact::FIELDS.each do |field| %>
-          <% unless (values = @expert.contact.send(field)).empty? %>
-            <% values.each do |val| %>
-              <tr>
-                <td>
-                  <%= contact_value val, field %>
+          <% @expert.contact.send(field).each do |val| %>
+            <tr>
+              <td>
+                <%= contact_value val, field %>
+              </td>
+              <td>
+                <%= t field.to_s.singularize, scope: :label %>
+              </td>
+              <% if current_user.access?(:experts) %>
+                <td class="del">
+                  <%= delete_contact_button('x', [@expert, @expert.contact],
+                                            field, val, class: 'icon-delete') %>
                 </td>
-                <td>
-                  <%= t field.to_s.singularize, scope: :label %>
-                </td>
-                <% if current_user.access?(:experts) %>
-                  <td class="del">
-                    <%= delete_contact_button('x', [@expert, @expert.contact],
-                                              field, val, class: 'icon-delete') %>
-                  </td>
-                <% end %>
-              </tr>
-            <% end %>
+              <% end %>
+            </tr>
           <% end %>
         <% end %>
       </tbody>
