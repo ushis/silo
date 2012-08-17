@@ -1196,21 +1196,19 @@ body.experts.documents #main h4,
 body.experts.contact #main h4 {
   color: #555;
   font-size: .9em;
-  padding-left: 23px;
 }
 
-body.experts.documents #main div.cvs table td:first-child {
+body.experts.documents #main div.cvs table td.icon-cv,
+body.experts.documents #main div.attachments table td.icon-attachment {
   padding-left: 30px;
-  background-image: url(<%= asset_data_uri 'icon_cv.png' %>);
+}
+
+body.experts.documents #main div.cvs table td.icon-cv {
   background-position: 10px 8px;
-  background-repeat: no-repeat;
 }
 
-body.experts.documents #main div.attachments table td:first-child {
-  padding-left: 30px;
-  background-image: url(<%= asset_data_uri 'icon_attachment.png' %>);
+body.experts.documents #main div.attachments table td.icon-attachment {
   background-position: 10px 9px;
-  background-repeat: no-repeat;
 }
 
 body.experts.documents #main div table td.del,
