@@ -8,7 +8,7 @@
  */
 body {
   background-color: #3a3a3a;
-  min-width: 1100px;
+  min-width: 1130px;
 }
 
 a, form.button_to input[type=submit] {
@@ -273,6 +273,11 @@ body.users.new #main div.row {
   margin-bottom: 10px;
 }
 
+body.experts.index #main div.header h2 {
+  padding-left: 24px;
+  background-position: left 1px;
+}
+
 #main div.form-wrapper h2 {
   padding: 10px 0 0 10px;
 }
@@ -455,7 +460,7 @@ body.experts #main div.form-wrapper#filter div.row {
 }
 
 body.experts #main div.form-wrapper#filter div.row:nth-child(3) {
-  margin-right: 360px;
+  margin-right: 390px;
 }
 
 body.experts #main div.form-wrapper#filter div.row div.name,
@@ -1047,14 +1052,14 @@ ul.pagination li.back > * {
   color: #666;
   margin-right: 10px;
   padding-left: 14px;
-  background: #efefef url(<%= asset_data_uri 'icon_back.png' %>) left center no-repeat;
+  background: #efefef url(<%= asset_data_uri 'icon_back.png' %>) center center no-repeat;
 }
 
 ul.pagination li.next > * {
   color: #666;
   margin-left: 10px;
   padding-right: 14px;
-  background: #efefef url(<%= asset_data_uri 'icon_next.png' %>) right center no-repeat;
+  background: #efefef url(<%= asset_data_uri 'icon_next.png' %>) center center no-repeat;
 }
 
 ul.pagination li span {
