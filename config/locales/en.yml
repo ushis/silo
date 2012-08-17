@@ -1,6 +1,6 @@
 # English localization file
 en:
-  action:
+  actions:
     add: 'Add'
     delete: 'Delete'
     edit: 'Edit'
