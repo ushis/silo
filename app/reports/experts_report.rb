@@ -14,21 +14,23 @@ class ExpertsReport < ApplicationReport
 
   # Adds an expert to a report.
   def add_expert(e)
+    a = lambda { |k| Expert.human_attribute_name(k) }
+
     data = [
-      [t('label.name'), e.name],
-      [t('label.prename'), e.prename],
-      [t('label.gender'), e.human_gender],
+      [a.call(:name), e.name],
+      [a.call(:prename), e.prename],
+      [a.call(:gender), e.human_gender],
       [''],
-      [t('label.birthday'), l(e.birthday, format: :short)],
-      [t('label.citizenship'), e.human_citizenship],
+      [a.call(:birthday), l(e.birthday, format: :short)],
+      [a.call(:citizenship), e.human_citizenship],
       [''],
-      [t('label.job'), e.job],
+      [a.call(:job), e.job],
       [''],
-      [t('label.degree'), e.degree],
-      [t('label.languages'), e.languages.collect { |l| l.human }.join(', ')],
+      [a.call(:degree), e.degree],
+      [a.call(:languages), e.languages.collect { |l| l.human }.join(', ')],
       [''],
-      [t('label.former_collaboration'), e.human_former_collaboration],
-      [t('label.fee'), e.fee],
+      [a.call(:former_collaboration), e.human_former_collaboration],
+      [a.call(:fee), e.fee],
       ['']
     ]
 
@@ -38,13 +40,19 @@ class ExpertsReport < ApplicationReport
       end
     end
 
-    e.addresses.each_with_index do |address, i|
-      data << ['']
-      data << ["#{i + 1}. #{t('label.address')}", address.address]
-      data << ['', address.human_country]
+    table(data, cell_style: { borders: [], padding: 5 })
+
+    unless e.addresses.empty?
+      move_down 16
+      text a.call(:addresses)
+
+      e.addresses.each do |address|
+        move_down 16
+        text address.address
+        text address.human_country
+      end
     end
 
-    table(data, cell_style: { borders: [], padding: 5 })
     move_down 16
     text e.comment.to_s
   end
