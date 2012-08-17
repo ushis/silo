@@ -1166,13 +1166,45 @@ body.experts.contact #main div table td.del {
 }
 
 body.experts.documents #main div table input.del,
-body.experts.contact #main div table input.icon-delete {
+body.experts.contact #main input.icon-delete {
   display: block;
   width: 11px;
   height: 12px;
   padding: 0;
   text-indent: -9999px;
   background: transparent url('<%= asset_data_uri 'icon_delete.png' %>') center center no-repeat;
+}
+
+body.experts.contact #main div.addresses li {
+  position: relative;
+  margin-bottom: 10px;
+  font-size: .76em;
+  color: #555;
+  background-color: #f7f7f7;
+  border-radius: 4px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+}
+
+body.experts.contact #main div.addresses li form {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 43px;
+  background-color: #efefef;
+  border-radius: 0 4px 4px 0;
+}
+
+body.experts.contact #main div.addresses li form input.icon-delete {
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  margin-top: -6px;
+}
+
+body.experts.contact #main div.addresses li address {
+  margin-right: 44px;
+  padding: 8px 12px;
 }
 
 body.experts.documents #main div.forms,
