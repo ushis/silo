@@ -69,10 +69,8 @@ module ApplicationHelper
   end
 
   # Returns select box options with all possible contact fields.
-  def list_contact_fields
-    Contact::FIELDS.collect do |f|
-      content_tag :option, t(f.to_s.singularize, scope: :label), value: f
-    end.join('').html_safe
+  def contact_field_options
+    options_for_select Contact.select_box_friendly_fields
   end
 
   # Returns the contact value. If field is :emails or :websites, the value

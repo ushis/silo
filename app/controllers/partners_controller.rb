@@ -9,12 +9,12 @@ class PartnersController < ApplicationController
 
   #
   def index
-    @title = t('label.partners')
+    @title = t('labels.partners.index')
   end
 
   #
   def not_found
-    flash[:alert] = t('msg.partner_not_found')
+    flash[:alert] = t('messages.partner.errors.find')
     refirect_to partners_url
   end
 end

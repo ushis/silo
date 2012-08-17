@@ -5,7 +5,7 @@
 
   <div class="contacts">
     <h4 class="icon-addresses">
-      <%= t('label.contacts') %>
+      <%= t 'labels.contact.index' %>
     </h4>
     <table>
       <tbody>
@@ -16,7 +16,7 @@
                 <%= contact_value val, field %>
               </td>
               <td>
-                <%= t field.to_s.singularize, scope: :label %>
+                <%= t field.to_s.singularize, scope: [:values, :contacts] %>
               </td>
               <% if current_user.access?(:experts) %>
                 <td class="del">
@@ -32,7 +32,7 @@
   </div><!-- contacts -->
   <div class="addresses">
     <h4 class="icon-addresses">
-      <%= t('label.addresses') %>
+      <%= t 'labels.address.index' %>
     </h4>
     <ul>
       <% @expert.addresses.each do |address| %>
@@ -52,11 +52,11 @@
   <div class="forms">
      <div class="contact">
       <h4>
-        <%= t 'label.new_contact' %>
+        <%= t 'labels.contact.new' %>
       </h4>
       <%= form_tag expert_contacts_path(@expert) do %>
         <div>
-          <%= select_tag 'contact[field]', list_contact_fields %>
+          <%= select_tag 'contact[field]', contact_field_options %>
         </div>
         <div>
           <%= text_field_tag 'contact[contact]' %>
@@ -66,7 +66,7 @@
     </div>
     <div class="address">
       <h4>
-        <%= t 'label.new_address' %>
+        <%= t 'labels.address.new' %>
       </h4>
       <%= form_for Address.new, url: expert_addresses_path(@expert) do |f| %>
         <div>

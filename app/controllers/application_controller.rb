@@ -17,13 +17,13 @@ class ApplicationController < ActionController::Base
 
   # Sets a not found alert and redirects to the root url.
   def not_found
-    flash[:alert] = t('msg.record_not_found')
+    flash[:alert] = t('messages.generics.errors.find')
     redirect_to root_url
   end
 
   # Sets a file not found alert and redirects to the root url.
   def file_not_found
-    flash[:alert] = t('msg.file_not_found')
+    flash[:alert] = t('messages.generics.errors.file_not_found')
     redirect_to root_url
   end
 
@@ -43,7 +43,7 @@ class ApplicationController < ActionController::Base
   # corresponding permissions, a flash message is set and the user is redirected.
   def authorize(section = nil, url = root_url)
     unless (section ? current_user.access?(section) : current_user.admin?)
-      flash[:alert] = t('msg.access_denied')
+      flash[:alert] = t('messages.generics.errors.access')
       redirect_to url
     end
   end

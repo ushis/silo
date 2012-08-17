@@ -19,21 +19,21 @@ class CvsController < ApplicationController
     begin
       expert = Expert.find(params[:expert_id])
     rescue
-      flash[:alert] = t('msg.expert_not_found')
+      flash[:alert] = t('messages.expert.errors.find')
       redirect_to experts_url and return
     end
 
     data = params[:cv]
 
     unless (cv = Cv.from_file(data[:file], data[:language_id]))
-      flash[:alert] = t('msg.could_not_store_cv')
+      flash[:alert] = t('messages.cv.errors.store')
       redirect_to document_expert_url(expert) and return
     end
 
     expert.cvs << cv
-    flash[:notice] = t('msg.stored_new_cv')
+    flash[:notice] = t('messages.cv.success.store')
   rescue
-    flash[:alert] = t('msg.could_not_save_cv')
+    flash[:alert] = t('messages.cv.errors.store')
   ensure
     redirect_to documents_expert_url(expert)
   end
@@ -41,9 +41,9 @@ class CvsController < ApplicationController
   # Destroys a Cv.
   def destroy
     if Cv.find(params[:id]).destroy
-      flash[:notice] = t('msg.deleted_cv')
+      flash[:notice] = t('messages.cv.success.delete')
     else
-      flash[:alert] = t('msg.could_not_delete_cv')
+      flash[:alert] = t('messages.cv.errors.delete')
     end
 
     redirect_to documents_expert_url(id: params[:expert_id])
@@ -51,7 +51,7 @@ class CvsController < ApplicationController
 
   # Sets an alert flash and redirect to the experts detail page.
   def not_found
-    flash[:alert] = t('msg.cv_not_found')
+    flash[:alert] = t('messages.cv.errors.find')
     redirect_to documents_expert_url(params[:expert_id])
   end
 end

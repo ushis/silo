@@ -22,7 +22,7 @@ class Contacts::ExpertsController < ContactsController
 
   # Sets a flash message and redirects the user.
   def not_found
-    flash[:alert] = t('msg.expert_not_found')
+    flash[:alert] = t('messages.expert.errors.find')
     redirect_to experts_url
   end
 end

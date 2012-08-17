@@ -17,7 +17,7 @@ class ExpertsReport < ApplicationReport
     data = [
       [t('label.name'), e.name],
       [t('label.prename'), e.prename],
-      [t('label.gender'), t(e.gender, scope: :gender)],
+      [t('label.gender'), e.human_gender],
       [''],
       [t('label.birthday'), l(e.birthday, format: :short)],
       [t('label.citizenship'), e.human_citizenship],
@@ -27,14 +27,14 @@ class ExpertsReport < ApplicationReport
       [t('label.degree'), e.degree],
       [t('label.languages'), e.languages.collect { |l| l.human }.join(', ')],
       [''],
-      [t('label.former_collaboration'), t(e.former_collaboration.to_s, scope: :label)],
+      [t('label.former_collaboration'), e.human_former_collaboration],
       [t('label.fee'), e.fee],
       ['']
     ]
 
     Contact::FIELDS.collect do |f|
       unless (values = e.contact.send(f)).empty?
-        data << [t(f, scope: :label), values.join(', ')]
+        data << [t(f, scope: [:values, :contacts]), values.join(', ')]
       end
     end
 

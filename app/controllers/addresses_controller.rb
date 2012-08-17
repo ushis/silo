@@ -10,9 +10,9 @@ class AddressesController < ApplicationController
   # through the _:address_ key.
   def add_to(model, url)
     model.addresses << Address.new(params[:address])
-    flash[:notice] = t('msg.saved_address.')
+    flash[:notice] = t('messages.address.success.save')
   rescue
-    flash[:alert] = t('msg.could_not_save_address')
+    flash[:alert] = t('messages.address.errors.save')
   ensure
     redirect_to url
   end
@@ -20,15 +20,15 @@ class AddressesController < ApplicationController
   # Destroys an Address.
   def destroy
     if Address.find(params[:id]).destroy
-      flash[:notice] = t('msg.deleted_address')
+      flash[:notice] = t('messages.address.success.delete')
     else
-      flash[:alert] = t('msf.could_not_delete_address')
+      flash[:alert] = t('messages.address.errors.delete')
     end
   end
 
   # Sets a flash message and redirect the user.
   def not_found(url = root_url)
-    flash[:alert] = t('msg.address_not_found')
+    flash[:alert] = t('messages.address.errors.find')
     redirect_to url
   end
 end

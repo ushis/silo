@@ -15,7 +15,9 @@
           </td>
           <td class="privileges">
             <p>
-              <strong><%= t 'label.registered_on' %>:</strong>
+              <strong>
+                <%= User.human_attribute_name(:created_at) %>:
+              </strong>
               <%= l user.created_at, format: :short  %>
             </p>
             <p>

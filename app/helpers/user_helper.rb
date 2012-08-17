@@ -9,8 +9,9 @@ module UserHelper
   #   #=> '<span>experts</span><span class="checked">partners</span>'
   def list_privileges(user, klass)
     user.privileges.inject('') do |html, item|
-      opt = { class: klass } if item[1]
-      html << content_tag(:span, t(item[0], scope: :label), opt)
+      html << content_tag(:span, class: (item[1] ? klass : nil)) do
+        Privilege.human_attribute_name(item[0])
+      end
     end.html_safe
   end
 

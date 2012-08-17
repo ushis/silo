@@ -19,13 +19,13 @@ class AttachmentsController < ApplicationController
   # It is ensured that the user is redirected to the specified url.
   def add_to(model, url)
     unless (a = Attachment.from_upload(params.fetch(:attachment)))
-      flash[:alert] = t('msg.could_not_store_attachment') and return
+      flash[:alert] = t('messages.attachment.errors.store') and return
     end
 
     model.attachments << a
-    flash[:notice] = t('msg.stored_new_attachment')
+    flash[:notice] = t('messages.attachment.success.store')
   rescue
-    flash[:alert] = t('msg.could_not_store_attachment')
+    flash[:alert] = t('messages.attachment.errors.store')
   ensure
     redirect_to url
   end
@@ -33,15 +33,15 @@ class AttachmentsController < ApplicationController
   # Destroys an Attachment from database and file system.
   def destroy
     if Attachment.find(params[:id]).destroy
-      flash[:notice] = t('msg.deleted_attachment')
+      flash[:notice] = t('messages.attachment.success.delete')
     else
-      flash[:alert] = t('msg.could_not_delete_attachment')
+      flash[:alert] = t('messages.attachment.errors.delete')
     end
   end
 
   # Sets a not found flash message and redirects the user.
   def not_found(url = root_url)
-    flash[:alert] = t('msg.attachment_not_found')
+    flash[:alert] = t('messages.attachment.errors.find')
     redirect_to url
   end
 end

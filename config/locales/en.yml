@@ -8,6 +8,7 @@ en:
     logout: 'Logout'
     print: 'Print'
     save: 'Save'
+    search: 'Search'
   activerecord:
     attributes:
       address:
@@ -23,6 +24,7 @@ en:
         expert: 'Expert'
         language: 'Language'
       expert:
+        age: 'Age'
         birthday: 'Date of birth'
         citizenship: 'Citizenship'
         comment: 'Comment'
@@ -61,118 +63,139 @@ en:
               invalid: 'Must only contain lower case letters and numbers.'
             password:
               confirmation: 'Passwords do not match.'
-
-  gender:
-    female: 'Female'
-    male: 'Male'
-
-  label:
-    admin: 'Admin'
-    address: 'Address'
-    advanced_search: 'Advanced Search'
-    age: 'Age'
-    all_experts: 'All Experts'
-    all_users: 'All Users'
-    birthday: 'Date of birth'
-    birthplace: 'Place of birth'
-    b_phone: 'Phone (Business)'
-    b_phones: 'Phones (Business)'
-    by: 'by %{name}'
-    citizenship: 'Citizenship'
-    country: 'Country'
-    cv: 'CV'
-    degree: 'Degree'
-    edit_expert: 'Edit Expert'
-    edit_user: 'Edit User'
-    email: 'Email'
-    emails: 'Emails'
-    errors: 'Errors'
-    experts: 'Experts'
-    'false': 'No'
-    fee: 'Fee'
-    filter: 'Filter'
-    former_collaboration: 'Former Collaboration'
-    gender: 'Gender'
-    job: 'Job'
-    languages: 'Languages'
-    m_phone: 'Phone (Mobile)'
-    m_phones: 'Phones (Mobile)'
-    name: 'Name'
-    new_expert: 'New Expert'
-    new_user: 'New User'
-    no_file_selected: 'No File Selected'
-    none: 'None'
-    partners: 'Partners'
-    password: 'Password'
-    p_phone: 'Phone (Private)'
-    p_phones: 'Phones (Private)'
-    prename: 'First Name'
-    privileges: 'Privileges'
-    profile: 'Profile'
-    quicksearch: 'Quicksearch'
-    references: 'References'
-    registered_on: 'Registered on'
-    search: 'Search'
-    skype: 'Skype'
-    skypes: 'Skypes'
-    title: 'Title'
-    'true': 'Yes'
-    updated_at: 'Updated at %{date}'
-    username: 'Username'
-    users: 'Users'
-    website: 'Website'
-    websites: 'Websites'
-    welcome: 'Welcome'
-
-  msg:
-    access_denied: 'Access denied.'
-    address_not_found: 'Address not found.'
-    attachment_not_found: 'Attachment not found.'
-    could_not_create_expert: 'Could not create expert.'
-    could_not_create_user: 'Could not create user.'
-    could_not_delete_attachment: 'Could not delete attachment.'
-    could_not_delete_contact: 'Could not delete contact.'
-    could_not_delete_cv: 'Could not delete CV.'
-    could_not_delete_expert: 'Could not delete expert.'
-    could_not_delete_user: 'Could not delete user.'
-    could_not_save_changes: 'Could not save changes.'
-    could_not_save_contact: 'Could not save contact.'
-    could_not_save_cv: 'Could not save CV.'
-    could_not_store_attachment: 'Could not store attachment.'
-    could_not_store_cv: 'Could not store CV.'
-    cv_not_found: 'CV not found.'
-    created_expert: 'Created expert: %{name}'
-    created_user: 'Created user: %{user}'
-    delete_current_user_error: 'You can not delete yourself.'
-    deleted_attachment: 'Deleted attachment.'
-    deleted_contact: 'Deleted contact.'
-    deleted_cv: 'Deleted CV.'
-    deleted_expert: 'Deleted expert: %{expert}'
-    deleted_address: 'Deleted Address.'
-    deleted_user: 'Deleted user: %{user}'
-    expert_has_no_attachments: 'This expert has no attachments.'
-    expert_has_no_cvs: 'This expert has no CVs.'
-    expert_not_found: 'Expert not found.'
-    file_not_found: 'File not found.'
-    generic_error: 'Sorry, but something went wrong.'
-    invalid_credentials: 'Wrong username or password.'
-    language_not_found: 'Language not found.'
-    partner_not_found: 'Partner not found.'
-    record_not_found: 'Record not found.'
-    reference_not_found: 'Reference not found.'
-    saved_address: 'Saved address.'
-    saved_changes: 'Saved changes.'
-    saved_contact: 'Saved contact.'
-    stored_new_attachment: 'Stored new attachment.'
-    stored_new_cv: 'Stored new CV.'
-    user_not_found: 'User not found.'
-    wrong_password: 'Wrong password.'
-
+  date:
+    formats:
+      short: '%B %e, %Y'
+  labels:
+    address:
+      index: 'Addresses'
+      new: 'New Address'
+    attachment:
+      index: 'Attachments'
+      new: 'New Attachment'
+    contact:
+      index: 'Contacts'
+      new: 'New Contact'
+    cv:
+      index: 'CVs'
+      new: 'New CV'
+    generic:
+      by: 'by %{name}'
+      search: 'Search'
+      welcome: 'Welcome'
+    expert:
+      all: 'All Experts'
+      contact: 'Contact'
+      documents: 'Documents'
+      edit: 'Edit Expert'
+      new: 'New Expert'
+      personal: 'Personal'
+    partners:
+      index: 'Partners'
+    references:
+      index: 'References'
+    sections:
+      experts: 'Experts'
+      partners: 'Partners'
+      References: 'References'
+      users: 'Users'
+    user:
+      all: 'All Users'
+      edit: 'Edit User'
+      new: 'New User'
+      profile: 'Profile'
+  messages:
+    generics:
+      errors:
+        access: 'Access denied.'
+        error: 'Sorry, but something went wrong.'
+        file_not_found: 'File not found.'
+        find: 'Record not found.'
+        save: 'Could not save changes.'
+      success:
+        save: 'Saved changes.'
+    address:
+      errors:
+        delete: 'Could not delete address'
+        find: 'Address not found.'
+      success:
+        delete: 'Deleted address.'
+        save: 'Saved address.'
+    attachment:
+      errors:
+        delete: 'Could not delete attachment.'
+        find: 'Attachment not found.'
+        store: 'Could not store attachment.'
+      success:
+        delete: 'Deleted attachment.'
+        store: 'Stored new attachment.'
+    contact:
+      errors:
+        delete: 'Could not delete contact.'
+        save: 'Could not save contact.'
+      success:
+        delete: 'Deleted contact.'
+        save: 'Saved contact.'
+    cv:
+      errors:
+        delete: 'Could not delete cv.'
+        find: 'Cv not found.'
+        store: 'Could not store cv.'
+      success:
+        delete: 'Deleted cv.'
+        store: 'Stored new CV.'
+    expert:
+      errors:
+        create: 'Could not create expert.'
+        delete: 'Could not delete expert.'
+        find: 'Expert not found.'
+        no_attachments: 'This expert has no attachments.'
+        no_cvs: 'This expert has no cvs.'
+        save: 'Could not save expert.'
+      success:
+        create: 'Created expert: %{name}'
+        delete: 'Deleted expert: %{name}'
+        save: 'Saved expert.'
+    language:
+      errors:
+        find: 'Language not found'
+    partners:
+      errors:
+        find: 'Partner not found.'
+    user:
+      errors:
+        create: 'Could not create user.'
+        credentials: 'Wrong username or password.'
+        delete: 'Could not delete user.'
+        delete_current_user: 'You can not delete yourself.'
+        find: 'User not found.'
+        password: 'Wrong password.'
+        save: 'Could not save user.'
+      success:
+        create: 'Created user: %{name}'
+        delete: 'Deleted user: %{name}'
+        save: 'Saved user.'
   time:
     formats:
       short: '%B %e, %Y'
       long: '%Y/%m/%d %H:%M'
-
-  date:
-    formats:
-      short: '%B %e, %Y'
+  values:
+    boolean:
+      'false': 'No'
+      'true': 'Yes'
+    contacts:
+      b_phone: 'Phone (Business)'
+      b_phones: 'Phones (Business)'
+      email: 'Email'
+      emails: 'Emails'
+      m_phone: 'Phone (Mobile)'
+      m_phones: 'Phones (Mobile)'
+      p_phone: 'Phone (Private)'
+      p_phones: 'Phones (Private)'
+      skype: 'Skype'
+      skypes: 'Skypes'
+      website: 'Website'
+      websites: 'Websites'
+    genders:
+      female: 'Female'
+      male: 'Male'

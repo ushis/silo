@@ -28,17 +28,17 @@
       <nav id="nav">
         <ul>
           <li class="experts">
-            <%= link_to t('label.experts'), experts_path %>
+            <%= link_to t('labels.sections.experts'), experts_path %>
           </li>
           <li class="partners">
-            <%= link_to t('label.partners'), partners_path %>
+            <%= link_to t('labels.sections.partners'), partners_path %>
           </li>
           <li class="references">
-            <%= link_to t('label.references'), references_path %>
+            <%= link_to t('labels.sections.references'), references_path %>
           </li>
           <% if current_user.admin? %>
             <li class="users">
-              <%= link_to t('label.users'), users_path %>
+              <%= link_to t('labels.sections.users'), users_path %>
             </li>
           <% end %>
         </ul>

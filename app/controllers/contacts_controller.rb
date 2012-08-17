@@ -23,12 +23,12 @@ class ContactsController < ApplicationController
     model.contact.send(c[:field]) << c[:contact].strip
 
     if model.contact.save
-      flash[:notice] = t('msg.saved_contact')
+      flash[:notice] = t('messages.contact.success.save')
     else
       raise 'Could not save contact.'
     end
   rescue
-    flash[:alert] = t('msg.could_not_save_contact')
+    flash[:alert] = t('messages.contact.errors.save')
   ensure
     redirect_to url
   end
@@ -39,12 +39,12 @@ class ContactsController < ApplicationController
     c = params[:contact]
 
     if model.contact.send(c[:field]).delete(c[:contact]) && model.contact.save
-      flash[:notice] = t('msg.deleted_contact')
+      flash[:notice] = t('messages.contact.success.delete')
     else
       raise 'Could not delete contact.'
     end
   rescue
-    flash[:alert] = t('msg.could_not_delete_contact')
+    flash[:alert] = t('messages.contact.errors.delete')
   ensure
     redirect_to url
   end

@@ -41,6 +41,13 @@ class Contact < ActiveRecord::Base
     define_method(method) { self.contacts[method.to_s] ||= [] }
   end
 
+  # Returns all fields in a select box friendly format.
+  def self.select_box_friendly_fields
+    FIELDS.collect do |f|
+      [I18n.t(f.to_s.singularize, scope: [:values, :contacts]), f]
+    end
+  end
+
   # Initializes the contacts hash.
   def init_contacts
     self.contacts ||= {}

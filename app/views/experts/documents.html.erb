@@ -5,14 +5,14 @@
   <div class="documents">
     <div class="cvs">
       <h4>
-        <%= t('label.cvs') %>
+        <%= t 'labels.cv.index' %>
       </h4>
       <table>
         <tbody>
           <% if @expert.cvs.empty? %>
             <tr>
               <td>
-                <%= t('msg.expert_has_no_cvs') %>
+                <%= t 'messages.expert.errors.no_cvs' %>
               </td>
             </tr>
           <% else %>
@@ -41,14 +41,14 @@
     </div><!-- cvs -->
     <div class="attachments">
       <h4>
-        <%= t('label.attachments') %>
+        <%= t 'labels.attachment.index' %>
       </h4>
       <table>
         <tbody>
           <% if @expert.attachments.empty? %>
             <tr>
               <td>
-                <%= t('msg.expert_has_no_attachments') %>
+                <%= t 'messages.expert.errors.no_attachments' %>
               </td>
             </tr>
           <% else %>
@@ -79,7 +79,7 @@
       <div class="forms">
         <div class="cv">
           <h4>
-            <%= t('label.new_cv') %>
+            <%= t 'labels.cv.new' %>
           </h4>
           <%= form_for Cv.new, url: expert_cvs_path(@expert) do |f| %>
             <div>
@@ -94,11 +94,12 @@
         </div>
         <div class="attachment">
           <h4>
-            <%= t('label.new_attachment') %>
+            <%= t 'labels.attachment.new' %>
           </h4>
           <%= form_for Attachment.new, url: expert_attachments_path(@expert) do |f| %>
             <div>
-              <%= f.text_field :title, placeholder: t('label.title') %>
+              <%= f.text_field :title,
+                               placeholder: Attachment.human_attribute_name(:title) %>
             </div>
             <div>
               <%= f.file_field :file %>

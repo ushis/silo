@@ -9,12 +9,12 @@ class ReferencesController < ApplicationController
 
   #
   def index
-    @title = t('label.references')
+    @title = t('labels.references.index')
   end
 
   #
   def not_found
-    flash[:alert] = t('msg.reference_not_found')
+    flash[:alert] = t('messages.reference.errors.find')
     refirect_to references_url
   end
 end

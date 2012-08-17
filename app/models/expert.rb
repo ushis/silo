@@ -131,6 +131,11 @@ class Expert < ActiveRecord::Base
     super(Expert.gender(gender))
   end
 
+  # Returns the localized gender.
+  def human_gender
+    I18n.t(gender, scope: [:values, :genders])
+  end
+
   # Sets the experts languages. So we can do things like:
   #
   #   en = Language.find_by_language('en')
@@ -147,6 +152,11 @@ class Expert < ActiveRecord::Base
   # Returns the localized country name.
   def human_citizenship
     Carmen::Country.coded(citizenship).try(:name)
+  end
+
+  # Returns the localized former collaboration value.
+  def human_former_collaboration
+    I18n.t(former_collaboration.to_s, scope: [:values, :boolean])
   end
 
   # Returns a string containing name and prename.

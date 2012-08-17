@@ -10,7 +10,8 @@
         <%= form_tag search_experts_path, method: :get do %>
           <div class="row">
             <div class="name">
-              <%= text_field_tag :name, params[:name], placeholder: t('label.name') %>
+              <%= text_field_tag(:name, params[:name],
+                                 placeholder: Expert.human_attribute_name(:name)) %>
             </div>
             <div class="q">
               <%= text_field_tag :q, params[:q], placeholder: 'CVs & Comments' %>
@@ -19,14 +20,14 @@
           <div class="row">
             <div>
               <%= language_select_tag(:language, params[:language],
-                                      prompt: t('label.language')) %>
+                                      prompt: Expert.human_attribute_name(:language)) %>
             </div>
             <div>
               <%= country_select_tag(:citizenship, params[:citizenship],
-                                     prompt: t('label.citizenship')) %>
+                                     prompt: Expert.human_attribute_name(:citizenship)) %>
             </div>
             <div class="submit">
-              <%= submit_tag 'Search' %>
+              <%= submit_tag t('actions.search') %>
             </div>
           </div>
           <div class="clear"></div>
@@ -40,26 +41,15 @@
     <table class="experts">
       <thead>
         <tr>
-          <th></th>
           <th>
-            <%= t 'label.name' %>
           </th>
-          <th>
-            <%= t 'label.prename' %>
+          <% [:name, :prename, :degree, :age, :citizenship, :cv].each do |attr| %>
+            <th>
+              <%= Expert.human_attribute_name(attr) %>
+            </th>
+          <% end %>
+          <th class="attachments">
           </th>
-          <th>
-            <%= t 'label.degree' %>
-          </th>
-          <th>
-            <%= t 'label.age' %>
-          </th>
-          <th>
-            <%= t 'label.citizenship' %>
-          </th>
-          <th>
-            <%= t 'label.cv' %>
-          </th>
-          <th class="attachments"></th>
         </tr>
       </thead>
       <tbody>
@@ -87,8 +77,9 @@
             </td>
             <td class="attachments">
               <% unless expert.attachments.empty? %>
-                <%= link_to(t('label.documents'), documents_expert_path(expert),
-                            class: 'icon-attachment')%>
+                <%= link_to(t('labels.expert.documents'),
+                            documents_expert_path(expert),
+                            class: 'icon-attachment') %>
               <% end %>
             </td>
           </tr>

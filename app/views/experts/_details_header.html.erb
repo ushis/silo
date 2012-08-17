@@ -3,8 +3,9 @@
     <%= @expert.full_name_with_degree %>
   </h2>
   <h3>
-    <%= t 'label.updated_at', date: l(@expert.updated_at, format: :short) %>
-    <%= t 'label.by', name: @expert.user.try(:full_name) %>
+    <%= Expert.human_attribute_name(:updated_at) %>
+    <%= l @expert.updated_at, format: :short %>
+    <%= t 'labels.generic.by', name: @expert.user.try(:full_name) %>
   </h3>
   <ul class="tools">
     <li>
@@ -20,13 +21,13 @@
   </ul>
   <ul class="tabs">
     <li class="show">
-      <%= link_to t('label.personal'), expert_path(@expert) %>
+      <%= link_to t('labels.expert.personal'), expert_path(@expert) %>
     </li>
     <li class="contact">
-      <%= link_to t('label.contact'), contact_expert_path(@expert) %>
+      <%= link_to t('labels.expert.contact'), contact_expert_path(@expert) %>
     </li>
     <li class="documents">
-      <%= link_to t('label.documents'), documents_expert_path(@expert) %>
+      <%= link_to t('labels.expert.documents'), documents_expert_path(@expert) %>
     </li>
   </ul>
 </div>

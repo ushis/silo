@@ -12,13 +12,13 @@ class ExpertsController < ApplicationController
   # Serves a paginated table of all experts.
   def index
     @experts = Expert.includes(:cvs, :attachments).limit(50).page(params[:page]).order(:name)
-    @title = t('label.search')
+    @title = t('labels.generic.search')
   end
 
   # Searches for experts.
   def search
     @experts = Expert.includes(:cvs, :attachments).search(params).limit(50).page(params[:page])
-    @title = t('label.search')
+    @title = t('labels.generic.search')
     @body_class << :index
     render :index
   end
@@ -53,7 +53,7 @@ class ExpertsController < ApplicationController
   # Servers a blank experts form
   def new
     @expert = Expert.new
-    @title = t('label.new_expert')
+    @title = t('labels.expert.new')
     render :form
   end
 
@@ -67,13 +67,13 @@ class ExpertsController < ApplicationController
     @expert.languages = params[:languages]
 
     if @expert.save
-      flash[:notice] = t('msg.created_expert', name: @expert.name)
+      flash[:notice] = t('messages.expert.success.create', name: @expert.name)
       redirect_to expert_url(@expert) and return
     else
-      flash[:alert] = t('msg.could_not_create_expert')
+      flash[:alert] = t('messages.expert.errors.create')
     end
 
-    @title = t('label.new_expert')
+    @title = t('labels.expert.new')
     @body_class << :new
     render :form
   end
@@ -81,7 +81,7 @@ class ExpertsController < ApplicationController
   # Serves an edit form, populated with the experts data.
   def edit
     @expert = Expert.includes(:comment, :languages).find(params[:id])
-    @title = t('label.edit_expert')
+    @title = t('labels.expert.new')
     render :form
   end
 
@@ -98,13 +98,13 @@ class ExpertsController < ApplicationController
     @expert.languages = params[:languages]
 
     if @expert.save
-      flash[:notice] = t('msg.saved_changes')
+      flash[:notice] = t('messages.expert.success.save')
       redirect_to expert_url(@expert) and return
     else
-      flash.now[:alert] = t('msg.could_not_save_changes')
+      flash.now[:alert] = t('messages.expert.errors.save')
     end
 
-    @title = t('label.edit_expert')
+    @title = t('labels.expert.edit')
     @body_class << :edit
     render :form
   end
@@ -114,17 +114,17 @@ class ExpertsController < ApplicationController
     expert = Expert.find(params[:id])
 
     if expert.destroy
-      flash[:notice] = t('msg.deleted_expert', expert: expert.name)
+      flash[:notice] = t('messages.expert.success.delete', name: expert.name)
   	  redirect_to experts_url
     else
-      flash[:alert] = t('msg.could_not_delete_expert')
+      flash[:alert] = t('messages.expert.errors.delete')
       redirect_to expert_url(expert)
     end
   end
 
   # Sets a not found flash and redirects to the experts index page.
   def not_found
-    flash[:alert] = t('msg.expert_not_found')
+    flash[:alert] = t('messages.expert.errors.find')
     redirect_to experts_url
   end
 end

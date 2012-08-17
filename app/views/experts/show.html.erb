@@ -5,43 +5,43 @@
   <div class="personal">
   	<dl>
   	  <dt>
-  	  	<%= t 'label.citizenship' %>
+  	  	<%= Expert.human_attribute_name :citizenship %>
   	  </dt>
   	  <dd>
   		  <%= @expert.human_citizenship %>
   	  </dd>
   	  <dt>
-  	  	<%= t 'label.birthday' %>
+  	  	<%= Expert.human_attribute_name :birthday %>
   	  </dt>
   	  <dd>
   		  <%= l(@expert.birthday, format: :short) if @expert.birthday %>
   	  </dd>
   	  <dt>
-  	  	<%= t 'label.language' %>
+  	  	<%= Expert.human_attribute_name :language %>
   	  </dt>
   	  <dd>
 	  	  <%= @expert.languages.join(', ') %>
   	  </dd>
   	  <dt>
-  	  	<%= t 'label.job' %>
+  	  	<%= Expert.human_attribute_name :job %>
   	  </dt>
   	  <dd>
   		  <%= @expert.job %>
   	  </dd>
   	  <dt>
-  	  	<%= t 'label.former_collaboration' %>
+  	  	<%= Expert.human_attribute_name :former_collaboration %>
   	  </dt>
   	  <dd>
-  		  <%= t @expert.former_collaboration.to_s, scope: :label %>
+  		  <%= @expert.human_former_collaboration %>
   	  </dd>
   	  <dt>
-  	  	<%= t 'label.fee' %>
+  	  	<%= Expert.human_attribute_name :fee %>
   	  </dt>
   	  <dd>
   		  <%= @expert.fee %>
   	  </dd>
   	  <dt>
-  	  	<%= t 'label.comment' %>
+  	  	<%= Expert.human_attribute_name :comment %>
   	  </dt>
   	  <dd>
   		  <%= markdown @expert.comment.comment %>
