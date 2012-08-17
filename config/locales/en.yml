@@ -2,20 +2,26 @@
 en:
   action:
     add: 'Add'
-    add_address: 'Add Address'
-    add_contact: 'Add Contact'
-    back: 'Back'
     delete: 'Delete'
     edit: 'Edit'
     login: 'Login'
     logout: 'Logout'
-    next: 'Next'
     print: 'Print'
     save: 'Save'
-    select_file: 'Select a file'
-
   activerecord:
     attributes:
+      address:
+        address: 'Address'
+        country: 'Country'
+      attachment:
+        filename: 'Filename'
+        title: 'Title'
+      comment:
+        comment: 'Comment'
+      cv:
+        cv: 'CV'
+        expert: 'Expert'
+        language: 'Language'
       expert:
         birthday: 'Date of birth'
         citizenship: 'Citizenship'
@@ -28,6 +34,11 @@ en:
         languages: 'Languages'
         name: 'Name'
         prename: 'First Name'
+      privilege:
+        admin: 'Admin'
+        experts: 'Experts'
+        partners: 'Partners'
+        references: 'References'
       user:
         email: 'Email'
         locale: 'Locale'
@@ -38,6 +49,7 @@ en:
         prename: 'First Name'
         privileges: 'Privileges'
         username: 'Username'
+        created_at: 'Registered On'
     errors:
       messages:
         blank: 'Can not be blank.'

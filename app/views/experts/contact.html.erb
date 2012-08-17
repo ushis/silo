@@ -52,7 +52,7 @@
   <div class="forms">
      <div class="contact">
       <h4>
-        <%= t 'action.new_contact' %>
+        <%= t 'label.new_contact' %>
       </h4>
       <%= form_tag expert_contacts_path(@expert) do %>
         <div>
@@ -60,13 +60,13 @@
         </div>
         <div>
           <%= text_field_tag 'contact[contact]' %>
-          <%= submit_tag t('action.add_contact') %>
+          <%= submit_tag t('action.add') %>
         </div>
       <% end %>
     </div>
     <div class="address">
       <h4>
-        <%= t 'action.new_address' %>
+        <%= t 'label.new_address' %>
       </h4>
       <%= form_for Address.new, url: expert_addresses_path(@expert) do |f| %>
         <div>
@@ -74,7 +74,7 @@
         </div>
         <div>
           <%= f.country_select :country %>
-          <%= f.submit t('action.add_address') %>
+          <%= f.submit t('action.add') %>
         </div>
       <% end %>
     </div>
