@@ -18,7 +18,7 @@
           <% else %>
             <% @expert.cvs.each do |cv| %>
               <tr>
-                <td>
+                <td class="icon-cv">
                   <%= link_to cv.language.human, [@expert, cv] %>
                 </td>
                 <td>
@@ -54,7 +54,7 @@
           <% else %>
             <% @expert.attachments.each do |attachment| %>
               <tr>
-                <td>
+                <td class="icon-attachment">
                   <%= link_to attachment.title, [@expert, attachment] %>
                 </td>
                 <td>
