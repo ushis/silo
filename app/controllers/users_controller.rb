@@ -10,6 +10,7 @@ class UsersController < ApplicationController
 
     @user = current_user
     @title = t('labels.user.profile')
+    @body_class << :edit
   end
 
   # Updates a users profile. If a user wants to change his(her password, the
@@ -31,6 +32,7 @@ class UsersController < ApplicationController
     end
 
     @title = t('labels.user.profile')
+    @body_class << :edit
     render :profile
   end
 
