@@ -35,7 +35,7 @@ class Expert < ActiveRecord::Base
   has_many :cvs, autosave: true, dependent: :destroy,
            select: [:id, :expert_id, :language_id], order: :language_id
 
-  belongs_to :user
+  belongs_to :user, select: [:id, :name, :prename]
 
   # Set of vailable genders.
   GENDERS = [:female, :male].to_set
@@ -73,7 +73,7 @@ class Expert < ActiveRecord::Base
     end
 
     unless (language = params[:language]).blank?
-      s = s.includes(:languages).where('languages.id = ?', language)
+      s = s.includes(:langs).where('langs.language_id = ?', language)
     end
 
     if ! params[:q].blank? && ! (ids = search_fulltext(params[:q])).empty?
