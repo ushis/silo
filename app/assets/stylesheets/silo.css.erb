@@ -607,6 +607,13 @@ body.experts div.confirm-delete div:hover {
   position: relative;
 }
 
+#main form div.field_with_errors label:after {
+  content: '!';
+  float: right;
+  font-weight: bold;
+  color: #f33;
+}
+
 #main input[type=submit] {
   float: left;
   cursor: pointer;
@@ -1317,4 +1324,9 @@ body.experts.documents #main div.forms form input[type=file] {
 body.experts.documents #main div.forms form input[type=submit],
 body.experts.contact #main div.forms form input[type=submit] {
   float: right;
+}
+
+/* Validation Errors */
+div.validation-errors table {
+  margin: -16px 0 16px 0;
 }

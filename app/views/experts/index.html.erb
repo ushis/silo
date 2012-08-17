@@ -4,7 +4,7 @@
   <div>
     <div class="header">
       <h2 class="icon-search">
-        <%= t 'label.search' %>
+        <%= @title %>
       </h2>
       <div id="filter" class="form-wrapper">
         <%= form_tag search_experts_path, method: :get do %>
@@ -36,7 +36,7 @@
         <%= paginate @experts %>
       </div>
     </div>
-    
+
     <table class="experts">
       <thead>
         <tr>

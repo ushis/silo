@@ -4,39 +4,42 @@
   <h2 class="icon-user-edit">
     <%= @title %>
   </h2>
+  <% unless @user.errors.empty? %>
+    <%= render 'shared/validation_errors', model: @user %>
+  <% end %>
   <div class="form-wrapper">
     <%= form_for @user do |f| %>
       <div class="row main">
         <ul>
           <li>
-            <%= f.label :username, t('label.username') %>
+            <%= f.label :username %>
             <%= f.text_field :username %>
           </li>
           <li>
-            <%= f.label :email, t('label.email') %>
+            <%= f.label :email %>
             <%= f.text_field :email %>
           </li>
           <li>
-            <%= f.label :password, t('label.password') %>
+            <%= f.label :password %>
             <%= f.password_field :password %>
           </li>
           <li>
-            <%= f.label :password_confirmation, t('label.password_confirmation') %>
+            <%= f.label :password_confirmation %>
             <%= f.password_field :password_confirmation %>
           </li>
         </ul>
         <ul>
           <li>
-            <%= f.label :prename, t('label.prename') %>
+            <%= f.label :prename %>
             <%= f.text_field :prename %>
           </li>
           <li>
-            <%= f.label :name, t('label.name') %>
+            <%= f.label :name %>
             <%= f.text_field :name %>
           </li>
           <li class="privileges<%= ' disabled' if current_user?(@user) %>">
             <%= fields_for @user.privilege do |p| %>
-              <%= f.label :privileges, t('label.privileges') %>
+              <%= f.label :privileges %>
               <% Privilege::SECTIONS.each do |section| %>
                 <%= p.check_box section, disabled: current_user?(@user) %>
                 <%= p.label section, class: 'check-box-label' %>
@@ -46,9 +49,9 @@
             <% end %>
           </li>
           <li>
-            <%= f.label :locale, t('label.locale') %>
+            <%= f.label :locale %>
             <%= f.select :locale, list_locales %>
-            <%= f.submit %>
+            <%= f.submit t('action.save') %>
           </li>
         </ul>
       </div>

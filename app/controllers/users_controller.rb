@@ -62,6 +62,7 @@ class UsersController < ApplicationController
 
     @title = t('label.new_user')
     flash.now[:alert] = t('msg.could_not_create_user')
+    @body_class << :new
     render :form
   end
 
@@ -93,6 +94,7 @@ class UsersController < ApplicationController
 
     flash.now[:alert] = t('msg.could_not_save_changes')
     @title = t('label.edit_user')
+    @body_class << :edit
     render :form
   end
 

@@ -1,0 +1,16 @@
+<div class="validation-errors">
+  <table>
+    <tbody>
+      <% model.errors.each do |attr, msg| %>
+        <tr>
+          <td>
+            <%= model.class.human_attribute_name attr %>
+          </td>
+          <td>
+            <%= msg %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
