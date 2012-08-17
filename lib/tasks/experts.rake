@@ -1,6 +1,7 @@
 #encoding: utf-8
 
 require 'carmen'
+require 'colorize'
 
 namespace :experts do
 
@@ -132,7 +133,7 @@ namespace :experts do
         end
 
         # First address
-        if ['Stra', 'Wohnort', 'Land'].any? { |v| ! data[v].blank? }
+        if ['Stra', 'Wohnort'].any? { |v| ! data[v].blank? }
           address = Address.new
 
           address.address = [data['Stra'], data['Wohnort']].delete_if do |f|
@@ -148,12 +149,16 @@ namespace :experts do
 
         # Yay!
         unless e.save
-          puts "Could not save dataset of #{data['Vorname1']} #{data['Name']}."
+          puts '=> Could not save dataset.'.red
           err += 1
+
+          e.errors.each do |attr, msg|
+            puts "===> #{Expert.human_attribute_name(attr)}: #{msg}".yellow
+          end
         end
       end
 
-      puts "Imported #{len - err} experts."
+      puts "Imported #{len - err}/#{len} experts."
     end
   end
 end

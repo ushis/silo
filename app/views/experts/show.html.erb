@@ -14,7 +14,7 @@
   	  	<%= t 'label.birthday' %>
   	  </dt>
   	  <dd>
-  		  <%= l @expert.birthday, format: :short %>
+  		  <%= l(@expert.birthday, format: :short) if @expert.birthday %>
   	  </dd>
   	  <dt>
   	  	<%= t 'label.language' %>

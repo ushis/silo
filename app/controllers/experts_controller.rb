@@ -74,6 +74,7 @@ class ExpertsController < ApplicationController
     end
 
     @title = t('label.new_expert')
+    @body_class << :new
     render :form
   end
 
@@ -104,6 +105,7 @@ class ExpertsController < ApplicationController
     end
 
     @title = t('label.edit_expert')
+    @body_class << :edit
     render :form
   end
 

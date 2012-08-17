@@ -31,5 +31,8 @@ gem 'prawn', '~> 0.12.0'
 # Markdown
 gem 'bluecloth', '~> 2.2.0'
 
+# Colrized Output
+gem 'colorize'
+
 # To use debugger
 # gem 'debugger'

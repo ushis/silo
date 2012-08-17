@@ -24,8 +24,7 @@ class Expert < ActiveRecord::Base
   attr_accessible(:name, :prename, :gender, :birthday, :fee, :job,
                   :citizenship, :degree, :former_collaboration)
 
-  # validates :name,    presence: true
-  # validates :prename, presence: true
+  validates :name, presence: true
 
   has_one :contact, autosave: true, dependent: :destroy, as: :contactable
   has_one :comment, autosave: true, dependent: :destroy, as: :commentable
