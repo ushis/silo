@@ -111,6 +111,7 @@ en:
     partner_not_found: 'Partner not found.'
     record_not_found: 'Record not found.'
     reference_not_found: 'Reference not found.'
+    saved_address: 'Saved address.'
     saved_changes: 'Saved changes.'
     saved_contact: 'Saved contact.'
     stored_new_attachment: 'Stored new attachment.'
