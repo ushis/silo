@@ -8,7 +8,7 @@
  */
 body {
   background-color: #3a3a3a;
-  min-width: 1100px;
+  min-width: 1130px;
 }
 
 a, form.button_to input[type=submit] {
@@ -273,6 +273,11 @@ body.users.new #main div.row {
   margin-bottom: 10px;
 }
 
+body.experts.index #main div.header h2 {
+  padding-left: 24px;
+  background-position: left 1px;
+}
+
 #main div.form-wrapper h2 {
   padding: 10px 0 0 10px;
 }
@@ -455,7 +460,7 @@ body.experts #main div.form-wrapper#filter div.row {
 }
 
 body.experts #main div.form-wrapper#filter div.row:nth-child(3) {
-  margin-right: 360px;
+  margin-right: 390px;
 }
 
 body.experts #main div.form-wrapper#filter div.row div.name,
@@ -471,6 +476,12 @@ body.experts #main div.form-wrapper#filter div.row div.q input {
   width: 100%;
   box-sizing: border-box;
 }
+
+body.experts #main div.form-wrapper#filter div.row div.submit {
+  float: right;
+  width: auto;
+}
+
 
 /* Experts table */
 body.experts #main table.experts {
@@ -856,19 +867,32 @@ body.experts #main form div.multi-lang span.delete {
   float: right;
   position: relative;
   cursor: pointer;
-  margin: 3px 10px 0 -5px;
-  padding: 0 10px;
-  font-size: .75em;
-  color: #d0d0d0;
-  text-shadow: 1px 1px 0px rgba(0, 0, 0, .5);
+  padding: 1px 14px 1px 14px;
+  margin-top: 3px;
+  margin-left: 5px;
+  font-size: .7em;
+  font-weight: bold;
+  color: #444;
   border: none;
-  border-top: 1px solid rgba(255, 255, 255, .1);
+  background: #f0f0f0;
+  text-shadow: 1px 1px 0px rgba(255, 255, 255, 1);
   border-radius: 3px;
-  background: -moz-linear-gradient(top,  #515151 0%, #464646 100%);
-  background: -webkit-linear-gradient(top,  #515151 0%,#464646 100%);
-  background: -o-linear-gradient(top,  #515151 0%,#464646 100%);
-  background: -ms-linear-gradient(top,  #515151 0%,#464646 100%);
-  background: linear-gradient(to bottom,  #515151 0%,#464646 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), 0 1px 1px rgba(0, 0, 0, .4);
+}
+
+body.experts #main form div.multi-lang span.more:hover,
+body.experts #main form div.multi-lang span.delete:hover {
+  color: #222;
+  text-shadow: 1px 1px 0px rgba(255, 255, 255, .2);
+  background: rgb(236,236,236);
+  background: -moz-linear-gradient(top,  rgba(236,236,236,1) 0%, rgba(227,227,227,1) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(236,236,236,1)), color-stop(100%,rgba(227,227,227,1))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  rgba(236,236,236,1) 0%,rgba(227,227,227,1) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  rgba(236,236,236,1) 0%,rgba(227,227,227,1) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  rgba(236,236,236,1) 0%,rgba(227,227,227,1) 100%); /* IE10+ */
+  background: linear-gradient(to bottom,  rgba(236,236,236,1) 0%,rgba(227,227,227,1) 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ececec', endColorstr='#e3e3e3',GradientType=0 ); /* IE6-9 */
+
 }
 
 body.experts #main form div.multi-lang span.more {
@@ -877,8 +901,22 @@ body.experts #main form div.multi-lang span.more {
 
 body.experts #main form div.multi-lang span.delete {
   padding: 0 8px 2px 8px;
-  margin: 3px 10px 0 5px;
+  margin: 3px 2px 0 5px;
   font-size: .7em;
+}
+
+body.experts #main form div.multi-lang span.more:after,
+body.experts #main form div.multi-lang span.delete:after {
+  content: ' ';
+  position: absolute;
+  top: 48%;
+  right: 100%;
+  border: solid transparent;
+  width: 0;
+  height: 0;
+  margin-top: -4px;
+  border-width: 4px;
+  border-right-color: rgb(236,236,236);
 }
 
 body.experts #main form div.multi-lang span.more:before,
@@ -890,9 +928,9 @@ body.experts #main form div.multi-lang span.delete:before {
   border: solid transparent;
   width: 0;
   height: 0;
-  margin-top: -4px;
+  margin-top: -3px;
   border-width: 4px;
-  border-right-color: #4f4f4f;
+  border-right-color: rgba(0,0,0,.5);
 }
 
 body.experts #main div.form-wrapper form div.submit {
@@ -1014,14 +1052,14 @@ ul.pagination li.back > * {
   color: #666;
   margin-right: 10px;
   padding-left: 14px;
-  background: #efefef url(<%= asset_data_uri 'icon_back.png' %>) left center no-repeat;
+  background: #efefef url(<%= asset_data_uri 'icon_back.png' %>) center center no-repeat;
 }
 
 ul.pagination li.next > * {
   color: #666;
   margin-left: 10px;
   padding-right: 14px;
-  background: #efefef url(<%= asset_data_uri 'icon_next.png' %>) right center no-repeat;
+  background: #efefef url(<%= asset_data_uri 'icon_next.png' %>) center center no-repeat;
 }
 
 ul.pagination li span {
@@ -1160,6 +1198,19 @@ body.experts.contact #main h4 {
   font-size: .9em;
 }
 
+body.experts.documents #main div.cvs table td.icon-cv,
+body.experts.documents #main div.attachments table td.icon-attachment {
+  padding-left: 30px;
+}
+
+body.experts.documents #main div.cvs table td.icon-cv {
+  background-position: 10px 8px;
+}
+
+body.experts.documents #main div.attachments table td.icon-attachment {
+  background-position: 10px 9px;
+}
+
 body.experts.documents #main div table td.del,
 body.experts.contact #main div table td.del {
   width: 24px;
@@ -1172,6 +1223,7 @@ body.experts.contact #main input.icon-delete {
   height: 12px;
   padding: 0;
   text-indent: -9999px;
+  box-shadow: none;
   background: transparent url('<%= asset_data_uri 'icon_delete.png' %>') center center no-repeat;
 }
 

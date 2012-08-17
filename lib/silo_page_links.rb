@@ -34,7 +34,7 @@ module SiloPageLinks
     def previous_page
       if current_page > 1
         content_tag :li, class: 'back' do
-          link_to t('action.back'), url(current_page - 1)
+          link_to '', url(current_page - 1)
         end
       end
     end
@@ -43,7 +43,7 @@ module SiloPageLinks
     def next_page
       if current_page < total_pages
         content_tag :li, class: 'next' do
-          link_to t('action.next'), url(current_page + 1)
+          link_to '', url(current_page + 1)
         end
       end
     end

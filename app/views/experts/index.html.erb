@@ -3,7 +3,7 @@
 <div id="main">
   <div>
     <div class="header">
-      <h2>
+      <h2 class="icon-search">
         <%= t 'label.search' %>
       </h2>
       <div id="filter" class="form-wrapper">
@@ -25,7 +25,7 @@
               <%= country_select_tag(:citizenship, params[:citizenship],
                                      prompt: t('label.citizenship')) %>
             </div>
-            <div>
+            <div class="submit">
               <%= submit_tag 'Search' %>
             </div>
           </div>
