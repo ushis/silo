@@ -59,49 +59,77 @@ div.layer {
 
 /* Pagination */
 ul.pagination {
-   font-size: .75em;
+   font-size: .7em;
+   position: absolute;
+   bottom: 0;
+   right: 0;
+   padding: 10px 10px 3px 9px;
+   background: #F9F9F9;
+   border-radius: 4px 0 0 0;
 }
 
 ul.pagination li {
   float: left;
-  padding: 3px 4px 1px 4px;
+  padding: 0 2px;
   margin: 0;
-  border-radius: 3px;
 }
 
-ul.pagination li > * {
+ul.pagination li a,
+ul.pagination li span {
   color: #999;
-  border-radius: 2px 2px 0 0;
-  padding: 5px 6px 3px 6px;
-  background: #efefef;
+  padding: 4px 8px 3px 8px;
   border-radius: 3px;
 }
 
-ul.pagination li.back > * {
-  color: #666;
-  margin-right: 10px;
-  padding-left: 14px;
-  background: #efefef url(<%= asset_data_uri 'icon_back.png' %>) center center no-repeat;
-}
-
-ul.pagination li.next > * {
-  color: #666;
-  margin-left: 10px;
-  padding-right: 14px;
-  background: #efefef url(<%= asset_data_uri 'icon_next.png' %>) center center no-repeat;
+ul.pagination li a:hover {
+  cursor: pointer;
+  color: #222;
+  text-shadow: 1px 1px 0px rgba(255, 255, 255, .2);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), 0 1px 1px rgba(0, 0, 0, .2);
+  background-color: rgb(236,236,236);
 }
 
 ul.pagination li span {
-  color: #666;
-  font-weight: bold;
-  text-shadow: none;
-  background: transparent;
+  color: #444;
+  text-shadow: 1px 1px 0px rgba(255, 255, 255, 1);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), 0 1px 1px rgba(0, 0, 0, .2);
+  background: #f0f0f0;
 }
 
 ul.pagination li span.gap {
-  color: #999;
   padding: 4px 2px;
   background-color: transparent;
+  box-shadow: none;
+}
+
+ul.pagination li.back a,
+ul.pagination li.next a {
+  padding: 4px 10px 3px 10px;
+  text-shadow: 1px 1px 0px rgba(255, 255, 255, 1);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), 0 1px 1px rgba(0, 0, 0, .2);
+}
+
+ul.pagination li.back a {
+  margin: 0 3px 0 0;
+  background: #f0f0f0 url(<%= asset_data_uri 'icon_back.png' %>) 7px 7px no-repeat;
+}
+
+ul.pagination li.next a {
+  margin: 0 0 0 3px;
+  background: #f0f0f0 url(<%= asset_data_uri 'icon_next.png' %>) 8px 7px no-repeat; 
+}
+
+div.pagination.bottom {
+  height: 20px;
+  margin: 10px 0 0 0;
+}
+
+div.pagination.bottom ul.pagination {
+  position: static;
+  float: right;
+  background: transparent;
+  border-radius: 0;
+  padding: 0 0 3px 8px;
 }
 
 /* Validation Errors */

@@ -10,6 +10,7 @@ class UsersController < ApplicationController
 
     @user = current_user
     @title = t('labels.user.profile')
+    @body_class << :edit
   end
 
   # Updates a users profile. If a user wants to change his(her password, the
@@ -31,6 +32,7 @@ class UsersController < ApplicationController
     end
 
     @title = t('labels.user.profile')
+    @body_class << :edit
     render :profile
   end
 
@@ -56,7 +58,7 @@ class UsersController < ApplicationController
     @user.privileges = params[:privilege]
 
     if @user.save
-      flash[:notice] = t('messages.user.success.create', user: @user.username)
+      flash[:notice] = t('messages.user.success.create', name: @user.username)
       redirect_to users_url and return
     end
 
