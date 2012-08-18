@@ -89,4 +89,8 @@
   $('#filter div.language input')
   .siloMultiSelect('languages[]', <%= param_as_json :languages, Array %>,
       <%= list_languages.to_json.html_safe %>);
+
+  $('#filter div.citizenship input')
+  .siloMultiSelect('citizenships[]', <%= param_as_json :citizenships, Array %>,
+      <%= list_countries.to_json.html_safe %>);
 </script>

@@ -116,7 +116,7 @@ ul.pagination li.back a {
 
 ul.pagination li.next a {
   margin: 0 0 0 3px;
-  background: #f0f0f0 url(<%= asset_data_uri 'icon_next.png' %>) 8px 7px no-repeat; 
+  background: #f0f0f0 url(<%= asset_data_uri 'icon_next.png' %>) 8px 7px no-repeat;
 }
 
 div.pagination.bottom {
@@ -248,6 +248,11 @@ div.multi-select div.select {
 div.multi-select div.select ul {
   float: left;
   width: 16.6%;
+}
+
+div.multi-select div.select li {
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 div.multi-select div.select input {

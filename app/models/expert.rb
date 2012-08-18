@@ -70,8 +70,8 @@ class Expert < ActiveRecord::Base
       s = s.where('name LIKE :n OR prename LIKE :n', n: "%#{params[:name]}%")
     end
 
-    unless params[:citizenship].blank?
-      s = s.where(citizenship:  params[:citizenship])
+    if (cships = params[:citizenships]).is_a?(Array) && ! cships.empty?
+      s = s.where(citizenship: cships)
     end
 
     if (languages = params[:languages]).is_a?(Array) && ! languages.empty?
