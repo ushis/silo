@@ -58,7 +58,7 @@ class UsersController < ApplicationController
     @user.privileges = params[:privilege]
 
     if @user.save
-      flash[:notice] = t('messages.user.success.create', user: @user.username)
+      flash[:notice] = t('messages.user.success.create', name: @user.username)
       redirect_to users_url and return
     end
 
