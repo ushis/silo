@@ -1,51 +1,52 @@
 <div id="main">
-  <h2>
+  <h2 class="icon-user-edit">
     <%= @title %>
   </h2>
   <% unless @user.errors.empty? %>
     <%= render 'shared/validation_errors', model: @user %>
   <% end %>
-  <%= form_for @user, url: profile_url do |f| %>
-    <div class="field-box base">
-      <p>
-        <%= f.label :username %>
-        <%= f.text_field :username, disabled: true %>
-      </p>
-      <p>
-        <%= f.label :email %>
-        <%= f.text_field :email %>
-      </p>
-      <p>
-        <%= f.label :password %>
-        <%= f.password_field :password %>
-      </p>
-      <p>
-        <%= f.label :password_confirmation %>
-        <%= f.password_field :password_confirmation %>
-      </p>
-      <p>
-        <%= f.label :password_old %>
-        <%= f.password_field :password_old %>
-      </p>
-    </div>
-    <div class="field-box more">
-      <p>
-        <%= f.label :name %>
-        <%= f.text_field :name %>
-      </p>
-      <p>
-        <%= f.label :prename %>
-        <%= f.text_field :prename %>
-      </p>
-      <p>
-        <%= f.label :locale %>
-        <%= f.select :locale, list_locales %>
-      </p>
-    </div>
-    <div class="field-box buttons">
-      <p>
-        <%= f.submit t('action.save') %>
-      </p>
-    </div>
-  <% end %>
+  <div class="form-wrapper">
+    <%= form_for @user, url: profile_url do |f| %>
+      <div class="row main">
+        <ul>
+          <li>
+            <%= f.label :username %>
+            <%= f.text_field :username, disabled: true %>
+          </li>
+          <li>
+            <%= f.label :email %>
+            <%= f.text_field :email %>
+          </li>
+          <li>
+            <%= f.label :password %>
+            <%= f.password_field :password %>
+          </li>
+          <li>
+            <%= f.label :password_confirmation %>
+            <%= f.password_field :password_confirmation %>
+          </li>
+          <li>
+            <%= f.label :password_old %>
+            <%= f.password_field :password_old %>
+          </li>
+        </ul>
+        <ul>
+          <li>
+            <%= f.label :name %>
+            <%= f.text_field :name %>
+          </li>
+          <li>
+            <%= f.label :prename %>
+            <%= f.text_field :prename %>
+          </li>
+          <li>
+            <%= f.label :locale %>
+            <%= f.select :locale, list_locales %>
+            <%= f.submit t('actions.save') %>
+          </li>
+        </ul>
+      </div>
+    <% end %>
+  </div>
+  <div class="clear"></div>
 </div>
