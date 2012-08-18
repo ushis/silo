@@ -74,8 +74,8 @@ class Expert < ActiveRecord::Base
       s = s.where(citizenship:  params[:citizenship])
     end
 
-    unless (language = params[:language]).blank?
-      s = s.includes(:langs).where('langs.language_id = ?', language)
+    if (languages = params[:languages]).is_a?(Array) && ! languages.empty?
+      s = s.where(id: search_languages(languages))
     end
 
     if ! params[:q].blank? && ! (ids = search_fulltext(params[:q])).empty?
@@ -83,6 +83,29 @@ class Expert < ActiveRecord::Base
     end
 
     s.order(:name)
+  end
+
+  # Searches for experts speaking all of the specified languages.
+  #
+  #   Expert.search_languages([3, 45, 7, 22])
+  #   #=> [4, 6]
+  #
+  # Returns an unordered array of expert ids.
+  def self.search_languages(language_ids)
+    sql = <<-SQL
+      SELECT langs.langable_id AS expert_id, COUNT(*) AS num
+      FROM langs
+      WHERE langs.langable_type = 'Expert'
+        AND langs.language_id IN (:ids)
+      GROUP BY expert_id
+      HAVING num > :num
+    SQL
+
+    sql = sanitize_sql([sql, ids: language_ids, num: language_ids.length - 1])
+
+    connection.select_all(sql).collect do |r|
+      r['expert_id']
+    end
   end
 
   # Searches the culltext associations, such as Comment and CV.
@@ -105,8 +128,8 @@ class Expert < ActiveRecord::Base
       ORDER BY score DESC
     SQL
 
-    connection.select_all(sanitize_sql([sql, q: query])).collect do |i|
-      i['expert_id']
+    connection.select_all(sanitize_sql([sql, q: query])).collect do |r|
+      r['expert_id']
     end
   end
 

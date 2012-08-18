@@ -19,41 +19,33 @@ body.experts.index #main div.header h2 {
 }
 
 /* Filter */
-body.experts #filter {
-  margin: 0 0 -32px -10px;
-  padding: 0;
-  background: transparent;
-  box-shadow: none;
-}
-
 body.experts #filter div.row {
+  clear: left;
   float: left;
-  width: 550px;
-  height: 40px;
-  margin-right: 20px;
+  width: 600px;
+  padding: 10px 0;
 }
 
-body.experts #filter div.row:nth-child(3) {
-  margin-right: 390px;
+body.experts #filter div.row.name {
+  border-bottom: 1px solid #bbb;
+  box-shadow: 0 1px 0 #efefef;
 }
 
-body.experts #filter div.row div.name,
-body.experts #filter div.row div.q {
-  float: left;
-  width: 265px;
-  box-sizing: border-box;
+body.experts #filter input[type=text] {
+  width: 193px;
+  margin-right: 10px;
 }
 
-body.experts #filter div.row div.name input,
-body.experts #filter div.row div.q input {
-  float: left;
-  width: 100%;
-  box-sizing: border-box;
+body.experts #filter div.citizenship input[type=text] {
+  margin-right: 0;
 }
 
-body.experts #filter div.row div.submit {
+body.experts #filter #q {
+  width: 396px;
+}
+
+body.experts #filter input[type=submit] {
   float: right;
-  width: auto;
 }
 
 /* Tabs */

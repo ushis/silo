@@ -6,31 +6,26 @@
       <h2 class="icon-search">
         <%= @title %>
       </h2>
-      <div id="filter" class="form-wrapper">
+      <div id="filter">
         <%= form_tag search_experts_path, method: :get do %>
-          <div class="row">
+          <div class="row name">
             <div class="name">
               <%= text_field_tag(:name, params[:name],
                                  placeholder: Expert.human_attribute_name(:name)) %>
             </div>
-            <div class="q">
-              <%= text_field_tag :q, params[:q], placeholder: 'CVs & Comments' %>
+            <div class="language">
+              <%= text_field_tag(:language, nil,
+                                 placeholder: Expert.human_attribute_name(:language)) %>
+            </div>
+            <div class="citizenship">
+              <%= text_field_tag(:citizenship, nil,
+                                 placeholder: Expert.human_attribute_name(:citizenship)) %>
             </div>
           </div>
-          <div class="row">
-            <div>
-              <%= language_select_tag(:language, params[:language],
-                                      prompt: Expert.human_attribute_name(:language)) %>
-            </div>
-            <div>
-              <%= country_select_tag(:citizenship, params[:citizenship],
-                                     prompt: Expert.human_attribute_name(:citizenship)) %>
-            </div>
-            <div class="submit">
-              <%= submit_tag t('actions.search') %>
-            </div>
+          <div class="row q">
+            <%= text_field_tag :q, params[:q], placeholder: 'CVs & Comments' %>
+            <%= submit_tag t('actions.search') %>
           </div>
-          <div class="clear"></div>
         <% end %>
       </div>
       <div class="pagination">
@@ -91,3 +86,9 @@
     </div>
   </div>
 </div>
+
+<script>
+  $('#filter div.language input')
+  .siloMultiSelect('languages[]', <%= param_as_json :languages, Array %>,
+      <%= list_languages.to_json.html_safe %>);
+</script>
