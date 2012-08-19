@@ -5,8 +5,8 @@ require 'colorize'
 
 namespace :experts do
 
-  task :import, [:filename] => [:environment] do |task, args|
-    puts "Importing experts data from XML file: #{args[:filename]}"
+  task :import, [:input, :output] => [:environment] do |task, args|
+    puts "Importing experts data from XML file: #{args[:input]}"
 
     countries = {
       'Aouth Africa'                     => 'ZA',
@@ -76,8 +76,9 @@ namespace :experts do
       Country.find_by_country(co.code)
     end
 
-    File.open(args[:filename]) do |f|
+    File.open(args[:input]) do |f|
       user = User.first
+      output = File.open(args[:output], 'w')
       experts = Hash.from_xml(f.read)['dataroot']['Adressen']
       len, err = [experts.length, 0]
 
@@ -148,17 +149,21 @@ namespace :experts do
         end
 
         # Yay!
-        unless e.save
-          puts '=> Could not save dataset.'.red
+        if e.save
+          output.puts "#{data['Index']}:#{e.id}"
+        else
+          $stderr.puts '=> Could not save dataset.'.red
           err += 1
 
           e.errors.each do |attr, msg|
-            puts "===> #{Expert.human_attribute_name(attr)}: #{msg}".yellow
+            $stderr.puts "===> #{Expert.human_attribute_name(attr)}: #{msg}".yellow
           end
         end
       end
 
+      output.close
       puts "Imported #{len - err}/#{len} experts."
+      puts "Wrote index shifts to: #{output.path}"
     end
   end
 end
