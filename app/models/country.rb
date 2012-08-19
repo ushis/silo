@@ -1,9 +1,18 @@
-#
+require 'set'
+
+# The Country model provides the ability to associate arbitrary models with
+# one or more countries.
 class Country < ActiveRecord::Base
   attr_accessible :country, :continent
 
   validates :country, uniqueness: true
 
+  # Polymorphic method to find a country.
+  #
+  #   Country.find_country("GB")
+  #   #=> #<Country id: 77, country: "GB", continent: "EU">
+  #
+  # Returns nil, if no country is found.
   def self.find_country(country)
     case country
     when Country
@@ -19,37 +28,41 @@ class Country < ActiveRecord::Base
     end
   end
 
+  # Returns a collection of all countries ordered by localized country name-
   def self.ordered
     Rails.cache.fetch("countries_#{I18n.locale}") do
       all.sort { |x, y| x.human <=> y.human }
     end
   end
 
-  def self.ordered_by_continent
+  # Returns a list of tuples containing the continent name and a list of
+  # country tuples ordered by localized country name.
+  #
+  #   Country.ordered_by_continent
+  #   #=> [
+  #   #     ["Afrika", [["Algeria", 62], ["Angole", 8], ...]],
+  #   #     ["Europe", [["Austria", 12], ...]],
+  #   #     ...
+  #   #   ]
+  def self.grouped_by_continent
     Rails.cache.fetch("countries_by_continent_#{I18n.locale}") do
       map = ActiveSupport::OrderedHash.new
 
       order(:continent).all.each do |country|
-        map[country.human_continent] ||= []
+        map[country.human_continent] ||= SortedSet.new
         map[country.human_continent] << [country.human, country.id]
-      end
-
-      map.each do |continent, countries|
-        map[continent] = countries.sort { |x, y| x[0] <=> y[0] }
       end
 
       map.to_a
     end
   end
 
-  def self.select_box_friendly
-    ordered.collect { |country| [country.human, country.id] }
-  end
-
+  # Returns the localized country name.
   def human
     I18n.t(country, scope: :countries)
   end
 
+  # Returns the localized continent name.
   def human_continent
     I18n.t(continent, scope: :continents)
   end

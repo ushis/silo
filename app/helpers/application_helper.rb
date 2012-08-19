@@ -43,11 +43,6 @@ module ApplicationHelper
     link_to(txt, path, opt)
   end
 
-  # Alias for Country.select_box_friendly
-  def list_countries
-    @list_countries ||= Country.select_box_friendly
-  end
-
   # Alias for Language.select_box_friendly
   def list_languages
     @list_languages ||= Language.select_box_friendly
