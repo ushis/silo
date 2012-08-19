@@ -21,8 +21,8 @@ class ExpertsReport < ApplicationReport
       [a.call(:prename), e.prename],
       [a.call(:gender), e.human_gender],
       [''],
-      [a.call(:birthday), l(e.birthday, format: :short)],
-      [a.call(:citizenship), e.human_citizenship],
+      [a.call(:birthday), e.birthday && l(e.birthday, format: :short)],
+      [a.call(:country), e.country.try(:human)],
       [''],
       [a.call(:job), e.job],
       [''],
@@ -49,7 +49,7 @@ class ExpertsReport < ApplicationReport
       e.addresses.each do |address|
         move_down 16
         text address.address
-        text address.human_country
+        text address.country.human
       end
     end
 

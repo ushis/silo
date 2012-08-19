@@ -49,14 +49,14 @@ class Language < ActiveRecord::Base
     case language
     when Language
       language
-    when Fixnum
+    when Fixnum, Array
       find_by_id(language)
     when Symbol
       find_by_language(language)
     when String
       (id = language.to_i) > 0 ? find_by_id(id) : find_by_language(language)
     else
-      raise ArgumentError, 'Argument is nor Language, Fixnum, Symbol or String'
+      nil
     end
   end
 
@@ -94,7 +94,7 @@ class Language < ActiveRecord::Base
   #   cv.language.human
   #   #=> 'English'
   def human
-    I18n.t(language, scope: :language)
+    I18n.t(language, scope: :languages)
   end
 
   # Return the localized language.

@@ -1,4 +1,3 @@
-require 'carmen'
 require 'bluecloth'
 require 'silo_page_links'
 
@@ -44,6 +43,11 @@ module ApplicationHelper
     link_to(txt, path, opt)
   end
 
+  # Alias for Country.select_box_friendly
+  def list_countries
+    @list_countries ||= Country.select_box_friendly
+  end
+
   # Alias for Language.select_box_friendly
   def list_languages
     @list_languages ||= Language.select_box_friendly
@@ -63,20 +67,6 @@ module ApplicationHelper
     langs.collect do |lang|
       language_select_tag 'languages[]', lang
     end.join('').html_safe
-  end
-
-  # Returns all countries in a select box friendly format.
-  def list_countries
-    @countries ||= Rails.cache.fetch("countries_#{I18n.locale}") do
-      Carmen::Country.all.sort { |x, y| x.name <=> y.name }.collect do |c|
-        [c.name, c.code]
-      end
-    end
-  end
-
-  # Returns a country select box.
-  def country_select_tag(name, val = nil, opt = {})
-    select_tag name, options_for_select(list_countries, val), opt
   end
 
   # Returns select box options with all possible contact fields.

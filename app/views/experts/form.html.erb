@@ -28,8 +28,8 @@
         </div>
         <div class="row">
           <div class="citizenship">
-            <%= f.label :citizenship %>
-            <%= f.country_select :citizenship %>
+            <%= f.label :country %>
+            <%= f.collection_select :country, Country.ordered, :id, :human %>
           </div>
           <div>
             <%= f.label :birthday %>

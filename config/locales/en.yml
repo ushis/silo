@@ -26,7 +26,7 @@ en:
       expert:
         age: 'Age'
         birthday: 'Date of birth'
-        citizenship: 'Citizenship'
+        country: 'Citizenship'
         comment: 'Comment'
         degree: 'Degree'
         fee: 'Fee'
@@ -118,6 +118,7 @@ en:
       errors:
         delete: 'Could not delete address'
         find: 'Address not found.'
+        save: 'Could not save address.'
       success:
         delete: 'Deleted address.'
         save: 'Saved address.'
