@@ -360,7 +360,8 @@ body.edit #main h2 {
   color: #f33;
 }
 
-#main input[type=submit] {
+#main input[type=submit],
+div.button {
   float: left;
   cursor: pointer;
   padding: 6px 14px 7px 14px;
@@ -375,7 +376,12 @@ body.edit #main h2 {
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), 0 1px 1px rgba(0, 0, 0, .4);
 }
 
-#main input[type=submit]:hover {
+div.button {
+  padding: 5px 14px;
+}
+
+#main input[type=submit]:hover,
+div.button:hover {
   color: #222;
   text-shadow: 1px 1px 0px rgba(255, 255, 255, .2);
   background: rgb(236,236,236);

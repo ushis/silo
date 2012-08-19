@@ -81,7 +81,7 @@ class ExpertsController < ApplicationController
   # Serves an edit form, populated with the experts data.
   def edit
     @expert = Expert.find(params[:id])
-    @title = t('labels.expert.new')
+    @title = t('labels.expert.edit')
     render :form
   end
 

@@ -153,11 +153,12 @@ do($ = jQuery) ->
     constructor: (@multiSelect, @s) ->
       @layer = new SiloLayer(@s.layerClass)
       @wrapper = $('<div>').addClass(@s.wrapperClass)
-      @header = $('<div>').addClass(@s.headerClass).text(@s.headline)
+      @header = $('<div>').addClass(@s.headerClass)
+      headline = $('<h2>').text(@s.headline)
       @abort = $('<div>').addClass("#{@s.abortClass} #{@s.buttonClass}").text(@s.abortText)
       @submit = $('<div>').addClass("#{@s.submitClass} #{@s.buttonClass}").text(@s.submitText)
       @select = $('<div>').addClass(@s.selectClass)
-      @header.append(@submit, @abort)
+      @header.append(headline, @submit, @abort)
       @wrapper.append(@header, @select)
 
       do (wrapper = @wrapper, layer = @layer, abort = @abort) ->
