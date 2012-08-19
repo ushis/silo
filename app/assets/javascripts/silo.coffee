@@ -112,12 +112,16 @@ do($ = jQuery) ->
   $.fn.siloMasterBox = (options) ->
     settings = $.extend {
       masterClass: 'master'
+      hard: false
     }, options
 
     do (el = $(@)) ->
       do (master = el.filter(".#{settings.masterClass}")) ->
         master.change ->
-          el.prop('checked', true) if $(@).is(':checked')
+          if $(@).is(':checked')
+            el.prop('checked', true)
+          else if settings.hard
+            el.prop('checked', false)
         el.not(".#{settings.masterClass}").change ->
           master.prop('checked', false) if $(@).not(':checked')
 
@@ -179,7 +183,7 @@ do($ = jQuery) ->
       do (s = @s) ->
         appendGroup = (group) ->
           select.append(group)
-          group.find('input').siloMasterBox(masterClass: 'group')
+          group.find('input').siloMasterBox(masterClass: 'group', hard: true)
 
         groupUl = (label, id) ->
           $('<ul>').append ->
