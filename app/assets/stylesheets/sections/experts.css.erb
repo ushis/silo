@@ -9,6 +9,10 @@ body.experts.edit #main {
   width: 740px;
 }
 
+body.experts.edit #main {
+  padding: 12px 20px;
+}
+
 body.experts #main div.header {
   overflow: hidden;
 }
@@ -27,8 +31,13 @@ body.experts #filter div.row {
 }
 
 body.experts #filter div.row.name {
+  padding-top: 0;
   border-bottom: 1px solid #bbb;
   box-shadow: 0 1px 0 #efefef;
+}
+
+body.experts #filter div.row.q {
+  padding-bottom: 0;
 }
 
 body.experts #filter input[type=text] {
@@ -131,22 +140,15 @@ body.experts #main table.experts thead tr {
 }
 
 body.experts #main table.experts thead th {
-  cursor: pointer;
   text-align: left;
   border-spacing: 0;
   background: none;
   box-shadow: none;
   font-size: .8em;
   padding: 0 5px 0 0;
-  font-weight: bold;
   color: #bbb;
   text-shadow: 1px 1px 0px rgba(255,255,255,.2);
   padding: 0 0 0 5px;
-}
-
-body.experts #main table.experts thead th:hover {
-  color: #AAA;
-  text-shadow: 1px 1px 0px rgba(255,255,255,.1);
 }
 
 body.experts #main table.experts thead th span {
