@@ -60,6 +60,7 @@ class Language < ActiveRecord::Base
     end
   end
 
+  # Returns a collection of all kanguages ordered by localized name.
   def self.ordered
     Rails.cache.fetch("languages_#{I18n.locale}") do
       all.sort { |x, y| x.human <=> y.human }

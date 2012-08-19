@@ -11,11 +11,11 @@
                                  placeholder: Expert.human_attribute_name(:name)) %>
             </div>
             <div class="language">
-              <%= text_field_tag(:language, nil,
+              <%= text_field_tag(:language, params[:language],
                                  placeholder: Expert.human_attribute_name(:language)) %>
             </div>
             <div class="citizenship">
-              <%= text_field_tag(:country, nil,
+              <%= text_field_tag(:country, params[:country],
                                  placeholder: Expert.human_attribute_name(:country)) %>
             </div>
           </div>
