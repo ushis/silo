@@ -153,47 +153,74 @@ do($ = jQuery) ->
     constructor: (@multiSelect, @s) ->
       @layer = new SiloLayer(@s.layerClass)
       @wrapper = $('<div>').addClass(@s.wrapperClass)
-      @header = $('<div>').addClass(@s.headerClass)
+      header = $('<div>').addClass(@s.headerClass)
       headline = $('<h2>').text(@s.headline)
-      @abort = $('<div>').addClass("#{@s.abortClass} #{@s.buttonClass}").text(@s.abortText)
-      @submit = $('<div>').addClass("#{@s.submitClass} #{@s.buttonClass}").text(@s.submitText)
-      @select = $('<div>').addClass(@s.selectClass)
-      @header.append(headline, @submit, @abort)
-      @wrapper.append(@header, @select)
+      abort = $('<div>').addClass("#{@s.abortClass} #{@s.buttonClass}").text(@s.abortText)
+      submit = $('<div>').addClass("#{@s.submitClass} #{@s.buttonClass}").text(@s.submitText)
+      select = $('<div>').addClass(@s.selectClass)
+      header.append(headline, submit, abort)
+      @wrapper.append(header, select)
 
-      do (wrapper = @wrapper, layer = @layer, abort = @abort) ->
+      do (wrapper = @wrapper, layer = @layer) ->
         abort.click ->
           layer.fadeOut()
           wrapper.fadeOut 200, ->
             wrapper.detach()
 
-      do (abort = @abort, submit = @submit, select = @select, multiSelect = @multiSelect) ->
+      do (multiSelect = @multiSelect) ->
         submit.click ->
           values = []
-          select.find('input:checked').each ->
+          select.find('input:checked').not('.group').each ->
             do (input = $(@)) ->
               values.push([input.attr('id'), input.data('name')])
           multiSelect.setValues(values)
           abort.click()
 
-    # Populates the mutli select field with check boxes.
-    populate: (selected) ->
-      do (s = @s, select = @select) ->
-        for i in [0..s.cols - 1]
-          ul = $('<ul>')
-          start = i * s.per_col
-          end = start + s.per_col - 1
-          for j in [start..end]
-            break if j >= s.data.length
-            id = s.data[j][1]
-            name = s.data[j][0]
-            input = $('<input>').attr(id: id, name: id, type: 'checkbox')
-            input.data('name', name).prop 'checked', ->
-              $.inArray(String(id), selected) > -1
-            label = $('<label>').attr(for: id).text(name)
-            ul.append ->
-              $('<li>').append(input, label)
-          select.append(ul)
+      do (s = @s) ->
+        appendGroup = (group) ->
+          select.append(group)
+          group.find('input').siloMasterBox(masterClass: 'group')
+
+        groupUl = (label, id) ->
+          $('<ul>').append ->
+            $('<li>').append ->
+              $('<input>').attr(id: id, type: 'checkbox', class: 'group')
+            .append ->
+              $('<label>').attr(for: id).text(label)
+
+        appendCol = (groupUl, col) ->
+          groupUl.append ->
+            $('<li>').addClass('col').append(col)
+
+        appendItem = (col, item) ->
+          col.append ->
+            $('<li>').addClass('item').append ->
+              $('<input>')
+                .attr(id: item[1], name: item[1], type: 'checkbox')
+                .data('name', item[0]).prop 'checked', ->
+                  $.inArray(String(item[1]), s.selected) > -1
+            .append ->
+              $('<label>').attr(for: item[1]).text(item[0])
+
+        appendItems = (groupUl, items) ->
+          per_col = Math.ceil(items.length / s.cols)
+          for j in [0..s.cols - 1]
+            ul = $('<ul>')
+            start = j * per_col
+            end = start + per_col - 1
+            for item in items[start..end]
+              appendItem(ul, item)
+            appendCol(groupUl, ul)
+
+        if ! s.grouped
+          gUl = $('<ul>')
+          appendItems(gUl, s.data)
+          appendGroup(gUl)
+        else
+          for group, i in s.data
+            gUl = groupUl(group[0], "group-#{i}")
+            appendItems(gUl, group[1])
+            appendGroup(gUl)
 
     # Fades in.
     fadeIn: ->
@@ -203,9 +230,11 @@ do($ = jQuery) ->
           wrapper.fadeIn(200)
 
   # Makes a text field multi selectable.
-  $.fn.siloMultiSelect = (name, selected, data, options) ->
+  $.fn.siloMultiSelect = (name, url, options) ->
     settings = $.extend {
       cols: 6
+      grouped: true
+      selected: []
       layerClass: 'layer'
       wrapperClass: 'multi-select'
       headerClass: 'header'
@@ -218,18 +247,26 @@ do($ = jQuery) ->
       buttonClass: 'button'
     }, options
 
-    settings.per_col = Math.ceil(data.length / settings.cols)
-    settings.data = data
-    settings.map = {}
+    do (collection = @) ->
+      mapData = (data) ->
+        settings.map = {} unless settings.map
+        for item in data
+          settings.map[item[1]] = item[0]
 
-    for lang in data
-      settings.map[lang[1]] = lang[0]
+      ready = (data) ->
+        settings.data = data
+        if ! settings.grouped
+          mapData(data)
+        else
+          for group in data
+            mapData(group[1])
 
-    @each ->
-      do (el = $(@)) ->
-        multiSelect = new SiloMultiSelect(name, el)
-        multiSelect.setValues([id, settings.map[id]] for id in selected)
-        multiSelectBox = new SiloMultiSelectBox(multiSelect, settings)
-        multiSelectBox.populate(selected)
-        el.focus ->
-          multiSelectBox.fadeIn()
+        collection.each ->
+          do (el = $(@)) ->
+            multiSelect = new SiloMultiSelect(name, el)
+            multiSelect.setValues([id, settings.map[id]] for id in settings.selected)
+            multiSelectBox = new SiloMultiSelectBox(multiSelect, settings)
+            el.focus ->
+              multiSelectBox.fadeIn()
+
+      $.ajax(url: url, dataType: 'json', success: ready)

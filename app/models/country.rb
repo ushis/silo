@@ -25,6 +25,23 @@ class Country < ActiveRecord::Base
     end
   end
 
+  def self.ordered_by_continent
+    Rails.cache.fetch("countries_by_continent_#{I18n.locale}") do
+      map = ActiveSupport::OrderedHash.new
+
+      order(:continent).all.each do |country|
+        map[country.human_continent] ||= []
+        map[country.human_continent] << [country.human, country.id]
+      end
+
+      map.each do |continent, countries|
+        map[continent] = countries.sort { |x, y| x[0] <=> y[0] }
+      end
+
+      map.to_a
+    end
+  end
+
   def self.select_box_friendly
     ordered.collect { |country| [country.human, country.id] }
   end
@@ -34,6 +51,6 @@ class Country < ActiveRecord::Base
   end
 
   def human_continent
-    I18n.t(continent, scope: :continent)
+    I18n.t(continent, scope: :continents)
   end
 end

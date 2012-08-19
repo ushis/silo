@@ -60,10 +60,16 @@ class Language < ActiveRecord::Base
     end
   end
 
+  def self.ordered
+    Rails.cache.fetch("languages_#{I18n.locale}") do
+      all.sort { |x, y| x.human <=> y.human }
+    end
+  end
+
   # Returns a collection of all languages ordered by priority and localized
   # language name.
   def self.priority_ordered
-    Rails.cache.fetch("languages_#{I18n.locale}") do
+    Rails.cache.fetch("languages_by_priority_#{I18n.locale}") do
       all.sort do |x, y|
         if x.prioritized? == y.prioritized?
           x.human <=> y.human
@@ -79,8 +85,8 @@ class Language < ActiveRecord::Base
   #
   #   Language.select_box_friendly
   #   #=> [['English', 12], ['German', 6], ['Arabic', 78], ...]
-  def self.select_box_friendly
-    priority_ordered.collect { |lang| [lang.human, lang.id] }
+  def self.select_box_friendly(order_method = :priority_ordered)
+    send(order_method).collect { |lang| [lang.human, lang.id] }
   end
 
   # Returns true if the language has priority, else false. The PRIORITIES

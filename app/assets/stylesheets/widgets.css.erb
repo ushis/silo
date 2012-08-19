@@ -229,6 +229,10 @@ div.multi-select {
   z-index: 99999;
 }
 
+div.multi-select.countries {
+  position: absolute;
+}
+
 div.multi-select h2 {
   float: left;
   padding-top: 0;
@@ -250,12 +254,39 @@ div.multi-select div.select {
   box-sizing: border-box;
 }
 
-div.multi-select div.select ul {
+div.multi-select div.select > ul {
+  clear: left;
   float: left;
-  width: 16.6%;
+  width: 100%;
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #bbb;
+  box-shadow: 0 1px 0 #efefef;
 }
 
-div.multi-select div.select li {
+div.multi-select div.select > ul:last-child {
+  margin: 0;
+  padding: 0;
+  border-bottom: 0 none transparent;
+  box-shadow: 0 0 0 transparent;
+}
+
+div.multi-select div.select > ul > li {
+  float: left;
+  width: 108px;
+  margin: 0 10px;
+}
+
+div.multi-select div.select.cols-3 > ul > li {
+  width: 190px;
+}
+
+div.multi-select.countries div.select > ul > li:first-child {
+  width: 130px;
+  margin: 0;
+}
+
+div.multi-select div.select li.item {
   white-space: nowrap;
   overflow: hidden;
 }

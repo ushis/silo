@@ -37,4 +37,10 @@ Silo::Application.routes.draw do
 
   # References
   resources :references
+
+  # Countries
+  get 'countries/by/continent' => 'countries#by_continent'
+
+  # Languages
+  resources :languages, only: [:index]
 end
