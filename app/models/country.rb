@@ -1,5 +1,3 @@
-require 'set'
-
 # The Country model provides the ability to associate arbitrary models with
 # one or more countries.
 class Country < ActiveRecord::Base
@@ -49,11 +47,13 @@ class Country < ActiveRecord::Base
       map = ActiveSupport::OrderedHash.new
 
       order(:continent).all.each do |country|
-        map[country.human_continent] ||= SortedSet.new
+        map[country.human_continent] ||= []
         map[country.human_continent] << [country.human, country.id]
       end
 
-      map.to_a
+      map.collect do |continent, countries|
+        [continent, countries.sort { |x, y| x[0] <=> y[0] }]
+      end
     end
   end
 
