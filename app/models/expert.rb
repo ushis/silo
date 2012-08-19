@@ -20,7 +20,7 @@ require 'set'
 # - *updated_at* datetime
 class Expert < ActiveRecord::Base
   attr_accessible(:name, :prename, :gender, :birthday, :fee, :job, :degree,
-                  :former_collaboration, :country)
+                  :former_collaboration, :country_id)
 
   validates :name, presence: true
 
