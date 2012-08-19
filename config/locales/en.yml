@@ -150,7 +150,9 @@ en:
         create: 'Could not create expert.'
         delete: 'Could not delete expert.'
         find: 'Expert not found.'
+        no_addresses: 'This expert has no addresses.'
         no_attachments: 'This expert has no attachments.'
+        no_contacts: 'This expert has no contacts.'
         no_cvs: 'This expert has no cvs.'
         save: 'Could not save expert.'
       success:

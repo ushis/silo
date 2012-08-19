@@ -55,8 +55,11 @@ class Contact < ActiveRecord::Base
 
   # Removes all blank values from the contact hash.
   def remove_blanks
-    FIELDS.each do |f|
-      send(f).delete_if { |val| val.blank? }
-    end
+    FIELDS.each { |f| send(f).delete_if { |val| val.blank? } }
+  end
+
+  # Returns true, if all contact fields are empty, else false.
+  def empty?
+    FIELDS.all? { |f| send(f).empty? }
   end
 end
