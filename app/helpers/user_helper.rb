@@ -20,7 +20,7 @@ module UserHelper
   #   list_locales
   #   #=> [['English', :en], ['German', :de]]
   def list_locales
-    User::LOCALES.collect { |l| [t(l, scope: :language), l] }
+    User::LOCALES.collect { |l| [t(l, scope: :languages), l] }
   end
 
   # Returns the user's fullname and its username in brackets.
