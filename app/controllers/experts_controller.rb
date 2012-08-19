@@ -11,13 +11,13 @@ class ExpertsController < ApplicationController
 
   # Serves a paginated table of all experts.
   def index
-    @experts = Expert.includes(:cvs, :attachments).limit(50).page(params[:page]).order(:name)
+    @experts = Expert.with_documents.limit(50).page(params[:page]).order(:name)
     @title = t('labels.generic.search')
   end
 
   # Searches for experts.
   def search
-    @experts = Expert.includes(:cvs, :attachments).search(params).limit(50).page(params[:page])
+    @experts = Expert.with_documents.search(params).limit(50).page(params[:page])
     @title = t('labels.generic.search')
     @body_class << :index
     render :index
@@ -25,25 +25,25 @@ class ExpertsController < ApplicationController
 
   # Serves the experts details page.
   def show
-    @expert = Expert.includes(:user, :comment, :languages).find(params[:id])
+    @expert = Expert.find(params[:id])
     @title = @expert.full_name_with_degree
   end
 
   # Serves an addresses and contacts page.
   def contact
-    @expert = Expert.includes(:addresses, :contact).find(params[:id])
+    @expert = Expert.find(params[:id])
     @title = @expert.full_name_with_degree
   end
 
   # Serves the experts documents page.
   def documents
-    @expert = Expert.includes(:attachments, {cvs: :attachment}, :user).find(params[:id])
+    @expert = Expert.includes(cvs: :attachment).find(params[:id])
     @title = @expert.full_name_with_degree
   end
 
   # Sends a generated pdf including the experts deatils.
   def report
-    e = Expert.includes(:contact).find(params[:id])
+    e = Expert.find(params[:id])
     send_data ExpertsReport.for_expert(e).render,
               filename: "report-#{e.full_name.parameterize}.pdf",
               type: 'application/pdf',
@@ -80,14 +80,14 @@ class ExpertsController < ApplicationController
 
   # Serves an edit form, populated with the experts data.
   def edit
-    @expert = Expert.includes(:comment, :languages).find(params[:id])
+    @expert = Expert.find(params[:id])
     @title = t('labels.expert.new')
     render :form
   end
 
   # Updates an expert and redirects to the experts details page on success.
   def update
-    @expert = Expert.includes(:comment, :languages).find(params[:id])
+    @expert = Expert.find(params[:id])
     @expert.user = current_user
 
     if (comment = params[:expert].try(:delete, :comment))

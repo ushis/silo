@@ -1,5 +1,3 @@
-require 'carmen'
-
 # The Address model provides the ability to store addresses and connect
 # the to other models through the polymorphic association _addressable_.
 #
@@ -8,17 +6,20 @@ require 'carmen'
 # - *id* integer
 # - *addressable_id* integer
 # - *addressable_type* string
+# - *country_id* integer
 # - *address* text
-# - *country* string
 class Address < ActiveRecord::Base
   attr_accessible :address, :country
 
   validates :address, presence: true
 
   belongs_to :addressable, polymorphic: true
+  belongs_to :country
 
-  # Returns a human readable country name.
-  def human_country
-    Carmen::Country.coded(country).try(:name)
+  default_scope includes(:country)
+
+  # Sets the country from an id.
+  def country=(country)
+    super(Country.find_country(country))
   end
 end

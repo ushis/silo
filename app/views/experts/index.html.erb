@@ -18,8 +18,8 @@
                                  placeholder: Expert.human_attribute_name(:language)) %>
             </div>
             <div class="citizenship">
-              <%= text_field_tag(:citizenship, nil,
-                                 placeholder: Expert.human_attribute_name(:citizenship)) %>
+              <%= text_field_tag(:country, nil,
+                                 placeholder: Expert.human_attribute_name(:country)) %>
             </div>
           </div>
           <div class="row q">
@@ -36,7 +36,7 @@
         <tr>
           <th>
           </th>
-          <% [:name, :prename, :degree, :age, :citizenship, :cv].each do |attr| %>
+          <% [:name, :prename, :degree, :age, :country, :cv].each do |attr| %>
             <th>
               <%= Expert.human_attribute_name(attr) %>
             </th>
@@ -63,7 +63,7 @@
               <%= expert.age %>
             </td>
             <td>
-              <%= expert.human_citizenship %>
+              <%= expert.country.try(:human) %>
             </td>
             <td class="cvs">
               <%= list_cvs expert, class: 'icon-cv' %>
@@ -91,6 +91,6 @@
       <%= list_languages.to_json.html_safe %>);
 
   $('#filter div.citizenship input')
-  .siloMultiSelect('citizenships[]', <%= param_as_json :citizenships, Array %>,
+  .siloMultiSelect('countries[]', <%= param_as_json :countries, Array %>,
       <%= list_countries.to_json.html_safe %>);
 </script>

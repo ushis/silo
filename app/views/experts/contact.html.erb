@@ -43,7 +43,7 @@
           <% end %>
           <address>
             <%= simple_format address.address %>
-            <%= address.human_country %>
+            <%= address.country.human %>
           </address>
         </li>
       <% end %>
@@ -73,7 +73,7 @@
           <%= f.text_area :address %>
         </div>
         <div>
-          <%= f.country_select :country %>
+          <%= f.collection_select :country, Country.ordered, :id, :human %>
           <%= f.submit t('actions.add') %>
         </div>
       <% end %>

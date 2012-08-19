@@ -5,10 +5,10 @@
   <div class="personal">
   	<dl>
   	  <dt>
-  	  	<%= Expert.human_attribute_name :citizenship %>
+  	  	<%= Expert.human_attribute_name :country %>
   	  </dt>
   	  <dd>
-  		  <%= @expert.human_citizenship %>
+  		  <%= @expert.country.try(:human) %>
   	  </dd>
   	  <dt>
   	  	<%= Expert.human_attribute_name :birthday %>

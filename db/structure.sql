@@ -2,8 +2,8 @@ CREATE TABLE `addresses` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `addressable_id` int(11) DEFAULT NULL,
   `addressable_type` varchar(255) DEFAULT NULL,
+  `country_id` int(11) DEFAULT NULL,
   `address` text NOT NULL,
-  `country` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `index_addresses_on_addressable_id_and_addressable_type` (`addressable_id`,`addressable_type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -41,6 +41,15 @@ CREATE TABLE `contacts` (
   KEY `index_contacts_on_contactable_id_and_contactable_type` (`contactable_id`,`contactable_type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE `countries` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `country` varchar(255) NOT NULL,
+  `continent` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_countries_on_country` (`country`),
+  KEY `index_countries_on_continent` (`continent`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 CREATE TABLE `cvs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `expert_id` int(11) NOT NULL,
@@ -55,11 +64,11 @@ CREATE TABLE `cvs` (
 CREATE TABLE `experts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
+  `country_id` int(11) DEFAULT NULL,
   `name` varchar(255) NOT NULL,
   `prename` varchar(255) NOT NULL,
   `gender` varchar(255) NOT NULL,
   `birthday` date DEFAULT NULL,
-  `citizenship` varchar(255) DEFAULT NULL,
   `degree` varchar(255) DEFAULT NULL,
   `former_collaboration` tinyint(1) NOT NULL DEFAULT '0',
   `fee` varchar(255) DEFAULT NULL,

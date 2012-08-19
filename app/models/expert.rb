@@ -1,6 +1,4 @@
 require 'set'
-require 'carmen'
-require 'eu'
 
 # The Expert model provides access to the experts data and several methods
 # for manipulation.
@@ -9,11 +7,11 @@ require 'eu'
 #
 # - *id* integer
 # - *user_id* integer
+# - *country_id* integer
 # - *name* string
 # - *prename* string
 # - *gender* string
 # - *birthday* date
-# - *citizenship* string
 # - *degree* string
 # - *former_collaboration* boolean
 # - *fee* string
@@ -21,8 +19,8 @@ require 'eu'
 # - *created_at* datetime
 # - *updated_at* datetime
 class Expert < ActiveRecord::Base
-  attr_accessible(:name, :prename, :gender, :birthday, :fee, :job,
-                  :citizenship, :degree, :former_collaboration)
+  attr_accessible(:name, :prename, :gender, :birthday, :fee, :job, :degree,
+                  :former_collaboration, :country)
 
   validates :name, presence: true
 
@@ -38,6 +36,11 @@ class Expert < ActiveRecord::Base
            select: [:id, :expert_id, :language_id], order: :language_id
 
   belongs_to :user, select: [:id, :name, :prename]
+  belongs_to :country
+
+  scope :with_documents, includes(:attachments, :cvs)
+
+  default_scope includes(:country)
 
   # Set of vailable genders.
   GENDERS = [:female, :male].to_set
@@ -56,8 +59,8 @@ class Expert < ActiveRecord::Base
   # Searches for experts. Takes a hash with condtions:
   #
   # - *:name* A (partial) name used to search _name_ and _prename_
-  # - *:citizenship* A valid country code
-  # - *:language* A valid _language_id_
+  # - *:countries* An array of country ids
+  # - *:languages* An array of language ids
   # - *:q* A arbitrary string used for a fulltext search in the _comment_ and
   #   the _cv_
   #
@@ -70,8 +73,8 @@ class Expert < ActiveRecord::Base
       s = s.where('name LIKE :n OR prename LIKE :n', n: "%#{params[:name]}%")
     end
 
-    if (cships = params[:citizenships]).is_a?(Array) && ! cships.empty?
-      s = s.where(citizenship: cships)
+    if (countries = params[:countries]).is_a?(Array) && ! countries.empty?
+      s = s.where(country_id: countries)
     end
 
     if (languages = params[:languages]).is_a?(Array) && ! languages.empty?
@@ -143,6 +146,11 @@ class Expert < ActiveRecord::Base
     super || self.comment = Comment.new
   end
 
+  # Sets the experts country.
+  def country=(country)
+    super(Country.find_country(country))
+  end
+
   # Returns the experts gender.
   def gender
     Expert.gender(super)
@@ -165,16 +173,6 @@ class Expert < ActiveRecord::Base
   #   expert.languages = [1, 2, "34", en]
   def languages=(ids)
     super(Language.where(id: ids)) if [Fixnum, Array].include?(ids.class)
-  end
-
-  # Returns true if expert is an EU citizen, else false.
-  def eu?
-    Eu.eu?(citizenship)
-  end
-
-  # Returns the localized country name.
-  def human_citizenship
-    Carmen::Country.coded(citizenship).try(:name)
   end
 
   # Returns the localized former collaboration value.

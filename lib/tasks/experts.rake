@@ -73,7 +73,7 @@ namespace :experts do
         countries[c] = co
       end
 
-      co
+      Country.find_by_country(co.code)
     end
 
     File.open(args[:filename]) do |f|
@@ -118,7 +118,7 @@ namespace :experts do
 
         # Citizenship
         if (c = data['Staatsb'])
-          e.citizenship = country_from_s.call(c).code
+          e.country = country_from_s.call(c)
         end
 
         # Contact data
@@ -141,7 +141,7 @@ namespace :experts do
           end.join("\n")
 
           if (c = data['Land'])
-            address.country = country_from_s.call(c).code
+            address.country = country_from_s.call(c)
           end
 
           e.addresses << address
