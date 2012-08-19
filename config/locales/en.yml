@@ -1,6 +1,7 @@
 # English localization file
 en:
   actions:
+    abort: 'Abort'
     add: 'Add'
     delete: 'Delete'
     edit: 'Edit'
@@ -9,6 +10,7 @@ en:
     print: 'Print'
     save: 'Save'
     search: 'Search'
+    submit: 'Submit'
   activerecord:
     attributes:
       address:
@@ -76,6 +78,8 @@ en:
     contact:
       index: 'Contacts'
       new: 'New Contact'
+    country:
+      countries: 'Countries'
     cv:
       index: 'CVs'
       new: 'New CV'
@@ -90,6 +94,8 @@ en:
       edit: 'Edit Expert'
       new: 'New Expert'
       personal: 'Personal'
+    language:
+      languages: 'Languages'
     partners:
       index: 'Partners'
     references:

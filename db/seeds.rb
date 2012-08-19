@@ -37,11 +37,13 @@ continents = {
     :VI
   ],
   EU: [
-    :AL, :AD, :AZ, :AT, :AM, :BE, :BA, :BG, :BY, :HR, :CY, :CZ, :DK, :EE,
-    :FO, :FI, :AX, :FR, :GE, :DE, :GI, :GR, :VA, :HU, :IS, :IE, :IT, :KZ,
-    :LV, :LI, :LT, :LU, :MT, :MC, :MD, :ME, :NL, :NO, :PL, :PT, :RO, :RU,
-    :SM, :RS, :SK, :SI, :ES, :SJ, :SE, :CH, :TR, :UA, :MK, :GB, :GG, :JE,
-    :IM
+    :AT, :BE, :BG, :CY, :CZ, :DK, :EE, :FI, :FR, :DE, :GR, :HU, :IE, :IT,
+    :LV, :LT, :LU, :MT, :NL, :PL, :PT, :RO, :SK, :SI, :ES, :SE, :GB
+  ],
+  EV: [
+    :AL, :AD, :AZ, :AM, :BA, :BY, :HR, :FO, :AX, :GE, :GI, :VA, :IS, :KZ,
+    :LI, :MC, :MD, :ME, :NO, :RU, :SM, :RS, :SJ, :CH, :TR, :UA, :MK, :GG,
+    :JE, :IM
   ],
   OC: [
     :AS, :AU, :SB, :CK, :FJ, :PF, :KI, :GU, :NR, :NC, :VU, :NZ, :NU, :NF,

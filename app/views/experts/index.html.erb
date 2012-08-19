@@ -86,7 +86,10 @@
   $('#filter div.language input')
   .siloMultiSelect('languages[]', '<%= languages_path format: :json%>', {
     selected: <%= param_as_json :languages, Array %>,
-    grouped: false
+    grouped: false,
+    headline: '<%= t 'labels.language.languages' %>',
+    submitText: '<%= t 'actions.submit' %>',
+    abortText: '<%= t 'actions.abort' %>'
   });
 
   $('#filter div.citizenship input')
@@ -94,6 +97,9 @@
     selected: <%= param_as_json :countries, Array %>,
     wrapperClass: 'multi-select countries',
     selectClass: 'select cols-3',
-    cols: 3
+    cols: 3,
+    headline: '<%= t 'labels.country.countries' %>',
+    submitText: '<%= t 'actions.submit' %>',
+    abortText: '<%= t 'actions.abort' %>'
   });
 </script>
