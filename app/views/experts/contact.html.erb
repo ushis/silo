@@ -56,7 +56,7 @@
             <% end %>
             <address>
               <%= simple_format address.address %>
-              <%= address.country.human %>
+              <%= address.country.try(:human) %>
             </address>
           </li>
         <%end %>

@@ -40,6 +40,9 @@ class Expert < ActiveRecord::Base
 
   scope :with_documents, includes(:attachments, :cvs)
 
+  # A little workaround, while waiting for ActiveRecord::NullRelation.
+  scope :none, where('1 < 0')
+
   default_scope includes(:country)
 
   # Set of vailable genders.
@@ -78,14 +81,22 @@ class Expert < ActiveRecord::Base
     end
 
     if (languages = params[:languages]).is_a?(Array) && ! languages.empty?
-      s = s.where(id: search_languages(languages))
+      if (ids = search_languages(languages)).empty?
+        return none
+      end
+
+      s = s.where(id: ids)
     end
 
-    if ! params[:q].blank? && ! (ids = search_fulltext(params[:q])).empty?
-      return s.where(id: ids).order('FIELD(experts.id, %s)' % ids.join(', '))
+    if params[:q].blank?
+      return s.order(:name)
     end
 
-    s.order(:name)
+    if (ids = search_fulltext(params[:q])).empty?
+      return none
+    end
+
+    s.where(id: ids).order('FIELD(experts.id, %s)' % ids.join(', '))
   end
 
   # Searches for experts speaking all of the specified languages.
