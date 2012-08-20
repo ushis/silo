@@ -20,7 +20,8 @@
             </div>
           </div>
           <div class="row q">
-            <%= text_field_tag :q, params[:q], placeholder: 'CVs & Comments' %>
+            <%= text_field_tag(:q, params[:q],
+                               placeholder: Expert.human_attribute_names(:cvs, :comment)) %>
             <%= submit_tag t('actions.search') %>
           </div>
         <% end %>

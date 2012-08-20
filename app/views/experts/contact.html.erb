@@ -27,7 +27,7 @@
                 </td>
                 <% if current_user.access?(:experts) %>
                   <td class="del">
-                    <%= delete_contact_button('x', [@expert, @expert.contact],
+                    <%= contact_delete_button('x', [@expert, @expert.contact],
                                               field, val, class: 'icon-delete') %>
                   </td>
                 <% end %>

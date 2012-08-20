@@ -43,57 +43,6 @@ module ApplicationHelper
     link_to(txt, path, opt)
   end
 
-  # Alias for Language.select_box_friendly
-  def list_languages
-    @list_languages ||= Language.select_box_friendly
-  end
-
-  # Returns a language select box.
-  def language_select_tag(name, val = nil, opt = {})
-    val = val.id if val.is_a? Language
-    opts = options_for_select(list_languages, val)
-    select_tag name, opts, opt
-  end
-
-  # Returns multiple language select boxes.
-  def language_select_tags(langs)
-    langs = [nil] if langs.empty?
-
-    langs.collect do |lang|
-      language_select_tag 'languages[]', lang
-    end.join('').html_safe
-  end
-
-  # Returns select box options with all possible contact fields.
-  def contact_field_options
-    options_for_select Contact.select_box_friendly_fields
-  end
-
-  # Returns the contact value. If field is :emails or :websites, the value
-  # is wrapped with <a> tag.
-  def contact_value(val, field, html_options = {})
-    case field
-    when :emails
-      mail_to val
-    when :websites
-      link_to val, (URI.parse(val).scheme.blank? ? "http://#{val}" : val)
-    else
-      val
-    end
-  end
-
-  # Returns a delete contact button.
-  #
-  #   delete_contact_button('x', contact_url(contact), :emails, 'alf@aol.com')
-  def delete_contact_button(txt, url, field, contact, html_options = {})
-    form_tag url, method: :delete, class: 'button_to' do
-      html = hidden_field_tag('contact[field]', field)
-      html << hidden_field_tag('contact[contact]', contact)
-      html << submit_tag(txt, html_options)
-      html.html_safe
-    end
-  end
-
   # Returns a pagination list.
   #
   #   paginate(@experts)
