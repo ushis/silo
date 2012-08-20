@@ -45,7 +45,7 @@ class UsersController < ApplicationController
   # Serves a blank user form.
   def new
     @user = User.new
-    @title = t('title.user.all')
+    @title = t('labels.user.new')
     render :form
   end
 

@@ -2,14 +2,16 @@
   <table>
     <tbody>
       <% model.errors.each do |attr, msg| %>
-        <tr>
-          <td>
-            <%= model.class.human_attribute_name attr %>
-          </td>
-          <td>
-            <%= msg %>
-          </td>
-        </tr>
+        <% unless [:password_digest].include?(attr) %>
+          <tr>
+            <td>
+              <%= model.class.human_attribute_name attr %>
+            </td>
+            <td>
+              <%= msg %>
+            </td>
+          </tr>
+        <% end %>
       <% end %>
     </tbody>
   </table>
