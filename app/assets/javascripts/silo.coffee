@@ -124,6 +124,7 @@ do($ = jQuery) ->
             el.prop('checked', false)
         el.not(".#{settings.masterClass}").change ->
           master.prop('checked', false) if $(@).not(':checked')
+        return el
 
   # Represents a multi select field.
   class SiloMultiSelect
@@ -184,11 +185,18 @@ do($ = jQuery) ->
         appendGroupHeader = (text) ->
           select.append ->
             $('<h3>').append ->
-              $('<a>').attr(href: '#').text(text)
+              $('<a>').attr(href: '#').text(text).append ->
+                $('<span>')
 
         appendGroup = (group) ->
           select.append(group)
-          group.find('input').siloMasterBox(masterClass: 'group', hard: true)
+          do (counter = group.prev('h3').find('a span')) ->
+            do (inputs = group.find('input')) ->
+              inputs.siloMasterBox(masterClass: 'group', hard: true)
+              .bind 'commit', ->
+                counter.text(inputs.filter(':checked:not(.group)').length)
+              .change ->
+                $(@).trigger('commit')
 
         groupUl = (i) ->
           $('<ul>').append ->
@@ -231,7 +239,11 @@ do($ = jQuery) ->
             gUl = groupUl(i)
             appendItems(gUl, group[1])
             appendGroup(gUl)
-          select.accordion(header: 'h3', autoHeight: false, active: s.activeGroup)
+          select.accordion(
+            header: 'h3',
+            autoHeight: false,
+            active: s.activeGroup
+          ).find('input').trigger('commit')
 
     # Fades in.
     fadeIn: ->
