@@ -112,6 +112,8 @@ en:
       profile: 'Profile'
   messages:
     generics:
+      confirm:
+        sure: 'Are you sure?'
       errors:
         access: 'Access denied.'
         error: 'Sorry, but something went wrong.'
@@ -121,6 +123,8 @@ en:
       success:
         save: 'Saved changes.'
     address:
+      confirm:
+        delete: 'Do you really want to delete this address?'
       errors:
         delete: 'Could not delete address'
         find: 'Address not found.'
@@ -129,6 +133,8 @@ en:
         delete: 'Deleted address.'
         save: 'Saved address.'
     attachment:
+      confirm:
+        delete: 'Do you really want to delete this attachment.'
       errors:
         delete: 'Could not delete attachment.'
         find: 'Attachment not found.'
@@ -137,6 +143,8 @@ en:
         delete: 'Deleted attachment.'
         store: 'Stored new attachment.'
     contact:
+      confirm:
+        delete: 'Do you really want to delete this contact?'
       errors:
         delete: 'Could not delete contact.'
         save: 'Could not save contact.'
@@ -144,13 +152,15 @@ en:
         delete: 'Deleted contact.'
         save: 'Saved contact.'
     cv:
+      confirm:
+        delete: 'Do you really want to delete this cv?'
       errors:
         delete: 'Could not delete cv.'
         find: 'Cv not found.'
         store: 'Could not store cv.'
       success:
         delete: 'Deleted cv.'
-        store: 'Stored new CV.'
+        store: 'Stored new cv.'
     expert:
       errors:
         create: 'Could not create expert.'
@@ -172,6 +182,8 @@ en:
       errors:
         find: 'Partner not found.'
     user:
+      confirm:
+        delete: 'Do you really want to delete this user?'
       errors:
         create: 'Could not create user.'
         credentials: 'Wrong username or password.'

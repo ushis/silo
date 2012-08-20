@@ -126,6 +126,49 @@ do($ = jQuery) ->
           master.prop('checked', false) if $(@).not(':checked')
         return el
 
+  # Shows a simple confirmation dialog.
+  $.fn.siloConfirmDelete = (options) ->
+    settings = $.extend {
+      layerClass: 'layer'
+      buttonClass: 'button'
+      submitClass: 'submit'
+      submitText: 'Ok'
+      abortClass: 'abort'
+      abortText: 'Abort'
+      textClass: 'text'
+      headerClass: 'header'
+      headerText: 'Are you sure?'
+      wrapperClass: 'confirm-delete'
+    }, options
+
+    layer = new SiloLayer(settings.layerClass)
+    makeButton = (text) ->
+      $('<div>').addClass(settings.buttonClass).text(text)
+
+    @each ->
+      do (el = $(@)) ->
+        el.click ->
+          wrapper = $('<div>').addClass(settings.wrapperClass)
+          wrapper.append ->
+            $('<div>').addClass(settings.headerClass).append ->
+              $('<h2>').text(settings.headerText)
+            .append ->
+              makeButton(settings.submitText)
+                .addClass(settings.submitClass).click ->
+                  el.closest('form').submit()
+            .append ->
+              makeButton(settings.abortText)
+                .addClass(settings.abortClass).click ->
+                  layer.fadeOut()
+                  wrapper.fadeOut 200, ->
+                    wrapper.remove()
+          .append ->
+            $('<div>').addClass(settings.textClass).append ->
+              $('<div>').text(el.data('confirm'))
+          .appendTo('body').fadeIn(200)
+          layer.fadeIn()
+          return false
+
   # Represents a multi select field.
   class SiloMultiSelect
     constructor: (@name, @el) ->

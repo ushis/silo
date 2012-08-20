@@ -28,7 +28,8 @@
                 <% if current_user.access?(:experts) %>
                   <td class="del">
                     <%= contact_delete_button('x', [@expert, @expert.contact],
-                                              field, val, class: 'icon-delete') %>
+                                              field, val, class: 'icon-delete',
+                                              confirm: t('messages.contact.confirm.delete')) %>
                   </td>
                 <% end %>
               </tr>
@@ -51,8 +52,10 @@
         <% @expert.addresses.each do |address| %>
           <li>
             <% if current_user.access?(:experts) %>
-              <%= button_to('x', [@expert, address], method: :delete,
-                            class: 'icon-delete') %>
+              <%= button_to('x', [@expert, address],
+                            method: :delete,
+                            class: 'icon-delete',
+                            confirm: t('messages.address.confirm.delete')) %>
             <% end %>
             <address>
               <%= simple_format address.address %>
