@@ -357,7 +357,6 @@ body.edit #main h2 {
   content: '!';
   float: right;
   font-weight: bold;
-  color: #f33;
 }
 
 #main input[type=submit],
@@ -440,6 +439,11 @@ div.button:hover {
   background: #f5f5f5;
   color: #444;
 }
+
+#main div.form-wrapper form div.field_with_errors input[type=text]{
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .3), inset 0 -2px 0 rgba(170, 20, 40, .8);
+}
+
 
 #main form div.field-box.buttons * {
   float: right;

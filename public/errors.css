@@ -18,7 +18,7 @@ p, div {
 #error {
   width: 260px;
   position: relative;
-  margin: -120px auto 0 auto;
+  margin: -180px auto 0 auto;
   padding-top: 45px;
   background: url('logo.png') 88px top no-repeat;
 }
@@ -46,7 +46,7 @@ p, div {
 }
 
 #type {
-  padding-top: 10px;
+  padding-top: 3px;
   color: #270808;
   font-size: 3.3em;
   line-height: 1em;
