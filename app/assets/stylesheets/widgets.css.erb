@@ -231,6 +231,7 @@ div.multi-select {
 
 div.multi-select.countries {
   position: absolute;
+  top: 30px;
 }
 
 div.multi-select h2 {
@@ -245,7 +246,7 @@ div.multi-select div.button {
 div.multi-select div.select {
   float: left;
   width: 100%;
-  padding: 15px;
+  padding: 9px 15px;
   font-size: .76em;
   color: #444;
   background-color: #dbdbdb;
@@ -254,21 +255,25 @@ div.multi-select div.select {
   box-sizing: border-box;
 }
 
+div.multi-select h3.ui-accordion-header a {
+  clear: both;
+  display: block;
+  margin: 4px 0;
+  padding: 4px 10px;
+  color: #333;
+  background-color: #efefef;
+  border-radius: 4px 4px 4px 4px;
+}
+
 div.multi-select div.select > ul {
   clear: left;
   float: left;
   width: 100%;
-  margin-bottom: 15px;
-  padding-bottom: 15px;
-  border-bottom: 1px solid #bbb;
-  box-shadow: 0 1px 0 #efefef;
+  padding: 9px 0;
 }
 
 div.multi-select div.select > ul:last-child {
-  margin: 0;
-  padding: 0;
-  border-bottom: 0 none transparent;
-  box-shadow: 0 0 0 transparent;
+  padding-bottom: 0;
 }
 
 div.multi-select div.select > ul > li {
@@ -278,11 +283,11 @@ div.multi-select div.select > ul > li {
 }
 
 div.multi-select.countries div.select > ul > li {
-  width: 190px;
+  width: 214px;
 }
 
 div.multi-select.countries div.select > ul > li:first-child {
-  width: 130px;
+  width: 60px;
   margin: 0;
 }
 

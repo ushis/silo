@@ -181,16 +181,21 @@ do($ = jQuery) ->
           abort.click()
 
       do (s = @s) ->
+        appendGroupHeader = (text) ->
+          select.append ->
+            $('<h3>').append ->
+              $('<a>').attr(href: '#').text(text)
+
         appendGroup = (group) ->
           select.append(group)
           group.find('input').siloMasterBox(masterClass: 'group', hard: true)
 
-        groupUl = (label, id) ->
+        groupUl = (i) ->
           $('<ul>').append ->
             $('<li>').append ->
-              $('<input>').attr(id: id, type: 'checkbox', class: 'group')
+              $('<input>').attr(id: "g-#{i}", type: 'checkbox', class: 'group')
             .append ->
-              $('<label>').attr(for: id).text(label)
+              $('<label>').attr(for: "g-#{i}").text(s.allText)
 
         appendCol = (groupUl, col) ->
           groupUl.append ->
@@ -222,9 +227,11 @@ do($ = jQuery) ->
           appendGroup(gUl)
         else
           for group, i in s.data
-            gUl = groupUl(group[0], "group-#{i}")
+            appendGroupHeader(group[0])
+            gUl = groupUl(i)
             appendItems(gUl, group[1])
             appendGroup(gUl)
+          select.accordion(header: 'h3', autoHeight: false, active: s.activeGroup)
 
     # Fades in.
     fadeIn: ->
@@ -239,11 +246,13 @@ do($ = jQuery) ->
       cols: 6
       grouped: true
       selected: []
+      activeGroup: 3
       layerClass: 'layer'
       wrapperClass: 'multi-select'
       headerClass: 'header'
       selectClass: 'select'
       headline: 'Multi Select'
+      allText: 'All'
       submitClass: 'submit'
       submitText: 'Submit'
       abortClass: 'abort'
