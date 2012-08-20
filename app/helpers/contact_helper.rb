@@ -17,6 +17,8 @@ module ContactHelper
     else
       val
     end
+  rescue
+    val
   end
 
   # Returns a delete contact button.
