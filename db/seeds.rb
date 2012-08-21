@@ -25,10 +25,10 @@ continents = {
   AN: [:AQ, :BV, :GS, :TF, :HM],
   AS: [
     :AF, :AZ, :BH, :BD, :AM, :BT, :IO, :BN, :MM, :KH, :LK, :CN, :TW, :CX,
-    :CC, :CY, :GE, :PS, :HK, :IN, :ID, :IR, :IQ, :IL, :JP, :KZ, :JO, :KP,
-    :KR, :KW, :KG, :LA, :LB, :MO, :MY, :MV, :MN, :OM, :NP, :PK, :PH, :TL,
-    :QA, :RU, :SA, :SG, :VN, :SY, :TJ, :TH, :AE, :TR, :TM, :UZ, :YE, :XE,
-    :XD, :XS
+    :CC, :GE, :PS, :HK, :IN, :ID, :IR, :IQ, :IL, :JP, :KZ, :JO, :KP, :KR,
+    :KW, :KG, :LA, :LB, :MO, :MY, :MV, :MN, :OM, :NP, :PK, :PH, :TL, :QA,
+    :RU, :SA, :SG, :VN, :SY, :TJ, :TH, :AE, :TR, :TM, :UZ, :YE, :XE, :XD,
+    :XS
   ],
   NA: [
     :AG, :BS, :BB, :BM, :BZ, :VG, :CA, :KY, :CR, :CU, :DM, :DO, :SV, :GL,
