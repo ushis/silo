@@ -30,6 +30,7 @@ en:
         birthday: 'Date of birth'
         country: 'Citizenship'
         comment: 'Comment'
+        cvs: 'CVs'
         degree: 'Degree'
         fee: 'Fee'
         former_collaboration: 'Former Collaboration'
@@ -155,12 +156,12 @@ en:
       confirm:
         delete: 'Do you really want to delete this cv?'
       errors:
-        delete: 'Could not delete cv.'
-        find: 'Cv not found.'
-        store: 'Could not store cv.'
+        delete: 'Could not delete CV.'
+        find: 'CV not found.'
+        store: 'Could not store CV.'
       success:
-        delete: 'Deleted cv.'
-        store: 'Stored new cv.'
+        delete: 'Deleted CV.'
+        store: 'Stored new CV.'
     expert:
       errors:
         create: 'Could not create expert.'
