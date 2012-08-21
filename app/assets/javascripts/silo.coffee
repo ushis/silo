@@ -141,30 +141,32 @@ do($ = jQuery) ->
       wrapperClass: 'confirm-delete'
     }, options
 
+    makeBox = (type) ->
+      $('<div>').addClass(settings["#{type}Class"])
+
+    makeButton = (type) ->
+      [klass, text] = [settings["#{type}Class"], settings["#{type}Text"]]
+      $('<div>').addClass("#{settings.buttonClass} #{klass}").text(text)
+
     layer = new SiloLayer(settings.layerClass)
-    makeButton = (text) ->
-      $('<div>').addClass(settings.buttonClass).text(text)
 
     @each ->
       do (el = $(@)) ->
         el.click ->
-          wrapper = $('<div>').addClass(settings.wrapperClass)
-          wrapper.append ->
-            $('<div>').addClass(settings.headerClass).append ->
+          dialog = makeBox('wrapper')
+          dialog.append ->
+            makeBox('header').append ->
               $('<h2>').text(settings.headerText)
             .append ->
-              makeButton(settings.submitText)
-                .addClass(settings.submitClass).click ->
-                  el.closest('form').submit()
+              makeButton('submit').click ->
+                el.closest('form').submit()
             .append ->
-              makeButton(settings.abortText)
-                .addClass(settings.abortClass).click ->
-                  layer.fadeOut()
-                  wrapper.fadeOut 200, ->
-                    wrapper.remove()
+              makeButton('abort').click ->
+                layer.fadeOut()
+                dialog.fadeOut 200, ->
+                  dialog.remove()
           .append ->
-            $('<div>').addClass(settings.textClass).append ->
-              $('<div>').text(el.data('confirm'))
+            makeBox('text').text(el.data('confirm'))
           .appendTo('body').fadeIn(200)
           layer.fadeIn()
           return false
