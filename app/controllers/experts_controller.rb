@@ -12,7 +12,7 @@ class ExpertsController < ApplicationController
   # Serves a paginated table of all experts.
   def index
     @experts = Expert.with_documents.limit(50).page(params[:page]).order(:name)
-    @title = t('labels.expert.index')
+    @title = t('labels.expert.all')
   end
 
   # Searches for experts.
@@ -22,7 +22,7 @@ class ExpertsController < ApplicationController
     end
 
     @experts = Expert.with_documents.search(params).limit(50).page(params[:page])
-    @title = t('labels.expert.index')
+    @title = t('labels.expert.search')
     @body_class << :index
     render :index
   end
