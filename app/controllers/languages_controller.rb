@@ -1,7 +1,6 @@
 # The LanguagesController provides actions to retrieve language data as JSON.
 class LanguagesController < ApplicationController
-  skip_before_filter :authenticate, only: [:index]
-  skip_before_filter :athorize,     only: [:index]
+  skip_before_filter :authorize, only: [:index]
 
   respond_to :json
 

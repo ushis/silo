@@ -27,8 +27,9 @@
                 </td>
                 <% if current_user.access?(:experts) %>
                   <td class="del">
-                    <%= delete_contact_button('x', [@expert, @expert.contact],
-                                              field, val, class: 'icon-delete') %>
+                    <%= contact_delete_button('x', [@expert, @expert.contact],
+                                              field, val, class: 'icon-delete',
+                                              confirm: t('messages.contact.confirm.delete')) %>
                   </td>
                 <% end %>
               </tr>
@@ -51,8 +52,10 @@
         <% @expert.addresses.each do |address| %>
           <li>
             <% if current_user.access?(:experts) %>
-              <%= button_to('x', [@expert, address], method: :delete,
-                            class: 'icon-delete') %>
+              <%= button_to('x', [@expert, address],
+                            method: :delete,
+                            class: 'icon-delete',
+                            confirm: t('messages.address.confirm.delete')) %>
             <% end %>
             <address>
               <%= simple_format address.address %>
@@ -63,35 +66,37 @@
       <% end %>
     </ul>
   </div><!-- addresses -->
-  <div class="forms">
-     <div class="contact">
-      <h4>
-        <%= t 'labels.contact.new' %>
-      </h4>
-      <%= form_tag expert_contacts_path(@expert) do %>
-        <div>
-          <%= select_tag 'contact[field]', contact_field_options %>
-        </div>
-        <div>
-          <%= text_field_tag 'contact[contact]' %>
-          <%= submit_tag t('actions.add') %>
-        </div>
-      <% end %>
-    </div>
-    <div class="address">
-      <h4>
-        <%= t 'labels.address.new' %>
-      </h4>
-      <%= form_for Address.new, url: expert_addresses_path(@expert) do |f| %>
-        <div>
-          <%= f.text_area :address %>
-        </div>
-        <div>
-          <%= f.collection_select :country, Country.ordered, :id, :human %>
-          <%= f.submit t('actions.add') %>
-        </div>
-      <% end %>
-    </div>
-  </div><!-- forms -->
+  <% if current_user.access?(:experts) %>
+    <div class="forms">
+      <div class="contact">
+        <h4>
+          <%= t 'labels.contact.new' %>
+        </h4>
+        <%= form_tag expert_contacts_path(@expert) do %>
+          <div>
+            <%= select_tag 'contact[field]', contact_field_options %>
+          </div>
+          <div>
+            <%= text_field_tag 'contact[contact]' %>
+            <%= submit_tag t('actions.add') %>
+          </div>
+        <% end %>
+      </div>
+      <div class="address">
+        <h4>
+          <%= t 'labels.address.new' %>
+        </h4>
+        <%= form_for Address.new, url: expert_addresses_path(@expert) do |f| %>
+          <div>
+            <%= f.text_area :address %>
+          </div>
+          <div>
+            <%= f.collection_select :country, Country.ordered, :id, :human %>
+            <%= f.submit t('actions.add') %>
+          </div>
+        <% end %>
+      </div>
+    </div><!-- forms -->
+  <% end %>
   <div class="clear"></div>
 </div>

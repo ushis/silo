@@ -30,7 +30,8 @@
                 <% if current_user.access?(:experts) %>
                   <td class="del">
                     <%= button_to('x', [@expert, cv], method: :delete,
-                                                      class: 'del') %>
+                                  class: 'icon-delete',
+                                  confirm: t('messages.cv.confirm.delete')) %>
                   </td>
                 <% end %>
               </tr>
@@ -66,7 +67,8 @@
                 <% if current_user.access?(:experts) %>
                   <td class="del">
                     <%= button_to('x', [@expert, attachment], method: :delete,
-                                                              class: 'del') %>
+                                  class: 'icon-delete',
+                                  confirm: t('messages.attachment.confirm.delete')) %>
                   </td>
                 <% end %>
               </tr>

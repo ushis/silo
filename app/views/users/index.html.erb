@@ -32,7 +32,8 @@
               </li>
               <li>
                 <%= button_to(t('actions.delete'), user_path(user),
-                              method: :delete, class: 'delete icon-delete')  %>
+                              method: :delete, class: 'delete icon-delete',
+                              confirm: t('messages.user.confirm.delete'))  %>
               </li>
             </ul>
           </td>

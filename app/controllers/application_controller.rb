@@ -27,6 +27,15 @@ class ApplicationController < ActionController::Base
     redirect_to root_url
   end
 
+  # Ensures that the specified parameters are Arrays.
+  def arrayify_params(*keys)
+    keys.each do |key|
+      unless params[key].is_a? Array
+        params[key] = params[key].to_s.split(/\s+/)
+      end
+    end
+  end
+
   # Inits the body class array and populates it with current controller,
   # action and wether the user is admin or not.
   def body_class
@@ -34,13 +43,14 @@ class ApplicationController < ActionController::Base
     @body_class << :admin if current_user.try(:admin?)
   end
 
-  # Sets the users preffered locale.
+  # Sets the users preferred locale.
   def set_locale
-    I18n.locale = current_user.locale if current_user
+    I18n.locale = current_user ? current_user.locale : locale_from_header
   end
 
-  # Authorizes the user (or not) to complete a request. If the the user has not the
-  # corresponding permissions, a flash message is set and the user is redirected.
+  # Authorizes the user (or not) to complete a request. If the the user has
+  # not the corresponding permissions, a flash message is set and the user
+  # is redirected.
   def authorize(section = nil, url = root_url)
     unless (section ? current_user.access?(section) : current_user.admin?)
       flash[:alert] = t('messages.generics.errors.access')
@@ -66,5 +76,10 @@ class ApplicationController < ActionController::Base
     if session[:login_hash]
       @current_user ||= User.find_by_login_hash(session[:login_hash])
     end
+  end
+
+  # Extracts the preferred locale from the ACCEPT-LANGUAGE header.
+  def locale_from_header
+    request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first
   end
 end

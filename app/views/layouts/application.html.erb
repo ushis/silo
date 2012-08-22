@@ -7,6 +7,7 @@
     <%= stylesheet_link_tag    'silo', media: :all %>
     <%= javascript_include_tag 'silo' %>
     <%= csrf_meta_tags %>
+    <%= redirect_ie %>
   </head>
   <body class="<%= @body_class.join(' ') %>">
     <div id="wrapper">
@@ -50,6 +51,11 @@
     <script>
       $('div.flash').siloFlash();
       $('a.disabled').siloDisabledLinks();
+      $('form input[type=submit].icon-delete').siloConfirmDelete({
+        submitText: '<%= t('actions.delete') %>',
+        abortText: '<%= t('actions.abort') %>',
+        headerText: '<%= t('messages.generics.confirm.sure') %>'
+      });
     </script>
   </body>
 </html>

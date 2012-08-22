@@ -4,6 +4,10 @@ require 'prawn'
 class ExpertsController < ApplicationController
   skip_before_filter :authorize, only: [:index, :show, :contact, :documents, :report]
 
+  before_filter only: [:search] do |c|
+    c.arrayify_params(:languages, :countries)
+  end
+
   # Checks if the user has access to the experts section.
   def authorize
     super(:experts, experts_url)
@@ -12,13 +16,13 @@ class ExpertsController < ApplicationController
   # Serves a paginated table of all experts.
   def index
     @experts = Expert.with_documents.limit(50).page(params[:page]).order(:name)
-    @title = t('labels.generic.search')
+    @title = t('labels.expert.all')
   end
 
   # Searches for experts.
   def search
     @experts = Expert.with_documents.search(params).limit(50).page(params[:page])
-    @title = t('labels.generic.search')
+    @title = t('labels.expert.search')
     @body_class << :index
     render :index
   end
