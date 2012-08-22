@@ -122,7 +122,7 @@ class Expert < ActiveRecord::Base
     end
   end
 
-  # Searches the culltext associations, such as Comment and CV.
+  # Searches the fulltext associations, such as Comment and CV.
   #
   #  Expert.search_fulltext('hello')
   #  #=> [5, 23, 34, 1, 4]
@@ -131,14 +131,15 @@ class Expert < ActiveRecord::Base
   def self.search_fulltext(query)
     sql = <<-SQL
       ( SELECT comments.commentable_id AS expert_id,
-          MATCH (comments.comment) AGAINST (:q) AS score
+          MATCH (comments.comment) AGAINST (:q IN BOOLEAN MODE) AS score
         FROM comments
         WHERE comments.commentable_type = 'Expert'
-          AND MATCH (comments.comment) AGAINST (:q) )
+          AND MATCH (comments.comment) AGAINST (:q IN BOOLEAN MODE) )
       UNION
-      ( SELECT cvs.expert_id, MATCH (cvs.cv) AGAINST (:q) AS score
+      ( SELECT cvs.expert_id,
+          MATCH (cvs.cv) AGAINST (:q IN BOOLEAN MODE) AS score
         FROM cvs
-        WHERE MATCH (cvs.cv) AGAINST (:q) )
+        WHERE MATCH (cvs.cv) AGAINST (:q IN BOOLEAN MODE) )
       ORDER BY score DESC
     SQL
 
