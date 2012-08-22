@@ -289,6 +289,7 @@ do($ = jQuery) ->
             autoHeight: false,
             active: s.activeGroup
           ).find('input').trigger('commit')
+        submit.click()
 
     # Fades in.
     fadeIn: ->
@@ -315,6 +316,7 @@ do($ = jQuery) ->
       abortClass: 'abort'
       abortText: 'Abort'
       buttonClass: 'button'
+      storagePrefix: 'multi-select-'
     }, options
 
     do (collection = @) ->
@@ -334,9 +336,19 @@ do($ = jQuery) ->
         collection.each ->
           do (el = $(@)) ->
             multiSelect = new SiloMultiSelect(name, el)
-            multiSelect.setValues([id, settings.map[id]] for id in settings.selected)
             multiSelectBox = new SiloMultiSelectBox(multiSelect, settings)
             el.focus ->
               multiSelectBox.fadeIn()
 
       $.ajax(url: url, dataType: 'json', success: ready)
+
+    # Do not send the country/language names to avoid 414 errors.
+    # Just cache them in localStorage if possible.
+    @each ->
+      do (el = $(@)) ->
+        storageKey = settings.storagePrefix + el.attr('name')
+        if settings.selected.length > 0 && hasStorage
+          el.val(localStorage[storageKey])
+        el.closest('form').submit ->
+          localStorage[storageKey] = el.val() if hasStorage
+          el.prop('disabled', true)
