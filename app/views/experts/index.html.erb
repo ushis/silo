@@ -85,7 +85,7 @@
 
 <script>
   $('#filter div.language input')
-  .siloMultiSelect('languages[]', '<%= languages_path format: :json%>', {
+  .siloMultiSelect('languages', '<%= languages_path format: :json%>', {
     selected: <%= param_as_json :languages, Array %>,
     grouped: false,
     headline: '<%= t 'labels.language.languages' %>',
@@ -94,7 +94,7 @@
   });
 
   $('#filter div.citizenship input')
-  .siloMultiSelect('countries[]', '<%= countries_by_continent_path format: :json %>', {
+  .siloMultiSelect('countries', '<%= countries_by_continent_path format: :json %>', {
     selected: <%= param_as_json :countries, Array %>,
     wrapperClass: 'multi-select countries',
     cols: 3,

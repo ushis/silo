@@ -173,43 +173,34 @@ do($ = jQuery) ->
 
   # Represents a multi select field.
   class SiloMultiSelect
-    constructor: (@name, @el) ->
-      @hidden = []
-
-    # Removes all hidden fields, resets the value.
-    clear: ->
-      for field in @hidden
-        field.remove()
-      @hidden = []
-      @el.val('')
+    constructor: (name, @el) ->
+      @hidden = $('<input>').attr(name: name, type: 'hidden')
+      @el.after @hidden
 
     # Creates new hidden fields and sets the value.
     setValues: (values) ->
-      @clear()
-      val = []
+      [ids, val] = [[], []]
       for v in values
+        ids.push v[0]
         val.push v[1]
-        @newHidden v[0]
-      @el.val(val.join(', '))
-
-    # Creates a new hidden field.
-    newHidden: (id) ->
-      h = $('<input>').attr(name: @name, type: 'hidden', value: id)
-      @hidden.push h
-      @el.before h
+      @hidden.val ids.join(' ')
+      @el.val val.join(', ')
 
   # Represents an overlay multi select box.
   class SiloMultiSelectBox
-    constructor: (@multiSelect, @s) ->
-      @layer = new SiloLayer(@s.layerClass)
-      @wrapper = $('<div>').addClass(@s.wrapperClass)
-      header = $('<div>').addClass(@s.headerClass)
-      headline = $('<h2>').text(@s.headline)
-      abort = $('<div>').addClass("#{@s.abortClass} #{@s.buttonClass}").text(@s.abortText)
-      submit = $('<div>').addClass("#{@s.submitClass} #{@s.buttonClass}").text(@s.submitText)
-      select = $('<div>').addClass(@s.selectClass)
-      header.append(headline, submit, abort)
-      @wrapper.append(header, select)
+    constructor: (@multiSelect, s) ->
+      makeBox = (type) ->
+        $('<div>').addClass(s["#{type}Class"])
+      makeButton = (type) ->
+        makeBox(type).addClass(s.buttonClass).text(s["#{type}Text"])
+
+      abort = makeButton('abort')
+      submit = makeButton('submit')
+      select = makeBox('select')
+      @layer = new SiloLayer(s.layerClass)
+      @wrapper = makeBox('wrapper').append(select).prepend ->
+        makeBox('header').append(submit, abort).prepend ->
+          $('<h2>').text(s.headline)
 
       do (wrapper = @wrapper, layer = @layer) ->
         abort.click ->
@@ -226,7 +217,7 @@ do($ = jQuery) ->
           multiSelect.setValues(values)
           abort.click()
 
-      do (s = @s) ->
+      do ->
         appendGroupHeader = (text) ->
           select.append ->
             $('<h3>').append ->
