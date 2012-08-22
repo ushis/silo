@@ -45,7 +45,7 @@ namespace :cvs do
 
       lang = :en
 
-      if (a = /_([a-z])\./.match(base))
+      if (a = /_([a-z])(?:\.|_)/.match(base))
         lang = langs[a[1]] || :en
       end
 

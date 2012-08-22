@@ -1,6 +1,6 @@
 # Add the initial user
 [['ushi', 'kalcher'], ['hendrik', 'froemmel']].each do |prename, name|
-  user = User.new(name: prename.capitalize, prename: name.capitalize)
+  user = User.new(name: name.capitalize, prename: prename.capitalize)
   user.username = prename
   user.password = prename
   user.email = "#{prename}@example.com"
