@@ -27,6 +27,15 @@ class ApplicationController < ActionController::Base
     redirect_to root_url
   end
 
+  # Ensures that the specified parameters are Arrays.
+  def arrayify_params(*keys)
+    keys.each do |key|
+      unless params[key].is_a? Array
+        params[key] = params[key].to_s.split(/\s+/)
+      end
+    end
+  end
+
   # Inits the body class array and populates it with current controller,
   # action and wether the user is admin or not.
   def body_class
