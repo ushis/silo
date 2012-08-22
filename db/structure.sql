@@ -44,10 +44,10 @@ CREATE TABLE `contacts` (
 CREATE TABLE `countries` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `country` varchar(255) NOT NULL,
-  `continent` varchar(255) NOT NULL,
+  `area` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_countries_on_country` (`country`),
-  KEY `index_countries_on_continent` (`continent`)
+  KEY `index_countries_on_area` (`area`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `cvs` (
@@ -77,6 +77,7 @@ CREATE TABLE `experts` (
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_experts_on_user_id` (`user_id`),
+  KEY `index_experts_on_country_id` (`country_id`),
   KEY `index_experts_on_name` (`name`),
   KEY `index_experts_on_prename` (`prename`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -148,6 +148,11 @@ namespace :experts do
           e.addresses << address
         end
 
+        # Comment
+        unless (comment = data['Bemerkung']).blank?
+          e.comment = Comment.new(comment: comment)
+        end
+
         # Yay!
         if e.save
           output.puts "#{data['Index']}:#{e.id}"

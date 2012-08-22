@@ -295,7 +295,7 @@ do($ = jQuery) ->
       cols: 6
       grouped: true
       selected: []
-      activeGroup: 3
+      activeGroup: 4
       layerClass: 'layer'
       wrapperClass: 'multi-select'
       headerClass: 'header'

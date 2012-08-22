@@ -21,11 +21,11 @@ class AddExperts < ActiveRecord::Migration
 
     create_table :countries do |t|
       t.string :country,   null: false
-      t.string :continent, null: false
+      t.string :area,      null: false
     end
 
     add_index :countries, :country, unique: true
-    add_index :countries, :continent
+    add_index :countries, :area
 
     create_table :contacts do |t|
       t.references :contactable, polymorphic: true
