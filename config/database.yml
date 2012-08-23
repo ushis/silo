@@ -25,5 +25,5 @@ production:
   database: silo
   username: root
   password: root
-  socket: /var/run/mysqld/mysqld.sock
+  socket: /var/lib/mysql/mysql.sock
   pool: 5
