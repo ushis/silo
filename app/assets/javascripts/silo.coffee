@@ -7,25 +7,16 @@
 
 # Checks the availability of localStorage. Returns true if localStorage
 # is available, esle false.
-hasStorage = ->
-  !!window.localStorage
+hasStorage = -> !! window.localStorage
 
 # Let's go
 do($ = jQuery) ->
 
   # A simple layer.
-  class SiloLayer
-    constructor: (className) ->
-      @layer = $('<div>').addClass(className)
-
-    # Fades in.
-    fadeIn: ->
-      @layer.appendTo('body').fadeIn(200)
-
-    # Fades out.
-    fadeOut: ->
-      @layer.fadeOut 200, ->
-        $(@).detach()
+  SiloLayer =
+    layer: $('<div>').addClass('layer')
+    fadeIn: -> @layer.appendTo('body').fadeIn(200)
+    fadeOut: -> @layer.fadeOut 200, -> $(@).detach()
 
   # Writes the username to localStorage on submit and sets the focus
   # to the first empty input field.
@@ -63,18 +54,7 @@ do($ = jQuery) ->
           el.toggleClass settings.class, settings.duration
 
   # Disables links
-  $.fn.siloDisabledLinks = ->
-    @each -> $(@).click -> false
-
-  # Animates a toggle slide for the given selector.
-  $.fn.siloToggler = (selector, options) ->
-    settings = $.extend {
-      duration: 400
-    }, options
-
-    @each ->
-      $(@).click ->
-        $(selector).slideToggle(settings.duration)
+  $.fn.siloDisabledLinks = -> @.click -> false
 
   # Wraps adds a click away x the all elements.
   $.fn.siloClickAway = (options) ->
@@ -136,15 +116,14 @@ do($ = jQuery) ->
     do (collection = @) ->
       ready = (help) ->
         help = $(help)
-        layer = new SiloLayer('layer')
         help.find('div.button').click ->
-          layer.fadeOut()
+          SiloLayer.fadeOut()
           help.fadeOut(200)
         $('body').append(help)
         collection.after ->
           $('<div>').addClass(settings.helpClass).text(settings.helpText)
           .fadeIn(600).click ->
-            layer.fadeIn()
+            SiloLayer.fadeIn()
             help.fadeIn(200)
 
       $.ajax(url: url, dataType: 'html', success: ready)
@@ -152,7 +131,6 @@ do($ = jQuery) ->
   # Shows a simple confirmation dialog.
   $.fn.siloConfirmDelete = (options) ->
     settings = $.extend {
-      layerClass: 'layer'
       buttonClass: 'button'
       submitClass: 'submit'
       submitText: 'Ok'
@@ -171,8 +149,6 @@ do($ = jQuery) ->
       [klass, text] = [settings["#{type}Class"], settings["#{type}Text"]]
       $('<div>').addClass("#{settings.buttonClass} #{klass}").text(text)
 
-    layer = new SiloLayer(settings.layerClass)
-
     @each ->
       do (el = $(@)) ->
         el.click ->
@@ -185,13 +161,13 @@ do($ = jQuery) ->
                 el.closest('form').submit()
             .append ->
               makeButton('abort').click ->
-                layer.fadeOut()
+                SiloLayer.fadeOut()
                 dialog.fadeOut 200, ->
                   dialog.remove()
           .append ->
             makeBox('text').text(el.data('confirm'))
           .appendTo('body').fadeIn(200)
-          layer.fadeIn()
+          SiloLayer.fadeIn()
           return false
 
   # Represents a multi select field.
@@ -220,14 +196,13 @@ do($ = jQuery) ->
       abort = makeButton('abort')
       submit = makeButton('submit')
       select = makeBox('select')
-      @layer = new SiloLayer(s.layerClass)
       @wrapper = makeBox('wrapper').append(select).prepend ->
         makeBox('header').append(submit, abort).prepend ->
           $('<h2>').text(s.headline)
 
-      do (wrapper = @wrapper, layer = @layer) ->
+      do (wrapper = @wrapper) ->
         abort.click ->
-          layer.fadeOut()
+          SiloLayer.fadeOut()
           wrapper.fadeOut 200, ->
             wrapper.detach()
 
@@ -307,7 +282,7 @@ do($ = jQuery) ->
 
     # Fades in.
     fadeIn: ->
-      @layer.fadeIn()
+      SiloLayer.fadeIn()
       do (wrapper = @wrapper) ->
         $('body').append ->
           wrapper.fadeIn(200)
@@ -319,7 +294,6 @@ do($ = jQuery) ->
       grouped: true
       selected: []
       activeGroup: 4
-      layerClass: 'layer'
       wrapperClass: 'multi-select overlay'
       headerClass: 'header'
       selectClass: 'select'
