@@ -138,47 +138,6 @@ div.validation-errors table {
   margin: -16px 0 16px 0;
 }
 
-/* Confirm Delete */
-div.confirm-delete {
-  display: none;
-  float: left;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  width: 340px;
-  margin: -100px 0 0 -170px;
-  padding: 10px;
-  background-color: #f6f6f6;
-  border-radius: 4px;
-  z-index: 9999;
-}
-
-div.confirm-delete div.header {
-  float: left;
-  width: 100%;
-  margin-bottom: 10px;
-}
-
-div.confirm-delete h2 {
-  float: left;
-  padding: 0;
-}
-
-div.confirm-delete div.button {
-  float: right;
-}
-
-div.confirm-delete div.text {
-  clear: both;
-  padding: 15px;
-  margin-bottom: 10px;
-  font-size: .76em;
-  color: #444;
-  background-color: #dbdbdb;
-  border-radius: 4px;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, .2);
-}
-
 /* Multi-Lang */
 div.multi-lang {
   width: 740px;
@@ -256,33 +215,107 @@ div.multi-lang span.delete:before {
   border-right-color: rgba(0,0,0,.5);
 }
 
-/* Multi Select */
-div.multi-select {
+/* Overlay */
+div.overlay {
   display: none;
   float: left;
   position: fixed;
   top: 100px;
   left: 50%;
-  width: 800px;
-  margin-left: -400px;
+  width: 520px;
+  margin-left: -260px;
   padding: 10px;
   background-color: #f6f6f6;
   border-radius: 4px;
-  z-index: 99999;
+  z-index: 9999;
+}
+
+div.overlay div.header {
+  float: left;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+div.overlay h2 {
+  float: left;
+  padding: 0;
+}
+
+div.overlay div.button {
+  float: right;
+}
+
+/* Confirm Delete */
+div.confirm-delete {
+  top: 50%;
+  left: 50%;
+  width: 340px;
+  margin: -100px 0 0 -170px;
+}
+
+div.confirm-delete div.text {
+  clear: both;
+  padding: 15px;
+  margin-bottom: 10px;
+  font-size: .76em;
+  color: #444;
+  background-color: #dbdbdb;
+  border-radius: 4px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, .2);
+}
+
+/* Help */
+div.help {
+  position: absolute;
+  top: 60px;
+  color: #555;
+}
+
+div.help dl {
+  clear: both;
+  padding: 15px;
+  margin-bottom: 10px;
+  font-size: .8em;
+  color: #444;
+  background-color: #dbdbdb;
+  border-radius: 4px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, .2);
+}
+
+div.help dt {
+  padding: 0 10px 6px 10px;
+}
+
+div.help dd {
+  margin-bottom: 15px;
+  padding: 8px 10px;
+  background-color: #e0e0e0;
+  border-radius: 4px;
+}
+
+div.help dd:last-child {
+  margin-bottom: 0;
+}
+
+div.help dd p {
+  padding: 8px 0 0 0;
+}
+
+div.help dd p.example {
+  padding: 0 0 8px 0;
+  font: 12px/16px monospace;
+  border-bottom: 1px solid #c8c8c8;
+}
+
+/* Multi Select */
+div.multi-select {
+  width: 800px;
+  margin-left: -400px;
 }
 
 div.multi-select.countries {
   position: absolute;
   top: 30px;
-}
-
-div.multi-select h2 {
-  float: left;
-  padding-top: 0;
-}
-
-div.multi-select div.button {
-  float: right;
 }
 
 div.multi-select div.select {

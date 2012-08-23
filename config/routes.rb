@@ -38,6 +38,9 @@ Silo::Application.routes.draw do
   # References
   resources :references
 
+  # Help
+  get 'help/:section' => 'help#show', as: :help
+
   # Countries
   get 'countries/by/area' => 'countries#by_area'
 

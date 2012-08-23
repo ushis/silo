@@ -20,7 +20,7 @@
             </div>
           </div>
           <div class="row q">
-            <%= text_field_tag(:q, params[:q],
+            <%= text_field_tag(:q, params[:q], class: 'fulltext',
                                placeholder: Expert.human_attribute_names(:cvs, :comment)) %>
             <%= submit_tag t('actions.search') %>
           </div>
@@ -96,10 +96,12 @@
   $('#filter div.citizenship input')
   .siloMultiSelect('countries', '<%= countries_by_area_path format: :json %>', {
     selected: <%= param_as_json :countries, Array %>,
-    wrapperClass: 'multi-select countries',
+    wrapperClass: 'multi-select countries overlay',
     cols: 3,
     headline: '<%= t 'labels.country.countries' %>',
     submitText: '<%= t 'actions.submit' %>',
     abortText: '<%= t 'actions.abort' %>'
   });
+
+  $('#filter input.fulltext').siloHelp('<%= help_path section: :fulltext %>')
 </script>

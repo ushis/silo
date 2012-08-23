@@ -1,0 +1,80 @@
+<div class="help fulltext overlay">
+  <div class="header">
+    <h2>
+      <%= t 'labels.help.help', section:  t('labels.help.fulltext') %>
+    </h2>
+    <div class="button">
+      <%= t 'actions.close' %>
+    </div>
+  </div>
+  <dl>
+    <dt>
+      <%= t 'labels.help.no_operator' %>
+    </dt>
+    <dd>
+      <p class="example">
+        internet cinema
+      </p>
+      <p class="description">
+        <%= t 'messages.help.fulltext.or' %>
+      </p>
+    </dd>
+    <dt>
+      <%= t 'labels.help.operator', operator: '+' %>
+    </dt>
+    <dd>
+      <p class="example">
+        +internet +cinema
+      </p>
+      <p class="description">
+        <%= t 'messages.help.fulltext.and' %>
+      </p>
+    </dd>
+    <dt>
+      <%= t 'labels.help.operator', operator: '-' %>
+    </dt>
+    <dd>
+      <p class="example">
+        +internet -cinema
+      </p>
+      <p>
+        <%= t 'messages.help.fulltext.not', t1: 'internet', t2: 'cinema' %>
+      </p>
+    </dd>
+    <dt>
+      <%= t 'labels.help.operator', operator: '()' %>
+    </dt>
+    <dd>
+      <p class="example">
+        +internet +(cinema kino)
+      </p>
+      <p>
+        <%= t('messages.help.fulltext.group',
+              t1: 'internet', t2: 'cinema', t3: 'kino') %>
+      </p>
+    </dd>
+    <dt>
+      <%= t 'labels.help.operator', operator: '*' %>
+    </dt>
+    <dd>
+      <p class="example">
+        apple*
+      </p>
+      <p>
+        <%= t('messages.help.fulltext.asterix',
+              t1: 'apple', t2: 'apples', t3: 'applesauce', t4: 'applet') %>
+      </p>
+    </dd>
+    <dt>
+      <%= t 'labels.help.operator', operator: '"' %>
+    </dt>
+    <dd>
+      <p class="example">
+        "i love silo"
+      </p>
+      <p>
+        <%= t 'messages.help.fulltext.quote', phrase: 'i love silo' %>
+      </p>
+    </dd>
+  </dl>
+</div>

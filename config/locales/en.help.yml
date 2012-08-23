@@ -1,0 +1,17 @@
+---
+en:
+  labels:
+    help:
+      fulltext: 'Fulltext'
+      help: 'Help: %{section}'
+      no_operator: 'No Operator'
+      operator: '%{operator} Operator'
+  messages:
+    help:
+      fulltext:
+        and: 'Find rows that contatin both of the words.'
+        asterix: "Find rows that contain words such as '%{t1}', '%{t2}', '%{t3}', or '%{t4}'."
+        group: "Find rows that contain '%{t1}' and '%{t2}', or '%{t1}' and '%{t3}'."
+        not: "Find rows that contain '%{t1}' but not '%{t2}'."
+        or: 'Find rows that contain at least one of the two words.'
+        quote: "Find rows that contain the exact phrase '%{phrase}'."

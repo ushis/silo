@@ -126,6 +126,29 @@ do($ = jQuery) ->
           master.prop('checked', false) if $(@).not(':checked')
         return el
 
+  # Loads the specified help and connects it with an element.
+  $.fn.siloHelp = (url, options) ->
+    settings = $.extend {
+      helpClass: 'need-help'
+      helpText: '?'
+    }, options
+
+    do (collection = @) ->
+      ready = (help) ->
+        help = $(help)
+        layer = new SiloLayer('layer')
+        help.find('div.button').click ->
+          layer.fadeOut()
+          help.fadeOut(200)
+        $('body').append(help)
+        collection.after ->
+          $('<div>').addClass(settings.helpClass).text(settings.helpText)
+          .fadeIn(600).click ->
+            layer.fadeIn()
+            help.fadeIn(200)
+
+      $.ajax(url: url, dataType: 'html', success: ready)
+
   # Shows a simple confirmation dialog.
   $.fn.siloConfirmDelete = (options) ->
     settings = $.extend {
@@ -138,7 +161,7 @@ do($ = jQuery) ->
       textClass: 'text'
       headerClass: 'header'
       headerText: 'Are you sure?'
-      wrapperClass: 'confirm-delete'
+      wrapperClass: 'confirm-delete overlay'
     }, options
 
     makeBox = (type) ->
@@ -297,7 +320,7 @@ do($ = jQuery) ->
       selected: []
       activeGroup: 4
       layerClass: 'layer'
-      wrapperClass: 'multi-select'
+      wrapperClass: 'multi-select overlay'
       headerClass: 'header'
       selectClass: 'select'
       headline: 'Multi Select'
