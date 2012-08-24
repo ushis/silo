@@ -20,6 +20,8 @@ class ExpertsReport < ApplicationReport
 
   # Adds a bunch of experts to a report
   def index(experts)
+    return if experts.empty?
+
     data = experts.collect do |expert|
       [expert.name, expert.prename, expert.country.try(:human)]
     end
