@@ -1,5 +1,3 @@
-require 'prawn'
-
 # The ExpertsController provides basic CRUD actions for the experts data.
 class ExpertsController < ApplicationController
   skip_before_filter :authorize, only: [:index, :show, :contact, :documents, :report]
@@ -27,6 +25,14 @@ class ExpertsController < ApplicationController
     render :index
   end
 
+  def search_report
+    experts = Expert.where(id: params[:ids])
+    send_data ExpertsReport.for(experts, current_user).render,
+              filename: "report-#{l Time.now, format: :long}.pdf",
+              type: 'application/pdf',
+              disposition: 'inline'
+  end
+
   # Serves the experts details page.
   def show
     @expert = Expert.find(params[:id])
@@ -48,7 +54,7 @@ class ExpertsController < ApplicationController
   # Sends a generated pdf including the experts deatils.
   def report
     e = Expert.find(params[:id])
-    send_data ExpertsReport.for_expert(e).render,
+    send_data ExpertsReport.for(e, current_user).render,
               filename: "report-#{e.full_name.parameterize}.pdf",
               type: 'application/pdf',
               disposition: 'inline'
