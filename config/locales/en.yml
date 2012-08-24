@@ -202,6 +202,7 @@ en:
         save: 'Saved user.'
   time:
     formats:
+      save: '%Y-%m-%d'
       short: '%B %e, %Y'
       long: '%Y/%m/%d %H:%M'
   values:
