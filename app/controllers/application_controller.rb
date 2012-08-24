@@ -45,7 +45,7 @@ class ApplicationController < ActionController::Base
 
   # Sets the users preferred locale.
   def set_locale
-    I18n.locale = current_user ? current_user.locale : locale_from_header
+    I18n.locale = current_user.try(:locale) || locale_from_header
   end
 
   # Authorizes the user (or not) to complete a request. If the the user has

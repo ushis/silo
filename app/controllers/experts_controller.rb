@@ -28,7 +28,7 @@ class ExpertsController < ApplicationController
   def search_report
     experts = Expert.where(id: params[:ids])
     send_data ExpertsReport.for(experts, current_user).render,
-              filename: "report-#{l Time.now, format: :save}.pdf",
+              filename: "report-#{l(Time.now, format: :save)}.pdf",
               type: 'application/pdf',
               disposition: 'inline'
   end
