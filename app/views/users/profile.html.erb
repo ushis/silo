@@ -18,6 +18,16 @@
             <%= f.text_field :email %>
           </li>
           <li>
+            <%= f.label :prename %>
+            <%= f.text_field :prename %>
+          </li>
+          <li>
+            <%= f.label :name %>
+            <%= f.text_field :name %>
+          </li>
+        </ul>
+        <ul>
+          <li>
             <%= f.label :password %>
             <%= f.password_field :password %>
           </li>
@@ -28,16 +38,6 @@
           <li>
             <%= f.label :password_old %>
             <%= f.password_field :password_old %>
-          </li>
-        </ul>
-        <ul>
-          <li>
-            <%= f.label :name %>
-            <%= f.text_field :name %>
-          </li>
-          <li>
-            <%= f.label :prename %>
-            <%= f.text_field :prename %>
           </li>
           <li>
             <%= f.label :locale %>
