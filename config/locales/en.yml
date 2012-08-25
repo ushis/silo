@@ -166,6 +166,9 @@ en:
         delete: 'Deleted CV.'
         store: 'Stored new CV.'
     expert:
+      confirm:
+        delete: 'Do you really want to delete this expert along with all its
+                 addresses, contacts, CVs and attachments?'
       errors:
         create: 'Could not create expert.'
         delete: 'Could not delete expert.'
@@ -188,6 +191,7 @@ en:
     user:
       confirm:
         delete: 'Do you really want to delete this user?'
+        password: 'Confirm with your password.'
       errors:
         create: 'Could not create user.'
         credentials: 'Wrong username or password.'

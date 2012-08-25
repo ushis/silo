@@ -9,6 +9,10 @@ body {
   min-width: 1130px;
 }
 
+form.button_to input[type=password] {
+  display: none;
+}
+
 a, form.button_to input[type=submit] {
   margin: 0;
   padding: 0;
@@ -292,13 +296,21 @@ body.edit #main h2 {
   margin-left: 15px;
 }
 
-#main div.header ul.tools li a {
+#main div.header ul.tools li a,
+#main div.header ul.tools li input[type=submit] {
   float: left;
   padding: 2px 0 0 18px;
   color: #444;
   text-shadow: 1px 1px 0 #efefef;
   font-size: 1em;
+  line-height: 20px;
+  font-weight: normal;
+  background-color: transparent;
+  background-position: left center;
+  background-repeat: no-repeat;
+  box-shadow: 0 0 0 transparent;
 }
+
 
 /* Tables */
 #main table {

@@ -123,6 +123,11 @@ class ExpertsController < ApplicationController
   def destroy
     expert = Expert.find(params[:id])
 
+    unless current_user.authenticate(params[:password])
+      flash[:alert] = t('messages.user.errors.password')
+      redirect_to expert_url(expert) and return
+    end
+
     if expert.destroy
       flash[:notice] = t('messages.expert.success.delete', name: expert.name)
   	  redirect_to experts_url

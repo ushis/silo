@@ -140,6 +140,8 @@ do($ = jQuery) ->
       headerClass: 'header'
       headerText: 'Are you sure?'
       wrapperClass: 'confirm-delete overlay'
+      passwordClass: 'password'
+      passwordText: 'Confirm with your password.'
     }, options
 
     makeBox = (type) ->
@@ -149,26 +151,36 @@ do($ = jQuery) ->
       [klass, text] = [settings["#{type}Class"], settings["#{type}Text"]]
       $('<div>').addClass("#{settings.buttonClass} #{klass}").text(text)
 
+    makePassword = ->
+      $('<input>').attr {
+        name: 'password'
+        type: 'password'
+        placeholder: settings.passwordText
+      }
+
     @each ->
       do (el = $(@)) ->
         el.click ->
           dialog = makeBox('wrapper')
+          password = makePassword()
+          submit = makeButton('submit').click ->
+            el.closest('form').append(password.clone()).submit()
+          abort = makeButton('abort').click ->
+            SiloLayer.fadeOut()
+            dialog.fadeOut 200, ->
+              dialog.remove()
           dialog.append ->
             makeBox('header').append ->
               $('<h2>').text(settings.headerText)
-            .append ->
-              makeButton('submit').click ->
-                el.closest('form').submit()
-            .append ->
-              makeButton('abort').click ->
-                SiloLayer.fadeOut()
-                dialog.fadeOut 200, ->
-                  dialog.remove()
+            .append(submit, abort)
           .append ->
             makeBox('text').text(el.data('confirm'))
-          .appendTo('body').fadeIn(200)
+          if el.hasClass(settings.passwordClass)
+            dialog.append ->
+              makeBox('password').append(password)
+          dialog.appendTo('body').fadeIn(200)
           SiloLayer.fadeIn()
-          return false
+          false
 
   # Represents a multi select field.
   class SiloMultiSelect
