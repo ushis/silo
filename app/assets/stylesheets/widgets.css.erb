@@ -349,7 +349,7 @@ div.multi-select * {
 }
 
 div.multi-select h3.ui-accordion-header a {
-  clear: both;
+  clear: left;
   display: block;
   margin: 6px 30px 6px 0;
   padding: 6px 10px;
@@ -371,10 +371,10 @@ div.multi-select h3.ui-accordion-header.ui-state-active a {
   background: linear-gradient(top bottom, rgba(236,236,236,1) 0%, rgba(227,227,227,1) 100%);
 }
 
-div.multi-select h3.ui-accordion-header a span {
+div.multi-select h3.ui-accordion-header span.counter {
   position: relative;
   float: right;
-  margin: -6px -42px 0 0;
+  margin: 0 0 0 0;
   padding: 7px 0;
   background-color: #EFEFEF;
   border-radius: 3px;
@@ -384,7 +384,7 @@ div.multi-select h3.ui-accordion-header a span {
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), 0 1px 1px rgba(0, 0, 0, .2);
 }
 
-div.multi-select h3.ui-accordion-header a span:before {
+div.multi-select h3.ui-accordion-header span.counter:before {
   content: ' ';
   position: absolute;
   top: 50%;
@@ -397,7 +397,7 @@ div.multi-select h3.ui-accordion-header a span:before {
   border-right-color: rgba(0, 0, 0, .2);;
 }
 
-div.multi-select h3.ui-accordion-header a span:after {
+div.multi-select h3.ui-accordion-header span.counter:after {
   content: ' ';
   position: absolute;
   top: 50%;

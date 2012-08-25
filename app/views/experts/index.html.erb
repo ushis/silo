@@ -91,22 +91,14 @@
 
 <script>
   $('#filter div.language input')
-  .siloMultiSelect('languages', '<%= languages_path format: :json%>', {
-    selected: <%= param_as_json :languages, Array %>,
-    grouped: false,
-    headline: '<%= t 'labels.language.languages' %>',
-    submitText: '<%= t 'actions.submit' %>',
-    abortText: '<%= t 'actions.abort' %>'
+  .siloMultiSelect('languages', '<%= languages_select_path %>', {
+    selected: <%= param_as_json :languages, Array %>
   });
 
   $('#filter div.citizenship input')
-  .siloMultiSelect('countries', '<%= countries_by_area_path format: :json %>', {
+  .siloMultiSelect('countries', '<%= areas_select_path %>', {
     selected: <%= param_as_json :countries, Array %>,
-    wrapperClass: 'multi-select countries overlay',
-    cols: 3,
-    headline: '<%= t 'labels.country.countries' %>',
-    submitText: '<%= t 'actions.submit' %>',
-    abortText: '<%= t 'actions.abort' %>'
+    grouped: true
   });
 
   $('#filter input.fulltext').siloHelp('<%= help_path section: :fulltext %>')

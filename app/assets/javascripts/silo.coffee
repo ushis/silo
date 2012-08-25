@@ -197,150 +197,65 @@ do($ = jQuery) ->
       @hidden.val ids.join(' ')
       @el.val val.join(', ')
 
-  # Represents an overlay multi select box.
-  class SiloMultiSelectBox
-    constructor: (@multiSelect, s) ->
-      makeBox = (type) ->
-        $('<div>').addClass(s["#{type}Class"])
-      makeButton = (type) ->
-        makeBox(type).addClass(s.buttonClass).text(s["#{type}Text"])
-
-      abort = makeButton('abort')
-      submit = makeButton('submit')
-      select = makeBox('select')
-      @wrapper = makeBox('wrapper').append(select).prepend ->
-        makeBox('header').append(submit, abort).prepend ->
-          $('<h2>').text(s.headline)
-
-      do (wrapper = @wrapper) ->
-        abort.click ->
-          SiloLayer.fadeOut()
-          wrapper.fadeOut 200, ->
-            wrapper.detach()
-
-      do (multiSelect = @multiSelect) ->
-        submit.click ->
-          values = []
-          select.find('input:checked').not('.group').each ->
-            do (input = $(@)) ->
-              values.push([input.attr('id'), input.data('name')])
-          multiSelect.setValues(values)
-          abort.click()
-
-      do ->
-        appendGroupHeader = (text) ->
-          select.append ->
-            $('<h3>').append ->
-              $('<a>').attr(href: '#').text(text).append ->
-                $('<span>')
-
-        appendGroup = (group) ->
-          select.append(group)
-          do (counter = group.prev('h3').find('a span')) ->
-            do (inputs = group.find('input')) ->
-              inputs.siloMasterBox(masterClass: 'group', hard: true)
-              .bind 'commit', ->
-                counter.text(inputs.filter(':checked:not(.group)').length)
-              .change ->
-                $(@).trigger('commit')
-
-        groupUl = (i) ->
-          $('<ul>').append ->
-            $('<li>').append ->
-              $('<input>').attr(id: "g-#{i}", type: 'checkbox', class: 'group')
-            .append ->
-              $('<label>').attr(for: "g-#{i}").text(s.allText)
-
-        appendCol = (groupUl, col) ->
-          groupUl.append ->
-            $('<li>').addClass('col').append(col)
-
-        appendItem = (col, item) ->
-          col.append ->
-            $('<li>').addClass('item').append ->
-              $('<input>')
-                .attr(id: item[1], name: item[1], type: 'checkbox')
-                .data('name', item[0]).prop 'checked', ->
-                  $.inArray(String(item[1]), s.selected) > -1
-            .append ->
-              $('<label>').attr(for: item[1]).text(item[0])
-
-        appendItems = (groupUl, items) ->
-          per_col = Math.ceil(items.length / s.cols)
-          for j in [0..s.cols - 1]
-            ul = $('<ul>')
-            start = j * per_col
-            end = start + per_col - 1
-            for item in items[start..end]
-              appendItem(ul, item)
-            appendCol(groupUl, ul)
-
-        if ! s.grouped
-          gUl = $('<ul>')
-          appendItems(gUl, s.data)
-          appendGroup(gUl)
-        else
-          for group, i in s.data
-            appendGroupHeader(group[0])
-            gUl = groupUl(i)
-            appendItems(gUl, group[1])
-            appendGroup(gUl)
-          select.accordion(
-            header: 'h3',
-            autoHeight: false,
-            active: s.activeGroup
-          ).find('input').trigger('commit')
-        submit.click()
-
-    # Fades in.
-    fadeIn: ->
-      SiloLayer.fadeIn()
-      do (wrapper = @wrapper) ->
-        $('body').append ->
-          wrapper.fadeIn(200)
-
   # Makes a text field multi selectable.
   $.fn.siloMultiSelect = (name, url, options) ->
     settings = $.extend {
-      cols: 6
-      grouped: true
       selected: []
-      activeGroup: 4
-      wrapperClass: 'multi-select overlay'
-      headerClass: 'header'
-      selectClass: 'select'
-      headline: 'Multi Select'
-      allText: 'All'
       submitClass: 'submit'
-      submitText: 'Submit'
       abortClass: 'abort'
-      abortText: 'Abort'
-      buttonClass: 'button'
+      selectClass: 'select'
+      counterClass: 'counter'
+      grouped: false
+      groupClass: 'group'
+      activeGroup: 4
       storagePrefix: 'multi-select-'
     }, options
 
-    do (collection = @) ->
-      mapData = (data) ->
-        settings.map = {} unless settings.map
-        for item in data
-          settings.map[item[1]] = item[0]
+    prepareSelect = (el) ->
+      do (el = $(el)) ->
+        for id in settings.selected
+          el.find("input[name=#{id}]").prop('checked', true)
 
-      ready = (data) ->
-        settings.data = data
-        if ! settings.grouped
-          mapData(data)
-        else
-          for group in data
-            mapData(group[1])
+        if settings.grouped
+          el.find(".#{settings.selectClass}")
+            .accordion(autoHeight: false, active: settings.activeGroup)
+          .find('ul').each ->
+            counter = $(@).prev('h3').find(".#{settings.counterClass}")
+            input = $(@).find('input')
+              .siloMasterBox(masterClass: settings.groupClass, hard: true)
+            input.bind 'count', ->
+              counter.text ->
+                input.filter(":checked:not(.#{settings.groupClass})").length
+            .trigger('count').change -> $(@).trigger('count')
+
+        el.find(".#{settings.abortClass}").click -> el.trigger('close')
+        el.find(".#{settings.submitClass}").click -> el.trigger('submit')
+
+        el.bind 'close', ->
+          SiloLayer.fadeOut()
+          el.fadeOut 200, -> el.detach()
+        .bind 'show', ->
+          SiloLayer.fadeIn()
+          el.appendTo('body').fadeIn(200)
+
+    do (collection = @) ->
+      ready = (select) ->
+        select = prepareSelect(select)
 
         collection.each ->
           do (el = $(@)) ->
+            el.focus -> select.trigger('show')
             multiSelect = new SiloMultiSelect(name, el)
-            multiSelectBox = new SiloMultiSelectBox(multiSelect, settings)
-            el.focus ->
-              multiSelectBox.fadeIn()
 
-      $.ajax(url: url, dataType: 'json', success: ready)
+            select.submit ->
+              values = []
+              select.find("input:checked:not(.#{settings.groupClass})").each ->
+                values.push [$(@).attr('name'), $(@).data('name')]
+              multiSelect.setValues(values)
+              select.trigger('close')
+            .trigger('submit')
+
+      $.ajax(url: url, dataType: 'html', success: ready)
 
     # Do not send the country/language names to avoid 414 errors.
     # Just cache them in localStorage if possible.

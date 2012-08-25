@@ -8,6 +8,13 @@ CREATE TABLE `addresses` (
   KEY `index_addresses_on_addressable_id_and_addressable_type` (`addressable_id`,`addressable_type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE `areas` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `area` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_areas_on_area` (`area`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 CREATE TABLE `attachments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `attachable_id` int(11) DEFAULT NULL,
@@ -43,11 +50,11 @@ CREATE TABLE `contacts` (
 
 CREATE TABLE `countries` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `area_id` int(11) NOT NULL,
   `country` varchar(255) NOT NULL,
-  `area` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_countries_on_country` (`country`),
-  KEY `index_countries_on_area` (`area`)
+  KEY `index_countries_on_area_id` (`area_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `cvs` (

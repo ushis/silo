@@ -42,9 +42,9 @@ Silo::Application.routes.draw do
   # Help
   get 'help/:section' => 'help#show', as: :help
 
-  # Countries
-  get 'countries/by/area' => 'countries#by_area'
+  # Areas
+  get 'areas/select' => 'areas#select'
 
   # Languages
-  resources :languages, only: [:index]
+  get 'languages/select' => 'languages#select'
 end

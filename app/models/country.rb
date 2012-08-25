@@ -4,12 +4,14 @@
 # Database scheme:
 #
 # - *id* integer
+# - *area_id* integer
 # - *country* string
-# - *area* string
 class Country < ActiveRecord::Base
   attr_accessible :country, :area
 
-  validates :country, uniqueness: true
+  validates :country, presence: true, uniqueness: true
+
+  belongs_to :area
 
   # Polymorphic method to find a country.
   #
@@ -39,37 +41,8 @@ class Country < ActiveRecord::Base
     end
   end
 
-  # Returns a list of tuples containing the area name and a list of
-  # country tuples ordered by localized country name.
-  #
-  #   Country.ordered_by_area
-  #   #=> [
-  #   #     ["Afrika", [["Algeria", 62], ["Angole", 8], ...]],
-  #   #     ["Europe", [["Austria", 12], ...]],
-  #   #     ...
-  #   #   ]
-  def self.grouped_by_area
-    Rails.cache.fetch("countries_by_area_#{I18n.locale}") do
-      map = ActiveSupport::OrderedHash.new
-
-      order(:area).all.each do |country|
-        map[country.human_area] ||= []
-        map[country.human_area] << [country.human, country.id]
-      end
-
-      map.collect do |area, countries|
-        [area, countries.sort { |x, y| x[0] <=> y[0] }]
-      end
-    end
-  end
-
   # Returns the localized country name.
   def human
     I18n.t(country, scope: :countries)
-  end
-
-  # Returns the localized area name.
-  def human_area
-    I18n.t(area, scope: :areas)
   end
 end

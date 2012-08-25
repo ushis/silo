@@ -91,7 +91,9 @@
             <%= f.text_area :address %>
           </div>
           <div>
-            <%= f.collection_select :country, Country.ordered, :id, :human %>
+            <%= f.grouped_collection_select(:country, Area.all,
+                                            :ordered_countries, :human,
+                                            :id, :human) %>
             <%= f.submit t('actions.add') %>
           </div>
         <% end %>

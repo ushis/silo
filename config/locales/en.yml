@@ -86,6 +86,7 @@ en:
       index: 'CVs'
       new: 'New CV'
     generic:
+      all: 'All'
       by: 'by %{name}'
       search: 'Search'
       welcome: 'Welcome'
