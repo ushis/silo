@@ -17,6 +17,9 @@ en:
       address:
         address: 'Address'
         country: 'Country'
+      area:
+        area: 'Area'
+        countries: 'Countries'
       attachment:
         filename: 'Filename'
         title: 'Title'
@@ -80,8 +83,6 @@ en:
     contact:
       index: 'Contacts'
       new: 'New Contact'
-    country:
-      countries: 'Countries'
     cv:
       index: 'CVs'
       new: 'New CV'
