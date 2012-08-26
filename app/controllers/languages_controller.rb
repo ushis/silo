@@ -1,10 +1,11 @@
-# The LanguagesController provides actions to retrieve language data as JSON.
+# The LanguagesController provides several actions to retrieve language views
+# via Ajax. They were not rendered within a layout.
 class LanguagesController < ApplicationController
   skip_before_filter :authorize, only: [:select]
 
   layout false
 
-  # Sends a JSON containing all languages ordered by language name.
+  # Serves a multi select box.
   def select
     @languages = Language.ordered
   end
