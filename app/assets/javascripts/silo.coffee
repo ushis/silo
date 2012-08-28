@@ -244,7 +244,7 @@ do($ = jQuery) ->
 
         collection.each ->
           do (el = $(@)) ->
-            el.focus -> select.trigger('show')
+            el.prop('disabled', false).focus -> select.trigger('show')
             multiSelect = new SiloMultiSelect(name, el)
 
             select.submit ->
@@ -255,6 +255,7 @@ do($ = jQuery) ->
               select.trigger('close')
             .trigger('submit')
 
+      collection.prop('disabled', true)
       $.ajax(url: url, dataType: 'html', success: ready)
 
     # Do not send the country/language names to avoid 414 errors.
