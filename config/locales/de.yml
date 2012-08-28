@@ -214,7 +214,7 @@ de:
         create: 'Benutzer konnte nicht hinzugefügt werden.'
         credentials: 'Ungültiger Benutzername oder Passwort'
         delete: 'Benutzer konnte nicht gelöscht werden.'
-        delete_current_user: 'Du kannst dich nich selbst löschen.'
+        delete_current_user: 'Du kannst dich nicht selbst löschen.'
         find: 'Benutzer nicht gefunden.'
         password: 'Ungültiges Passwort.'
         save: 'Benutzer konnte nicht gespeichert werden.'
