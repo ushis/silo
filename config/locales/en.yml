@@ -32,6 +32,7 @@ en:
         expert: 'Expert'
         language: 'Language'
       expert:
+        addresses: 'Addresses'
         age: 'Age'
         birthday: 'Date of birth'
         country: 'Citizenship'

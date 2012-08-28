@@ -32,6 +32,7 @@ de:
         expert: 'Experte'
         language: 'Sprache'
       expert:
+        addresses: 'Adressen'
         age: 'Alter'
         birthday: 'Geburtsdatum'
         country: 'Staatsangehörigkeit'
