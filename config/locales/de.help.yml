@@ -1,0 +1,17 @@
+---
+de:
+  labels:
+    help:
+      fulltext: 'Volltext'
+      help: 'Hilfe: %{section}'
+      no_operator: 'Kein Operator'
+      operator: '%{operator} Operator'
+  messages:
+    help:
+      fulltext:
+        and: 'Finde Einträge, die beide Wörter beinhalten.'
+        asterix: "Finde Einträge, die Wörter wie '%{t1}', '%{t2}', '%{t3}', oder '%{t4}' beinhalten."
+        group: "Finde Einträge, die '%{t1}' und '%{t2}', oder '%{t1}' und '%{t3}' beinhalten."
+        not: "Finde Einträge, die '%{t1}' beinhalten, aber nicht '%{t2}'."
+        or: 'Finde Einträge, die mindestens eines der beiden Wörter beinhalten.'
+        quote: "Finde Einträge, die die exakte Wortgruppe '%{phrase}' beinhalten."

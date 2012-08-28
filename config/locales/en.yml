@@ -1,4 +1,5 @@
 # English localization file
+---
 en:
   actions:
     abort: 'Abort'
@@ -8,6 +9,7 @@ en:
     edit: 'Edit'
     login: 'Login'
     logout: 'Logout'
+    more: 'More'
     print: 'Print'
     save: 'Save'
     search: 'Search'
@@ -40,9 +42,11 @@ en:
         former_collaboration: 'Former Collaboration'
         gender: 'Gender'
         job: 'Job'
+        language: 'Language'
         languages: 'Languages'
         name: 'Name'
         prename: 'First Name'
+        updated_at: 'Updated At'
       privilege:
         admin: 'Admin'
         experts: 'Experts'
@@ -73,6 +77,15 @@ en:
   date:
     formats:
       short: '%B %e, %Y'
+    order:
+      - :year
+      - :month
+      - :day
+  datetime:
+    prompts:
+      year: 'Year'
+      month: 'Month'
+      day: 'Day'
   labels:
     address:
       index: 'Addresses'
@@ -109,7 +122,7 @@ en:
     sections:
       experts: 'Experts'
       partners: 'Partners'
-      References: 'References'
+      references: 'References'
       users: 'Users'
     user:
       all: 'All Users'
@@ -132,7 +145,7 @@ en:
       confirm:
         delete: 'Do you really want to delete this address?'
       errors:
-        delete: 'Could not delete address'
+        delete: 'Could not delete address.'
         find: 'Address not found.'
         save: 'Could not save address.'
       success:
@@ -140,7 +153,7 @@ en:
         save: 'Saved address.'
     attachment:
       confirm:
-        delete: 'Do you really want to delete this attachment.'
+        delete: 'Do you really want to delete this attachment?'
       errors:
         delete: 'Could not delete attachment.'
         find: 'Attachment not found.'
@@ -159,7 +172,7 @@ en:
         save: 'Saved contact.'
     cv:
       confirm:
-        delete: 'Do you really want to delete this cv?'
+        delete: 'Do you really want to delete this CV?'
       errors:
         delete: 'Could not delete CV.'
         find: 'CV not found.'

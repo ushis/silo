@@ -88,5 +88,7 @@
 </div>
 
 <script>
-  $('div.multi-lang select').siloClickAway().parent().parent().siloClickAndClone();
+  $('div.multi-lang select').siloClickAway().parent().parent().siloClickAndClone({
+    text: '<%= t 'actions.more' %>'
+  });
 </script>
