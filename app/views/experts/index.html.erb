@@ -29,7 +29,7 @@
       <%= paginate @experts %>
       <ul class="tools">
         <li>
-          <%= link_to(t('actions.print'), report_experts_path(ids: @experts.to_a),
+          <%= link_to(t('actions.print'), url_for(params.merge(format: :pdf)),
                       class: 'icon-print') %>
         </li>
       </ul>

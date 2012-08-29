@@ -3,15 +3,16 @@
 class ExpertsReport < ApplicationReport
 
   # Creates a report for an Expert or a collection of experts.
-  def self.for(obj, user)
+  def self.for(obj, user, params = {})
     case obj
     when Expert
       report = new(obj.full_name_with_degree, user)
       report.show(obj)
     when Array, ActiveRecord::Relation
       report = new(I18n.t('labels.expert.index'), user)
-      report.index(obj)
+      report.index(obj, params)
     else
+      flash[:alert] = t('messages.attachment.errors.store') and return
       raise TypeError, "Argument 1 must be an Expert or Array: #{obj.class}"
     end
 
@@ -19,17 +20,29 @@ class ExpertsReport < ApplicationReport
   end
 
   # Adds a bunch of experts to a report
-  def index(experts)
+  def index(experts, params)
+    a = lambda { |k| Expert.human_attribute_name(k) }
+
+    data = [
+      [a.call(:name), params[:name]],
+      [a.call(:languages), Language.where(id: params[:languages]).join(', ')],
+      [a.call(:country), Country.where(id: params[:countries]).join(', ')],
+      [t('labels.generic.fulltext'), params[:q]],
+      [t('labels.generic.page'), "#{experts.current_page}/#{experts.total_pages}"]
+    ]
+
+    h2 t('labels.generic.search_params')
+    table data
+
     return if experts.empty?
 
     data = experts.collect do |expert|
       [expert.name, expert.prename, expert.country.try(:human)]
     end
 
-    table data, cell_style: { borders: [], padding: 6 } do |table|
-      table.width = 520
-      table.row_colors = ['f6f6f6', 'ffffff']
-    end
+    move_down 16
+    h2 t('labels.generic.results')
+    table(data) { |table| table.width = 380 }
   end
 
   # Adds an expert to a report.
@@ -55,31 +68,29 @@ class ExpertsReport < ApplicationReport
       end
     end
 
-    table data, cell_style: { borders: [], padding: 5 } do |table|
-      table.width = 520
-      table.row_colors = ['f6f6f6', 'ffffff']
-    end
+    table data
 
     unless e.addresses.empty?
       move_down 16
-      text a.call(:addresses), size: 12, style: :bold
-      current_y = y - 46
+      h2 a.call(:addresses)
+      current_y = y - 36
 
       e.addresses.each_with_index do |address, i|
         bounding_box [(i * 130), current_y], width: 120 do
           indent 5 do
             text address.address
-            move_down 4
-            text address.country.human
+
+            if address.country
+              move_down 4
+              text address.country.human
+            end
           end
         end
       end
     end
 
     move_down 16
-    text a.call(:comment), size: 12, style: :bold
-    move_down 10
-
+    h2 a.call(:comment)
     indent(5) { text e.comment.to_s }
   end
 end

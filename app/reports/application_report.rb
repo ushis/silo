@@ -20,4 +20,26 @@ class ApplicationReport < Prawn::Document
     text title, size: 20, style: :bold
     move_down 10
   end
+
+  # Adds a second level headline to the report.
+  def h2(content)
+    text content, size: 12, style: :bold
+    move_down 10
+  end
+
+  # Sets some default table options.
+  def table(data, options = {})
+    settings = {
+      cell_style: {
+        borders: [],
+        padding: 5
+      }
+    }.merge(options)
+
+    super(data, settings) do |table|
+      table.width = 520
+      table.row_colors = ['f6f6f6', 'ffffff']
+      yield(table) if block_given?
+    end
+  end
 end

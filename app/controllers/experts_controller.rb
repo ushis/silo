@@ -1,6 +1,6 @@
 # The ExpertsController provides basic CRUD actions for the experts data.
 class ExpertsController < ApplicationController
-  skip_before_filter :authorize, only: [:index, :show, :contact, :documents, :report]
+  skip_before_filter :authorize, only: [:index, :search, :show, :contact, :documents]
 
   before_filter only: [:search] do |c|
     c.arrayify_params(:languages, :countries)
@@ -15,6 +15,11 @@ class ExpertsController < ApplicationController
   def index
     @experts = Expert.with_documents.limit(50).page(params[:page]).order(:name)
     @title = t('labels.expert.all')
+
+    respond_to do |format|
+      format.html
+      format.pdf { search_report(@experts) }
+    end
   end
 
   # Searches for experts.
@@ -22,21 +27,22 @@ class ExpertsController < ApplicationController
     @experts = Expert.with_documents.search(params).limit(50).page(params[:page])
     @title = t('labels.expert.search')
     @body_class << :index
-    render :index
-  end
 
-  def search_report
-    experts = Expert.where(id: params[:ids])
-    send_data ExpertsReport.for(experts, current_user).render,
-              filename: "report-#{l(Time.now, format: :save)}.pdf",
-              type: 'application/pdf',
-              disposition: 'inline'
+    respond_to do |format|
+      format.html { render :index }
+      format.pdf  { search_report(@experts) }
+    end
   end
 
   # Serves the experts details page.
   def show
     @expert = Expert.find(params[:id])
     @title = @expert.full_name_with_degree
+
+    respond_to do |format|
+      format.html
+      format.pdf { report(@expert) }
+    end
   end
 
   # Serves an addresses and contacts page.
@@ -49,15 +55,6 @@ class ExpertsController < ApplicationController
   def documents
     @expert = Expert.includes(cvs: :attachment).find(params[:id])
     @title = @expert.full_name_with_degree
-  end
-
-  # Sends a generated pdf including the experts deatils.
-  def report
-    e = Expert.find(params[:id])
-    send_data ExpertsReport.for(e, current_user).render,
-              filename: "report-#{e.full_name.parameterize}.pdf",
-              type: 'application/pdf',
-              disposition: 'inline'
   end
 
   # Servers a blank experts form
@@ -141,5 +138,23 @@ class ExpertsController < ApplicationController
   def not_found
     flash[:alert] = t('messages.expert.errors.find')
     redirect_to experts_url
+  end
+
+  private
+
+  # Sends a generated pdf including the experts deatils.
+  def report(expert)
+    send_data ExpertsReport.for(expert, current_user).render,
+              filename: "report-#{expert.full_name.parameterize}.pdf",
+              type: 'application/pdf',
+              disposition: 'inline'
+  end
+
+  # Sends a pdf report of the search.
+  def search_report(results)
+    send_data ExpertsReport.for(results, current_user, params).render,
+              filename: "report-#{l(Time.now, format: :save)}.pdf",
+              type: 'application/pdf',
+              disposition: 'inline'
   end
 end

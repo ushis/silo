@@ -45,4 +45,9 @@ class Country < ActiveRecord::Base
   def human
     I18n.t(country, scope: :countries)
   end
+
+  # Alias for Country#human
+  def to_s
+    human
+  end
 end
