@@ -19,7 +19,7 @@ class AttachmentsController < ApplicationController
   # It is ensured that the user is redirected to the specified url.
   def add_to(model, url)
     unless (a = Attachment.from_upload(params.fetch(:attachment)))
-      flash[:alert] = t('messages.attachment.errors.store') and return
+      raise 'Could not store attachment.'
     end
 
     model.attachments << a

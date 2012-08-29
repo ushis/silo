@@ -18,15 +18,17 @@ class ContactsController < ApplicationController
   def add_to(model, url)
     c = params[:contact]
 
-    raise 'I am not going to save blank contacts!' if c[:contact].blank?
+    if c[:contact].blank?
+      raise 'I am not going to save blank contacts!'
+    end
 
-    model.contact.send(c[:field]) << c[:contact].strip
+    model.contact.field(c[:field]) << c[:contact].strip
 
-    if model.contact.save
-      flash[:notice] = t('messages.contact.success.save')
-    else
+    unless model.contact.save
       raise 'Could not save contact.'
     end
+
+    flash[:notice] = t('messages.contact.success.save')
   rescue
     flash[:alert] = t('messages.contact.errors.save')
   ensure
@@ -38,11 +40,11 @@ class ContactsController < ApplicationController
   def remove_from(model, url)
     c = params[:contact]
 
-    if model.contact.send(c[:field]).delete(c[:contact]) && model.contact.save
-      flash[:notice] = t('messages.contact.success.delete')
-    else
+    unless model.contact.field(c[:field]).delete(c[:contact]) && model.contact.save
       raise 'Could not delete contact.'
     end
+
+    flash[:notice] = t('messages.contact.success.delete')
   rescue
     flash[:alert] = t('messages.contact.errors.delete')
   ensure
