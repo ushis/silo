@@ -81,7 +81,11 @@ body.experts #main div.header ul.tabs li {
   line-height: 2.2em;
   padding: 0;
   margin-right: 3px;
-  background: #646464;
+  background: -moz-linear-gradient(top, #515151 0%, #464646 100%);
+  background: -webkit-linear-gradient(top, #515151 0%, #464646 100%);
+  background: -o-linear-gradient(top, #515151 0%, #464646 100%);
+  background: -ms-linear-gradient(top, #515151 0%, #464646 100%);
+  background: linear-gradient(to bottom, #515151 0%, #464646 100%);
   color: #d0d0d0;
   border-radius: 4px 4px 0 0;
   text-shadow: 1px 1px 0px rgba(0,0,0,.5);
@@ -89,11 +93,11 @@ body.experts #main div.header ul.tabs li {
 
 body.experts #main div.header ul.tabs li a {
   display: block;
-  padding: 2px 15px 2px 15px;
+  padding: 0px 15px;
 }
 
 body.experts #main div.header.details {
-  min-height: 80px;
+  min-height: 66px;
 }
 
 body.experts.show #main div.header ul.tabs li.show,
@@ -388,7 +392,7 @@ body.experts #main div.communication div.forms div.tab div.form-wrapper {
   padding: 0;
 }
 
-body.experts #main div.communication div.forms div.tab div.form-wrapper div textarea, 
+body.experts #main div.communication div.forms div.tab div.form-wrapper div textarea,
 body.experts #main div.communication div.forms div.tab div.form-wrapper div input[type=text] {
   margin-bottom: 10px;
 }
