@@ -61,11 +61,6 @@
         <div class="markdown"> <%= markdown @expert.comment.comment %> </div>
       </div>
     </div>
-    <% if current_user.access?(:experts) %>
-    <div class="tools">
-      <%= link_to(t('actions.edit'), edit_expert_path(@expert), class: 'icon-edit') %>
-    </div>
-    <% end %>
   </div>
   <div class="communication">
     <div class="addresses">
