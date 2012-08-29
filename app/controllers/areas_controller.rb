@@ -7,6 +7,6 @@ class AreasController < ApplicationController
 
   # Serves a multi select box for countries grouped by areas.
   def select
-    @areas = Area.all
+    @areas = Area.with_ordered_countries
   end
 end

@@ -21,7 +21,7 @@
           <%= check_box_tag area.area, 1, false, class: 'group' %>
           <%= label_tag area.area, t('labels.generic.all') %>
         </li>
-        <% area.ordered_countries.each_slice(area.countries.size.fdiv(3).ceil) do |slice| %>
+        <% area.countries.each_slice(area.countries.size.fdiv(3).ceil) do |slice| %>
           <li class="col">
             <ul>
               <% slice.each do |country| %>

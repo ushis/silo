@@ -29,9 +29,9 @@
         <div class="row">
           <div class="citizenship">
             <%= f.label :country %>
-            <%= f.grouped_collection_select(:country_id, Area.all,
-                                            :ordered_countries, :human,
-                                            :id, :human) %>
+            <%= f.grouped_collection_select(:country_id,
+                                            Area.with_ordered_countries,
+                                            :countries, :human, :id, :human) %>
           </div>
           <div>
             <%= f.label :birthday %>

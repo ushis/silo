@@ -16,10 +16,12 @@ class Area < ActiveRecord::Base
 
   default_scope order(:area).includes(:countries)
 
-  # Returns the countries of an area ordered by their localized name.
-  def ordered_countries
-    Rails.cache.fetch("countries_#{area}_#{I18n.locale}") do
-      countries.sort { |x, y| x.human <=> y.human }
+  # Returns all areas and their countries, ordered by their localized name.
+  def self.with_ordered_countries
+    Rails.cache.fetch("areas_#{I18n.locale}") do
+      all.each do |area|
+        area.countries.sort! { |x, y| x.human <=> y.human }
+      end
     end
   end
 
