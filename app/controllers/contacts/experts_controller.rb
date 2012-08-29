@@ -11,13 +11,13 @@ class Contacts::ExpertsController < ContactsController
   # Adds a contact to an Expert.
   def create
     expert = Expert.includes(:contact).find(params[:expert_id])
-    add_to expert, contact_expert_url(expert)
+    add_to expert, expert_url(expert)
   end
 
   # Destroys one of the experts contacts.
   def destroy
     expert = Expert.includes(:contact).find(params[:expert_id])
-    remove_from expert, contact_expert_url(expert)
+    remove_from expert, expert_url(expert)
   end
 
   # Sets a flash message and redirects the user.
