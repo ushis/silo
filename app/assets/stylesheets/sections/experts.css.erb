@@ -58,15 +58,56 @@ body.experts #filter input[type=submit] {
 }
 
 body.experts #filter div.need-help {
-  display: none;
   float: left;
-  font-size: .8em;
-  line-height: 27px;
-  color: #666;
+  position: relative;
   cursor: pointer;
+  padding: 2px 7px 1px 7px;
+  margin: 3px 0 0 -3px;
+  font-size: .7em;
+  font-weight: bold;
+  color: #777;
+  border: none;
+  background: #dbdbdb;
+  text-shadow: 1px 1px 0px rgba(255, 255, 255, .4);
+  border-radius: 3px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .3), 0 1px 1px rgba(0, 0, 0, .4);
+}
+
+body.experts #filter div.need-help:hover {
+  color: #444;
+}
+
+body.experts #filter div.need-help:before {
+  content: ' ';
+  position: absolute;
+  top: 48%;
+  right: 100%;
+  border: solid transparent;
+  width: 0;
+  height: 0;
+  margin-top: -3px;
+  border-width: 4px;
+  border-right-color: rgba(0, 0, 0, .5);
+}
+
+body.experts #filter div.need-help:after {
+  content: ' ';
+  position: absolute;
+  top: 48%;
+  right: 100%;
+  border: solid transparent;
+  width: 0;
+  height: 0;
+  margin-top: -4px;
+  border-width: 4px;
+  border-right-color: #dbdbdb;
 }
 
 /* Tabs */
+body.experts #main div.header {
+  margin-bottom: 20px;
+}
+
 body.experts #main div.header ul.tabs {
   position: absolute;
   bottom: 0;
@@ -259,7 +300,7 @@ body.experts.show #main div.personal {
   float: left;
   position: relative;
   width: 60%;
-  padding: 10px 40px 10px 10px;
+  padding: 10px;
   border-radius: 4px;
   background-color: #f7f7f7;
   box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
@@ -282,7 +323,6 @@ body.experts.show #main div.personal div.tools {
 body.experts.show #main div.personal div.row {
   float: left;
   width: 100%;
-  margin-right: 40px;
   padding: 7px 0;
   border-bottom: 1px solid #e5e5e5;
   box-shadow: 0 1px 1px rgba(255, 255, 255, 1);
@@ -361,6 +401,7 @@ body.experts.show #main div.communication div.addresses h4 {
 body.experts.show #main div.communication div table td.del {
   width: 20px;
   padding: 0 5px 0 4px;
+  vertical-align: middle;
 }
 
 body.experts.show #main div.communication div table td.del input[type=submit] {
@@ -448,6 +489,7 @@ body.experts.documents #main div.attachments table td.icon-attachment {
 
 body.experts.documents #main div table td.del {
   width: 24px;
+  vertical-align: middle;
 }
 
 body.experts.documents #main div table input.icon-delete {

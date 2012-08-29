@@ -174,10 +174,11 @@ do($ = jQuery) ->
               $('<h2>').text(settings.headerText)
             .append(submit, abort)
           .append ->
-            makeBox('text').text(el.data('confirm'))
-          if el.hasClass(settings.passwordClass)
-            dialog.append ->
-              makeBox('password').append(password)
+            makeBox('text').append ->
+              makeBox('content').text(el.data('confirm'))
+            .append ->    
+              if el.hasClass(settings.passwordClass)
+                makeBox('password').append(password)
           dialog.appendTo('body').fadeIn(200)
           SiloLayer.fadeIn()
           false
