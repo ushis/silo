@@ -27,7 +27,6 @@ Silo::Application.routes.draw do
 
     member do
       get :documents
-      get :contact
     end
   end
 

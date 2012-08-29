@@ -1,6 +1,6 @@
 # The ExpertsController provides basic CRUD actions for the experts data.
 class ExpertsController < ApplicationController
-  skip_before_filter :authorize, only: [:index, :search, :show, :contact, :documents]
+  skip_before_filter :authorize, only: [:index, :search, :show, :documents]
 
   before_filter only: [:search] do |c|
     c.arrayify_params(:languages, :countries)
@@ -43,12 +43,6 @@ class ExpertsController < ApplicationController
       format.html
       format.pdf { report(@expert) }
     end
-  end
-
-  # Serves an addresses and contacts page.
-  def contact
-    @expert = Expert.find(params[:id])
-    @title = @expert.full_name_with_degree
   end
 
   # Serves the experts documents page.
