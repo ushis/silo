@@ -3,50 +3,183 @@
 <div id="main">
   <%= render 'details_header' %>
   <div class="personal">
-  	<dl>
-  	  <dt>
-  	  	<%= Expert.human_attribute_name :country %>
-  	  </dt>
-  	  <dd>
-  		  <%= @expert.country.try(:human) %>
-  	  </dd>
-  	  <dt>
-  	  	<%= Expert.human_attribute_name :birthday %>
-  	  </dt>
-  	  <dd>
-  		  <%= l(@expert.birthday, format: :short) if @expert.birthday %>
-  	  </dd>
-  	  <dt>
-  	  	<%= Expert.human_attribute_name :language %>
-  	  </dt>
-  	  <dd>
-	  	  <%= @expert.languages.join(', ') %>
-  	  </dd>
-  	  <dt>
-  	  	<%= Expert.human_attribute_name :job %>
-  	  </dt>
-  	  <dd>
-  		  <%= @expert.job %>
-  	  </dd>
-  	  <dt>
-  	  	<%= Expert.human_attribute_name :former_collaboration %>
-  	  </dt>
-  	  <dd>
-  		  <%= @expert.human_former_collaboration %>
-  	  </dd>
-  	  <dt>
-  	  	<%= Expert.human_attribute_name :fee %>
-  	  </dt>
-  	  <dd>
-  		  <%= @expert.fee %>
-  	  </dd>
-  	  <dt>
-  	  	<%= Expert.human_attribute_name :comment %>
-  	  </dt>
-  	  <dd>
-  		  <%= markdown @expert.comment.comment %>
-  	  </dd>
-  	</dl>
+    <div class="row">
+      <div class="degree <%= 'empty' if @expert.degree.blank? %>">
+        <h4><%= Expert.human_attribute_name :degree %></h4>
+        <p><%= @expert.degree %></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="firstname">
+        <h4><%= Expert.human_attribute_name :prename %></h4>
+        <p><%= @expert.prename %></p>
+      </div>
+      <div class="name">
+        <h4><%= Expert.human_attribute_name :name %></h4>
+        <p><%= @expert.name %></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="citizenship <%= 'empty' if @expert.country.nil? %>">
+        <h4><%= Expert.human_attribute_name :country %></h4>
+        <p><%= @expert.country.try(:human) %></p>
+      </div>
+      <div class="birthday <%= 'empty' if @expert.birthday.blank? %>">
+        <h4><%= Expert.human_attribute_name :birthday %></h4>
+        <p><%= l(@expert.birthday, format: :short) if @expert.birthday %></p>
+      </div>
+      <div class="gender <%= 'empty' if @expert.gender.blank? %>">
+        <h4><%= Expert.human_attribute_name :gender %></h4>
+        <p><%= @expert.gender %></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="languages <%= 'empty' if @expert.languages.empty? %>" >
+        <h4><%= Expert.human_attribute_name :languages %></h4>
+        <p><%= @expert.languages.join(', ') %></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="job <%= 'empty' if @expert.job.blank? %>">
+        <h4><%= Expert.human_attribute_name :job %></h4>
+        <p><%= @expert.job || '-' %></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="fee <%= 'empty' if @expert.fee.blank? %>">
+        <h4><%= Expert.human_attribute_name :fee %></h4>
+        <p><%= @expert.fee %></p>
+      </div>
+      <div class="former-collaboration">
+        <h4><%= Expert.human_attribute_name :former_collaboration %></h4>
+        <p><%= @expert.human_former_collaboration %></p>
+      </div>
+    </div>
+    <div class="row last">
+      <div class="comments <%= 'empty' if @expert.comment.comment.blank? %>">
+        <h4><%= Expert.human_attribute_name :comment %></h4>
+        <div class="markdown"> <%= markdown @expert.comment.comment %> </div>
+      </div>
+    </div>
+    <% if current_user.access?(:experts) %>
+    <div class="tools">
+      <%= link_to(t('actions.edit'), edit_expert_path(@expert), class: 'icon-edit') %>
+    </div>
+    <% end %>
+  </div>
+  <div class="communication">
+    <div class="addresses">
+      <h4 class="icon-addresses">
+        <%= t 'labels.address.index' %>
+      </h4>
+      <table>
+        <tbody>
+          <% if @expert.addresses.empty? %>
+            <tr>
+              <td class="empty">
+                <%= t 'messages.expert.errors.no_addresses' %>
+              </td>
+            </tr>
+          <% else %>
+            <% @expert.addresses.each do |address| %>
+              <tr>
+                <td>
+                  <%= simple_format address.address %>
+                  <%= address.country.try(:human) %>
+                </td>
+                <td class="del">
+                  <% if current_user.access?(:experts) %>
+                    <%= button_to('x', [@expert, address],
+                                  method: :delete,
+                                  class: 'icon-delete',
+                                  confirm: t('messages.address.confirm.delete')) %>
+                  <% end %>
+                </td>
+              </tr>
+            <%end %>
+          <% end %>
+      </tbody>
+      </table>
+    </div><!-- addresses -->
+    <div class="contacts">
+      <h4 class="icon-addresses">
+        <%= t 'labels.contact.index' %>
+      </h4>
+      <table>
+        <tbody>
+          <% if @expert.contact.empty? %>
+            <tr>
+              <td>
+                <%= t 'messages.expert.errors.no_contacts' %>
+              </td>
+            </tr>
+          <% else %>
+            <% Contact::FIELDS.each do |field| %>
+              <% @expert.contact.send(field).each do |val| %>
+                <tr>
+                  <td>
+                    <%= contact_value val, field %>
+                  </td>
+                  <td>
+                    <%= t field.to_s.singularize, scope: [:values, :contacts] %>
+                  </td>
+                  <% if current_user.access?(:experts) %>
+                    <td class="del">
+                      <%= contact_delete_button('x', [@expert, @expert.contact],
+                                                field, val, class: 'icon-delete',
+                                                confirm: t('messages.contact.confirm.delete')) %>
+                    </td>
+                  <% end %>
+                </tr>
+              <% end %>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div><!-- contacts -->
+    <% if current_user.access?(:experts) %>
+      <div id="tabs" class="forms">
+        <ul class="tabs">
+          <li>
+            <a href="#tabs-1"><%= t 'labels.contact.new' %></a>
+          </li>
+          <li>
+            <a href="#tabs-2"><%= t 'labels.address.new' %></a>
+          </li>
+        </ul>
+        <div id="tabs-1" class="contact tab">
+          <div class="form-wrapper">
+            <%= form_tag expert_contacts_path(@expert) do %>
+              <div>
+                <%= text_field_tag 'contact[contact]' %>
+              </div>
+              <div>
+                <%= select_tag 'contact[field]', contact_field_options %>
+                <%= submit_tag t('actions.add') %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+        <div id="tabs-2" class="address tab">
+          <div class="form-wrapper">
+            <%= form_for Address.new, url: expert_addresses_path(@expert) do |f| %>
+              <div>
+                <%= f.text_area :address, rows: "4" %>
+              </div>
+              <div>
+                <%= f.collection_select :country, Country.ordered, :id, :human %>
+                <%= f.submit t('actions.add') %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div><!-- forms -->
+    <% end %>
   </div>
   <div class="clear"></div>
 </div>
+<script>
+(function($){
+  $("#tabs").tabs();
+})(jQuery);
+</script>
