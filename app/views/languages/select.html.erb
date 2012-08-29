@@ -1,0 +1,29 @@
+<div class="multi-select overlay languages">
+  <div class="header">
+    <h2>
+      <%= t 'labels.language.languages' %>
+    </h2>
+    <div class="submit button">
+      <%= t 'actions.submit' %>
+    </div>
+    <div class="abort button">
+      <%= t 'actions.abort' %>
+    </div>
+  </div>
+  <div class="select">
+    <ul>
+      <% @languages.each_slice(@languages.length.fdiv(6).ceil) do |slice| %>
+        <li class="col">
+          <ul>
+            <% slice.each do |language| %>
+              <li class="item<%= ' prioritized' if language.prioritized? %>">
+                <%= check_box_tag language.id, 1, false, 'data-name' => language.human %>
+                <%= label_tag language.id, language.human %>
+              </li>
+            <% end %>
+          </ul>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>

@@ -81,10 +81,7 @@ class Expert < ActiveRecord::Base
     end
 
     if (languages = params[:languages]).is_a?(Array) && ! languages.empty?
-      if (ids = search_languages(languages)).empty?
-        return none
-      end
-
+      return none if (ids = search_languages(languages)).empty?
       s = s.where(id: ids)
     end
 
@@ -116,10 +113,7 @@ class Expert < ActiveRecord::Base
     SQL
 
     sql = sanitize_sql([sql, ids: language_ids, num: language_ids.length - 1])
-
-    connection.select_all(sql).collect do |r|
-      r['expert_id']
-    end
+    connection.select_all(sql).collect { |r| r['expert_id'] }
   end
 
   # Searches the fulltext associations, such as Comment and CV.
@@ -143,9 +137,8 @@ class Expert < ActiveRecord::Base
       ORDER BY score DESC
     SQL
 
-    connection.select_all(sanitize_sql([sql, q: query])).collect do |r|
-      r['expert_id']
-    end
+    sql = sanitize_sql([sql, q: query])
+    connection.select_all(sql).collect { |r| r['expert_id'] }
   end
 
   # Initializes the contact on access, if not already initalized.

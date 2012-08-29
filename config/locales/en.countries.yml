@@ -1,14 +1,13 @@
 ---
 en:
-  continents:
+  areas:
     AF: 'Africa'
+    AM: 'America'
     AN: 'Antarctica'
     AS: 'Asia'
-    EU: 'European Union'
-    EV: 'Europe'
-    NA: 'North America'
+    E2: 'European Union'
+    EU: 'Europe (Non-EU)'
     OC: 'Oceania'
-    SA: 'South America'
   countries:
     AD: 'Andorra'
     AE: 'United Arab Emirates'

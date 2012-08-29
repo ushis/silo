@@ -1,0 +1,39 @@
+<div class="multi-select overlay countries">
+  <div class="header">
+    <h2>
+      <%= Area.human_attribute_name(:countries) %>
+    </h2>
+    <div class="submit button">
+      <%= t 'actions.submit' %>
+    </div>
+    <div class="abort button">
+      <%= t 'actions.abort' %>
+    </div>
+  </div>
+  <div class="select">
+    <% @areas.each do |area| %>
+      <h3>
+        <span class="counter">0</span>
+        <%= link_to area.human, "#" %>
+      </h3>
+      <ul>
+        <li class="col">
+          <%= check_box_tag area.area, 1, false, class: 'group' %>
+          <%= label_tag area.area, t('labels.generic.all') %>
+        </li>
+        <% area.countries.each_slice(area.countries.size.fdiv(3).ceil) do |slice| %>
+          <li class="col">
+            <ul>
+              <% slice.each do |country| %>
+                <li class="item">
+                  <%= check_box_tag country.id, 1, false, 'data-name' => country.human %>
+                  <%= label_tag country.id, country.human %>
+                </li>
+              <% end %>
+            </ul>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+</div>

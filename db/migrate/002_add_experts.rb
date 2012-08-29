@@ -19,13 +19,19 @@ class AddExperts < ActiveRecord::Migration
     add_index :experts, :name
     add_index :experts, :prename
 
-    create_table :countries do |t|
-      t.string :country,   null: false
-      t.string :continent, null: false
+    create_table :areas do |t|
+      t.string :area, null: false
     end
 
+    add_index :areas, :area, unique: true
+
+    create_table :countries do |t|
+      t.integer :area_id,      null: false
+      t.string  :country,   null: false
+    end
+
+    add_index :countries, :area_id
     add_index :countries, :country, unique: true
-    add_index :countries, :continent
 
     create_table :contacts do |t|
       t.references :contactable, polymorphic: true
@@ -45,6 +51,7 @@ class AddExperts < ActiveRecord::Migration
 
   def down
     drop_table :experts
+    drop_table :areas
     drop_table :countries
     drop_table :contacts
     drop_table :addresses

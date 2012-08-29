@@ -85,11 +85,12 @@ class UsersController < ApplicationController
     @user.attributes = params[:user]
     @user.username = username
 
-    if @user != current_user
+    unless current_user?(@user)
       @user.privileges = params[:privilege]
     end
 
     if @user.save
+      I18n.locale = @user.locale if current_user?(@user)
       flash[:notice] = t('messages.user.success.save')
       redirect_to users_url and return
     end

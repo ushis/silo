@@ -1,12 +1,15 @@
 # English localization file
+---
 en:
   actions:
     abort: 'Abort'
     add: 'Add'
+    close: 'Close'
     delete: 'Delete'
     edit: 'Edit'
     login: 'Login'
     logout: 'Logout'
+    more: 'More'
     print: 'Print'
     save: 'Save'
     search: 'Search'
@@ -16,6 +19,9 @@ en:
       address:
         address: 'Address'
         country: 'Country'
+      area:
+        area: 'Area'
+        countries: 'Countries'
       attachment:
         filename: 'Filename'
         title: 'Title'
@@ -26,6 +32,7 @@ en:
         expert: 'Expert'
         language: 'Language'
       expert:
+        addresses: 'Addresses'
         age: 'Age'
         birthday: 'Date of birth'
         country: 'Citizenship'
@@ -36,9 +43,11 @@ en:
         former_collaboration: 'Former Collaboration'
         gender: 'Gender'
         job: 'Job'
+        language: 'Language'
         languages: 'Languages'
         name: 'Name'
         prename: 'First Name'
+        updated_at: 'Updated At'
       privilege:
         admin: 'Admin'
         experts: 'Experts'
@@ -69,6 +78,15 @@ en:
   date:
     formats:
       short: '%B %e, %Y'
+    order:
+      - :year
+      - :month
+      - :day
+  datetime:
+    prompts:
+      year: 'Year'
+      month: 'Month'
+      day: 'Day'
   labels:
     address:
       index: 'Addresses'
@@ -79,12 +97,11 @@ en:
     contact:
       index: 'Contacts'
       new: 'New Contact'
-    country:
-      countries: 'Countries'
     cv:
       index: 'CVs'
       new: 'New CV'
     generic:
+      all: 'All'
       by: 'by %{name}'
       search: 'Search'
       welcome: 'Welcome'
@@ -93,6 +110,7 @@ en:
       contact: 'Contact'
       documents: 'Documents'
       edit: 'Edit Expert'
+      index: 'Experts'
       new: 'New Expert'
       personal: 'Personal'
       search: 'Search Experts'
@@ -105,7 +123,7 @@ en:
     sections:
       experts: 'Experts'
       partners: 'Partners'
-      References: 'References'
+      references: 'References'
       users: 'Users'
     user:
       all: 'All Users'
@@ -128,7 +146,7 @@ en:
       confirm:
         delete: 'Do you really want to delete this address?'
       errors:
-        delete: 'Could not delete address'
+        delete: 'Could not delete address.'
         find: 'Address not found.'
         save: 'Could not save address.'
       success:
@@ -136,7 +154,7 @@ en:
         save: 'Saved address.'
     attachment:
       confirm:
-        delete: 'Do you really want to delete this attachment.'
+        delete: 'Do you really want to delete this attachment?'
       errors:
         delete: 'Could not delete attachment.'
         find: 'Attachment not found.'
@@ -155,7 +173,7 @@ en:
         save: 'Saved contact.'
     cv:
       confirm:
-        delete: 'Do you really want to delete this cv?'
+        delete: 'Do you really want to delete this CV?'
       errors:
         delete: 'Could not delete CV.'
         find: 'CV not found.'
@@ -164,6 +182,9 @@ en:
         delete: 'Deleted CV.'
         store: 'Stored new CV.'
     expert:
+      confirm:
+        delete: 'Do you really want to delete this expert along with all its
+                 addresses, contacts, CVs and attachments?'
       errors:
         create: 'Could not create expert.'
         delete: 'Could not delete expert.'
@@ -186,6 +207,7 @@ en:
     user:
       confirm:
         delete: 'Do you really want to delete this user?'
+        password: 'Confirm with your password.'
       errors:
         create: 'Could not create user.'
         credentials: 'Wrong username or password.'
@@ -200,6 +222,7 @@ en:
         save: 'Saved user.'
   time:
     formats:
+      save: '%Y-%m-%d'
       short: '%B %e, %Y'
       long: '%Y/%m/%d %H:%M'
   values:

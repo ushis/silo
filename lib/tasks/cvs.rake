@@ -45,30 +45,30 @@ namespace :cvs do
 
       lang = :en
 
-      if (a = /_([a-z])\./.match(base))
+      if (a = /_([a-z])(?:\.|_)/.match(base))
         lang = langs[a[1]] || :en
       end
 
       f = File.open(cv)
 
-      unless (c = Cv.from_file(f, lang))
-        puts "=> Could not load cv: #{base}".red
-        puts "=> Storing as attachment".yellow
-
-        unless (a = Attachment.from_file(f))
-          puts "=> Could not store attachment: #{base}".red
-          f.close
-          FileUtils.cp(cv, trash.join(base))
-          next
-        end
-
-        e.attachments << a
+      if (c = Cv.from_file(f, lang))
         f.close
+        e.cvs << c
+        next
+      end
+
+      puts "=> Could not load cv: #{base}".red
+      puts "=> Storing as attachment".yellow
+
+      if (a = Attachment.from_file(f))
+        f.close
+        e.attachments << a
         next
       end
 
       f.close
-      e.cvs << c
+      puts "=> Could not store attachment: #{base}".red
+      FileUtils.cp(cv, trash.join(base))
     end
   end
 end

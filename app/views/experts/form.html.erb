@@ -29,7 +29,9 @@
         <div class="row">
           <div class="citizenship">
             <%= f.label :country %>
-            <%= f.collection_select :country_id, Country.ordered, :id, :human %>
+            <%= f.grouped_collection_select(:country_id,
+                                            Area.with_ordered_countries,
+                                            :countries, :human, :id, :human) %>
           </div>
           <div>
             <%= f.label :birthday %>
@@ -86,5 +88,7 @@
 </div>
 
 <script>
-  $('div.multi-lang select').siloClickAway().parent().parent().siloClickAndClone();
+  $('div.multi-lang select').siloClickAway().parent().parent().siloClickAndClone({
+    text: '<%= t 'actions.more' %>'
+  });
 </script>

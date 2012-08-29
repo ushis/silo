@@ -1,14 +1,22 @@
 # The Country model provides the ability to associate arbitrary models with
 # one or more countries.
+#
+# Database scheme:
+#
+# - *id* integer
+# - *area_id* integer
+# - *country* string
 class Country < ActiveRecord::Base
-  attr_accessible :country, :continent
+  attr_accessible :country, :area
 
-  validates :country, uniqueness: true
+  validates :country, presence: true, uniqueness: true
+
+  belongs_to :area
 
   # Polymorphic method to find a country.
   #
   #   Country.find_country("GB")
-  #   #=> #<Country id: 77, country: "GB", continent: "EU">
+  #   #=> #<Country id: 77, country: "GB", area: "E2">
   #
   # Returns nil, if no country is found.
   def self.find_country(country)
@@ -33,37 +41,8 @@ class Country < ActiveRecord::Base
     end
   end
 
-  # Returns a list of tuples containing the continent name and a list of
-  # country tuples ordered by localized country name.
-  #
-  #   Country.ordered_by_continent
-  #   #=> [
-  #   #     ["Afrika", [["Algeria", 62], ["Angole", 8], ...]],
-  #   #     ["Europe", [["Austria", 12], ...]],
-  #   #     ...
-  #   #   ]
-  def self.grouped_by_continent
-    Rails.cache.fetch("countries_by_continent_#{I18n.locale}") do
-      map = ActiveSupport::OrderedHash.new
-
-      order(:continent).all.each do |country|
-        map[country.human_continent] ||= []
-        map[country.human_continent] << [country.human, country.id]
-      end
-
-      map.collect do |continent, countries|
-        [continent, countries.sort { |x, y| x[0] <=> y[0] }]
-      end
-    end
-  end
-
   # Returns the localized country name.
   def human
     I18n.t(country, scope: :countries)
-  end
-
-  # Returns the localized continent name.
-  def human_continent
-    I18n.t(continent, scope: :continents)
   end
 end

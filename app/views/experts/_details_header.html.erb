@@ -12,6 +12,17 @@
       <%= link_to(t('actions.print'), report_expert_path(@expert),
                   class: 'icon-print') %>
     </li>
+    <% if current_user.access?(:experts) %>
+      <li>
+        <%= link_to(t('actions.edit'), edit_expert_path(@expert),
+                    class: 'icon-edit') %>
+      </li>
+      <li>
+        <%= button_to(t('actions.delete'), expert_path(@expert),
+                      method: 'delete', class: 'icon-delete password',
+                      confirm: t('messages.expert.confirm.delete')) %>
+      </li>
+    <% end %>
   </ul>
   <ul class="tabs">
     <li class="show">

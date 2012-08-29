@@ -53,6 +53,18 @@ class Contact < ActiveRecord::Base
     self.contacts ||= {}
   end
 
+  # Returns the specified field. Raises an ArgumentError, if the specified
+  # field is not a valid one.
+  def field(field)
+    f = field.to_sym
+
+    unless FIELDS.include?(f)
+      raise ArgumentError, "Argument is not a valid field: #{field}"
+    end
+
+    send(f)
+  end
+
   # Removes all blank values from the contact hash.
   def remove_blanks
     FIELDS.each { |f| send(f).delete_if { |val| val.blank? } }

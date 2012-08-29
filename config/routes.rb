@@ -23,6 +23,7 @@ Silo::Application.routes.draw do
 
     collection do
       get 'search(/page/:page)' => 'experts#search', as: :search
+      get 'report'              => 'experts#search_report'
     end
 
     member do
@@ -38,9 +39,12 @@ Silo::Application.routes.draw do
   # References
   resources :references
 
-  # Countries
-  get 'countries/by/continent' => 'countries#by_continent'
+  # Help
+  get 'help/:section' => 'help#show', as: :help
+
+  # Areas
+  get 'areas/select' => 'areas#select'
 
   # Languages
-  resources :languages, only: [:index]
+  get 'languages/select' => 'languages#select'
 end

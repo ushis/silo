@@ -64,6 +64,7 @@ class Cv < ActiveRecord::Base
     attachment.try(:absolute_path)
   end
 
+  # Returns the created_at attribute of the cvs attachment.
   def created_at
     attachment.try(:created_at)
   end
