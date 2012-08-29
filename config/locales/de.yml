@@ -114,11 +114,11 @@ de:
     expert:
       all: 'Alle Experten'
       contact: 'Kontakt'
+      details: 'Details'
       documents: 'Dokumente'
       edit: 'Experte bearbeiten'
       index: 'Experten'
       new: 'Neuer Experte'
-      personal: 'Persönlich'
       search: 'Experten suchen'
     language:
       languages: 'Sprachen'

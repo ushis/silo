@@ -112,11 +112,11 @@ en:
     expert:
       all: 'All Experts'
       contact: 'Contact'
+      details: 'Details'
       documents: 'Documents'
       edit: 'Edit Expert'
       index: 'Experts'
       new: 'New Expert'
-      personal: 'Personal'
       search: 'Search Experts'
     language:
       languages: 'Languages'
