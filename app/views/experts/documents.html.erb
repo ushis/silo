@@ -80,9 +80,6 @@
     <% if current_user.access?(:experts) %>
       <div class="forms">
         <div class="cv">
-          <h4>
-            <%= t 'labels.cv.new' %>
-          </h4>
           <%= form_for Cv.new, url: expert_cvs_path(@expert) do |f| %>
             <div>
               <%= f.collection_select(:language_id, Language.priority_ordered,
@@ -95,9 +92,6 @@
           <% end %>
         </div>
         <div class="attachment">
-          <h4>
-            <%= t 'labels.attachment.new' %>
-          </h4>
           <%= form_for Attachment.new, url: expert_attachments_path(@expert) do |f| %>
             <div>
               <%= f.text_field :title,
