@@ -5,7 +5,7 @@
 # _app/views/help/my_section.html.erb_. You can vistit it at
 # _/help/my_section_.
 class HelpController < ApplicationController
-  skip_before_filter :authorize
+  skip_before_filter :authenticate, :authorize, only: [:show]
 
   layout false
 

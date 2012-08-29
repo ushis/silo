@@ -1,7 +1,7 @@
 # The AreasController is like the LanguagesController for areas/countries.
 # All views were rendered without a layout.
 class AreasController < ApplicationController
-  skip_before_filter :authorize, only: [:select]
+  skip_before_filter :authenticate, :authorize, only: [:select]
 
   layout false
 

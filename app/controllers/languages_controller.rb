@@ -1,7 +1,7 @@
 # The LanguagesController provides several actions to retrieve language views
 # via Ajax. They were not rendered within a layout.
 class LanguagesController < ApplicationController
-  skip_before_filter :authorize, only: [:select]
+  skip_before_filter :authenticate, :authorize, only: [:select]
 
   layout false
 
