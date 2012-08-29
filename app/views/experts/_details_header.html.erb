@@ -9,7 +9,7 @@
   </h3>
   <ul class="tools">
     <li>
-      <%= link_to(t('actions.print'), report_expert_path(@expert),
+      <%= link_to(t('actions.print'), expert_path(@expert, format: :pdf),
                   class: 'icon-print') %>
     </li>
     <% if current_user.access?(:experts) %>

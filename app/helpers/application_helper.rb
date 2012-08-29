@@ -16,7 +16,9 @@ module ApplicationHelper
 
   # Renders markdown formatted text.
   def markdown(txt)
-    BlueCloth.new(txt, auto_links: true, escape_html: true).to_html.html_safe
+    content_tag :div, class: 'mardown' do
+      BlueCloth.new(txt, auto_links: true, escape_html: true).to_html.html_safe
+    end
   end
 
   # Returns the value of a param as JSON.

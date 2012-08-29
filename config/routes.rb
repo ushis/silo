@@ -23,13 +23,11 @@ Silo::Application.routes.draw do
 
     collection do
       get 'search(/page/:page)' => 'experts#search', as: :search
-      get 'report'              => 'experts#search_report'
     end
 
     member do
       get :documents
       get :contact
-      get :report
     end
   end
 

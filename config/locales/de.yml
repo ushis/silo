@@ -105,7 +105,11 @@ de:
     generic:
       all: 'Alle'
       by: 'von %{name}'
+      fulltext: 'Volltext'
+      page: 'Seite'
+      results: 'Ergebnisse'
       search: 'Suche'
+      search_params: 'Suchparameter'
       welcome: 'Willkommen'
     expert:
       all: 'Alle Experten'

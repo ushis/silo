@@ -103,7 +103,11 @@ en:
     generic:
       all: 'All'
       by: 'by %{name}'
+      fulltext: 'Fulltext'
+      page: 'Page'
+      results: 'Results'
       search: 'Search'
+      search_params: 'Search parameters'
       welcome: 'Welcome'
     expert:
       all: 'All Experts'
