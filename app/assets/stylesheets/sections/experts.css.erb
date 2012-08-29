@@ -242,26 +242,137 @@ body.experts #main div.form-wrapper form input[type=submit] {
   margin: 0;
 }
 
-/* Documents & Contacts*/
+/* Details & Documents */
+body.experts.show #main div.personal {
+  float: left;
+  position: relative;
+  width: 60%;
+  padding: 10px 40px 10px 10px;
+  border-radius: 4px;
+  background-color: #f7f7f7;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+body.experts.show #main div.personal div.tools {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 28px;
+  height: 100%;
+  border-radius: 0 4px 4px 0;
+  background-color: #efefef;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+body.experts.show #main div.personal div.row {
+  float: left;
+  width: 100%;
+  margin-right: 40px;
+  padding: 7px 0;
+  border-bottom: 1px solid #e5e5e5;
+  box-shadow: 0 1px 1px rgba(255, 255, 255, 1);
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+body.experts.show #main div.personal div.row:first-child {
+  padding-top: 0;
+}
+
+body.experts.show #main div.personal div.row.last {
+  border-bottom: none;
+  box-shadow: none;
+}
+
+body.experts.show #main div.personal div.row div {
+  float: left;
+  width: 100%;
+}
+
+body.experts.show #main div.personal div.row div.citizenship,
+body.experts.show #main div.personal div.row div.fee,
+body.experts.show #main div.personal div.row div.firstname,
+body.experts.show #main div.personal div.row div.name {
+  width: 50%;
+}
+
+body.experts.show #main div.personal div.row div.birthday,
+body.experts.show #main div.personal div.row div.gender,
+body.experts.show #main div.personal div.row div.former-collaboration {
+  width: 25%;
+}
+
+body.experts.show #main div.personal div.row p:first-child {
+  color: #666;
+  font-size: .7em;
+  text-shadow: 1px 1px 0 rgba(255, 255, 255, .5);
+}
+
+body.experts.show #main div.personal div.row p:last-child {
+  color: #444;
+  font-size: .8em;
+}
+
+body.experts.show #main div.personal div.row div.empty p:last-child:after {
+  content: '-';
+}
+
+body.experts.show #main div.personal div.tools a.icon-edit {
+  display: block;
+  margin: 7px auto;
+  width: 12px;
+  height: 12px;
+  text-indent: -99999px;
+}
+
+body.experts.show #main div.communication {
+  float: right;
+  position: relative;
+  width: 38%;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+body.experts.show #main div.communication div.addresses {
+  margin-bottom: 20px;
+}
+
+body.experts.show #main div.communication div.contacts h4,
+body.experts.show #main div.communication div.addresses h4 {
+  padding: 1px 0 0 20px;
+  font-size: .9em;
+}
+
+body.experts.show #main div.communication div table td.del {
+  width: 20px;
+  padding: 0 5px 0 4px;
+}
+
+body.experts.show #main div.communication div table td.del input[type=submit] {
+  width: 12px;
+  height: 12px;
+  padding: 0;
+  box-shadow: none;
+  text-indent: -99999px;
+  display: block;
+}
+
 body.experts.documents #main div.cvs,
 body.experts.documents #main div.attachments,
-body.experts.documents #main div.forms > div,
-body.experts.contact #main div.addresses,
-body.experts.contact #main div.contacts,
-body.experts.contact #main div.forms > div {
+body.experts.documents #main div.forms > div {
   width: 49%;
   float: left;
 }
 
 body.experts.documents #main div.attachments,
-body.experts.documents #main div.forms div.attachment,
-body.experts.contact #main div.addresses,
-body.experts.contact #main div.forms div.address {
+body.experts.documents #main div.forms div.attachment {
   float: right;
 }
 
-body.experts.documents #main h4,
-body.experts.contact #main h4 {
+body.experts.documents #main h4 {
   color: #555;
   font-size: .9em;
 }
@@ -279,13 +390,11 @@ body.experts.documents #main div.attachments table td.icon-attachment {
   background-position: 10px 9px;
 }
 
-body.experts.documents #main div table td.del,
-body.experts.contact #main div table td.del {
+body.experts.documents #main div table td.del {
   width: 24px;
 }
 
-body.experts.documents #main div table input.icon-delete,
-body.experts.contact #main input.icon-delete {
+body.experts.documents #main div table input.icon-delete {
   display: block;
   width: 11px;
   height: 12px;
@@ -294,54 +403,12 @@ body.experts.contact #main input.icon-delete {
   box-shadow: none;
 }
 
-body.experts.contact #main div.addresses ul {
-  margin: 8px 0;
-}
-
-body.experts.contact #main div.addresses li {
-  position: relative;
-  margin-bottom: 10px;
-  font-size: .76em;
-  color: #555;
-  background-color: #f7f7f7;
-  border-radius: 4px;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
-}
-
-body.experts.contact #main div.addresses li.empty {
-  padding: 7px 10px 5px 10px;
-}
-
-body.experts.contact #main div.addresses li form {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 43px;
-  background-color: #efefef;
-  border-radius: 0 4px 4px 0;
-}
-
-body.experts.contact #main div.addresses li form input.icon-delete {
-  position: absolute;
-  top: 50%;
-  right: 16px;
-  margin-top: -6px;
-}
-
-body.experts.contact #main div.addresses li address {
-  margin-right: 44px;
-  padding: 8px 12px;
-}
-
-body.experts.documents #main div.forms,
-body.experts.contact #main div.forms {
+body.experts.documents #main div.forms {
   clear: both;
   padding-top: 20px;
 }
 
-body.experts.documents #main div.forms form,
-body.experts.contact #main div.forms form {
+body.experts.documents #main div.forms form {
   margin-top: 10px;
   padding: 4px 10px;
   background: #dbdbdb;
@@ -351,41 +418,26 @@ body.experts.contact #main div.forms form {
   -moz-box-sizing: border-box;
 }
 
-body.experts.documents #main div.forms div,
-body.experts.contact #main div.forms div {
+body.experts.documents #main div.forms div {
   padding: 6px 0;
 }
 
 body.experts.documents #main div.forms form input,
-body.experts.documents #main div.forms form select,
-body.experts.contact #main div.forms form input,
-body.experts.contact #main div.forms form select,
-body.experts.contact #main div.forms form textarea {
+body.experts.documents #main div.forms form select {
   display: inline;
   float: none;
   margin: 0;
   color: #222;
 }
 
-body.experts.contact #main div.forms form textarea {
-  width: 100%;
-  height: 80px;
-  margin: 0;
-}
-
 body.experts.documents #main div.forms form input[type=text] {
   width: 190px;
-}
-
-body.experts.contact #main div.forms form input[type=text] {
-  width: 250px;
 }
 
 body.experts.documents #main div.forms form input[type=file] {
   font-size: .76em;
 }
 
-body.experts.documents #main div.forms form input[type=submit],
-body.experts.contact #main div.forms form input[type=submit] {
+body.experts.documents #main div.forms form input[type=submit] {
   float: right;
 }

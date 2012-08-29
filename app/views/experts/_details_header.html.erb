@@ -12,19 +12,10 @@
       <%= link_to(t('actions.print'), report_expert_path(@expert),
                   class: 'icon-print') %>
     </li>
-    <% if current_user.access?(:experts) %>
-      <li>
-        <%= link_to(t('actions.edit'), edit_expert_path(@expert),
-                    class: 'icon-edit') %>
-      </li>
-    <% end %>
   </ul>
   <ul class="tabs">
     <li class="show">
-      <%= link_to t('labels.expert.personal'), expert_path(@expert) %>
-    </li>
-    <li class="contact">
-      <%= link_to t('labels.expert.contact'), contact_expert_path(@expert) %>
+      <%= link_to t('labels.expert.details'), expert_path(@expert) %>
     </li>
     <li class="documents">
       <%= link_to t('labels.expert.documents'), documents_expert_path(@expert) %>
