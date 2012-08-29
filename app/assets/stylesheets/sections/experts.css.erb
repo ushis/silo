@@ -314,13 +314,13 @@ body.experts.show #main div.personal div.row div.former-collaboration {
   width: 25%;
 }
 
-body.experts.show #main div.personal div.row p:first-child {
+body.experts.show #main div.personal div.row h4 {
   color: #666;
   font-size: .7em;
   text-shadow: 1px 1px 0 rgba(255, 255, 255, .5);
 }
 
-body.experts.show #main div.personal div.row p:last-child {
+body.experts.show #main div.personal div.row p {
   color: #444;
   font-size: .8em;
 }
@@ -369,16 +369,60 @@ body.experts.show #main div.communication div table td.del input[type=submit] {
   display: block;
 }
 
-body.experts.documents #main div.cvs,
-body.experts.documents #main div.attachments,
-body.experts.documents #main div.forms > div {
-  width: 49%;
-  float: left;
+div.communication div.forms {
+  margin-top: 25px;
 }
 
-body.experts.documents #main div.attachments,
-body.experts.documents #main div.forms div.attachment {
-  float: right;
+div.communication div.forms div.tab {
+  float: left;
+  width: 100%;
+  background: #efefef;
+  padding: 10px;
+  border-radius: 0 4px 4px 4px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+}
+
+body.experts #main div.communication div.forms div.tab div.form-wrapper {
+  margin: 0;
+  padding: 0;
+}
+
+body.experts #main div.communication div.forms div.tab div.form-wrapper div textarea, 
+body.experts #main div.communication div.forms div.tab div.form-wrapper div input[type=text] {
+  margin-bottom: 10px;
+}
+
+body.experts #main div.communication div.forms div.tab div.form-wrapper div select {
+  margin: 0;
+  width: 150px;
+}
+
+div.communication div.forms ul.tabs {
+  float: left;
+  width: 100%;
+}
+
+div.communication div.forms ul.tabs li {
+  float: left;
+  cursor: pointer;
+  background: #d5d5d5;
+  margin-right: 3px;
+  border-radius: 3px 3px 0 0;
+}
+
+div.communication div.forms ul.tabs li a {
+  font-size: .75em;
+  color: #777777;
+  text-shadow: 1px 1px 0 rgba(255,255,255,.5);
+  padding: 5px 10px;
+}
+
+div.communication div.forms ul.tabs li.ui-state-active {
+  background: #efefef;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+  color: #525252;
 }
 
 body.experts.documents #main h4 {
