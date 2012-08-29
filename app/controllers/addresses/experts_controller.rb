@@ -10,13 +10,13 @@ class Addresses::ExpertsController < AddressesController
   # Creates a new Address and adds to an Expert.
   def create
     expert = Expert.includes(:addresses).find(params[:expert_id])
-    add_to expert, contact_expert_url(expert)
+    add_to expert, expert_url(expert)
   end
 
   # Destroys an Address.
   def destroy
     super
-    redirect_to contact_expert_url(id: params[:expert_id])
+    redirect_to expert_url(id: params[:expert_id])
   end
 
   # Sets a flash message and redirects the user.
