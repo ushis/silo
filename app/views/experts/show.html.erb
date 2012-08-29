@@ -30,7 +30,7 @@
       </div>
       <div class="gender <%= 'empty' if @expert.gender.blank? %>">
         <h4><%= Expert.human_attribute_name :gender %></h4>
-        <p><%= @expert.gender %></p>
+        <p><%= t @expert.human_gender %></p>
       </div>
     </div>
     <div class="row">
