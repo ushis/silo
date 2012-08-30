@@ -42,7 +42,7 @@
     <div class="row last">
       <div class="comments <%= 'empty' if @expert.comment.comment.blank? %>">
         <h4><%= Expert.human_attribute_name :comment %></h4>
-        <div class="markdown"> <%= markdown @expert.comment.comment %> </div>
+        <%= markdown @expert.comment.comment %>
       </div>
     </div>
   </div>
