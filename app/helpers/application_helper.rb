@@ -16,7 +16,7 @@ module ApplicationHelper
 
   # Renders markdown formatted text.
   def markdown(txt)
-    content_tag :div, class: 'mardown' do
+    content_tag :div, class: 'markdown' do
       BlueCloth.new(txt, auto_links: true, escape_html: true).to_html.html_safe
     end
   end
