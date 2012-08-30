@@ -412,23 +412,26 @@ body.experts.show #main div.communication div table td.del input[type=submit] {
 }
 
 div.communication div.forms {
-  margin-top: 10px;
+  margin-top: 35px;
+  position: relative;
 }
 
 div.communication div.forms div.tab {
   float: left;
   width: 100%;
-  background: #efefef;
-  padding: 10px;
-  border-radius: 0 4px 4px 4px;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
 }
 
 body.experts #main div.communication div.forms div.tab div.form-wrapper {
+  float: left;
+  position: relative;
+  width: 100%;
   margin: 0;
   padding: 0;
+  background: #DBDBDB;
+  border-radius: 4px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, .2);
 }
 
 body.experts #main div.communication div.forms div.tab div.form-wrapper div textarea,
@@ -442,29 +445,38 @@ body.experts #main div.communication div.forms div.tab div.form-wrapper div sele
 }
 
 div.communication div.forms ul.tabs {
-  float: left;
   width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  margin-top: -29px;
+  z-index: 9999;
 }
 
 div.communication div.forms ul.tabs li {
   float: left;
   cursor: pointer;
-  background: #d5d5d5;
+  background: transparent;
   margin-right: 3px;
-  border-radius: 3px 3px 0 0;
+  border-radius: 4px 4px 0 0;
+  padding: 2px;
 }
 
 div.communication div.forms ul.tabs li a {
   font-size: .75em;
   color: #777777;
   text-shadow: 1px 1px 0 rgba(255,255,255,.5);
-  padding: 5px 10px;
+  padding: 10px;
 }
 
 div.communication div.forms ul.tabs li.ui-state-active {
-  background: #efefef;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+  background: #DBDBDB;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, .2);
   color: #525252;
+  border-bottom: 5px solid #DBDBDB;
+  margin-bottom: -10px;
+  z-index: 99999;
 }
 
 body.experts.documents #main h4 {
@@ -488,7 +500,8 @@ body.experts.documents #main div.attachments table td.icon-attachment {
 }
 
 body.experts.documents #main div table td.del {
-  width: 24px;
+  width: 20px;
+  padding: 0 5px 0 4px;
   vertical-align: middle;
 }
 
@@ -507,7 +520,7 @@ body.experts.documents #main div.forms {
 
 body.experts.documents #main div.forms form {
   margin-top: 10px;
-  padding: 4px 10px;
+  padding: 10px;
   background: #dbdbdb;
   border-radius: 4px;
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, .2);
@@ -515,8 +528,13 @@ body.experts.documents #main div.forms form {
   -moz-box-sizing: border-box;
 }
 
-body.experts.documents #main div.forms div {
+body.experts.documents #main div.forms div > div {
   padding: 6px 0;
+}
+
+body.experts.documents #main div.forms div div.input {
+  height: 30px;
+  margin-bottom: 5px;
 }
 
 body.experts.documents #main div.forms form input,
@@ -527,12 +545,8 @@ body.experts.documents #main div.forms form select {
   color: #222;
 }
 
-body.experts.documents #main div.forms form select {
-  margin-top: 6px;
-}
-
 body.experts.documents #main div.forms form input[type=text] {
-  width: 190px;
+  width: 220px;
 }
 
 body.experts.documents #main div.forms form input[type=file] {
