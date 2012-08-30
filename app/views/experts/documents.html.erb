@@ -81,7 +81,7 @@
       <div class="forms">
         <div class="cv">
           <%= form_for Cv.new, url: expert_cvs_path(@expert) do |f| %>
-            <div>
+            <div class="input">
               <%= f.collection_select(:language_id, Language.priority_ordered,
                                       :id, :human) %>
             </div>
@@ -93,7 +93,7 @@
         </div>
         <div class="attachment">
           <%= form_for Attachment.new, url: expert_attachments_path(@expert) do |f| %>
-            <div>
+            <div class="input">
               <%= f.text_field :title,
                                placeholder: Attachment.human_attribute_name(:title) %>
             </div>

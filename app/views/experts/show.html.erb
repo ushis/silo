@@ -4,22 +4,6 @@
   <%= render 'details_header' %>
   <div class="personal">
     <div class="row">
-      <div class="degree <%= 'empty' if @expert.degree.blank? %>">
-        <h4><%= Expert.human_attribute_name :degree %></h4>
-        <p><%= @expert.degree %></p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="firstname">
-        <h4><%= Expert.human_attribute_name :prename %></h4>
-        <p><%= @expert.prename %></p>
-      </div>
-      <div class="name">
-        <h4><%= Expert.human_attribute_name :name %></h4>
-        <p><%= @expert.name %></p>
-      </div>
-    </div>
-    <div class="row">
       <div class="citizenship <%= 'empty' if @expert.country.nil? %>">
         <h4><%= Expert.human_attribute_name :country %></h4>
         <p><%= @expert.country.try(:human) %></p>
