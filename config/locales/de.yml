@@ -226,6 +226,11 @@ de:
         create: 'Benutzer hinzugefügt: %{name}'
         delete: 'Benutzer gelöscht: %{name}'
         save: 'Benutzer gepseichert.'
+  support:
+    array:
+      words_connector: ', '
+      two_words_connector: ' und '
+      last_word_connector: ' und '
   time:
     formats:
       save: '%Y-%m-%d'
