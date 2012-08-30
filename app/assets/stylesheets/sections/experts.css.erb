@@ -344,7 +344,17 @@ body.experts.show #main div.personal div.row div.citizenship,
 body.experts.show #main div.personal div.row div.fee,
 body.experts.show #main div.personal div.row div.firstname,
 body.experts.show #main div.personal div.row div.name {
-  width: 50%;
+  width: 45%;
+  margin-right: 10px;
+}
+
+body.experts.show #main div.personal div.row div.citizenship,
+body.experts.show #main div.personal div.row div.fee,
+body.experts.show #main div.personal div.row div.firstname,
+body.experts.show #main div.personal div.row div.birthday {
+  width: 45%;
+  margin-right: 10px;
+  border-right: 1px solid #e5e5e5;
 }
 
 body.experts.show #main div.personal div.row div.birthday,
@@ -458,8 +468,10 @@ div.communication div.forms ul.tabs li.ui-state-active {
 }
 
 body.experts.documents #main h4 {
-  color: #555;
-  font-size: .9em;
+  font-size: .7em;
+  padding: 0 5px 0 0;
+  color: #BBB;
+  text-shadow: 1px 1px 0px rgba(255, 255, 255, .2);
 }
 
 body.experts.documents #main div.cvs table td.icon-cv,
@@ -491,7 +503,6 @@ body.experts.documents #main div table input.icon-delete {
 
 body.experts.documents #main div.forms {
   clear: both;
-  padding-top: 20px;
 }
 
 body.experts.documents #main div.forms form {
@@ -514,6 +525,10 @@ body.experts.documents #main div.forms form select {
   float: none;
   margin: 0;
   color: #222;
+}
+
+body.experts.documents #main div.forms form select {
+  margin-top: 6px;
 }
 
 body.experts.documents #main div.forms form input[type=text] {
