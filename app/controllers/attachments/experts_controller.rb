@@ -12,6 +12,9 @@ class Attachments::ExpertsController < AttachmentsController
   def create
     expert = Expert.find(params[:expert_id])
     add_to expert, documents_expert_url(expert)
+  rescue ActiveRecord::RecordNotFound
+    flash[:alert] = t('messages.expert.errors.find')
+    redirect_to experts_url
   end
 
   # Destroys an Attachment and redirects the user to the experts documents

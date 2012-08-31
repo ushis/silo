@@ -20,23 +20,24 @@ class Cv < ActiveRecord::Base
   # Inits a new Cv from a file. The file is stored on the filesystem and the
   # contents is stored in the _cv_ attribute.
   #
-  #   if (cv = Cv.from_file(upload, language))
-  #     expert.cvs << cv
-  #   end
+  #   expert.cvs << Cv.from_file(upload, language))
   #
-  # Returns a new Cv object or nil on error.
-  def self.from_file(document, language = nil)
+  # Returns a new Cv object and raises several exceptions on error.
+  def self.from_file(file, language)
     cv = Cv.new
-
-    unless (cv.attachment = Attachment.from_file(document)) && cv.load_document
-      raise 'Invalid CV.'
-    end
-
-    cv.language = Language.find_language(language) if language
+    cv.attachment = Attachment.from_file(file)
+    cv.load_document!
+    cv.language = Language.find_language(language)
     cv
   rescue
     cv.destroy
-    nil
+    raise
+  end
+
+  # Takes a Hash containing a :file and a :language_id key and passes it to
+  # Cv.from_file.
+  def self.from_upload(data)
+    from_file(data[:file], data[:language_id])
   end
 
   # Adds a fulltext search condition to the database query.
@@ -69,21 +70,19 @@ class Cv < ActiveRecord::Base
     attachment.try(:created_at)
   end
 
-  # Tries to load the document text into the database.
+  # Tries to load the document text.
   #
-  # Returns the document text on success, else nil.
+  # Returns the document text on success, raise an exception on error.
   def load_document
-    unless (cv = Yomu.new(absolute_path).text).blank?
-      self.cv = cv
+    if (text = Yomu.new(absolute_path).text).blank?
+      raise 'Empty document'
+    else
+      text
     end
-  rescue
-    nil
   end
 
-  # Loads the document text into the database and saves the record.
-  #
-  # Returns true on success.
+  # Loads the document and stores the returned text in the cv attribute.
   def load_document!
-    load_document && save
+    self.cv = load_document
   end
 end

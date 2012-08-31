@@ -13,29 +13,18 @@ class CvsController < ApplicationController
     send_file cv.absolute_path, filename: cv.public_filename
   end
 
-  # Creates a new Cv by storing an uploaded file and loading it's content
+  # Creates a new Cv by storing an uploaded file and loading its content
   # into the database.
   def create
-    begin
-      expert = Expert.find(params[:expert_id])
-    rescue
-      flash[:alert] = t('messages.expert.errors.find')
-      redirect_to experts_url and return
-    end
-
-    data = params[:cv]
-
-    unless (cv = Cv.from_file(data[:file], data[:language_id]))
-      flash[:alert] = t('messages.cv.errors.store')
-      redirect_to document_expert_url(expert) and return
-    end
-
-    expert.cvs << cv
+    expert = Expert.find(params[:expert_id])
+    expert.cvs << Cv.from_upload(params[:cv])
     flash[:notice] = t('messages.cv.success.store')
+  rescue ActiveRecord::RecordNotFound
+    flash[:alert] = t('messages.expert.errors.find')
   rescue
     flash[:alert] = t('messages.cv.errors.store')
   ensure
-    redirect_to documents_expert_url(expert)
+    redirect_to(expert ? documents_expert_url(expert) : experts_url)
   end
 
   # Destroys a Cv.

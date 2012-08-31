@@ -31,8 +31,9 @@ class Attachment < ActiveRecord::Base
   STORE = Rails.root.join(DIRNAME)
 
   # Inits a new Attachment from a file. The file is stored in the
-  # attachment store and new Attachment is returned... or nil on
-  # error.
+  # attachment store and new Attachment is returned.
+  #
+  # Raises several exceptions on error.
   def self.from_file(file, title = nil)
     attachment = Attachment.new
     attachment.store(file)
@@ -48,7 +49,7 @@ class Attachment < ActiveRecord::Base
     attachment
   rescue
     attachment.destroy
-    nil
+    raise
   end
 
   # An alias for Attachment.from_file. But it is taking a hash as argument.
@@ -86,12 +87,13 @@ class Attachment < ActiveRecord::Base
   #
   # Returns the filename.
   def store(attachment)
-    if attachment.is_a? ActionDispatch::Http::UploadedFile
+    case attachment
+    when ActionDispatch::Http::UploadedFile
       ext = File.extname(attachment.original_filename)
-    elsif attachment.is_a? File
+    when File
       ext = File.extname(attachment.path)
     else
-      raise ArgumentError, 'Argument must be a File or a UploadedFile.'
+      raise TypeError, 'Argument must be a File or a UploadedFile.'
     end
 
     empty_document(ext.downcase) do |f|
