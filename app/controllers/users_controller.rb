@@ -17,20 +17,24 @@ class UsersController < ApplicationController
   # old password is required.
   def update_profile
     password_old = params[:user].delete(:password_old)
-
     @user = current_user
-    @user.attributes = params[:user]
 
     if ! params[:user][:password].blank? && ! @user.authenticate(password_old)
-      flash.now[:alert] = t('messages.generics.errors.save')
       @user.errors.add(:password_old, t('messages.user.errors.password'))
-    elsif @user.save
-      I18n.locale = @user.locale
-      flash.now[:notice] = t('messages.user.success.save')
-    else
-      flash.now[:alert] = t('messages.user.errors.save')
+      raise 'Wrong password!'
     end
 
+    @user.attributes = params[:user]
+
+    unless @user.save
+      raise 'Could not save user.'
+    end
+
+    I18n.locale = @user.locale
+    flash.now[:notice] = t('messages.generics.success.save')
+  rescue
+    flash.now[:alert] = t('messages.generics.errors.save')
+  ensure
     @title = t('labels.user.profile')
     @body_class << :edit
     render :profile
