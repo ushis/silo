@@ -51,22 +51,24 @@ namespace :cvs do
 
       f = File.open(cv)
 
-      if (c = Cv.from_file(f, lang))
+      begin
+        e.cvs << Cv.from_file(f, lang)
         f.close
-        e.cvs << c
         next
+      rescue
       end
 
       puts "=> Could not load cv: #{base}".red
       puts "=> Storing as attachment".yellow
 
-      if (a = Attachment.from_file(f))
-        f.close
-        e.attachments << a
+      begin
+        e.attachments << Attachment.from_file(f)
         next
+      rescue
+      ensure
+        f.close
       end
 
-      f.close
       puts "=> Could not store attachment: #{base}".red
       FileUtils.cp(cv, trash.join(base))
     end
