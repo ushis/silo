@@ -152,9 +152,8 @@ div.multi-lang span.delete {
   float: right;
   position: relative;
   cursor: pointer;
-  padding: 1px 14px 1px 14px;
-  margin-top: 3px;
-  margin-left: 5px;
+  padding: 0 8px 2px 8px;
+  margin: 3px 2px 0 5px;
   font-size: .7em;
   font-weight: bold;
   color: #444;
@@ -163,6 +162,15 @@ div.multi-lang span.delete {
   text-shadow: 1px 1px 0px rgba(255, 255, 255, 1);
   border-radius: 3px;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), 0 1px 1px rgba(0, 0, 0, .4);
+}
+
+div.multi-lang span.more {
+  float: left;
+  padding: 1px 14px 1px 14px;
+}
+
+div.multi-lang div.click-away:first-of-type:last-of-type span.delete {
+  display: none;
 }
 
 div.multi-lang span.more:hover,
@@ -177,16 +185,8 @@ div.multi-lang span.delete:hover {
   background: linear-gradient(to bottom, rgba(236,236,236,1) 0%, rgba(227,227,227,1) 100%);
 }
 
-div.multi-lang span.more {
-  float: left;
-}
-
-div.multi-lang span.delete {
-  padding: 0 8px 2px 8px;
-  margin: 3px 2px 0 5px;
-  font-size: .7em;
-}
-
+div.multi-lang span.more:before,
+div.multi-lang span.delete:before,
 div.multi-lang span.more:after,
 div.multi-lang span.delete:after {
   content: ' ';
@@ -203,15 +203,7 @@ div.multi-lang span.delete:after {
 
 div.multi-lang span.more:before,
 div.multi-lang span.delete:before {
-  content: ' ';
-  position: absolute;
-  top: 48%;
-  right: 100%;
-  border: solid transparent;
-  width: 0;
-  height: 0;
   margin-top: -3px;
-  border-width: 4px;
   border-right-color: rgba(0,0,0,.5);
 }
 
@@ -389,7 +381,8 @@ div.multi-select h3.ui-accordion-header span.counter {
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), 0 1px 1px rgba(0, 0, 0, .2);
 }
 
-div.multi-select h3.ui-accordion-header span.counter:before {
+div.multi-select h3.ui-accordion-header span.counter:before,
+div.multi-select h3.ui-accordion-header span.counter:after {
   content: ' ';
   position: absolute;
   top: 50%;
@@ -403,16 +396,8 @@ div.multi-select h3.ui-accordion-header span.counter:before {
 }
 
 div.multi-select h3.ui-accordion-header span.counter:after {
-  content: ' ';
-  position: absolute;
-  top: 50%;
-  right: 100%;
-  border: solid transparent;
-  width: 0;
-  height: 0;
   margin-top: -4px;
-  border-width: 4px;
-  border-right-color: #EFEFEF;
+  border-right-color: #efefef;
 }
 
 div.multi-select div.select > ul {
@@ -471,42 +456,40 @@ div.multi-select div.select li.prioritized label {
 }
 
 /* jQuery UI Tabs */
-
 div.ui-tabs-hide {
   display: none;
 }
 
 /* Markdown */
-
-div.markdown, 
-div.markdown h1, 
-div.markdown h2, 
-div.markdown h3, 
-div.markdown h4, 
-div.markdown h5, 
-div.markdown h6, 
-div.markdown p, 
+div.markdown,
+div.markdown h1,
+div.markdown h2,
+div.markdown h3,
+div.markdown h4,
+div.markdown h5,
+div.markdown h6,
+div.markdown p,
 div.markdown blockquote,
-div.markdown a, 
-div.markdown small, 
-div.markdown strong, 
-div.markdown b, 
-div.markdown u, 
-div.markdown i, 
-div.markdown center, 
-div.markdown dl, 
-div.markdown dt, 
-div.markdown dd, 
-div.markdown ol, 
-div.markdown ul, 
-div.markdown li, 
-div.markdown table, 
-div.markdown tbody, 
-div.markdown tfoot, 
-div.markdown thead, 
-div.markdown tr, 
-div.markdown th, 
-div.markdown td, 
+div.markdown a,
+div.markdown small,
+div.markdown strong,
+div.markdown b,
+div.markdown u,
+div.markdown i,
+div.markdown center,
+div.markdown dl,
+div.markdown dt,
+div.markdown dd,
+div.markdown ol,
+div.markdown ul,
+div.markdown li,
+div.markdown table,
+div.markdown tbody,
+div.markdown tfoot,
+div.markdown thead,
+div.markdown tr,
+div.markdown th,
+div.markdown td,
 div.markdown em {
   margin: 0;
   padding: 0;
@@ -522,11 +505,11 @@ div.markdown {
   padding-top: 3px;
 }
 
-div.markdown h1, 
-div.markdown h2, 
-div.markdown h3, 
-div.markdown h4, 
-div.markdown h5, 
+div.markdown h1,
+div.markdown h2,
+div.markdown h3,
+div.markdown h4,
+div.markdown h5,
 div.markdown h6 {
   font-weight: bold;
   padding: 3px 0;
