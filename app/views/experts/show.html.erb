@@ -2,6 +2,7 @@
 
 <div id="main">
   <%= render 'details_header' %>
+
   <div class="personal">
     <div class="row">
       <div class="citizenship <%= 'empty' if @expert.country.nil? %>">
@@ -14,19 +15,19 @@
       </div>
       <div class="gender <%= 'empty' if @expert.gender.blank? %>">
         <h4><%= Expert.human_attribute_name :gender %></h4>
-        <p><%= t @expert.human_gender %></p>
+        <p><%= @expert.human_gender %></p>
       </div>
     </div>
     <div class="row">
       <div class="languages <%= 'empty' if @expert.languages.empty? %>" >
         <h4><%= Expert.human_attribute_name :languages %></h4>
-        <p><%= @expert.languages.join(', ') %></p>
+        <p><%= @expert.languages.to_sentence %></p>
       </div>
     </div>
     <div class="row">
       <div class="job <%= 'empty' if @expert.job.blank? %>">
         <h4><%= Expert.human_attribute_name :job %></h4>
-        <p><%= @expert.job || '-' %></p>
+        <p><%= @expert.job %></p>
       </div>
     </div>
     <div class="row">
@@ -114,13 +115,13 @@
       <div id="tabs" class="forms">
         <ul class="tabs">
           <li>
-            <a href="#tabs-1"><%= t 'labels.contact.new' %></a>
+            <%= link_to t('labels.contact.new'), '#tab-contact' %>
           </li>
           <li>
-            <a href="#tabs-2"><%= t 'labels.address.new' %></a>
+            <%= link_to t('labels.address.new'), '#tab-address' %>
           </li>
         </ul>
-        <div id="tabs-1" class="contact tab">
+        <div id="tab-contact" class="contact tab">
           <div class="form-wrapper">
             <%= form_tag expert_contacts_path(@expert) do %>
               <div>
@@ -133,7 +134,7 @@
             <% end %>
           </div>
         </div>
-        <div id="tabs-2" class="address tab">
+        <div id="tab-address" class="address tab">
           <div class="form-wrapper">
             <%= form_for Address.new, url: expert_addresses_path(@expert) do |f| %>
               <div>
@@ -151,8 +152,7 @@
   </div>
   <div class="clear"></div>
 </div>
+
 <script>
-(function($){
   $("#tabs").tabs();
-})(jQuery);
 </script>
