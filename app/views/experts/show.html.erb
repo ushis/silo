@@ -5,33 +5,33 @@
 
   <div class="personal">
     <div class="row">
-      <div class="citizenship <%= 'empty' if @expert.country.nil? %>">
+      <div class="citizenship">
         <h4><%= Expert.human_attribute_name :country %></h4>
         <p><%= @expert.country.try(:human) %></p>
       </div>
-      <div class="birthday <%= 'empty' if @expert.birthday.blank? %>">
+      <div class="birthday">
         <h4><%= Expert.human_attribute_name :birthday %></h4>
         <p><%= l(@expert.birthday, format: :short) if @expert.birthday %></p>
       </div>
-      <div class="gender <%= 'empty' if @expert.gender.blank? %>">
+      <div class="gender">
         <h4><%= Expert.human_attribute_name :gender %></h4>
         <p><%= @expert.human_gender %></p>
       </div>
     </div>
     <div class="row">
-      <div class="languages <%= 'empty' if @expert.languages.empty? %>" >
+      <div class="languages" >
         <h4><%= Expert.human_attribute_name :languages %></h4>
         <p><%= @expert.languages.to_sentence %></p>
       </div>
     </div>
     <div class="row">
-      <div class="job <%= 'empty' if @expert.job.blank? %>">
+      <div class="job">
         <h4><%= Expert.human_attribute_name :job %></h4>
         <p><%= @expert.job %></p>
       </div>
     </div>
     <div class="row">
-      <div class="fee <%= 'empty' if @expert.fee.blank? %>">
+      <div class="fee">
         <h4><%= Expert.human_attribute_name :fee %></h4>
         <p><%= @expert.fee %></p>
       </div>
@@ -41,7 +41,7 @@
       </div>
     </div>
     <div class="row last">
-      <div class="comments <%= 'empty' if @expert.comment.comment.blank? %>">
+      <div class="comments">
         <h4><%= Expert.human_attribute_name :comment %></h4>
         <%= markdown @expert.comment.comment %>
       </div>
