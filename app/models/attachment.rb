@@ -96,7 +96,7 @@ class Attachment < ActiveRecord::Base
       raise TypeError, 'Argument must be a File or a UploadedFile.'
     end
 
-    empty_document(ext.downcase) do |f|
+    empty_file(ext.downcase) do |f|
       f << attachment.read
       self.filename = File.basename(f.path)
     end
@@ -104,18 +104,19 @@ class Attachment < ActiveRecord::Base
 
   private
 
-  # Removes the attachment from the file system.
+  # Removes the attachment from the file system. Returns true on success,
+  # else false.
   def unlink
-    if absolute_path.file?
-      absolute_path.delete
-    end
+    !!absolute_path.delete
+  rescue
+    false
   end
 
-  # Opens a document with unique filename in _wb_ mode.
+  # Opens a file with unique filename in _wb_ mode.
   #
-  #   cv.empty_document('.doc')
+  #   cv.empty_file('.doc')
   #   #=> <File:/path/to/store/e4b969da-10df-4374-afd7-648b15b09903.doc>
-  def empty_document(suffix = nil)
+  def empty_file(suffix = nil)
     STORE.mkpath unless STORE.exist?
     date = Date.today.to_formatted_s(:db)
 
