@@ -51,10 +51,12 @@ namespace :experts do
       'Syria'                            => 'SY',
       'Tanzania'                         => 'TZ',
       'The Gambia'                       => 'GM',
+      'Timor Leste'                      => 'TL',
       'Trinidad And Tobago'              => 'TT',
       'Trinidad & Tobago'                => 'TT',
       'Tunisie'                          => 'TN',
       'U.P. India'                       => 'IN',
+      'United Kingdom (Scotland)'        => 'GB',
       'Usa 07450'                        => 'US',
       'Venezuela'                        => 'VE',
       'Vietnam'                          => 'VN'
