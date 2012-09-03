@@ -97,7 +97,10 @@ class Attachment < ActiveRecord::Base
     end
 
     empty_file(ext.downcase) do |f|
-      f << attachment.read
+      while chunk = attachment.read(16384)
+        f << chunk
+      end
+
       self.filename = File.basename(f.path)
     end
   end
