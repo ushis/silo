@@ -9,7 +9,10 @@ class AddressesController < ApplicationController
   # expected that the _params_ hash contains another info hash accessible
   # through the _:address_ key.
   def add_to(model, url)
-    model.addresses << Address.new(params[:address])
+    unless (model.addresses << Address.new(params[:address]))
+      raise 'Could not save address.'
+    end
+
     flash[:notice] = t('messages.address.success.save')
   rescue
     flash[:alert] = t('messages.address.errors.save')
