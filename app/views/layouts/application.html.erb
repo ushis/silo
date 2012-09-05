@@ -52,10 +52,10 @@
       $('div.flash').siloFlash();
       $('a.disabled').siloDisabledLinks();
       $('form input[type=submit].icon-delete').siloConfirmDelete({
-        submitText: '<%= t('actions.delete') %>',
-        abortText: '<%= t('actions.abort') %>',
-        headerText: '<%= t('messages.generics.confirm.sure') %>',
-        passwordText: '<%= t('messages.user.confirm.password') %>'
+        submitText: <%= t('actions.delete').to_json.html_safe %>,
+        abortText: <%= t('actions.abort').to_json.html_safe %>,
+        headerText: <%= t('messages.generics.confirm.sure').to_json.html_safe %>,
+        passwordText: <%= t('messages.user.confirm.password').to_json.html_safe %>
       });
     </script>
   </body>

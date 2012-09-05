@@ -89,6 +89,6 @@
 
 <script>
   $('div.multi-lang select').siloClickAway().parent().parent().siloClickAndClone({
-    text: '<%= t 'actions.more' %>'
+    text: <%= t('actions.more').to_json.html_safe %>
   });
 </script>
