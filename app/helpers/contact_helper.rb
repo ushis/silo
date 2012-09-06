@@ -1,11 +1,6 @@
 # Contains contact specific helper methods.
 module ContactHelper
 
-  # Returns select box options with all possible contact fields.
-  def contact_field_options
-    options_for_select Contact.select_box_friendly_fields
-  end
-
   # Returns the contact value. If field is :emails or :websites, the value
   # is wrapped with <a> tag.
   def contact_value(val, field, html_options = {})

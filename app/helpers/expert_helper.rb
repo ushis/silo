@@ -1,19 +1,6 @@
 # Provides expert specific helpers.
 module ExpertHelper
 
-  # Returns a gender select box
-  def gender_select_tag(name, val = nil, opt = {})
-    select_tag name, options_for_select(list_genders, val), opt
-  end
-
-  # Returns all available genders in a select box freindly format.
-  #
-  #   list_genders
-  #   #=> [['Female', :female], ['Male', :male]]
-  def list_genders
-    Expert::GENDERS.collect { |g| [t(g, scope: [:values, :genders]), g] }
-  end
-
   # Returns a string containing links to the CV downloads.
   #
   #   list_cvs(expert)

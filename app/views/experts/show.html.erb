@@ -128,7 +128,7 @@
                 <%= text_field_tag 'contact[contact]' %>
               </div>
               <div>
-                <%= select_tag 'contact[field]', contact_field_options %>
+                <%= contact_field_select_tag 'contact[field]' %>
                 <%= submit_tag t('actions.add') %>
               </div>
             <% end %>

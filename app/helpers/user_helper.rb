@@ -15,14 +15,6 @@ module UserHelper
     end.html_safe
   end
 
-  # Returns all available locales in a select box friendly format.
-  #
-  #   list_locales
-  #   #=> [['English', :en], ['German', :de]]
-  def list_locales
-    User::LOCALES.collect { |l| [t(l, scope: :languages), l] }
-  end
-
   # Returns the user's fullname and its username in brackets.
   def full_user_link(user)
     link_to edit_user_path(user) do
