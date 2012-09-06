@@ -9,10 +9,18 @@ class HelpController < ApplicationController
 
   layout false
 
+  caches_action :show
+
   # Serves a help section.
   def show
     render params[:section]
   rescue ActionView::MissingTemplate
     raise ActionController::RoutingError, 'Help not found.'
+  end
+
+  private
+
+  def action_cache_path
+    super << "/#{params[:section]}"
   end
 end

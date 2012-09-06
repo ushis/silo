@@ -34,20 +34,10 @@ class Country < ActiveRecord::Base
     end
   end
 
-  # Returns a collection of all countries ordered by localized country name-
-  def self.ordered
-    Rails.cache.fetch("countries_#{I18n.locale}") do
-      all.sort { |x, y| x.human <=> y.human }
-    end
-  end
-
   # Returns the localized country name.
   def human
     I18n.t(country, scope: :countries)
   end
 
-  # Alias for Country#human
-  def to_s
-    human
-  end
+  alias :to_s :human
 end

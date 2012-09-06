@@ -5,6 +5,8 @@ class LanguagesController < ApplicationController
 
   layout false
 
+  caches_action :select
+
   # Serves a multi select box.
   def select
     @languages = Language.ordered

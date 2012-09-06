@@ -5,6 +5,8 @@ class AreasController < ApplicationController
 
   layout false
 
+  caches_action :select
+
   # Serves a multi select box for countries grouped by areas.
   def select
     @areas = Area.with_ordered_countries

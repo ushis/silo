@@ -138,11 +138,10 @@
           <div class="form-wrapper">
             <%= form_for Address.new, url: expert_addresses_path(@expert) do |f| %>
               <div>
-                <%= f.text_area :address, rows: "4" %>
+                <%= f.text_area :address, rows: 4 %>
               </div>
               <div>
-                <%= f.grouped_collection_select(:country, Area.with_ordered_countries,
-                                                :countries, :human, :id, :human) %>
+                <%= f.country_select :country %>
                 <%= f.submit t('actions.add') %>
               </div>
             <% end %>

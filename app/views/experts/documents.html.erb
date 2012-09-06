@@ -82,8 +82,7 @@
         <div class="cv">
           <%= form_for Cv.new, url: expert_cvs_path(@expert) do |f| %>
             <div class="input">
-              <%= f.collection_select(:language_id, Language.priority_ordered,
-                                      :id, :human) %>
+              <%= f.language_select(:language_id) %>
             </div>
             <div>
               <%= f.file_field :file %>

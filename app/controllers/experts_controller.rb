@@ -2,7 +2,7 @@
 class ExpertsController < ApplicationController
   skip_before_filter :authorize, only: [:index, :search, :show, :documents]
 
-  before_filter only: [:search] do |c|
+  before_filter only: [:search, :create, :update] do |c|
     c.arrayify_params(:languages, :countries)
   end
 

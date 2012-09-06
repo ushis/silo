@@ -29,9 +29,7 @@
         <div class="row">
           <div class="citizenship">
             <%= f.label :country %>
-            <%= f.grouped_collection_select(:country_id,
-                                            Area.with_ordered_countries,
-                                            :countries, :human, :id, :human) %>
+            <%= f.country_select(:country_id) %>
           </div>
           <div>
             <%= f.label :birthday %>
@@ -46,9 +44,7 @@
         <div class="row lang">
           <div class="languages">
             <%= f.label :languages %>
-            <div class="multi-lang">
-              <%= language_select_tags @expert.languages %>
-            </div>
+            <%= f.text_field :language, value: @expert.languages.join(', ') %>
           </div>
         </div>
         <div class="row business">
@@ -86,9 +82,9 @@
   </div>
   <div class="clear"></div>
 </div>
-
 <script>
-  $('div.multi-lang select').siloClickAway().parent().parent().siloClickAndClone({
-    text: <%= t('actions.more').to_json.html_safe %>
+  $('div.languages input')
+  .siloMultiSelect('languages', '<%= languages_select_path %>', {
+    selected: <%= @expert.languages.collect { |l| l.id }.to_json.html_safe %>
   });
 </script>

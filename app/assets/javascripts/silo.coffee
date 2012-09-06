@@ -74,35 +74,6 @@ do($ = jQuery) ->
   # Disables links
   $.fn.siloDisabledLinks = -> @.click -> false
 
-  # Wraps adds a click away x the all elements.
-  $.fn.siloClickAway = (options) ->
-    settings = $.extend {
-      text: 'x'
-      class: 'delete'
-      divClass: 'click-away'
-    }, options
-
-    @each ->
-      $(@).wrap('<div>').parent().addClass(settings.divClass).append ->
-        $('<span>').addClass(settings.class).text(settings.text).click ->
-          do (el = $(@).closest('div')) ->
-            if el.parent().children("div.#{settings.divClass}").length > 1
-              el.remove()
-
-  # Adds a click and clone + to an element.
-  $.fn.siloClickAndClone = (options) ->
-    settings = $.extend {
-      text: 'more'
-      class: 'more'
-      selector: 'div.click-away'
-    }, options
-
-    @each ->
-      do (el = $(@)) ->
-        el.append ->
-          $('<span>').addClass(settings.class).text(settings.text).click ->
-            $(@).before -> el.find(settings.selector).last().clone(true)
-
   # Defines a master box and several slave boxes. If the master box is
   # checked, all slaves get checked too. If one slave is unchecked, the
   # master gets unchecked.

@@ -15,6 +15,12 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
   helper_method :current_user?
 
+  # Appends a proper cache_path to all ActiveSupport::Concern.caches_action
+  # calls.
+  def self.caches_action(*actions)
+    super *actions, cache_path: lambda { |_| action_cache_path }
+  end
+
   # Sets a not found alert and redirects to the root url.
   def not_found
     flash[:alert] = t('messages.generics.errors.find')
@@ -25,6 +31,12 @@ class ApplicationController < ActionController::Base
   def file_not_found
     flash[:alert] = t('messages.generics.errors.file_not_found')
     redirect_to root_url
+  end
+
+  # Returns cache a path for a actions view, dependent on current controller,
+  # action and locale.
+  def action_cache_path
+    [I18n.locale, params[:controller], params[:action]].join('/')
   end
 
   # Ensures that the specified parameters are Arrays.

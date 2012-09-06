@@ -3,6 +3,7 @@ require 'silo_page_links'
 
 # Contains several generic helper methods.
 module ApplicationHelper
+  ActionView::Base.default_form_builder = FormHelper::FormBuilder
 
   # Returns all flash messages in separate div boxes.
   #
