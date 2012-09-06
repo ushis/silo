@@ -17,7 +17,8 @@ module FormHelper
 
     # Returns a collection select box containing all languages.
     def language_select(method, options = {}, html_options = {})
-      collection_select(method, all_languages, :id, :human)
+      collection_select(method, all_languages, :id, :human,
+                        options, html_options)
     end
 
     private
