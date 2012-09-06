@@ -18,6 +18,24 @@ do($ = jQuery) ->
     fadeIn: -> @layer.appendTo('body').fadeIn(200)
     fadeOut: -> @layer.fadeOut 200, -> $(@).detach()
 
+  # Adds the overlay class to an element and bindes the "show" and the
+  # "close" event.
+  $.fn.siloOverlay = (options) ->
+    settings = $.extend {
+      class: 'overlay'
+    }, options
+
+    @each ->
+      el = $(@).addClass(settings.class)
+
+      el.bind 'show', ->
+        SiloLayer.fadeIn()
+        el.appendTo('body').fadeIn(200)
+
+      el.bind 'close', ->
+        SiloLayer.fadeOut()
+        el.fadeOut 200, -> el.detach()
+
   # Writes the username to localStorage on submit and sets the focus
   # to the first empty input field.
   $.fn.siloLogin = (options) ->
@@ -83,8 +101,7 @@ do($ = jQuery) ->
       do (el = $(@)) ->
         el.append ->
           $('<span>').addClass(settings.class).text(settings.text).click ->
-            $(@).before ->
-              el.find(settings.selector).last().clone(true)
+            $(@).before -> el.find(settings.selector).last().clone(true)
 
   # Defines a master box and several slave boxes. If the master box is
   # checked, all slaves get checked too. If one slave is unchecked, the
@@ -95,16 +112,17 @@ do($ = jQuery) ->
       hard: false
     }, options
 
-    do (el = $(@)) ->
-      do (master = el.filter(".#{settings.masterClass}")) ->
-        master.change ->
-          if $(@).is(':checked')
-            el.prop('checked', true)
-          else if settings.hard
-            el.prop('checked', false)
-        el.not(".#{settings.masterClass}").change ->
-          master.prop('checked', false) if $(@).not(':checked')
-        return el
+    do (el = @) ->
+      master = el.filter(".#{settings.masterClass}").change ->
+        if $(@).is(':checked')
+          el.prop('checked', true)
+        else if settings.hard
+          el.prop('checked', false)
+
+      el.not(".#{settings.masterClass}").change ->
+        master.prop('checked', false) if $(@).not(':checked')
+
+      return el
 
   # Loads the specified help and connects it with an element.
   $.fn.siloHelp = (url, options) ->
@@ -114,19 +132,13 @@ do($ = jQuery) ->
     }, options
 
     do (collection = @) ->
-      ready = (help) ->
-        help = $(help)
-        help.find('div.button').click ->
-          SiloLayer.fadeOut()
-          help.fadeOut(200)
-        $('body').append(help)
+      $.ajax url: url, dataType: 'html', success: (help) ->
+        help = $(help).siloOverlay()
+        help.find('div.button').click -> help.trigger('close')
+
         collection.after ->
           $('<div>').addClass(settings.helpClass).text(settings.helpText)
-          .fadeIn(600).click ->
-            SiloLayer.fadeIn()
-            help.fadeIn(200)
-
-      $.ajax(url: url, dataType: 'html', success: ready)
+          .fadeIn(600).click -> help.trigger('show')
 
   # Shows a simple confirmation dialog.
   $.fn.siloConfirmDelete = (options) ->
@@ -139,7 +151,7 @@ do($ = jQuery) ->
       textClass: 'text'
       headerClass: 'header'
       headerText: 'Are you sure?'
-      wrapperClass: 'confirm-delete overlay'
+      wrapperClass: 'confirm-delete'
       passwordClass: 'password'
       passwordText: 'Confirm with your password.'
     }, options
@@ -148,124 +160,130 @@ do($ = jQuery) ->
       $('<div>').addClass(settings["#{type}Class"])
 
     makeButton = (type) ->
-      [klass, text] = [settings["#{type}Class"], settings["#{type}Text"]]
-      $('<div>').addClass("#{settings.buttonClass} #{klass}").text(text)
+      makeBox(type).addClass(settings.buttonClass).text(settings["#{type}Text"])
 
     makePassword = ->
-      $('<input>').attr {
-        name: 'password'
-        type: 'password'
-        placeholder: settings.passwordText
-      }
+      $('<input name="password" type="password">')
+      .attr(placeholder: settings.passwordText)
 
     @each ->
       do (el = $(@)) ->
         el.click ->
-          dialog = makeBox('wrapper')
+          dialog = makeBox('wrapper').siloOverlay()
           password = makePassword()
+
           submit = makeButton('submit').click ->
             el.closest('form').append(password.clone()).submit()
-          abort = makeButton('abort').click ->
-            SiloLayer.fadeOut()
-            dialog.fadeOut 200, ->
-              dialog.remove()
+
+          abort = makeButton('abort').click -> dialog.trigger('close')
+
           dialog.append ->
-            makeBox('header').append ->
+            makeBox('header').append(submit, abort).prepend ->
               $('<h2>').text(settings.headerText)
-            .append(submit, abort)
-          .append ->
+
+          dialog.append ->
             makeBox('text').append ->
               makeBox('content').text(el.data('confirm'))
-            .append ->    
+            .append ->
               if el.hasClass(settings.passwordClass)
                 makeBox('password').append(password)
-          dialog.appendTo('body').fadeIn(200)
-          SiloLayer.fadeIn()
-          false
 
-  # Represents a multi select field.
-  class SiloMultiSelect
-    constructor: (name, @el) ->
-      @hidden = $('<input>').attr(name: name, type: 'hidden')
-      @el.after @hidden
+          dialog.trigger('show')
+          return false
 
-    # Creates new hidden fields and sets the value.
-    setValues: (values) ->
-      [ids, val] = [[], []]
-      for v in values
-        ids.push v[0]
-        val.push v[1]
-      @hidden.val ids.join(' ')
-      @el.val val.join(', ')
+  # Handles groups in multi select boxes.
+  $.fn.siloMultiSelectGroup = (options) ->
+    settings = $.extend {
+      activeGroup: 4
+      groupClass: 'group'
+      counterClass: 'counter'
+    }, options
 
-  # Makes a text field multi selectable.
-  $.fn.siloMultiSelect = (name, url, options) ->
+    @each ->
+      el = $(@).accordion(autoHeight: false, active: settings.activeGroup)
+
+      el.find('ul').each ->
+        ul = $(@)
+        counter = ul.prev('h3').find(".#{settings.counterClass}")
+        input = ul.find('input')
+        input.siloMasterBox(masterClass: settings.groupClass, hard: true)
+
+        input.bind 'count', ->
+          counter.text ->
+            input.filter(":checked:not(.#{settings.groupClass})").length
+
+        input.trigger('count').change -> $(@).trigger('count')
+
+  # Handles a multi select overlay.
+  $.fn.siloMultiSelectOverlay = (options) ->
     settings = $.extend {
       selected: []
       submitClass: 'submit'
       abortClass: 'abort'
       selectClass: 'select'
-      counterClass: 'counter'
       grouped: false
-      groupClass: 'group'
-      activeGroup: 4
-      storagePrefix: 'multi-select-'
     }, options
 
-    prepareSelect = (el) ->
-      do (el = $(el)) ->
+    # Connects the multi select overlay with an input field.
+    @connectWith = (input, name) ->
+      @each ->
+        el = $(@)
+        hidden = $('<input>').attr(name: name, type: 'hidden')
+        input.after(hidden)
+
+        el.bind 'submit', ->
+          [ids, val] = [[], []]
+
+          el.find("input:checked:not(.#{settings.groupClass})").each ->
+            ids.push $(@).attr('name')
+            val.push $(@).data('name')
+
+          hidden.val ids.join(' ')
+          input.val val.join(', ')
+          el.trigger('close')
+
+        el.trigger('submit')
+
+    # Inits the overlay
+    @each ->
+      do (el = $(@)) ->
+        el.siloOverlay()
+        el.find(".#{settings.abortClass}").click -> el.trigger('close')
+        el.find(".#{settings.submitClass}").click -> el.trigger('submit')
+
         for id in settings.selected
           el.find("input[name=#{id}]").prop('checked', true)
 
         if settings.grouped
-          el.find(".#{settings.selectClass}")
-            .accordion(autoHeight: false, active: settings.activeGroup)
-          .find('ul').each ->
-            counter = $(@).prev('h3').find(".#{settings.counterClass}")
-            input = $(@).find('input')
-              .siloMasterBox(masterClass: settings.groupClass, hard: true)
-            input.bind 'count', ->
-              counter.text ->
-                input.filter(":checked:not(.#{settings.groupClass})").length
-            .trigger('count').change -> $(@).trigger('count')
+          el.find(".#{settings.selectClass}").siloMultiSelectGroup(settings)
 
-        el.find(".#{settings.abortClass}").click -> el.trigger('close')
-        el.find(".#{settings.submitClass}").click -> el.trigger('submit')
-
-        el.bind 'close', ->
-          SiloLayer.fadeOut()
-          el.fadeOut 200, -> el.detach()
-        .bind 'show', ->
-          SiloLayer.fadeIn()
-          el.appendTo('body').fadeIn(200)
+  # Makes a text field multi selectable.
+  $.fn.siloMultiSelect = (name, url, options) ->
+    settings = $.extend {
+      groupClass: 'group'
+      storagePrefix: 'multi-select-'
+    }, options
 
     do (collection = @) ->
-      ready = (select) ->
-        select = prepareSelect(select)
+      # Retrieve the multi select overlay and boot it up.
+      $.ajax url: url, dataType: 'html', success: (select) ->
+        select = $(select).siloMultiSelectOverlay(settings)
+
+        collection.prop('disabled', false).focus ->
+          select.trigger('show')
 
         collection.each ->
-          do (el = $(@)) ->
-            el.prop('disabled', false).focus -> select.trigger('show')
-            multiSelect = new SiloMultiSelect(name, el)
+          select.connectWith($(@), name)
 
-            select.submit ->
-              values = []
-              select.find("input:checked:not(.#{settings.groupClass})").each ->
-                values.push [$(@).attr('name'), $(@).data('name')]
-              multiSelect.setValues(values)
-              select.trigger('close')
-            .trigger('submit')
+      # Disable input while loading and prevent sending of the long text
+      # values by submitting the form to avoid 414. Use localStorage instead.
+      collection.prop('disabled', true).each ->
+        do (el = $(@)) ->
+          storageKey = settings.storagePrefix + el.attr('name')
+          el.removeAttr('name')
 
-      collection.prop('disabled', true)
-      $.ajax(url: url, dataType: 'html', success: ready)
+          if settings.selected.length > 0 && hasStorage
+            el.val(localStorage[storageKey])
 
-    # Do not send the country/language names to avoid 414 errors.
-    # Just cache them in localStorage if possible.
-    @each ->
-      do (el = $(@)) ->
-        storageKey = settings.storagePrefix + el.attr('name')
-        if settings.selected.length > 0 && hasStorage
-          el.val(localStorage[storageKey])
-        el.closest('form').submit ->
-          localStorage[storageKey] = el.val() if hasStorage
-          el.prop('disabled', true)
+          el.closest('form').submit ->
+            localStorage[storageKey] = el.val() if hasStorage
