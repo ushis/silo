@@ -16,8 +16,8 @@ class ContactsController < ApplicationController
   #
   # It is ensured, the user is redirected to the specified url.
   def add_to(model, url)
-    field = params[:contact][:field]
-    contact = params[:contact][:contact].strip
+    field, contact = params[:contact].values_at(:field, :contact)
+    contact.strip!
 
     if contact.blank? || model.contact.field(field).include?(contact)
       raise 'I am not going to save blanks or duplicates!'
@@ -39,7 +39,7 @@ class ContactsController < ApplicationController
   # Removes a contact from a field. It behaves like
   # ContactsController#add_to(), but vice versa.
   def remove_from(model, url)
-    field, contact = [params[:contact][:field], params[:contact][:contact]]
+    field, contact = params[:contact].values_at(:field, :contact)
 
     unless model.contact.field(field).delete(contact) && model.contact.save
       raise 'Could not delete contact.'

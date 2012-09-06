@@ -121,7 +121,7 @@ class ExpertsController < ApplicationController
 
     if expert.destroy
       flash[:notice] = t('messages.expert.success.delete', name: expert.name)
-  	  redirect_to experts_url
+      redirect_to experts_url
     else
       flash[:alert] = t('messages.expert.errors.delete')
       redirect_to expert_url(expert)
