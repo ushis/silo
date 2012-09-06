@@ -54,7 +54,7 @@ class ExpertsReport < ApplicationReport
       [a.call(:prename), e.prename],
       [a.call(:name), e.name],
       [a.call(:country), e.country.try(:human)],
-      [a.call(:birthday), e.birthday && l(e.birthday, format: :short)],
+      [a.call(:birthday), e.human_birthday],
       [a.call(:gender), e.human_gender],
       [a.call(:languages), e.languages.collect { |l| l.human }.join(', ')],
       [a.call(:job), e.job],

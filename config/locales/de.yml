@@ -76,7 +76,7 @@ de:
               confirmation: 'Passwörter stimmen nicht überein.'
   date:
     formats:
-      short: '%B %e, %Y'
+      short: '%e. %B %Y'
     month_names: [~, Januar, Februar, März, April, Mai, Juni, Juli, August,
                   September, Oktober, November, Dezember]
     order:

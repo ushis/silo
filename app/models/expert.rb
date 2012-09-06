@@ -200,6 +200,16 @@ class Expert < ActiveRecord::Base
     degree.blank? ? full_name : "#{full_name}, #{degree}"
   end
 
+  # Returns the localized date of birth.
+  #
+  #   expert.human_birthday
+  #   #=> "12. September 2012"
+  #
+  # Returns nil, if birthday is nil.
+  def human_birthday(format = :short)
+    birthday && I18n.l(birthday, format: format)
+  end
+
   # Returns the experts age or nil if the birthday is unknown.
   #
   #   expert.age
