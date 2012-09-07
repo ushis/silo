@@ -207,7 +207,7 @@ class Expert < ActiveRecord::Base
   #
   # Returns nil, if birthday is nil.
   def human_birthday(format = :short)
-    birthday && I18n.l(birthday, format: format)
+    I18n.l(birthday, format: format) if birthday
   end
 
   # Returns the experts age or nil if the birthday is unknown.
