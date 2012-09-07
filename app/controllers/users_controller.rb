@@ -56,18 +56,19 @@ class UsersController < ApplicationController
   # Creates a new user and redirects to the new users edit page.
   def create
     username = params[:user].delete(:username)
+    privileges = params[:user].delete(:privilege)
 
     @user = User.new(params[:user])
     @user.username = username
-    @user.privileges = params[:privilege]
+    @user.privileges = privileges
 
     if @user.save
       flash[:notice] = t('messages.user.success.create', name: @user.username)
       redirect_to users_url and return
     end
 
-    @title = t('labels.user.new')
     flash.now[:alert] = t('messages.user.errors.create')
+    @title = t('labels.user.new')
     @body_class << :new
     render :form
   end
@@ -84,13 +85,14 @@ class UsersController < ApplicationController
   # *Note:* A user can not change his/her own privileges.
   def update
     username = params[:user].delete(:username)
+    privileges = params[:user].delete(:privilege)
 
     @user = User.find(params[:id])
     @user.attributes = params[:user]
     @user.username = username
 
     unless current_user?(@user)
-      @user.privileges = params[:privilege]
+      @user.privileges = privileges
     end
 
     if @user.save
@@ -117,7 +119,7 @@ class UsersController < ApplicationController
     end
 
     if user.destroy
-      flash[:notice] = t('messages.deleted_user', user: user.username)
+      flash[:notice] = t('messages.user.success.delete', name: user.username)
     else
       flash[:alert] = t('messages.user.errors.delete')
     end

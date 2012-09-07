@@ -49,6 +49,21 @@ module FormHelper
                         options, html_options)
     end
 
+    # Returns fields for privileges. Its a bunch of check boxes and labels.
+    def privilege_fields(method, disabled = false)
+      fields_for @object.send(method) do |fields|
+        html = fields.check_box(:admin, disabled: disabled, class: :admin)
+        html << fields.label(:admin, class: :admin)
+
+        Privilege::SECTIONS.reverse_each do |section|
+          html << fields.check_box(section, disabled: disabled)
+          html << fields.label(section)
+        end
+
+        html
+      end
+    end
+
     private
 
     # Returns a select box friendly list of all localized genders.

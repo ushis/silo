@@ -37,16 +37,9 @@
             <%= f.label :name %>
             <%= f.text_field :name %>
           </li>
-          <li class="privileges<%= ' disabled' if current_user?(@user) %>">
-            <%= fields_for @user.privilege do |p| %>
-              <%= f.label :privileges %>
-              <% Privilege::SECTIONS.each do |section| %>
-                <%= p.check_box section, disabled: current_user?(@user) %>
-                <%= p.label section, class: 'check-box-label' %>
-              <% end %>
-              <%= p.check_box :admin, disabled: current_user?(@user), class: 'master' %>
-              <%= p.label :admin, class: 'check-box-label' %>
-            <% end %>
+          <li class="privileges">
+            <%= f.label :privileges %>
+            <%= f.privilege_fields :privilege, current_user?(@user) %>
           </li>
           <li>
             <%= f.label :locale %>
@@ -61,5 +54,5 @@
 </div>
 
 <script>
-  $('li.privileges input:checkbox').siloMasterBox();
+  $('li.privileges input:checkbox').siloMasterBox({masterClass: 'admin'});
 </script>
