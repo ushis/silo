@@ -97,7 +97,7 @@ class Attachment < ActiveRecord::Base
     end
 
     empty_file(ext.downcase) do |f|
-      while chunk = attachment.read(16384)
+      while (chunk = attachment.read(16384))
         f << chunk
       end
 
