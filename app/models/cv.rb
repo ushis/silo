@@ -11,6 +11,9 @@ require 'yomu'
 # - *language_id* integer
 # - *cv* text
 class Cv < ActiveRecord::Base
+
+  validates :cv, presence: true
+
   has_one    :attachment, autosave: true, dependent: :destroy, as: :attachable
   belongs_to :expert
   belongs_to :language
@@ -26,7 +29,7 @@ class Cv < ActiveRecord::Base
   def self.from_file(file, language)
     cv = Cv.new
     cv.attachment = Attachment.from_file(file)
-    cv.load_document!
+    cv.load_document
     cv.language = Language.find_language(language)
     cv
   rescue
@@ -70,19 +73,16 @@ class Cv < ActiveRecord::Base
     attachment.try(:created_at)
   end
 
-  # Tries to load the document text.
+  # Loads the documents text and stores it in the cv attribute.
   #
-  # Returns the document text on success, raise an exception on error.
+  #   cv.load_document
+  #   #=> 'Hello Silo,\n\nHow are you today?'
+  #
+  #   cv.cv
+  #   #=> 'Hello Silo,\n\nHow are you today?'
+  #
+  # Returns the documents text.
   def load_document
-    if (text = Yomu.new(absolute_path).text).blank?
-      raise 'Empty document'
-    else
-      text
-    end
-  end
-
-  # Loads the document and stores the returned text in the cv attribute.
-  def load_document!
-    self.cv = load_document
+    self.cv = Yomu.new(absolute_path).text
   end
 end

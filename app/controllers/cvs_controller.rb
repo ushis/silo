@@ -17,7 +17,13 @@ class CvsController < ApplicationController
   # into the database.
   def create
     expert = Expert.find(params[:expert_id])
-    expert.cvs << Cv.from_upload(params[:cv])
+    cv = Cv.from_upload(params[:cv])
+
+    unless (expert.cvs << cv)
+      cv.destroy
+      raise 'Could not save CV.'
+    end
+
     flash[:notice] = t('messages.cv.success.store')
   rescue ActiveRecord::RecordNotFound
     flash[:alert] = t('messages.expert.errors.find')
