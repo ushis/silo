@@ -52,7 +52,13 @@ namespace :cvs do
       f = File.open(cv)
 
       begin
-        e.cvs << Cv.from_file(f, lang)
+        cv = Cv.from_file(f, lang)
+
+        unless (e.cvs << cv)
+          cv.destroy
+          raise 'Could not save cv.'
+        end
+
         f.close
         next
       rescue
@@ -62,7 +68,13 @@ namespace :cvs do
       puts "=> Storing as attachment".yellow
 
       begin
-        e.attachments << Attachment.from_file(f)
+        a = Attachment.from_file(f)
+
+        unless (e.attachments << a)
+          a.destroy
+          raise 'Could not save attachment.'
+        end
+
         next
       rescue
       ensure
