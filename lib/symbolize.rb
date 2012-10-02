@@ -69,8 +69,11 @@ module Symbolize
     #   user.locale         # Reads an symbolizes the locale attribute.
     #   #=> :de
     #
-    #   user.human_locale   # Returns the localized attribute
+    #   user.human_locale   # Returns the localized attribute.
     #   #=> 'German'
+    #
+    #   user.set_default_locale  # Sets the default locale.
+    #   #=> :en
     #
     # The I18n localization path is
     # *activerecord.symbolizes.model_name.attribute_name.value*:
@@ -96,6 +99,17 @@ module Symbolize
       # Defines the setter method.
       define_method("#{attr_name}=") do |value|
         write_symbolized_attribute(attr_name, value)
+      end
+
+      # Defines the set_default_xxx method and adds a before_save callback.
+      unless options[:default].nil?
+        define_method("set_default_#{attr_name}") do
+          if read_symbolized_attribute(attr_name).nil?
+            write_symbolized_attribute(attr_name, options[:default])
+          end
+        end
+
+        send(:before_save, "set_default_#{attr_name}".to_sym)
       end
 
       return unless options[:in].is_a?(Array)
