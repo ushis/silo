@@ -74,6 +74,15 @@ en:
               invalid: 'Must only contain lower case letters and numbers.'
             password:
               confirmation: 'Passwords do not match.'
+    symbolizes:
+      expert:
+        gender:
+          female: 'Female'
+          male: 'Male'
+      user:
+        locale:
+          en: 'English'
+          de: 'German'
   date:
     formats:
       short: '%B %e, %Y'
@@ -250,6 +259,3 @@ en:
       skypes: 'Skypes'
       website: 'Website'
       websites: 'Websites'
-    genders:
-      female: 'Female'
-      male: 'Male'

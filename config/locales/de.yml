@@ -74,6 +74,15 @@ de:
               invalid: 'Darf nur aus Kleinbuchstaben und Zahlen bestehen.'
             password:
               confirmation: 'Passwörter stimmen nicht überein.'
+    symbolizes:
+      expert:
+        gender:
+          female: 'Weiblich'
+          male: 'Männlich'
+      user:
+        locale:
+          en: 'Englisch'
+          de: 'Deutsch'
   date:
     formats:
       short: '%e. %B %Y'
@@ -252,6 +261,3 @@ de:
       skypes: 'Skypes'
       website: 'Webseite'
       websites: 'Webseiten'
-    genders:
-      female: 'Weiblich'
-      male: 'Männlich'

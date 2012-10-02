@@ -26,16 +26,6 @@ module FormHelper
     require_dependency 'country'
     require_dependency 'language'
 
-    # Returns a gender select box.
-    def gender_select(method, options = {}, html_options = {})
-      select(method, gender_list, options, html_options)
-    end
-
-    # Returns a locale select box.
-    def locale_select(method, options = {}, html_options = {})
-      select(method, locale_list, options, html_options)
-    end
-
     # Returns a grouped collection select box containing all countries grouped
     # by area and ordered by their localized names.
     def country_select(method, options = {}, html_options = {})
@@ -65,20 +55,6 @@ module FormHelper
     end
 
     private
-
-    # Returns a select box friendly list of all localized genders.
-    def gender_list
-      @gender_list ||= Expert::GENDERS.collect do |g|
-        [I18n.t(g, scope: [:values, :genders]), g]
-      end
-    end
-
-    # Returns a select box friendly list of all localized locales.
-    def locale_list
-      @locale_list ||= User::LOCALES.collect do |l|
-        [I18n.t(l, scope: :languages), l]
-      end
-    end
 
     # Returns all areas with their ordered countries.
     def all_areas

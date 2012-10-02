@@ -38,7 +38,7 @@
           </div>
           <div class="gender">
             <%= f.label :gender %>
-            <%= f.gender_select :gender %>
+            <%= f.select :gender, Expert.gender_values %>
           </div>
         </div>
         <div class="row lang">

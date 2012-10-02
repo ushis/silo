@@ -1,5 +1,3 @@
-require 'set'
-
 # The Expert model provides access to the experts data and several methods
 # for manipulation.
 #
@@ -19,8 +17,10 @@ require 'set'
 # - *created_at* datetime
 # - *updated_at* datetime
 class Expert < ActiveRecord::Base
-  attr_accessible(:name, :prename, :gender, :birthday, :fee, :job, :degree,
-                  :former_collaboration, :country_id)
+  attr_accessible :name, :prename, :gender, :birthday, :fee, :job, :degree,
+                  :former_collaboration, :country_id
+
+  symbolize :gender, in: [:female, :male]
 
   validates :name, presence: true
 
@@ -44,20 +44,6 @@ class Expert < ActiveRecord::Base
   scope :none, where('1 < 0')
 
   default_scope includes(:country)
-
-  # Set of vailable genders.
-  GENDERS = [:female, :male].to_set
-
-  # Returns a valid gender symbol using the GENDERS list.
-  #
-  #   Expert.gender('female')
-  #   #=> :female
-  #
-  # If no valid symbol is found, the first symbol in GENDERS is returned.
-  def self.gender(gender)
-    g = gender.try(:to_sym)
-    GENDERS.include?(g) ? g : GENDERS.first
-  end
 
   # Searches for experts. Takes a hash with condtions:
   #
@@ -156,33 +142,12 @@ class Expert < ActiveRecord::Base
     super(Country.find_country(country))
   end
 
-  # Returns the experts gender.
-  def gender
-    Expert.gender(super)
-  end
-
-  # Sets the experts gender. If the given gender is invalid, a default value
-  # is assigned.
-  def gender=(gender)
-    super(Expert.gender(gender))
-  end
-
-  # Returns the localized gender.
-  def human_gender
-    I18n.t(gender, scope: [:values, :genders])
-  end
-
   # Sets the experts languages. So we can do things like:
   #
   #   en = Language.find_by_language('en')
   #   expert.languages = [1, 2, "34", en]
   def languages=(ids)
     super(Language.where(id: ids)) if [Fixnum, Array].include?(ids.class)
-  end
-
-  # Returns the localized former collaboration value.
-  def human_former_collaboration
-    I18n.t(former_collaboration.to_s, scope: [:values, :boolean])
   end
 
   # Returns a string containing name and prename.
@@ -198,6 +163,11 @@ class Expert < ActiveRecord::Base
   # If degree is blank, Expert#full_name is returned.
   def full_name_with_degree
     degree.blank? ? full_name : "#{full_name}, #{degree}"
+  end
+
+  # Returns the localized former collaboration value.
+  def human_former_collaboration
+    I18n.t(former_collaboration.to_s, scope: [:values, :boolean])
   end
 
   # Returns the localized date of birth.

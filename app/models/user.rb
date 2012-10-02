@@ -1,4 +1,3 @@
-require 'set'
 require 'digest/sha1'
 require 'securerandom'
 
@@ -31,6 +30,8 @@ class User < ActiveRecord::Base
 
   has_secure_password
 
+  symbolize :locale, in: I18n.available_locales, default: I18n.default_locale
+
   validates :password,   presence: true,  on: :create
   validates :username,   presence: true,  uniqueness: true, format: /\A[a-z0-9]+\z/
   validates :email,      presence: true,  uniqueness: true
@@ -43,34 +44,9 @@ class User < ActiveRecord::Base
 
   default_scope includes(:privilege)
 
-  # Available localizations
-  LOCALES = I18n.available_locales.to_set
-
-  # Returns a valid locale symbol for a value using the LOCALES constant.
-  #
-  #   User.locale('en')
-  #   #=> :en
-  #
-  # If no valid symbol is found, the first symbol of LOCALES is returned.
-  def self.locale(locale)
-    l = locale.try(:to_sym)
-    LOCALES.include?(l) ? l : LOCALES.first
-  end
-
   # Auto initializes the users privileges on access.
   def privilege
     super || self.privilege = Privilege.new
-  end
-
-  # Returns the users preferred locale.
-  def locale
-    User.locale(super)
-  end
-
-  # Sets the users preferred locale. If the given locale value is not found
-  # in the LOCALES list, a default locale is assigned.
-  def locale=(locale)
-    super(User.locale(locale).to_s)
   end
 
   # Checks for admin privileges.

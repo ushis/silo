@@ -41,7 +41,7 @@
           </li>
           <li>
             <%= f.label :locale %>
-            <%= f.locale_select :locale %>
+            <%= f.select :locale, User.locale_values %>
             <%= f.submit t('actions.save') %>
           </li>
         </ul>
