@@ -15,8 +15,15 @@ do($ = jQuery) ->
   # A simple layer.
   SiloLayer =
     layer: $('<div>').addClass('layer')
-    fadeIn: -> @layer.appendTo('body').fadeIn(200)
-    fadeOut: -> @layer.fadeOut 200, -> $(@).detach()
+
+    fadeIn: (child) ->
+      @child.detach() if @child
+      @layer.appendTo('body').fadeIn(200)
+      @child = child.appendTo('body').fadeIn(200)
+
+    fadeOut: ->
+      @layer.fadeOut 200, -> $(@).detach()
+      @child.fadeOut 200, -> $(@).detach()
 
   # Adds the overlay class to an element and bindes the "show" and the
   # "close" event.
@@ -27,14 +34,8 @@ do($ = jQuery) ->
 
     @each ->
       el = $(@).addClass(settings.class)
-
-      el.bind 'show', ->
-        SiloLayer.fadeIn()
-        el.appendTo('body').fadeIn(200)
-
-      el.bind 'close', ->
-        SiloLayer.fadeOut()
-        el.fadeOut 200, -> el.detach()
+      el.bind 'show', -> SiloLayer.fadeIn(el)
+      el.bind 'close', -> SiloLayer.fadeOut(el)
 
   # Writes the username to localStorage on submit and sets the focus
   # to the first empty input field.
