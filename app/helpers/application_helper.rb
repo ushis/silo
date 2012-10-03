@@ -22,17 +22,6 @@ module ApplicationHelper
     end
   end
 
-  # Returns the value of a param as JSON.
-  #
-  #   params_as_json(:languages, Array)
-  #   #=> ["1", "7"]
-  #
-  # If the param is not an object of the specified klass, a new object is
-  # initialized.
-  def param_as_json(key, klass)
-    (params[key].is_a?(klass) ? params[key] : klass.new).to_json.html_safe
-  end
-
   # Checks if the current user has access to the section and adds a
   # 'disabled' class to the link if not.
   #

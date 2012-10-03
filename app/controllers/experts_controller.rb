@@ -2,10 +2,6 @@
 class ExpertsController < ApplicationController
   skip_before_filter :authorize, only: [:index, :search, :show, :documents]
 
-  before_filter only: [:search, :create, :update] do |c|
-    c.arrayify_params(:languages, :countries)
-  end
-
   # Checks if the user has access to the experts section.
   def authorize
     super(:experts, experts_url)
@@ -24,13 +20,14 @@ class ExpertsController < ApplicationController
 
   # Searches for experts.
   def search
-    @experts = Expert.with_documents.search(params).limit(50).page(params[:page])
+    _params = params.merge(arrayified_params(:countries, :languages))
+    @experts = Expert.with_documents.search(_params).limit(50).page(params[:page])
     @title = t('labels.expert.search')
-    @body_class << :index
+    body_class << :index
 
     respond_to do |format|
       format.html { render :index }
-      format.pdf  { search_report(@experts) }
+      format.pdf  { search_report(@experts, _params) }
     end
   end
 
@@ -65,7 +62,7 @@ class ExpertsController < ApplicationController
     @expert = Expert.new(params[:expert])
     @expert.user = current_user
     @expert.comment.comment = comment[:comment] if comment
-    @expert.languages = params[:languages]
+    @expert.languages = arrayified_param(:languages)
 
     if @expert.save
       flash[:notice] = t('messages.expert.success.create', name: @expert.name)
@@ -75,7 +72,7 @@ class ExpertsController < ApplicationController
     end
 
     @title = t('labels.expert.new')
-    @body_class << :new
+    body_class << :new
     render :form
   end
 
@@ -96,7 +93,7 @@ class ExpertsController < ApplicationController
     end
 
     @expert.attributes = params[:expert]
-    @expert.languages = params[:languages]
+    @expert.languages = arrayified_param(:languages)
 
     if @expert.save
       flash[:notice] = t('messages.expert.success.save')
@@ -106,7 +103,7 @@ class ExpertsController < ApplicationController
     end
 
     @title = t('labels.expert.edit')
-    @body_class << :edit
+    body_class << :edit
     render :form
   end
 
@@ -145,8 +142,8 @@ class ExpertsController < ApplicationController
   end
 
   # Sends a pdf report of the search.
-  def search_report(results)
-    send_data ExpertsReport.for(results, current_user, params).render,
+  def search_report(results, search_params)
+    send_data ExpertsReport.for(results, current_user, search_params).render,
               filename: "report-#{l(Time.now, format: :save)}.pdf",
               type: 'application/pdf',
               disposition: 'inline'

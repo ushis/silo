@@ -92,12 +92,12 @@
 <script>
   $('#filter div.language input')
   .siloMultiSelect('languages', '<%= languages_select_path %>', {
-    selected: <%= param_as_json :languages, Array %>
+    selected: <%= arrayified_param(:languages).to_json.html_safe %>
   });
 
   $('#filter div.citizenship input')
   .siloMultiSelect('countries', '<%= areas_select_path %>', {
-    selected: <%= param_as_json :countries, Array %>,
+    selected: <%= arrayified_param(:countries).to_json.html_safe %>,
     grouped: true
   });
 

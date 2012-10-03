@@ -10,8 +10,9 @@ class ApplicationController < ActionController::Base
   before_filter :authenticate
   before_filter :authorize
   before_filter :set_locale
-  before_filter :body_class
 
+  helper_method :body_class
+  helper_method :arrayified_param
   helper_method :current_user
   helper_method :current_user?
 
@@ -39,20 +40,51 @@ class ApplicationController < ActionController::Base
     [I18n.locale, params[:controller], params[:action]].join('/')
   end
 
-  # Ensures that the specified parameters are Arrays.
-  def arrayify_params(*keys)
-    keys.each do |key|
-      unless params[key].is_a? Array
-        params[key] = params[key].to_s.split(/\s+/)
-      end
+  # Returns a hash of arrayified params.
+  #
+  #   params[:some_ids]             #=> '123 423 65 34'
+  #   arrayified_params(:some_ids)  #=> {some_ids: [123, 423, 65, 34]}
+  #
+  # This is useful in combination with params.merge to arrayify special keys.
+  def arrayified_params(*keys)
+    keys.inject({}) do |hsh, key|
+      hsh[key] = arrayified_param(key)
+      hsh
     end
   end
 
-  # Inits the body class array and populates it with current controller,
-  # action and wether the user is admin or not.
+  # Returns an arrayified parameter.
+  #
+  #   params[:some_ids]            #=> '23 34 546'
+  #   arrayified_param(:some_ids)  #=> [23, 34, 546]
+  #
+  # Returns an Array in any case.
+  def arrayified_param(key)
+    case (value = params[key])
+    when Array then value
+    when Hash then value.values
+    else value.to_s.split
+    end
+  end
+
+  # Returns the body class Array. It is prepopulated with the current controller, action and
+  # the :admin class if the current user is an admin. New classes can be added with ease:
+  #
+  #   body_class << :special
+  #   #=> [:users, :edit, :admin, :special]
+  #
+  # In the layout:
+  #
+  #   <body class="<%= body_class.join(' ') %>">
+  #
+  # Returns an Array.
   def body_class
-    @body_class = [params[:controller], params[:action]]
-    @body_class << :admin if current_user.try(:admin?)
+    unless @body_class
+      @body_class = [params[:controller], params[:action]]
+      @body_class << :admin if current_user.try(:admin?)
+    end
+
+    @body_class
   end
 
   # Sets the users preferred locale.
