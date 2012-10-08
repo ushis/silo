@@ -75,14 +75,10 @@ en:
             password:
               confirmation: 'Passwords do not match.'
     symbolizes:
-      expert:
+      values:
         gender:
           female: 'Female'
           male: 'Male'
-      user:
-        locale:
-          en: 'English'
-          de: 'German'
   date:
     formats:
       short: '%B %e, %Y'

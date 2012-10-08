@@ -55,6 +55,7 @@ module Symbolize
     # - *:validate*     Set to false, to disable validation.
     # - *:allow_nil*    Adds :allow_nil validation rule.
     # - *:allow_blank*  Adds :allow_blank validation rule.
+    # - *:i18n_scope*   Use a custom i18n scope for translations.
     #
     # Several methods are defined and overwritten. The example above
     # (re)defines the following methods/constants:
@@ -75,13 +76,20 @@ module Symbolize
     #   user.set_default_locale  # Sets the default locale.
     #   #=> :en
     #
-    # The I18n localization path is
-    # *activerecord.symbolizes.model_name.attribute_name.value*:
+    # The default I18n localization paths are:
+    #
+    # - *activerecord.symbolizes.model_name.attribute_name.value"
+    # - *activerecord.symbolizes.values.attribute_name.value*
     #
     #   ---
     #   en:
     #     activerecord:
     #       symbolizes:
+    #         values:
+    #           sizes:
+    #             s: 'Small'
+    #             m: 'Medium'
+    #             l: 'Large'
     #         user:
     #           locale:
     #             en: 'English'
@@ -123,19 +131,13 @@ module Symbolize
 
       # Defines the localized getter method.
       define_method("human_#{attr_name}") do
-        self.class.translate_symbolized_value(attr_name, send(attr_name))
+        self.class.translate_symbolized_value(attr_name, send(attr_name), options[:i18n_scope])
       end
 
-      method = "#{attr_name}_values".to_sym
-
       # Defines the class method returning the list of all values.
-      self.class.instance_eval do
-        unless method_defined?(method)
-          define_method(method) do
-            const_get(const).inject([]) do |values, sym|
-              values << [translate_symbolized_value(attr_name, sym), sym]
-            end
-          end
+      define_singleton_method("#{attr_name}_values") do
+        const_get(const).inject([]) do |values, sym|
+          values << [translate_symbolized_value(attr_name, sym, options[:i18n_scope]), sym]
         end
       end
 
@@ -154,10 +156,20 @@ module Symbolize
     #   #=> 'English'
     #
     # Returns nil, if value is nil.
-    def translate_symbolized_value(attr_name, value)
-      unless value.nil?
-        I18n.t(value, scope: [:activerecord, :symbolizes, model_name.i18n_key, attr_name])
+    def translate_symbolized_value(attr_name, value, scope = nil)
+      return nil if value.nil?
+
+      keys = [
+        :"#{i18n_scope}.symbolizes.#{model_name.i18n_key}.#{attr_name}.#{value}",
+        :"#{i18n_scope}.symbolizes.values.#{attr_name}.#{value}"
+      ]
+
+      if scope
+        scope = scope.join('.') if scope.is_a?(Array)
+        keys.unshift(:"#{scope}.#{value}")
       end
+
+      I18n.t(keys.shift, default: keys)
     end
   end
 end

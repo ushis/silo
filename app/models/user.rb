@@ -25,12 +25,13 @@ require 'securerandom'
 #
 # If the two passwords are not equal, the _save_ call will fail.
 class User < ActiveRecord::Base
-  attr_accessible(:email, :password, :password_confirmation, :name, :prename,
-                  :locale)
+  attr_accessible :email, :password, :password_confirmation, :name, :prename,
+                  :locale
 
   has_secure_password
 
-  symbolize :locale, in: I18n.available_locales, default: I18n.default_locale
+  symbolize :locale, in: I18n.available_locales, default: I18n.default_locale,
+            i18n_scope: :languages
 
   validates :password,   presence: true,  on: :create
   validates :username,   presence: true,  uniqueness: true, format: /\A[a-z0-9]+\z/

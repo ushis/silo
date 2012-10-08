@@ -75,14 +75,10 @@ de:
             password:
               confirmation: 'Passwörter stimmen nicht überein.'
     symbolizes:
-      expert:
+      values:
         gender:
           female: 'Weiblich'
           male: 'Männlich'
-      user:
-        locale:
-          en: 'Englisch'
-          de: 'Deutsch'
   date:
     formats:
       short: '%e. %B %Y'
