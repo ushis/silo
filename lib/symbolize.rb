@@ -78,8 +78,10 @@ module Symbolize
     #
     # The default I18n localization paths are:
     #
-    # - *activerecord.symbolizes.model_name.attribute_name.value"
-    # - *activerecord.symbolizes.values.attribute_name.value*
+    # - activerecord.symbolizes.{model_name}.{attribute_name}.{value}
+    # - activerecord.symbolizes.values.{attribute_name}.{value}
+    #
+    # Example of a working en.yml:
     #
     #   ---
     #   en:
