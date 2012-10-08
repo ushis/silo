@@ -89,14 +89,11 @@ CREATE TABLE `experts` (
   KEY `index_experts_on_prename` (`prename`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `langs` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `experts_languages` (
+  `expert_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
-  `langable_id` int(11) DEFAULT NULL,
-  `langable_type` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `index_langs_on_language_id` (`language_id`),
-  KEY `index_langs_on_langable_id_and_langable_type` (`langable_id`,`langable_type`)
+  KEY `index_experts_languages_on_expert_id` (`expert_id`),
+  KEY `index_experts_languages_on_language_id` (`language_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `languages` (
@@ -147,3 +144,5 @@ INSERT INTO schema_migrations (version) VALUES ('3');
 INSERT INTO schema_migrations (version) VALUES ('4');
 
 INSERT INTO schema_migrations (version) VALUES ('5');
+
+INSERT INTO schema_migrations (version) VALUES ('6');

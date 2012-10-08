@@ -24,16 +24,16 @@ class Expert < ActiveRecord::Base
 
   validates :name, presence: true
 
-  has_one :contact, autosave: true, dependent: :destroy, as: :contactable
-  has_one :comment, autosave: true, dependent: :destroy, as: :commentable
+  has_and_belongs_to_many :languages
 
   has_many :attachments, autosave: true, dependent: :destroy, as: :attachable
   has_many :addresses,   autosave: true, dependent: :destroy, as: :addressable
-  has_many :langs,       autosave: true, dependent: :destroy, as: :langable
-  has_many :languages,   through:  :langs
 
   has_many :cvs, autosave: true, dependent: :destroy,
            select: [:id, :expert_id, :language_id], order: :language_id
+
+  has_one :contact, autosave: true, dependent: :destroy, as: :contactable
+  has_one :comment, autosave: true, dependent: :destroy, as: :commentable
 
   belongs_to :user, select: [:id, :name, :prename]
   belongs_to :country
@@ -90,11 +90,10 @@ class Expert < ActiveRecord::Base
   # Returns an unordered array of expert ids.
   def self.search_languages(language_ids)
     sql = <<-SQL
-      SELECT langs.langable_id AS expert_id, COUNT(*) AS num
-      FROM langs
-      WHERE langs.langable_type = 'Expert'
-        AND langs.language_id IN (:ids)
-      GROUP BY expert_id
+      SELECT experts_languages.expert_id, COUNT(*) AS num
+      FROM experts_languages
+      WHERE experts_languages.language_id IN (:ids)
+      GROUP BY experts_languages.expert_id
       HAVING num > :num
     SQL
 

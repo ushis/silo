@@ -7,24 +7,11 @@ require 'set'
 # - *id* integer
 # - *language* string
 #
-# Alone it is quite useless, but in combination with the polymorphic Lang
-# model it provides the possibility to associate an arbitrary model with one
-# or more languages.
-#
-#   class Something < ActiveRecord::Base
-#     has_many :lang
-#     has_and_belongs_to_many :languages, through: :lang
-#   end
-#
 # The Language#human method provides access to localized language names.
 class Language < ActiveRecord::Base
   attr_accessible :language
 
   validates :language, presence: true, uniqueness: true
-
-  has_one  :cv
-  has_many :langs,   dependent: :destroy
-  has_many :experts, through:   :langs
 
   # A set of prioritized language codes.
   PRIORITIES = [:de, :en, :es, :fr].to_set
