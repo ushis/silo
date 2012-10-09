@@ -14,7 +14,7 @@ class ExpertsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.pdf { search_report(@experts) }
+      format.pdf { search_report(@experts, params) }
     end
   end
 
