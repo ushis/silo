@@ -107,19 +107,19 @@ module Symbolize
       end
 
       # Defines the setter method.
-      define_method("#{attr_name}=") do |value|
+      define_method(:"#{attr_name}=") do |value|
         write_symbolized_attribute(attr_name, value)
       end
 
       # Defines the set_default_xxx method and adds a before_save callback.
       unless options[:default].nil?
-        define_method("set_default_#{attr_name}") do
+        define_method(:"set_default_#{attr_name}") do
           if read_symbolized_attribute(attr_name).nil?
             write_symbolized_attribute(attr_name, options[:default])
           end
         end
 
-        send(:before_save, "set_default_#{attr_name}".to_sym)
+        send(:before_save, :"set_default_#{attr_name}")
       end
 
       return unless options[:in].is_a?(Array)
@@ -132,14 +132,14 @@ module Symbolize
       end
 
       # Defines the localized getter method.
-      define_method("human_#{attr_name}") do
+      define_method(:"human_#{attr_name}") do
         self.class.translate_symbolized_value(attr_name, send(attr_name), options[:i18n_scope])
       end
 
       # Defines the class method returning the list of all values.
-      define_singleton_method("#{attr_name}_values") do
-        const_get(const).inject([]) do |values, sym|
-          values << [translate_symbolized_value(attr_name, sym, options[:i18n_scope]), sym]
+      define_singleton_method(:"#{attr_name}_values") do
+        const_get(const).collect do |sym|
+          [translate_symbolized_value(attr_name, sym, options[:i18n_scope]), sym]
         end
       end
 
