@@ -15,7 +15,9 @@ class UsersController < ApplicationController
 
   # Serves the users profile. Admins are redirected to their edit page.
   def profile
-    redirect_to edit_user_url(current_user) if current_user.admin?
+    if current_user.admin?
+      redirect_to edit_user_url(current_user) and return
+    end
 
     @user = current_user
     @title = t('labels.user.profile')
@@ -25,27 +27,30 @@ class UsersController < ApplicationController
   # Updates a users profile. If a user wants to change his(her password, the
   # old password is required.
   def update_profile
-    password_old = params[:user].delete(:password_old)
-    @user = current_user
-
-    if ! params[:user][:password].blank? && ! @user.authenticate(password_old)
-      @user.errors.add(:password_old, t('messages.user.errors.password'))
-      raise 'Wrong password!'
-    end
-
-    @user.attributes = params[:user]
-
-    unless @user.save
-      raise 'Could not save user.'
-    end
-
-    I18n.locale = @user.locale
-    flash.now[:notice] = t('messages.generics.success.save')
-  rescue
-    flash.now[:alert] = t('messages.generics.errors.save')
-  ensure
     @title = t('labels.user.profile')
     body_class << :edit
+
+    password = params[:user].try(:delete, :password)
+    password_old = params[:user].try(:delete, :password_old)
+
+    @user = current_user
+    @user.attributes = params[:user]
+
+    if ! password.blank? && ! @user.authenticate(password_old)
+      @user.errors.add(:password_old, t('messages.user.errors.password'))
+      flash.now[:alert] = t('messages.generics.errors.save')
+      render :profile and return
+    end
+
+    @user.password = password
+
+    if @user.save
+      I18n.locale = @user.locale
+      flash.now[:notice] = t('messages.generics.success.save')
+    else
+      flash.now[:alert] = t('messages.generics.errors.save')
+    end
+
     render :profile
   end
 
