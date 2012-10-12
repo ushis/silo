@@ -43,8 +43,6 @@ class User < ActiveRecord::Base
   has_many :experts
   has_one  :privilege, autosave: true, dependent: :destroy
 
-  default_scope includes(:privilege)
-
   # Auto initializes the users privileges on access.
   def privilege
     super || self.privilege = Privilege.new
@@ -123,6 +121,8 @@ class User < ActiveRecord::Base
   def full_name
     "#{prename} #{name}"
   end
+
+  alias :to_s :full_name
 
   private
 

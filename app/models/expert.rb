@@ -18,13 +18,13 @@
 # - *updated_at* datetime
 class Expert < ActiveRecord::Base
   attr_accessible :name, :prename, :gender, :birthday, :fee, :job, :degree,
-                  :former_collaboration, :country_id
+                  :former_collaboration, :country_id, :comment_attributes
 
   symbolize :gender, in: [:female, :male]
 
   validates :name, presence: true
 
-  has_and_belongs_to_many :languages
+  has_and_belongs_to_many :languages, uniq: true
 
   has_many :attachments, autosave: true, dependent: :destroy, as: :attachable
   has_many :addresses,   autosave: true, dependent: :destroy, as: :addressable
@@ -44,6 +44,8 @@ class Expert < ActiveRecord::Base
   scope :none, where('1 < 0')
 
   default_scope includes(:country)
+
+  accepts_nested_attributes_for :comment
 
   # Searches for experts. Takes a hash with condtions:
   #

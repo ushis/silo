@@ -3,39 +3,34 @@
 module Symbolize
   extend ActiveSupport::Concern
 
-  # Defines several helper methods, needed to symbolize attributes on read and
-  # write. It should not be necessary to use them directly.
-  module InstanceMethods
-
-    # Symbolizes a value. Boolean and numeric values are preserved.
-    #
-    #   symbolize('hello')    #=> :hello
-    #   symbolize('')         #=> nil
-    #   smybolize(true)       #=> true
-    #   symbolize(47)         #=> 47
-    #   symbolize(Symbolize)  #=> nil
-    #
-    # Returns nil for empty strings and invlalid types.
-    def symbolize(value)
-      case value
-      when String
-        value.empty? ? nil : value.to_sym
-      when Symbol, TrueClass, FalseClass, Numeric
-        value
-      else
-        nil
-      end
+  # Symbolizes a value. Boolean and numeric values are preserved.
+  #
+  #   symbolize('hello')    #=> :hello
+  #   symbolize('')         #=> nil
+  #   smybolize(true)       #=> true
+  #   symbolize(47)         #=> 47
+  #   symbolize(Symbolize)  #=> nil
+  #
+  # Returns nil for empty strings and invlalid types.
+  def symbolize(value)
+    case value
+    when String
+      value.empty? ? nil : value.to_sym
+    when Symbol, TrueClass, FalseClass, Numeric
+      value
+    else
+      nil
     end
+  end
 
-    # Returns a symbolized attribute.
-    def read_symbolized_attribute(attr_name)
-      symbolize(read_attribute(attr_name))
-    end
+  # Returns a symbolized attribute.
+  def read_symbolized_attribute(attr_name)
+    symbolize(read_attribute(attr_name))
+  end
 
-    # Symbolizes an attribute before writing it.
-    def write_symbolized_attribute(attr_name, value)
-      write_attribute(attr_name, symbolize(value))
-    end
+  # Symbolizes an attribute before writing it.
+  def write_symbolized_attribute(attr_name, value)
+    write_attribute(attr_name, symbolize(value))
   end
 
   # Defines class methods to activate attribute symbolization.

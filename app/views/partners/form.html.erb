@@ -1,0 +1,80 @@
+<%= render 'sidebar' %>
+
+<div id="main">
+  <div>
+    <h2 class="icon-partner-edit">
+      <%= @title %>
+    </h2>
+    <% unless @partner.errors.empty? %>
+      <%= render 'shared/validation_errors', model: @partner %>
+    <% end %>
+    <div class="form-wrapper">
+      <%= form_for @partner do |f| %>
+        <div class="row main">
+          <div>
+            <%= f.label :company %>
+            <%= f.text_field :company %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="businesses">
+            <%= f.label :businesses %>
+            <%= f.text_field :businesses, value: @partner.businesses.join(', ') %>
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <%= f.label :street %>
+            <%= f.text_field :street %>
+          </div>
+          <div>
+            <%= f.label :zip %>
+            <%= f.text_field :zip %>
+          </div>
+          <div>
+            <%= f.label :city %>
+            <%= f.text_field :city %>
+          </div>
+          <div>
+            <%= f.label :region %>
+            <%= f.text_field :region %>
+          </div>
+          <div>
+            <%= f.label :country %>
+            <%= f.country_select :country_id %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="contact-persons">
+            <%= f.label :contact_persons %>
+            <%= f.text_field :contact_persons, value: @partner.contact_persons.join(', ') %>
+          </div>
+        </div>
+        <div class="row">
+          <%= f.fields_for :comment do |fields| %>
+            <div class="comment">
+              <%= fields.label :comment %>
+              <%= fields.text_area :comment %>
+            </div>
+          <% end %>
+        </div>
+        <div class="row">
+          <div class="submit">
+            <%= f.submit t('actions.save') %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="clear"></div>
+</div>
+
+<script>
+  $('div.businesses input')
+  .siloAutocomplete('<%= businesses_select_path format: :json %>', 'business');
+
+  $('div.contact-persons input')
+  .siloMultiSelect('contact_persons', '<%= select_users_path %>', {
+    selected: <%= @partner.contact_persons.map(&:id).to_json.html_safe %>
+  });
+</script>

@@ -128,9 +128,9 @@ class Attachment < ActiveRecord::Base
     end while path.exist?
 
     if block_given?
-      File.open(path, 'wb') { |f| yield(f) }
+      path.open('wb') { |f| yield(f) }
     else
-      File.open(path, 'wb')
+      path.open('wb')
     end
   end
 end

@@ -120,16 +120,17 @@ de:
       contact: 'Kontakt'
       details: 'Details'
       documents: 'Dokumente'
-      edit: 'Experte bearbeiten'
+      edit: 'Experten bearbeiten'
       index: 'Experten'
       new: 'Neuer Experte'
       search: 'Experten suchen'
     language:
       languages: 'Sprachen'
-    partners:
-      index: 'Partner'
-    references:
-      index: 'Referenzen'
+    partner:
+      all: 'Alle Partner'
+      new: 'Neuer Partner'
+    reference:
+      all: 'Alle Referenzen'
     sections:
       experts: 'Experten'
       partners: 'Partner'

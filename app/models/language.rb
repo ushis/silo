@@ -13,6 +13,8 @@ class Language < ActiveRecord::Base
 
   validates :language, presence: true, uniqueness: true
 
+  has_and_belongs_to_many :experts, uniq: true
+
   # A set of prioritized language codes.
   PRIORITIES = [:de, :en, :es, :fr].to_set
 

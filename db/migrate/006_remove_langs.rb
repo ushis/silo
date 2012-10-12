@@ -5,8 +5,7 @@ class RemoveLangs < ActiveRecord::Migration
       t.integer :language_id, null: false
     end
 
-    add_index :experts_languages, :expert_id
-    add_index :experts_languages, :language_id
+    add_index :experts_languages, [:expert_id, :language_id], unqiue: true
 
     execute <<-SQL
       INSERT INTO experts_languages (expert_id, language_id)

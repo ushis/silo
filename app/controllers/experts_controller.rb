@@ -57,20 +57,16 @@ class ExpertsController < ApplicationController
 
   # Creates a new expert and redirects to the experts details page on success.
   def create
-    comment = params[:expert].try(:delete, :comment)
-
     @expert = Expert.new(params[:expert])
     @expert.user = current_user
-    @expert.comment.comment = comment[:comment] if comment
     @expert.languages = arrayified_param(:languages)
 
     if @expert.save
       flash[:notice] = t('messages.expert.success.create', name: @expert.name)
       redirect_to expert_url(@expert) and return
-    else
-      flash[:alert] = t('messages.expert.errors.create')
     end
 
+    flash.now[:alert] = t('messages.expert.errors.create')
     @title = t('labels.expert.new')
     body_class << :new
     render :form
@@ -87,21 +83,15 @@ class ExpertsController < ApplicationController
   def update
     @expert = Expert.find(params[:id])
     @expert.user = current_user
-
-    if (comment = params[:expert].try(:delete, :comment))
-      @expert.comment.comment = comment[:comment]
-    end
-
     @expert.attributes = params[:expert]
     @expert.languages = arrayified_param(:languages)
 
     if @expert.save
       flash[:notice] = t('messages.expert.success.save')
       redirect_to expert_url(@expert) and return
-    else
-      flash.now[:alert] = t('messages.expert.errors.save')
     end
 
+    flash.now[:alert] = t('messages.expert.errors.save')
     @title = t('labels.expert.edit')
     body_class << :edit
     render :form

@@ -1,0 +1,11 @@
+<nav id="sidebar">
+  <ul>
+    <li class="index">
+      <%= link_to t('labels.partner.all'), partners_path, class: 'icon-list' %>
+    </li>
+    <li class="new">
+      <%= restricted_link_to t('labels.partner.new'), new_partner_path,
+                             :partners, class: 'icon-expert-add' %>
+    </li>
+  </ul>
+</nav>

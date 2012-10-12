@@ -22,8 +22,8 @@ do($ = jQuery) ->
       @child = child.appendTo('body').fadeIn(200)
 
     fadeOut: ->
-      @layer.fadeOut 200, -> $(@).detach()
-      @child.fadeOut 200, -> $(@).detach()
+      @layer.fadeOut(200, -> $(@).detach())
+      @child.fadeOut(200, -> $(@).detach()) if @child
 
   # Adds the overlay class to an element and bindes the "show" and the
   # "close" event.
@@ -254,8 +254,35 @@ do($ = jQuery) ->
           storageKey = settings.storagePrefix + el.attr('name')
           el.removeAttr('name')
 
-          if settings.selected.length > 0 && hasStorage
+          if settings.selected.length > 0 && ! el.val().trim() && hasStorage
             el.val(localStorage[storageKey])
 
           el.closest('form').submit ->
             localStorage[storageKey] = el.val() if hasStorage
+
+  # Downloads possible values and intializes comma separated autocompletion
+  # for the connected text fields.
+  $.fn.siloAutocomplete = (url, attribute, options) ->
+    settings = $.extend {
+      minLength: 0
+    }, options
+
+    do (collection = @) ->
+      $.ajax url: url, dataType: 'json', success: (data) ->
+        values = (model[attribute] for model in data)
+
+        collection.each ->
+          $(@).autocomplete {
+            minLength: settings.minLength
+            appendTo: $(@).parent()
+            source: (req, res) ->
+              res($.ui.autocomplete.filter(values, req.term.split(/,\s*/).pop()))
+            focus: -> false
+            select: (e, ui) ->
+              terms = @value.split(/,\s*/)
+              terms.pop()
+              terms.push(ui.item.value)
+              terms.push('')
+              @value = terms.join(', ')
+              false
+          }

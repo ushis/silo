@@ -10,7 +10,11 @@ Silo::Application.routes.draw do
   get 'profile' => 'users#profile'
   put 'profile' => 'users#update_profile'
 
-  resources :users, except: [:show]
+  resources :users, except: [:show] do
+    collection do
+      get :select
+    end
+  end
 
   # Experts
   get 'experts(/page/:page)' => 'experts#index', as: :experts
@@ -31,7 +35,13 @@ Silo::Application.routes.draw do
   end
 
   # Partners
-  resources :partners
+  get 'partners(/page/:page)' => 'partners#index', as: :partners
+
+  resources :partners, except: [:index] do
+    collection do
+      get 'search(/page/:page)' => 'partners#search', as: :search
+    end
+  end
 
   # References
   resources :references
@@ -39,9 +49,8 @@ Silo::Application.routes.draw do
   # Help
   get 'help/:section' => 'help#show', as: :help
 
-  # Areas
-  get 'areas/select' => 'areas#select'
-
-  # Languages
-  get 'languages/select' => 'languages#select'
+  # Areas, Languages, Businesses
+  [:areas, :languages, :businesses].each do |controller|
+    get "#{controller}/select" => "#{controller}#select"
+  end
 end

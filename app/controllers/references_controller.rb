@@ -9,7 +9,7 @@ class ReferencesController < ApplicationController
 
   #
   def index
-    @title = t('labels.references.index')
+    @title = t('labels.reference.all')
   end
 
   #

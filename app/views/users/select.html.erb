@@ -1,0 +1,29 @@
+<div class="multi-select users">
+  <div class="header">
+    <h2>
+      <%= t 'labels.language.languages' %>
+    </h2>
+    <div class="submit button">
+      <%= t 'actions.submit' %>
+    </div>
+    <div class="abort button">
+      <%= t 'actions.abort' %>
+    </div>
+  </div>
+  <div class="select">
+    <ul>
+      <% @users.each_slice(@users.length.fdiv(4).ceil) do |slice| %>
+        <li class="col">
+          <ul>
+            <% slice.each do |user| %>
+              <li class="item">
+                <%= check_box_tag user.id, 1, false, 'data-name' => user.full_name %>
+                <%= label_tag user.id, user.full_name %>
+              </li>
+            <% end %>
+          </ul>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>

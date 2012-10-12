@@ -27,6 +27,19 @@ CREATE TABLE `attachments` (
   KEY `index_attachments_on_attachable_id_and_attachable_type` (`attachable_id`,`attachable_type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE `businesses` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `business` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_businesses_on_business` (`business`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `businesses_partners` (
+  `business_id` int(11) NOT NULL,
+  `partner_id` int(11) NOT NULL,
+  UNIQUE KEY `index_businesses_partners_on_business_id_and_partner_id` (`business_id`,`partner_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 CREATE TABLE `comments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `commentable_id` int(11) DEFAULT NULL,
@@ -68,6 +81,18 @@ CREATE TABLE `cvs` (
   FULLTEXT KEY `fulltext_cv` (`cv`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+CREATE TABLE `employees` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `partner_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `gender` varchar(255) DEFAULT NULL,
+  `job` varchar(255) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_employees_on_partner_id` (`partner_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 CREATE TABLE `experts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
@@ -92,8 +117,7 @@ CREATE TABLE `experts` (
 CREATE TABLE `experts_languages` (
   `expert_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
-  KEY `index_experts_languages_on_expert_id` (`expert_id`),
-  KEY `index_experts_languages_on_language_id` (`language_id`)
+  KEY `index_experts_languages_on_expert_id_and_language_id` (`expert_id`,`language_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `languages` (
@@ -101,6 +125,33 @@ CREATE TABLE `languages` (
   `language` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_languages_on_language` (`language`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `partners` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `country_id` int(11) DEFAULT NULL,
+  `company` varchar(255) NOT NULL,
+  `street` varchar(255) DEFAULT NULL,
+  `city` varchar(255) DEFAULT NULL,
+  `zip` varchar(255) DEFAULT NULL,
+  `region` varchar(255) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_partners_on_company` (`company`),
+  KEY `index_partners_on_user_id` (`user_id`),
+  KEY `index_partners_on_country_id` (`country_id`),
+  KEY `index_partners_on_street` (`street`),
+  KEY `index_partners_on_city` (`city`),
+  KEY `index_partners_on_zip` (`zip`),
+  KEY `index_partners_on_region` (`region`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `partners_users` (
+  `partner_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  UNIQUE KEY `index_partners_users_on_partner_id_and_user_id` (`partner_id`,`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `privileges` (
@@ -146,3 +197,5 @@ INSERT INTO schema_migrations (version) VALUES ('4');
 INSERT INTO schema_migrations (version) VALUES ('5');
 
 INSERT INTO schema_migrations (version) VALUES ('6');
+
+INSERT INTO schema_migrations (version) VALUES ('7');

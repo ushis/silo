@@ -1,3 +1,31 @@
-<p class="not-implemented">
-  Coming soon.
-</p>
+<%= render 'sidebar' %>
+
+<div id="main">
+  <div>
+    <div id="header">
+      ---
+    </div>
+    <table class="partners">
+      <thead>
+        <tr>
+          <% [:company, :city, :country, :website, :businesses].each do |col| %>
+            <th>
+              <%= Partner.human_attribute_name(col) %>
+            </th>
+          <% end %>
+          <th class="attachments">
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @partners.each do |partner| %>
+          <tr>
+            <td>
+              <%= partner.company %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

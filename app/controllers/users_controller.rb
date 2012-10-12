@@ -1,8 +1,17 @@
 # The UsersController provides CRUD actions for the users data. It is
-# accessibles as admin only. Exceptions are the methods _profile_ and
-# _update_profile_.
+# accessibles as admin only. Exceptions are the methods
+# UsersController#profile, UsersController#update_profile and
+# UsersController#select.
 class UsersController < ApplicationController
-  skip_before_filter :authorize, only: [:profile, :update_profile]
+  skip_before_filter :authorize,    only: [:profile, :update_profile, :select]
+  skip_before_filter :authenticate, only: [:select]
+
+  layout false, only: [:select]
+
+  # Serves a multi select box.
+  def select
+    @users = User.order(:name, :prename)
+  end
 
   # Serves the users profile. Admins are redirected to their edit page.
   def profile
@@ -42,7 +51,7 @@ class UsersController < ApplicationController
 
   # Serves a list of all users.
   def index
-    @users = User.order('name, prename')
+    @users = User.includes(:privilege).order('name, prename')
     @title = t('labels.user.all')
   end
 
@@ -55,8 +64,8 @@ class UsersController < ApplicationController
 
   # Creates a new user and redirects to the new users edit page.
   def create
-    username = params[:user].delete(:username)
-    privileges = params[:user].delete(:privilege)
+    username = params[:user].try(:delete, :username)
+    privileges = params[:user].try(:delete, :privilege)
 
     @user = User.new(params[:user])
     @user.username = username
@@ -84,8 +93,8 @@ class UsersController < ApplicationController
   #
   # *Note:* A user can not change his/her own privileges.
   def update
-    username = params[:user].delete(:username)
-    privileges = params[:user].delete(:privilege)
+    username = params[:user].try(:delete, :username)
+    privileges = params[:user].try(:delete, :privilege)
 
     @user = User.find(params[:id])
     @user.attributes = params[:user]

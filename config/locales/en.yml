@@ -124,10 +124,11 @@ en:
       search: 'Search Experts'
     language:
       languages: 'Languages'
-    partners:
-      index: 'Partners'
-    references:
-      index: 'References'
+    partner:
+      all: 'All Partners'
+      new: 'New Partner'
+    reference:
+      all: 'All References'
     sections:
       experts: 'Experts'
       partners: 'Partners'
