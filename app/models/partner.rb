@@ -34,16 +34,24 @@ class Partner < ActiveRecord::Base
   accepts_nested_attributes_for :comment
 
   scope :with_meta, includes(:businesses, :attachments)
-
-  scope :none, where('1 < 0')
+  scope :none,      where('1 < 0')
 
   default_scope includes(:country)
 
+  # Searches for partners. Takes a hash of conditions.
+  #
+  # - *:company* A (partial) company name.
+  # - *:countries* An Array of country ids.
+  # - *:businesses* An Array of business ids.
+  # - *:q* A string used for fulltext search.
+  #
+  # The results are ordered by company. If _:q_ is present, the results are
+  # ordered by relevance.
   def self.search(params)
     s = self
 
     unless params[:company].blank?
-      s = s.where('company LIKE :c', c: "%#{params[:company]}%")
+      s = s.where('company LIKE ?', "%#{params[:company]}%")
     end
 
     if (countries = params[:countries]).is_a?(Array) && ! countries.empty?
@@ -66,6 +74,12 @@ class Partner < ActiveRecord::Base
     s.where(id: ids).order('FIELD(partners.id, %s)' % ids.join(', '))
   end
 
+  # Searches for partners tagged with all of the specified businesses.
+  #
+  #   Partner.search_businesses([3, 23, 12, 1])
+  #   #=> [43, 1, 103]
+  #
+  # Returns an unordered Array of partner ids.
   def self.search_businesses(business_ids)
     sql = <<-SQL
       SELECT businesses_partners.partner_id, COUNT(*) AS num
