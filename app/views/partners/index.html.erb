@@ -8,7 +8,7 @@
     <table class="partners">
       <thead>
         <tr>
-          <% [:company, :city, :country, :website, :businesses].each do |col| %>
+          <% [:company, :businesses, :city, :region, :country].each do |col| %>
             <th>
               <%= Partner.human_attribute_name(col) %>
             </th>
@@ -21,7 +21,19 @@
         <% @partners.each do |partner| %>
           <tr>
             <td>
-              <%= partner.company %>
+              <%= link_to partner.company, partner_path(partner) %>
+            </td>
+            <td>
+              <%= partner.businesses.join(', ') %>
+            </td>
+            <td>
+              <%= partner.city %>
+            </td>
+            <td>
+              <%= partner.region %>
+            </td>
+            <td>
+              <%= partner.country.human %>
             </td>
           </tr>
         <% end %>

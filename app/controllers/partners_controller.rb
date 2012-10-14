@@ -41,6 +41,7 @@ class PartnersController < ApplicationController
 
     flash.now[:alert] = t('messages.partner.errors.create')
     @title = t('labels.partner.new')
+    body_class << :new
     render :form
   end
 
@@ -53,10 +54,38 @@ class PartnersController < ApplicationController
 
   #
   def update
+    @partner = Partner.find(params[:id])
+    @partner.user = current_user
+    @partner.contact_persons = arrayified_param(:contact_persons)
+    @partner.attributes = params[:partner]
+
+    if @partner.save
+      flash[:notice] = t('messages.partner.success.save')
+      redirect_to partner_url(@partner) and return
+    end
+
+    flash.now[:alert] = t('messages.partner.errors.save')
+    @title = t('labels.partner.edit')
+    body_class << :edit
+    render :form
   end
 
   #
   def destroy
+    partner = Partner.find(params[:id])
+
+    unless current_user.authenticate(params[:password])
+      flash[:alert] = t('messages.user.errors.password')
+      redirect_to partner_url(partner) and return
+    end
+
+    if partner.destroy
+      flash[:notice] = t('messages.partner.success.delete', name: partner.company)
+      redirect_to partners_url
+    else
+      flash[:alert] = t('messages.partner.errors.delete')
+      redirect_to partner_url(partner)
+    end
   end
 
   #

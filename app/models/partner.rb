@@ -18,7 +18,7 @@ class Partner < ActiveRecord::Base
   attr_accessible :country_id, :company, :street, :city, :zip, :region,
                   :businesses, :comment_attributes
 
-  validates :company, presence: true
+  validates :company, presence: true, uniqueness: true
 
   has_and_belongs_to_many :businesses, uniq: true
   has_and_belongs_to_many :contact_persons, class_name: :User, uniq: true
@@ -31,6 +31,24 @@ class Partner < ActiveRecord::Base
   belongs_to :country
 
   accepts_nested_attributes_for :comment
+
+  # Searches the fulltext associations, such as Comment.
+  #
+  #   Partner.search_fulltext('Banana Split')
+  #   #=> [4, 34, 1, 23]
+  #
+  # Returns an array of partner ids ordered by relevance.
+  def self.search_fulltext(query)
+    sql = <<-SQL
+      SELECT comments.commentable_id
+      FROM comments
+      WHERE comments.commentable_type = 'Partner'
+        AND MATCH (comments.comment) AGAINST (:q IN BOOLEAN MODE)
+      ORDER BY MATCH (comments.comment) AGAINST (:q IN BOOLEAN MODE) DESC
+    SQL
+
+    connection.select_rows(sanitize_sql([sql, q: query])).map(&:first)
+  end
 
   # Returns the partners comment. A new one is initialized if necessary.
   def comment

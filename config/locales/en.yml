@@ -139,6 +139,7 @@ en:
       edit: 'Edit User'
       new: 'New User'
       profile: 'Profile'
+      users: 'Users'
   messages:
     generics:
       confirm:

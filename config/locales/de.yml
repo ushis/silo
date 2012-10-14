@@ -141,6 +141,7 @@ de:
       edit: 'Benutzer bearbeiten'
       new: 'Neuer Benutzer'
       profile: 'Profil'
+      users: 'Benutzer'
   messages:
     generics:
       confirm:

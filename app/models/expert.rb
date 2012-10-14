@@ -96,11 +96,12 @@ class Expert < ActiveRecord::Base
       FROM experts_languages
       WHERE experts_languages.language_id IN (:ids)
       GROUP BY experts_languages.expert_id
-      HAVING num > :num
+      HAVING num >= :num
     SQL
 
-    sql = sanitize_sql([sql, ids: language_ids, num: language_ids.length - 1])
-    connection.select_all(sql).collect { |r| r['expert_id'] }
+    connection.select_rows(sanitize_sql(
+      [sql, ids: language_ids, num: language_ids.size]
+    )).map(&:first)
   end
 
   # Searches the fulltext associations, such as Comment and CV.
@@ -124,8 +125,7 @@ class Expert < ActiveRecord::Base
       ORDER BY score DESC
     SQL
 
-    sql = sanitize_sql([sql, q: query])
-    connection.select_all(sql).collect { |r| r['expert_id'] }
+    connection.select_rows(sanitize_sql([sql, q: query])).map(&:first)
   end
 
   # Initializes the contact on access, if not already initalized.

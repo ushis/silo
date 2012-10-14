@@ -22,13 +22,6 @@ class Comment < ActiveRecord::Base
 
   belongs_to :commentable, polymorphic: true
 
-  # Adds a fulltext search condition to the query.
-  #
-  # Returns ActiveRecord::Relation.
-  def self.search(query)
-    where('MATCH (comments.comment) AGAINST (?)', query)
-  end
-
   # Initializes the comment with an empty string.
   def init_comment
     self.comment ||= ''
