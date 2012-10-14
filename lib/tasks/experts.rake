@@ -1,66 +1,17 @@
-#encoding: utf-8
-
 require 'carmen'
 require 'colorize'
+require 'psych'
 
 namespace :experts do
 
   task :import, [:input, :output] => [:environment] do |task, args|
-    puts "Importing experts data from XML file: #{args[:input]}"
+    countries = nil
 
-    countries = {
-      'Aouth Africa'                     => 'ZA',
-      'Austrialia'                       => 'AU',
-      'Australia 3149'                   => 'AU',
-      'Australia 4350'                   => 'AU',
-      'Bosnia And Herzegovina'           => 'BA',
-      'Bolivia'                          => 'BO',
-      'Canada B0 J 2 C0'                 => 'CA',
-      'Canada J4 Z 1 G5'                 => 'CA',
-      'Colombia 8'                       => 'CO',
-      'Costa Rica C.A.'                  => 'CR',
-      'CÔte D’Ivoire'                    => 'CI',
-      'French'                           => 'FR',
-      'Guatemala 01010'                  => 'GT',
-      'Guinea Bissau'                    => 'GW',
-      'India 400 058'                    => 'IN',
-      'Iran'                             => 'IR',
-      'Kazakhstan, 480002'               => 'KZ',
-      'Kazakhstan 480090'                => 'KZ',
-      'Kosovar Albanian'                 => 'AL',
-      'Kosovo Albania'                   => 'AL',
-      'Kosovo'                           => 'AL',
-      'Kosova'                           => 'AL',
-      'Lao Pdr'                          => 'LA',
-      'Laos'                             => 'LA',
-      'Macedonia'                        => 'MK',
-      'Mocambique'                       => 'MZ',
-      'Moldova'                          => 'MD',
-      'North Ireland'                    => 'IE',
-      'Palestinian'                      => 'PS',
-      'Papua Neuguinea'                  => 'PG',
-      'Russia'                           => 'RU',
-      'Saint Lucian'                     => 'LC',
-      'Saint Vincent And The Grenadines' => 'VC',
-      'Scotland'                         => 'GB',
-      'Sebien'                           => 'RS',
-      'Serbien'                          => 'RS',
-      'Simbabwe'                         => 'ZW',
-      'Spain, Canary Isles'              => 'ES',
-      'St. Kitts & Nevis'                => 'KN',
-      'Syria'                            => 'SY',
-      'Tanzania'                         => 'TZ',
-      'The Gambia'                       => 'GM',
-      'Timor Leste'                      => 'TL',
-      'Trinidad And Tobago'              => 'TT',
-      'Trinidad & Tobago'                => 'TT',
-      'Tunisie'                          => 'TN',
-      'U.P. India'                       => 'IN',
-      'United Kingdom (Scotland)'        => 'GB',
-      'Usa 07450'                        => 'US',
-      'Venezuela'                        => 'VE',
-      'Vietnam'                          => 'VN'
-    }.inject({}) { |c, t| c[t[0]] = Carmen::Country.coded(t[1]); c }
+    File.open(File.expand_path('../countries.yml', __FILE__)) do |f|
+      countries = Psych.load(f.read).fetch('countries')
+    end
+
+    countries.each { |c, code| countries[c] = Carmen::Country.coded(code) }
 
     country_from_s = lambda do |s|
       c = s.split('/')[0].gsub(/!|\?/, '').strip.titleize
@@ -77,6 +28,8 @@ namespace :experts do
 
       Country.find_by_country(co.code)
     end
+
+    puts "Importing experts data from XML file: #{args[:input]}"
 
     File.open(args[:input]) do |f|
       user = User.first

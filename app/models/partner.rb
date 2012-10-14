@@ -18,12 +18,13 @@ class Partner < ActiveRecord::Base
   attr_accessible :country_id, :company, :street, :city, :zip, :region,
                   :businesses, :comment_attributes
 
-  validates :company, presence: true, uniqueness: true
+  validates :company, presence: true
 
   has_and_belongs_to_many :businesses, uniq: true
   has_and_belongs_to_many :contact_persons, class_name: :User, uniq: true
 
-  has_many :employees, autosave: true, dependent: :destroy
+  has_many :employees,   autosave: true, dependent: :destroy
+  has_many :attachments, autosave: true, dependent: :destroy, as: :attachable
 
   has_one :comment, autosave: true, dependent: :destroy, as: :commentable
 
@@ -31,6 +32,53 @@ class Partner < ActiveRecord::Base
   belongs_to :country
 
   accepts_nested_attributes_for :comment
+
+  scope :with_meta, includes(:businesses, :attachments)
+
+  scope :none, where('1 < 0')
+
+  default_scope includes(:country)
+
+  def self.search(params)
+    s = self
+
+    unless params[:company].blank?
+      s = s.where('company LIKE :c', c: "%#{params[:company]}%")
+    end
+
+    if (countries = params[:countries]).is_a?(Array) && ! countries.empty?
+      s = s.where(country_id: countries)
+    end
+
+    if (businesses = params[:businesses]).is_a?(Array) && ! businesses.empty?
+      return none if (ids = search_businesses(businesses)).empty?
+      s = s.where(id: ids)
+    end
+
+    if params[:q].blank?
+      return s.order(:company)
+    end
+
+    if (ids = search_fulltext(params[:q])).empty?
+      return none
+    end
+
+    s.where(id: ids).order('FIELD(partners.id, %s)' % ids.join(', '))
+  end
+
+  def self.search_businesses(business_ids)
+    sql = <<-SQL
+      SELECT businesses_partners.partner_id, COUNT(*) AS num
+      FROM businesses_partners
+      WHERE businesses_partners.business_id IN (:ids)
+      GROUP BY businesses_partners.partner_id
+      HAVING num >= :num
+    SQL
+
+    connection.select_rows(sanitize_sql(
+      [sql, ids: business_ids, num: business_ids.size]
+    )).map(&:first)
+  end
 
   # Searches the fulltext associations, such as Comment.
   #

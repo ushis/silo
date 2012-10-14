@@ -139,7 +139,7 @@ CREATE TABLE `partners` (
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `index_partners_on_company` (`company`),
+  KEY `index_partners_on_company` (`company`),
   KEY `index_partners_on_user_id` (`user_id`),
   KEY `index_partners_on_country_id` (`country_id`),
   KEY `index_partners_on_street` (`street`),

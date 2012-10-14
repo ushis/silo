@@ -1,0 +1,32 @@
+<div class="multi-select businesses">
+  <div class="header">
+    <h2>
+      <%= t 'labels.businesses.businesses' %>
+    </h2>
+    <div class="submit button">
+      <%= t 'actions.submit' %>
+    </div>
+    <div class="abort button">
+      <%= t 'actions.abort' %>
+    </div>
+  </div>
+  <div class="select">
+    <% unless @businesses.empty? %>
+      <ul>
+        <% @businesses.each_slice(@businesses.length.fdiv(4).ceil) do |slice| %>
+          <li class="col">
+            <ul>
+              <% slice.each do |business| %>
+                <li class="item">
+                  <%= check_box_tag business.id, 1, false,
+                                    'data-name' => business.to_s %>
+                  <%= label_tag business.id, business.to_s %>
+                </li>
+              <% end %>
+            </ul>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+</div>

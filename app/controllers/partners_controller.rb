@@ -9,12 +9,17 @@ class PartnersController < ApplicationController
 
   #
   def index
-    @partners = Partner.limit(50).page(params[:page]).order(:company)
+    @partners = Partner.with_meta.limit(50).page(params[:page]).order(:company)
     @title = t('labels.partner.all')
   end
 
   #
   def search
+    _params = params.merge(arrayified_params(:businesses, :countries))
+    @partners = Partner.with_meta.search(_params).limit(50).page(params[:page])
+    @title = t('labels.partner.search')
+    body_class << :index
+    render :index
   end
 
   #

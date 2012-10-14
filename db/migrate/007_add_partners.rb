@@ -17,9 +17,7 @@ class AddPartners < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index :partners, :company, unique: true
-
-    [:user_id, :country_id, :street, :city, :zip, :region].each do |col|
+    [:company, :user_id, :country_id, :street, :city, :zip, :region].each do |col|
       add_index :partners, col
     end
 
