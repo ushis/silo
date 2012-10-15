@@ -21,18 +21,18 @@
               <%= l user.created_at, format: :short  %>
             </p>
             <p>
-              <%= list_privileges(user, 'icon-checkmark') %>
+              <%= list_privileges(user, 'icon-ok') %>
             </p>
           </td>
           <td class="icons">
             <ul>
               <li>
                 <%= link_to(t('actions.edit'), edit_user_path(user),
-                            class: 'icon-edit') %>
+                            class: 'icon-pencil') %>
               </li>
               <li>
                 <%= button_to(t('actions.delete'), user_path(user),
-                              method: :delete, class: 'delete icon-delete',
+                              method: :delete, class: 'delete icon-trash',
                               confirm: t('messages.user.confirm.delete'))  %>
               </li>
             </ul>

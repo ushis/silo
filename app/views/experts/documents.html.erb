@@ -18,7 +18,7 @@
           <% else %>
             <% @expert.cvs.each do |cv| %>
               <tr>
-                <td class="icon-cv">
+                <td class="icon-file">
                   <%= link_to cv.language.human, [@expert, cv] %>
                 </td>
                 <td>
@@ -30,7 +30,7 @@
                 <% if current_user.access?(:experts) %>
                   <td class="del">
                     <%= button_to('x', [@expert, cv], method: :delete,
-                                  class: 'icon-delete',
+                                  class: 'icon-trash',
                                   confirm: t('messages.cv.confirm.delete')) %>
                   </td>
                 <% end %>
@@ -67,7 +67,7 @@
                 <% if current_user.access?(:experts) %>
                   <td class="del">
                     <%= button_to('x', [@expert, attachment], method: :delete,
-                                  class: 'icon-delete',
+                                  class: 'icon-trash',
                                   confirm: t('messages.attachment.confirm.delete')) %>
                   </td>
                 <% end %>

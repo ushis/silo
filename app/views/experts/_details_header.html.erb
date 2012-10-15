@@ -15,11 +15,11 @@
     <% if current_user.access?(:experts) %>
       <li>
         <%= link_to(t('actions.edit'), edit_expert_path(@expert),
-                    class: 'icon-edit') %>
+                    class: 'icon-pencil') %>
       </li>
       <li>
         <%= button_to(t('actions.delete'), expert_path(@expert),
-                      method: 'delete', class: 'icon-delete password',
+                      method: 'delete', class: 'icon-trash password',
                       confirm: t('messages.expert.confirm.delete')) %>
       </li>
     <% end %>
