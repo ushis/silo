@@ -85,14 +85,14 @@ ul.pagination li span {
 ul.pagination li a:hover {
   cursor: pointer;
   color: #222;
-  text-shadow: 1px 1px 0px rgba(255, 255, 255, .2);
+  text-shadow: 0 1px 0px rgba(255, 255, 255, .2);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), 0 1px 1px rgba(0, 0, 0, .2);
   background-color: rgb(236,236,236);
 }
 
 ul.pagination li span {
   color: #444;
-  text-shadow: 1px 1px 0px rgba(255, 255, 255, 1);
+  text-shadow: 0 1px 0px rgba(255, 255, 255, 1);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), 0 1px 1px rgba(0, 0, 0, .2);
   background: #f0f0f0;
 }
@@ -105,19 +105,41 @@ ul.pagination li span.gap {
 
 ul.pagination li.back a,
 ul.pagination li.next a {
-  padding: 4px 10px 3px 10px;
-  text-shadow: 1px 1px 0px rgba(255, 255, 255, 1);
+  color: #666;
+  background-color: #f0f0f0;
+  padding: 4px 9px 3px 9px;
+  text-shadow: 0 1px 0px rgba(255, 255, 255, .8);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), 0 1px 1px rgba(0, 0, 0, .2);
+}
+
+ul.pagination li.back a:hover,
+ul.pagination li.next a:hover {
+  color: #444;
 }
 
 ul.pagination li.back a {
   margin: 0 3px 0 0;
-  background: #f0f0f0 url(<%= asset_data_uri 'icon_back.png' %>) 7px 7px no-repeat;
 }
 
 ul.pagination li.next a {
   margin: 0 0 0 3px;
-  background: #f0f0f0 url(<%= asset_data_uri 'icon_next.png' %>) 8px 7px no-repeat;
+}
+
+ul.pagination li.back a:before,
+ul.pagination li.next a:before {
+  font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  display: inline-block;
+  text-decoration: inherit;
+}
+
+ul.pagination li.back a:before {
+  content: "\f0d9";
+}
+
+ul.pagination li.next a:before {
+  content: "\f0da";
 }
 
 div.pagination.bottom {
@@ -290,7 +312,7 @@ div.multi-select h3.ui-accordion-header a {
 div.multi-select h3.ui-accordion-header a:hover,
 div.multi-select h3.ui-accordion-header.ui-state-active a {
   color: #222;
-  text-shadow: 1px 1px 0px rgba(255, 255, 255, .2);
+  text-shadow: 0 1px 0px rgba(255, 255, 255, .2);
   background: rgb(236,236,236);
   background: -moz-linear-gradient(top, rgba(236,236,236,1) 0%, rgba(227,227,227,1) 100%);
   background: -webkit-linear-gradient(top, rgba(236,236,236,1) 0%, rgba(227,227,227,1) 100%);
@@ -382,7 +404,7 @@ div.multi-select div.select label {
   font-size: .9em;
   padding: 0 2px 4px 2px;
   font-weight: normal;
-  text-shadow: 1px 1px 0 rgba(255, 255, 255, .25);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, .25);
   cursor: pointer;
 }
 
