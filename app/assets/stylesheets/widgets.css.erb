@@ -7,15 +7,16 @@
 div.flash {
   float: left;
   position: relative;
-  top: 16px;
+  top: 19px;
   left: 16px;
   padding: 0 16px;
   font-size: 12px;
-  line-height: 24px;
-  color: #dbdbdb;
-  background-color: #3a3a3a;
-  border: 2px solid #4f4f4f;
-  border-radius: 2px;
+  line-height: 28px;
+  color: #757575;
+  background-color: #2E2E2E;
+  border-radius: 3px;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .5);
+  text-shadow: 0 1px 0 rgba(0, 0, 0, .5);
 }
 
 
@@ -24,22 +25,24 @@ div.flash:after {
   content: ' ';
   position: absolute;
   top: 50%;
-  right: 100%;
+  left: -10px;
   border: solid transparent;
   width: 0;
   height: 0;
 }
 
 div.flash:before {
-  margin-top: -8px;
-  border-width: 8px;
-  border-right-color: #4f4f4f;
+  margin-left: -1px;
+  margin-top: -7px;
+  border-width: 6px;
+  border-right-color: #222;
 }
 
 div.flash:after {
+  margin-left: 1px;
   margin-top: -5px;
   border-width: 5px;
-  border-right-color: #3a3a3a;
+  border-right-color: #2e2e2e;
 }
 
 div.flash.highlight {
