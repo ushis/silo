@@ -19,10 +19,15 @@
         <ul id="user-tools">
           <li>
             <%= link_to t('actions.logout'), login_path, method: :delete,
-                        class: 'icon-signout' %>
+                        class: 'icon-signout-after' %>
           </li>
+          <% if current_user.admin? %>
+            <li>
+              <%= link_to t('labels.sections.users') , users_path, class: 'icon-cog-after'%>
+            </li>
+          <% end %>
           <li>
-            <%= link_to current_user.full_name, profile_path %>
+            <%= link_to current_user.full_name, profile_path, class: 'icon-user-after'%>
           </li>
         </ul>
       </header>

@@ -73,7 +73,7 @@ div.clear {
 
 #header h1 {
   float: left;
-  margin: 15px 0 0 -10px;
+  margin: 18px 0 0 -13px;
 }
 
 #header h1 a {
@@ -96,9 +96,10 @@ div.clear {
 
 #user-tools {
   float: right;
-  margin:  16px -20px 0 0;
-  border: 2px solid #4f4f4f;
-  border-radius: 2px;
+  margin: 16px -20px 0 0;
+  padding: 4px;
+  position: relative;
+  border-radius: 3px;
 }
 
 #user-tools li {
@@ -106,29 +107,20 @@ div.clear {
   font-size: 12px;
 }
 
-#user-tools li:first-child {
-  border-left: 1px solid #4f4f4f;
-}
-
 #user-tools li a {
   display: block;
   line-height: 24px;
   padding: 0 10px;
+  color: #666;
+  text-shadow: 0 1px 0 rgba(0,0,0,.5);
 }
 
-#user-tools li input[type=submit] {
-  display: block;
-  margin: 0;
-  padding: 4px 10px 5px 10px;
+#user-tools li a:hover {
+  color: #999;
 }
 
-#user-tools li a:hover,
-#user-tools li input[type=submit]:hover {
-  background-color: #353535;
-}
-
-#user-tools li input[type=submit] {
-  padding-right: 26px;
+#user-tools li a:after {
+  margin-left: 7px;
 }
 
 /* Navigation */
@@ -273,7 +265,7 @@ body.users #nav li.users a {
   clear: both;
   padding: 10px 0;
   background-color: #dbdbdb;
-  border-radius: 0 4px 4px 4px;
+  border-radius: 4px;
 }
 
 /* Sidebar */
@@ -285,7 +277,7 @@ body.users #nav li.users a {
 }
 
 #sidebar ul li {
-  padding: 14px 0 10px;
+  padding: 4px 0 10px;
   border-bottom: 1px solid #c9c9c9;
   box-shadow: 0 1px 0 #e9e9e9;
 }
@@ -371,7 +363,6 @@ body.index #main {
 
 #filter input[type=text] {
   width: 193px;
-  margin-right: 10px;
 }
 
 #filter div.citizenship input[type=text] {
@@ -391,7 +382,7 @@ body.index #main {
   position: relative;
   cursor: pointer;
   padding: 2px 7px 1px 7px;
-  margin: 3px 0 0 -3px;
+  margin: 3px 0 0 7px;
   font-size: .7em;
   font-weight: bold;
   color: #777;
@@ -602,8 +593,7 @@ body.edit #main h2[class*=" icon-"]:before{
   padding: 7px;
 }
 
-#main table td.icons a,
-#main table td.icons input[type=submit] {
+#main table td.icons a {
   display: block;
   width: 18px;
   height: 18px;
@@ -626,6 +616,29 @@ body.edit #main h2[class*=" icon-"]:before{
   font-size: 1.25em;
 }
 
+#main div table td.del {
+  width: 20px;
+  padding: 0 5px 0 4px;
+  vertical-align: middle;
+  text-align: center;
+}
+
+#main div table td.del a {
+  display: block;
+  width: 20px;
+  height: 20px;
+  overflow: hidden;
+  color: #666;
+}
+
+#main div table td.del a:hover {
+  color: #444;
+}
+
+#main div table td.del a:before {
+  font-size: 1.2em;
+}
+
 #main table thead tr {
   line-height: 0;
 }
@@ -646,6 +659,178 @@ body.edit #main h2[class*=" icon-"]:before{
   float: right;
 }
 
+/* Show Tables */
+
+body.show #main div.left {
+  float: left;
+  width: 60%
+}
+
+body.show #main div.right {
+  float: right;
+  width: 38%
+}
+
+body.show #main div.info {
+  float: left;
+  position: relative;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  background-color: #f7f7f7;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+body.show #main div.info.contacts,
+body.show #main div.info.addresses {
+  background: none;
+  box-shadow: none;
+  padding: 0;
+  margin-top: -8px;
+}
+
+body.show #main div.info div.row {
+  float: left;
+  width: 100%;
+  padding: 7px 0;
+  border-bottom: 1px solid #e5e5e5;
+  box-shadow: 0 1px 1px rgba(255, 255, 255, 1);
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+body.show #main div.info div.row:first-child {
+  padding-top: 0;
+}
+
+body.show #main div.info div.row.last {
+  border-bottom: none;
+  box-shadow: none;
+  padding-bottom: 0;
+}
+
+body.show #main div.info div.row div {
+  float: left;
+  width: 100%;
+}
+
+body.show #main div.info div.row h4 {
+  color: #7a7a7a;
+  font-size: .7em;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, .9);
+}
+
+body.show #main div.info div.row p {
+  color: #444;
+  font-size: .8em;
+}
+
+body.show #main div.info div.row div.comments p {
+  font-size: .9em;
+}
+
+body.show #main div.info div.row p:empty:after,
+body.show #main div.info div.row div.markdown:empty:after {
+  content: '-';
+}
+
+body.show #main div.right div.tab div.form-wrapper {
+  float: left;
+  position: relative;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: #DBDBDB;
+  border-radius: 4px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, .2);
+}
+
+body.show #main div.right div.tab div.form-wrapper div textarea,
+body.show #main div.right div.tab div.form-wrapper div input[type=text] {
+  margin-bottom: 10px;
+}
+
+body.show #main div.right div.tab div.form-wrapper div select {
+  margin: 0;
+  width: 150px;
+}
+
+body.show #main div.right div.forms {
+  margin-top: 35px;
+  position: relative;
+}
+
+body.show #main div.right div.forms div.tab {
+  float: left;
+  width: 100%;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+body.show #main div.right div.forms ul.tabs {
+  width: 100%;
+  position: relative;
+  top: 0;
+  left: 0;
+  display: block;
+  margin-top: -29px;
+  z-index: 99;
+}
+
+body.show #main div.right div.forms ul.tabs li {
+  float: left;
+  cursor: pointer;
+  background: transparent;
+  margin-right: 3px;
+  border-radius: 4px 4px 0 0;
+  padding: 2px;
+}
+
+body.show #main div.right div.forms ul.tabs li a {
+  font-size: .75em;
+  color: #777777;
+  text-shadow: 0 1px 0 rgba(255,255,255,.5);
+  padding: 10px;
+}
+
+body.show #main div.right div.forms ul.tabs li.ui-state-active {
+  background: #DBDBDB;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, .2);
+  color: #525252;
+  border-bottom: 5px solid #DBDBDB;
+  margin-bottom: -10px;
+  z-index: 99;
+}
+
+body.show #main div.info table.within {
+  margin-bottom: -5px;
+}
+
+body.show #main div.info table.within td {
+  background: none;
+  border-spacing: 0;
+  box-shadow: none;
+  padding: 0 0 4px 0;
+  color: #444;
+  border-radius: 0;
+  border-bottom: 1px solid #E5E5E5;
+  box-shadow: 0 1px 1px rgba(255, 255, 255, 1);
+}
+
+body.show #main div.info table.within td a {
+  border-left: 1px solid #E5E5E5;
+  padding: 4px 0 4px 10px;
+}
+
+body.show #main div.info table.within tr:last-child td {
+  border-bottom: none;
+  box-shadow: none;
+  padding: 0;
+}
+
 /* Forms */
 #main form {
   position: relative;
@@ -657,13 +842,14 @@ body.edit #main h2[class*=" icon-"]:before{
 }
 
 #main input[type=submit],
-div.button {
+div.button,
+a.button {
   float: left;
   cursor: pointer;
   padding: 6px 14px 7px 14px;
   margin-left: 5px;
-  font-size: .7em;
   font-weight: bold;
+  font-size: .7em;
   color: #444;
   border: 0 none transparent;
   background: #f0f0f0;
@@ -672,12 +858,18 @@ div.button {
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), 0 1px 1px rgba(0, 0, 0, .4);
 }
 
+a.button {
+  padding-bottom: 4px;
+  floaT: right;
+}
+
 div.button {
   padding: 5px 14px;
 }
 
 #main input[type=submit]:hover,
-div.button:hover {
+div.button:hover,
+a.button:hover {
   color: #222;
   text-shadow: 0 1px 0px rgba(255, 255, 255, .2);
   background: rgb(236,236,236);
@@ -700,6 +892,10 @@ div.button:hover {
 
 #main form table {
   border-spacing: 0;
+}
+
+#main div.form-wrapper div.row div:nth-child(2n) {
+  margin-right: 0;
 }
 
 #main form div.field-box p:last-child,
@@ -764,7 +960,6 @@ div.button:hover {
 #main div.form-wrapper form textarea,
 #main div.form-wrapper form input[type=text],
 #main div.form-wrapper form input[type=password] {
-  margin: 0;
   width: 100%;
 }
 
@@ -787,12 +982,15 @@ div.button:hover {
   margin-bottom: 0;
 }
 
-#main div.form-wrapper div.row > div {
+#main form div.row > div {
   float: left;
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
+  margin-right: 20px;
 }
 
-#main #filter div.row div:last-child input {
+#main #filter form div.row > div {
+  margin-right: 10px;
+}
+
+#main #filter div.row div:last-child {
   margin-right: 0;
 }

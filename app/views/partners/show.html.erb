@@ -1,0 +1,126 @@
+<%= render 'sidebar' %>
+
+<div id="main">
+  <%= render 'details_header' %>
+
+  <div class="left">
+    <div class="info">
+      <div class="row">
+        <div class="businesses">
+          <h4><%= Partner.human_attribute_name :businesses %></h4>
+          <p>
+            <%= @partner.businesses.join(', ') %>
+          </p>
+        </div>
+      </div>
+      <div class="row last">
+        <div class="comments">
+          <h4><%= Partner.human_attribute_name :comment %></h4>
+          <%= markdown @partner.comment %>
+        </div>
+      </div>
+    </div>
+    <div class="info">
+      <div class="row last">
+        <div class="contact-persons">
+          <h4><%= Partner.human_attribute_name :contact_persons %></h4>
+          <table class="within">
+            <% if @partner.contact_persons.empty? %>
+              <tr>
+                <td class="empty">
+                  <%= t 'messages.partner.errors.no_contact_persons' %>
+                </td>
+              </tr>
+            <% else %>
+              <% @partner.contact_persons.each do |user| %>
+                <tr>
+                  <td>
+                    <%= user.full_name %>
+                  </td>
+                  <td>
+                    <%= mail_to user.email %>
+                  </td>
+                </tr>
+              <%end %>
+            <% end %>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="right">
+    <div class="info">
+        <div class="row address">
+          <h4><%= Partner.human_attribute_name :address %></h4>
+          <p><%= @partner.street %></p>
+          <p><%= @partner.zip %> <%= @partner.city %></p>
+          <p><%= @partner.region %></p>
+        </div>
+        <div class="row last address">
+          <p><%= @partner.country %></p>
+        </div>
+    </div>
+    <div class="info contacts">
+      <table>
+        <tbody>
+          <% if @partner.contact.empty? %>
+            <tr>
+              <td>
+                <%= t 'messages.partner.errors.no_contacts' %>
+              </td>
+            </tr>
+          <% else %>
+            <% Contact::FIELDS.each do |field| %>
+              <% @partner.contact.send(field).each do |val| %>
+                <tr>
+                  <td>
+                    <%= contact_value val, field %>
+                  </td>
+                  <td>
+                    <%= t field.to_s.singularize, scope: [:values, :contacts] %>
+                  </td>
+                  <% if current_user.access?(:partners) %>
+                    <td class="del">
+                      <%= contact_delete_link(
+                            t('actions.delete'), [@partner, @partner.contact],
+                            field, val, class: 'icon-trash',
+                            confirm: t('messages.contact.confirm.delete')) %>
+                    </td>
+                  <% end %>
+                </tr>
+              <% end %>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <% if current_user.access?(:partners) %>
+      <div id="tabs" class="forms">
+        <ul class="tabs">
+          <li>
+            <%= link_to t('labels.contact.new'), '#tab-contact' %>
+          </li>
+        </ul>
+        <div id="tab-contact" class="contact tab">
+          <div class="form-wrapper">
+            <%= form_tag partner_contacts_path(@partner) do %>
+              <div>
+                <%= text_field_tag 'contact[contact]' %>
+              </div>
+              <div>
+                <%= contact_field_select_tag 'contact[field]' %>
+                <%= submit_tag t('actions.add') %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <div class="clear"></div>
+</div>
+
+<script>
+  $("#tabs").tabs();
+</script>

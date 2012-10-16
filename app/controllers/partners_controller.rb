@@ -22,8 +22,10 @@ class PartnersController < ApplicationController
     render :index
   end
 
-  #
+  # Serves the partners details page.
   def show
+    @partner = Partner.find(params[:id])
+    @title = @partner.company
   end
 
   #

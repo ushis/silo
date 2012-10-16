@@ -211,9 +211,15 @@ en:
     language:
       errors:
         find: 'Language not found'
-    partners:
+    partner:
+      confirm:
+        delete: 'Do you really want to delete this partner with all its attachments?'
       errors:
         find: 'Partner not found.'
+      success:
+        create: 'Created partner: %{name}'
+        delete: 'Deleted partner: %{name}'
+        save: 'Saved partner'
     user:
       confirm:
         delete: 'Do you really want to delete this user?'
