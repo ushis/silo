@@ -5,7 +5,7 @@
  */
 /* Elements */
 body {
-  background-color: #3a3a3a;
+  background-color: #323232;
   min-width: 1130px;
 }
 
@@ -135,6 +135,9 @@ div.clear {
 #nav {
   float: left;
   width: 100%;
+  height: 35px;
+  overflow: hidden;
+  padding-left: 10px;
   font-size: .8em;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -147,7 +150,7 @@ div.clear {
   -moz-box-sizing: border-box;
 }
 
-#nav ul li {
+#nav > ul > li {
   float: left;
   width: 17.5%;
   max-width: 250px;
@@ -164,9 +167,22 @@ div.clear {
   padding-left: 0;
 }
 
-#nav ul li:nth-child(n+4) {
+#nav ul li.lists {
   float: right;
-  padding-right: 0;
+  width: 350px;
+  max-width: 350px;
+  font-size: 1em;
+  display: block;
+  padding: 8px 10px 9px 15px;
+  text-align: center;
+  text-transform: uppercase;
+  background: -moz-linear-gradient(top, #515151 0%, #464646 100%);
+  background: -webkit-linear-gradient(top, #515151 0%, #464646 100%);
+  background: -o-linear-gradient(top, #515151 0%, #464646 100%);
+  background: -ms-linear-gradient(top, #515151 0%, #464646 100%);
+  background: linear-gradient(to bottom, #515151 0%, #464646 100%);
+  border-radius: 6px 6px 0 0;
+  text-shadow: 0 1px 0px rgba(0, 0, 0, .5);
 }
 
 #nav ul li a {
@@ -184,6 +200,58 @@ div.clear {
   text-shadow: 0 1px 0px rgba(0, 0, 0, .5);
 }
 
+#nav ul li.lists div.left {
+  float: left;
+}
+
+#nav ul li.lists div.right {
+  float: right;
+}
+
+#nav ul li.lists div a {
+  background: none;
+  padding: 0;
+  height: 18px;
+}
+
+#nav ul li.lists div.left a:before {
+  margin-right: 7px;
+}
+
+#nav ul li.lists div.right li {
+  float: left;
+}
+
+#nav ul li.lists div.right li.open-list {
+  margin-right: 10px;
+}
+
+#nav ul li.lists div.right li.open-list span {
+  text-align: right;
+  text-transform: none;
+  color: #dbdbdb;
+  font-size: .9em;
+  margin-left: 7px;
+}
+
+#nav ul li.lists div.right li.open-list span:first-child {
+  color: #888;
+}
+
+#nav ul li.lists div.right li.button {
+  height: 18px;
+  width: 18px;
+  display: block;
+  background: #676767;
+  overflow: hidden;
+  border-radius: 3px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .1), 0 1px 1px rgba(0, 0, 0, .2);
+}
+
+#nav ul li.lists div.right li.button a:before {
+  line-height: 1.75em;
+}
+
 body.experts #nav li.experts a,
 body.partners #nav li.partners a,
 body.references #nav li.references a,
@@ -194,15 +262,18 @@ body.users #nav li.users a {
 }
 
 /* Content */
+#content-wrapper {
+  clear: both;
+  padding: 0 10px 10px 10px;
+  border-radius: 4px 0 4px 4px;
+  background: #464646;
+}
+
 #content {
   clear: both;
   padding: 10px 0;
   background-color: #dbdbdb;
   border-radius: 0 4px 4px 4px;
-}
-
-body.admin #content {
-  border-radius: 0 0 4px 4px;
 }
 
 /* Sidebar */
@@ -272,6 +343,145 @@ body.index #main {
 }
 
 #main div.header {
+  overflow: hidden;
+}
+
+#main div.header h2 {
+  padding-left: 24px;
+  background-position: left 1px;
+}
+
+/* Filter */
+#filter div.row {
+  clear: left;
+  float: left;
+  width: 600px;
+  padding: 10px 0;
+}
+
+#filter div.row.name {
+  padding-top: 0;
+  border-bottom: 1px solid #bbb;
+  box-shadow: 0 1px 0 #efefef;
+}
+
+#filter div.row.q {
+  padding-bottom: 0;
+}
+
+#filter input[type=text] {
+  width: 193px;
+  margin-right: 10px;
+}
+
+#filter div.citizenship input[type=text] {
+  margin-right: 0;
+}
+
+#filter #q {
+  width: 396px;
+}
+
+#filter input[type=submit] {
+  float: right;
+}
+
+#filter div.need-help {
+  float: left;
+  position: relative;
+  cursor: pointer;
+  padding: 2px 7px 1px 7px;
+  margin: 3px 0 0 -3px;
+  font-size: .7em;
+  font-weight: bold;
+  color: #777;
+  border: none;
+  background: #dbdbdb;
+  text-shadow: 0 1px 0px rgba(255, 255, 255, .4);
+  border-radius: 3px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .3), 0 1px 1px rgba(0, 0, 0, .4);
+}
+
+#filter div.need-help:hover {
+  color: #444;
+}
+
+#filter div.need-help:before {
+  content: ' ';
+  position: absolute;
+  top: 48%;
+  right: 100%;
+  border: solid transparent;
+  width: 0;
+  height: 0;
+  margin-top: -3px;
+  border-width: 4px;
+  border-right-color: rgba(0, 0, 0, .5);
+}
+
+#filter div.need-help:after {
+  content: ' ';
+  position: absolute;
+  top: 48%;
+  right: 100%;
+  border: solid transparent;
+  width: 0;
+  height: 0;
+  margin-top: -4px;
+  border-width: 4px;
+  border-right-color: #dbdbdb;
+}
+
+/* Tabs */
+#main div.header {
+  margin-bottom: 20px;
+}
+
+#main div.header ul.tabs {
+  position: absolute;
+  bottom: 0;
+  font-size: .8em;
+}
+
+#main div.header ul.tabs li {
+  cursor: pointer;
+  text-align: center;
+  float: left;
+  line-height: 2.2em;
+  padding: 0;
+  margin-right: 3px;
+  background: -moz-linear-gradient(top, #515151 0%, #464646 100%);
+  background: -webkit-linear-gradient(top, #515151 0%, #464646 100%);
+  background: -o-linear-gradient(top, #515151 0%, #464646 100%);
+  background: -ms-linear-gradient(top, #515151 0%, #464646 100%);
+  background: linear-gradient(to bottom, #515151 0%, #464646 100%);
+  color: #dbdbdb;
+  background: #555;
+  border-radius: 4px 4px 0 0;
+  text-shadow: 0 1px 0px rgba(0,0,0,.5);
+}
+
+#main div.header ul.tabs li a {
+  display: block;
+  padding: 0px 15px;
+  text-shadow: none;
+}
+
+body.show #main div.header ul.tabs li.show,
+body.documents #main div.header ul.tabs li.documents {
+  background: #f9f9f9;
+}
+
+body.show #main div.header ul.tabs li.show a,
+body.documents #main div.header ul.tabs li.documents a {
+  color: #3b3b3b;
+}
+
+#main div.header.details {
+  min-height: 66px;
+}
+
+#main div.header {
   margin-bottom: 30px;
 }
 
@@ -287,7 +497,7 @@ body.index #main {
   padding: 10px 0 0 10px;
 }
 
-body.new #main  h2 {
+body.new #main h2 {
   display: none;
 }
 
@@ -363,6 +573,7 @@ body.edit #main h2[class*=" icon-"]:before{
   font-size: .75em;
   border-collapse: separate;
   border-spacing: 0 8px;
+  position: relative;
 }
 
 #main table td {
@@ -413,6 +624,26 @@ body.edit #main h2[class*=" icon-"]:before{
 #main table td.icons [class^="icon-"]:before, 
 #main table td.icons [class*=" icon-"]:before {
   font-size: 1.25em;
+}
+
+#main table thead tr {
+  line-height: 0;
+}
+
+#main table thead th {
+  text-align: left;
+  border-spacing: 0;
+  background: none;
+  box-shadow: none;
+  font-size: .8em;
+  padding: 0 5px 0 0;
+  color: #bbb;
+  text-shadow: 0 1px 0px rgba(255,255,255,.2);
+  padding: 0 0 0 5px;
+}
+
+#main table thead th span {
+  float: right;
 }
 
 /* Forms */
@@ -558,7 +789,10 @@ div.button:hover {
 
 #main div.form-wrapper div.row > div {
   float: left;
-  margin-right: 20px;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
+}
+
+#main #filter div.row div:last-child input {
+  margin-right: 0;
 }
