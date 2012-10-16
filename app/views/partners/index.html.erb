@@ -61,6 +61,13 @@
             <td>
               <%= partner.country.try(:human) %>
             </td>
+            <td class="attachments">
+              <% unless partner.attachments.empty? %>
+                <%= link_to t('labels.partner.documents'),
+                            documents_partner_path(partner),
+                            class: 'icon-attachment' %>
+              <% end %>
+            </td>
           </tr>
         <% end %>
       </tbody>
