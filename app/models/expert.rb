@@ -24,6 +24,7 @@ class Expert < ActiveRecord::Base
 
   validates :name, presence: true
 
+  has_and_belongs_to_many :lists,     uniq: true
   has_and_belongs_to_many :languages, uniq: true
 
   has_many :attachments, autosave: true, dependent: :destroy, as: :attachable

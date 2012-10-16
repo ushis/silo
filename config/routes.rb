@@ -43,10 +43,25 @@ Silo::Application.routes.draw do
     collection do
       get 'search(/page/:page)' => 'partners#search', as: :search
     end
+
+    member do
+      get :documents
+    end
   end
 
   # References
   resources :references
+
+  # Lists
+  resources :lists do
+    collection do
+      get :select
+    end
+
+    member do
+      put :use
+    end
+  end
 
   # Help
   get 'help/:section' => 'help#show', as: :help

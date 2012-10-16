@@ -1,0 +1,33 @@
+<div class="overlay">
+  <div class="header">
+    <h2>
+      <%= t 'label.list.lists' %>
+    </h2>
+    <div class="abort button">
+      <%= t 'actions.abort' %>
+    </div>
+  </div>
+  <div class="select">
+    <%= form_tag select_lists_path, method: :get, 'data-type' => :json, remote: true do %>
+      <div>
+        <%= text_field_tag :title, nil, placeholder: List.human_attribute_name(:title) %>
+        <%= submit_tag t('actions.search') %>
+      </div>
+    <% end %>
+    <table>
+      <tbody>
+        <% @lists.each do |list| %>
+          <tr>
+            <td>
+              <%= list.title %>
+            </td>
+            <td>
+              <%= link_to t('actions.use'), use_list_path(list),
+                          method: :put, remote: true, 'data-type' => :json %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -120,11 +120,35 @@ CREATE TABLE `experts_languages` (
   KEY `index_experts_languages_on_expert_id_and_language_id` (`expert_id`,`language_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE `experts_lists` (
+  `expert_id` int(11) NOT NULL,
+  `list_id` int(11) NOT NULL,
+  KEY `index_experts_lists_on_expert_id_and_list_id` (`expert_id`,`list_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 CREATE TABLE `languages` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `language` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_languages_on_language` (`language`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `lists` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `private` tinyint(1) NOT NULL DEFAULT '0',
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_lists_on_title` (`title`),
+  KEY `index_lists_on_user_id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `lists_partners` (
+  `list_id` int(11) NOT NULL,
+  `partner_id` int(11) NOT NULL,
+  UNIQUE KEY `index_lists_partners_on_list_id_and_partner_id` (`list_id`,`partner_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `partners` (
@@ -180,6 +204,7 @@ CREATE TABLE `users` (
   `prename` varchar(255) NOT NULL,
   `locale` varchar(255) NOT NULL DEFAULT 'en',
   `created_at` datetime NOT NULL,
+  `current_list_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_users_on_username` (`username`),
   KEY `index_users_on_email` (`email`),
@@ -199,3 +224,5 @@ INSERT INTO schema_migrations (version) VALUES ('5');
 INSERT INTO schema_migrations (version) VALUES ('6');
 
 INSERT INTO schema_migrations (version) VALUES ('7');
+
+INSERT INTO schema_migrations (version) VALUES ('8');
