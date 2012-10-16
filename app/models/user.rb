@@ -41,7 +41,11 @@ class User < ActiveRecord::Base
   validates :prename,    presence: true
 
   has_many :experts
+  has_many :lists
+
   has_one  :privilege, autosave: true, dependent: :destroy
+
+  belongs_to :current_list, class_name: :List
 
   # Auto initializes the users privileges on access.
   def privilege

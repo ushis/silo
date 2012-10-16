@@ -20,6 +20,7 @@ class Partner < ActiveRecord::Base
 
   validates :company, presence: true
 
+  has_and_belongs_to_many :lists,      uniq: true
   has_and_belongs_to_many :businesses, uniq: true
   has_and_belongs_to_many :contact_persons, class_name: :User, uniq: true
 
