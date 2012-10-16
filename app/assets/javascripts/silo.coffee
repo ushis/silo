@@ -145,7 +145,7 @@ do($ = jQuery) ->
           dialog = makeBox('wrapper').siloOverlay()
           password = makePassword()
 
-          submit = el.clone().addClass(settings.buttonClass).click ->
+          submit = el.clone().attr(class: settings.buttonClass).click ->
             $(@).data({method: 'delete', password: password.val()})
 
           abort = makeButton('abort').click -> dialog.trigger('close')
