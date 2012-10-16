@@ -47,6 +47,17 @@ de:
         name: 'Name'
         prename: 'Vorname'
         updated_at: 'Zuletzt bearbeitet am'
+      partner:
+        address: 'Adresse'
+        businesses: 'Geschäftsfelder'
+        comment: 'Kommentar'
+        company: 'Firma'
+        contact_persons: 'Ansprechpartner'
+        country: 'Land'
+        region: 'Region'
+        street: 'Straße'
+        updated_at: 'Zuletzt bearbeitet am'
+        zip: 'Postleitzahl'
       privilege:
         admin: 'Admin'
         experts: 'Experten'
@@ -129,6 +140,12 @@ de:
     partner:
       all: 'Alle Partner'
       new: 'Neuer Partner'
+      details: 'Details'
+      documents: 'Dokumente'
+      edit: 'Partner bearbeiten'
+      index: 'Partner'
+      new: 'Neuer Partner'
+      search: 'Partner suchen'
     reference:
       all: 'Alle Referenzen'
     sections:
@@ -213,9 +230,18 @@ de:
     language:
       errors:
         find: 'Sprache nicht gefunden.'
-    partners:
+    partner:
+      confirm:
+        delete: 'Möchtest du wirklich diesen Partner mit all seinen
+                 Anhängen löschen?'
       errors:
+        create: 'Partner konnte nicht hinzugefügt werden.'
+        delete: 'Partner konnte nicht gelöscht werden.'
         find: 'Partner nicht gefunden.'
+        no_addresses: 'Dieser Partner hat keine Adressen.'
+        no_attachments: 'Dieser Partner hat keine Anhänge.'
+        no_contacts: 'Dieser Partner hat keine Kontakte.'
+        save: 'Partner konnte nicht gepseichert werden.'
     user:
       confirm:
         delete: 'Möchtest du wirklich diesen Benutzer löschen?'

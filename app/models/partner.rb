@@ -27,6 +27,7 @@ class Partner < ActiveRecord::Base
   has_many :employees,   autosave: true, dependent: :destroy
   has_many :attachments, autosave: true, dependent: :destroy, as: :attachable
 
+  has_one :contact, autosave: true, dependent: :destroy, as: :contactable
   has_one :comment, autosave: true, dependent: :destroy, as: :commentable
 
   belongs_to :user
@@ -111,6 +112,11 @@ class Partner < ActiveRecord::Base
     SQL
 
     connection.select_rows(sanitize_sql([sql, q: query])).map(&:first)
+  end
+
+  # Initializes the contact on access, if not already initalized.
+  def contact
+    super || self.contact = Contact.new
   end
 
   # Returns the partners comment. A new one is initialized if necessary.
