@@ -37,15 +37,26 @@
           <li class="references">
             <%= link_to t('labels.sections.references'), references_path %>
           </li>
-          <% if current_user.admin? %>
-            <li class="users">
-              <%= link_to t('labels.sections.users'), users_path %>
-            </li>
-          <% end %>
+          <li class="lists">
+            <div class="left"><a class="icon-list-ul" href="#">LISTEN</a></div>
+            <div class="right">
+              <ul>
+                <li class="open-list">
+                  <span>Arbeite in Liste: </span>
+                  <span>Projekt Beispiel</span>
+                </li>
+                <li class="button">
+                  <a class="icon-folder-open" href="#">open</a>
+                </li>
+              </ul>
+            </div>
+          </li>
         </ul>
       </nav>
-      <div id="content">
-        <%= yield %>
+      <div id="content-wrapper">
+        <div id="content">
+          <%= yield %>
+        </div>
       </div>
     </div>
     <script>
