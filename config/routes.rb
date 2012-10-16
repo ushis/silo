@@ -50,6 +50,17 @@ Silo::Application.routes.draw do
   # References
   resources :references
 
+  # Lists
+  resources :lists do
+    collection do
+      get :select
+    end
+
+    member do
+      put :use
+    end
+  end
+
   # Help
   get 'help/:section' => 'help#show', as: :help
 

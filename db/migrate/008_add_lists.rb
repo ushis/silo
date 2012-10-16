@@ -25,11 +25,11 @@ class AddLists < ActiveRecord::Migration
 
     add_index :lists_partners, [:list_id, :partner_id], unique: true
 
-    add_column :users, :list_id, :integer, null: true
+    add_column :users, :current_list_id, :integer, null: true
   end
 
   def down
-    remove_column :users, :list_id
+    remove_column :users, :current_list_id
     drop_table :experts_lists
     drop_table :lists_partners
     drop_table :lists

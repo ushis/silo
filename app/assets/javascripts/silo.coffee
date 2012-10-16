@@ -261,6 +261,64 @@ do($ = jQuery) ->
           el.closest('form').submit ->
             localStorage[storageKey] = el.val() if hasStorage
 
+  #
+  $.fn.siloSelectListOverlay = (url, options) ->
+    settings = $.extend {
+      abortClass: 'abort'
+      selectClass: 'select'
+      useText: 'Use'
+      useUrl: '/lists/:id/use'
+      linkAttributes:
+        'data-method': 'put'
+        'data-remote': 'true'
+        'data-type': 'json'
+    }, options
+
+    $.fn.prepare = ->
+      @each ->
+        el = $(@)
+        el.bind 'ajax:beforeSend', -> el.addClass('loading')
+        el.bind 'ajax:complete', -> el.removeClass('loading')
+
+    makeTr = (list) ->
+      $('<tr>').append($('<td>').text(list.title)).append ->
+        $('<td>').append ->
+          $('<a>', settings.linkAttributes)
+            .attr(href: settings.useUrl.replace(':id', list.id))
+            .text(settings.useText)
+
+    # CLEAN!
+    @each ->
+      el = $(@).siloOverlay()
+      el.find(".#{settings.abortClass}").click -> el.trigger('close')
+      select = el.find(".#{settings.selectClass}")
+      form = select.find('form')
+
+      table = select.find('tbody').bind 'ready', ->
+        $(@).find('a').prepare().bind 'ajax:success', (e, data) ->
+          $('#current-list').text(data.title)
+          el.trigger('close')
+
+      form.prepare().bind 'ajax:success', (e, data) ->
+        table.empty()
+        for list in data
+          table.append -> makeTr(list)
+        table.trigger('ready')
+
+      table.trigger('ready')
+
+  #
+  $.fn.siloSelectList = (options) ->
+    @each ->
+      el = $(@).css(visibility: 'hidden')
+
+      $.ajax el.attr('href'), dataType: 'html', success: (select) ->
+        select = $(select).siloSelectListOverlay(options)
+
+        el.css(visibility: 'visible').click ->
+          select.trigger('show')
+          return false
+
   # Downloads possible values and intializes comma separated autocompletion
   # for the connected text fields.
   $.fn.siloAutocomplete = (url, attribute, options) ->

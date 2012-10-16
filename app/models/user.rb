@@ -6,15 +6,16 @@ require 'securerandom'
 #
 # Database scheme:
 #
-# - *id* integer
-# - *username* string
-# - *email* string
-# - *password_digest* string
-# - *login_hash* string
-# - *name* string
-# - *prename* string
-# - *locale* string
-# - *created_at* datetime
+# - *id*               integer
+# - *list_id*          integer
+# - *username*         string
+# - *email*            string
+# - *password_digest*  string
+# - *login_hash*       string
+# - *name*             string
+# - *prename*          string
+# - *locale*           string
+# - *created_at*       datetime
 #
 # It uses _bcrypt-ruby_ for password encryption. It provides the two properties
 # _password_ and _password_confirmation_. They are used the following way:

@@ -204,7 +204,7 @@ CREATE TABLE `users` (
   `prename` varchar(255) NOT NULL,
   `locale` varchar(255) NOT NULL DEFAULT 'en',
   `created_at` datetime NOT NULL,
-  `list_id` int(11) DEFAULT NULL,
+  `current_list_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_users_on_username` (`username`),
   KEY `index_users_on_email` (`email`),

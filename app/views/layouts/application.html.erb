@@ -38,15 +38,25 @@
             <%= link_to t('labels.sections.references'), references_path %>
           </li>
           <li class="lists">
-            <div class="left"><a class="icon-list-ul" href="#">LISTEN</a></div>
+            <div class="left">
+              <%= link_to t('labels.sections.lists'), lists_path,
+                          class: 'icon-list-ul' %>
+            </div>
             <div class="right">
               <ul>
                 <li class="open-list">
-                  <span>Arbeite in Liste: </span>
-                  <span>Projekt Beispiel</span>
+                  <% if current_user.current_list %>
+                    <span>
+                      <%= t 'labels.list.current' %>:
+                    </span>
+                    <span id="current-list">
+                      <%= current_user.current_list.title %>
+                    </span>
+                  <% end %>
                 </li>
                 <li class="button">
-                  <a class="icon-folder-open" href="#">open</a>
+                  <%= link_to t('actions.open'), select_lists_path,
+                              class: 'icon-folder-open' %>
                 </li>
               </ul>
             </div>
@@ -62,12 +72,15 @@
     <script>
       $('div.flash').siloFlash();
       $('a.disabled').siloDisabledLinks();
+
       $('a[data-confirm]').siloConfirmDelete({
         submitText: <%= t('actions.delete').to_json.html_safe %>,
         abortText: <%= t('actions.abort').to_json.html_safe %>,
         headerText: <%= t('messages.generics.confirm.sure').to_json.html_safe %>,
         passwordText: <%= t('messages.user.confirm.password').to_json.html_safe %>
       });
+
+      $('#nav li.button a').siloSelectList();
     </script>
   </body>
 </html>
