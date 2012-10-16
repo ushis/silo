@@ -39,7 +39,7 @@ class ContactsController < ApplicationController
   # Removes a contact from a field. It behaves like
   # ContactsController#add_to(), but vice versa.
   def remove_from(model, url)
-    field, contact = params[:contact].values_at(:field, :contact)
+    field, contact = params.values_at(:field, :contact)
 
     unless model.contact.field(field).delete(contact) && model.contact.save
       raise 'Could not delete contact.'

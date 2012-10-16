@@ -9,18 +9,18 @@
   </h3>
   <ul class="tools">
     <li>
-      <%= link_to(t('actions.print'), expert_path(@expert, format: :pdf),
-                  class: 'icon-print') %>
+      <%= link_to t('actions.print'), expert_path(@expert, format: :pdf),
+                  class: 'icon-print' %>
     </li>
     <% if current_user.access?(:experts) %>
       <li>
-        <%= link_to(t('actions.edit'), edit_expert_path(@expert),
-                    class: 'icon-pencil') %>
+        <%= link_to t('actions.edit'), edit_expert_path(@expert),
+                    class: 'icon-pencil' %>
       </li>
       <li>
-        <%= button_to(t('actions.delete'), expert_path(@expert),
-                      method: 'delete', class: 'icon-trash password',
-                      confirm: t('messages.expert.confirm.delete')) %>
+        <%= link_to t('actions.delete'), expert_path(@expert),
+                    class: 'icon-trash password',
+                    confirm: t('messages.expert.confirm.delete') %>
       </li>
     <% end %>
   </ul>

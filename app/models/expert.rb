@@ -38,14 +38,14 @@ class Expert < ActiveRecord::Base
   belongs_to :user, select: [:id, :name, :prename]
   belongs_to :country
 
+  accepts_nested_attributes_for :comment
+
   scope :with_documents, includes(:attachments, :cvs)
 
   # A little workaround, while waiting for ActiveRecord::NullRelation.
   scope :none, where('1 < 0')
 
   default_scope includes(:country)
-
-  accepts_nested_attributes_for :comment
 
   # Searches for experts. Takes a hash with condtions:
   #

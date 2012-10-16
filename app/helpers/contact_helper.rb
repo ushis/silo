@@ -16,15 +16,16 @@ module ContactHelper
     val
   end
 
-  # Returns a delete contact button.
+  # Returns a delete contact link.
   #
-  #   delete_contact_button('x', contact_url(contact), :emails, 'alf@aol.com')
-  def contact_delete_button(txt, url, field, contact, html_options = {})
-    form_tag url, method: :delete, class: 'button_to' do
-      html = hidden_field_tag('contact[field]', field)
-      html << hidden_field_tag('contact[contact]', contact)
-      html << submit_tag(txt, html_options)
-      html.html_safe
-    end
+  #   delete_contact_link('x', contact_url(contact), :emails, 'alf@aol.com')
+  def contact_delete_link(txt, url, field, contact, html_options = {})
+    options = {
+      method: :delete,
+      'data-field' => field,
+      'data-contact' => contact
+    }
+
+    link_to txt, url, options.merge(html_options)
   end
 end

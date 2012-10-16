@@ -66,9 +66,9 @@
                 </td>
                 <% if current_user.access?(:experts) %>
                   <td class="del">
-                    <%= button_to(t('actions.delete'), [@expert, address],
-                                  method: :delete, class: 'icon-trash',
-                                  confirm: t('messages.address.confirm.delete')) %>
+                    <%= link_to t('actions.delete'), [@expert, address],
+                                method: :delete, class: 'icon-trash',
+                                confirm: t('messages.address.confirm.delete') %>
                   </td>
                 <% end %>
               </tr>
@@ -98,7 +98,7 @@
                   </td>
                   <% if current_user.access?(:experts) %>
                     <td class="del">
-                      <%= contact_delete_button(
+                      <%= contact_delete_link(
                             t('actions.delete'), [@expert, @expert.contact],
                             field, val, class: 'icon-trash',
                             confirm: t('messages.contact.confirm.delete')) %>
