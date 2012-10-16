@@ -73,7 +73,7 @@ div.clear {
 
 #header h1 {
   float: left;
-  margin: 15px 0 0 -10px;
+  margin: 18px 0 0 -13px;
 }
 
 #header h1 a {
@@ -96,9 +96,10 @@ div.clear {
 
 #user-tools {
   float: right;
-  margin:  16px -20px 0 0;
-  border: 2px solid #4f4f4f;
-  border-radius: 2px;
+  margin: 16px -20px 0 0;
+  padding: 4px;
+  position: relative;
+  border-radius: 3px;
 }
 
 #user-tools li {
@@ -106,29 +107,20 @@ div.clear {
   font-size: 12px;
 }
 
-#user-tools li:first-child {
-  border-left: 1px solid #4f4f4f;
-}
-
 #user-tools li a {
   display: block;
   line-height: 24px;
   padding: 0 10px;
+  color: #666;
+  text-shadow: 0 1px 0 rgba(0,0,0,.5);
 }
 
-#user-tools li input[type=submit] {
-  display: block;
-  margin: 0;
-  padding: 4px 10px 5px 10px;
+#user-tools li a:hover {
+  color: #999;
 }
 
-#user-tools li a:hover,
-#user-tools li input[type=submit]:hover {
-  background-color: #353535;
-}
-
-#user-tools li input[type=submit] {
-  padding-right: 26px;
+#user-tools li a:after {
+  margin-left: 7px;
 }
 
 /* Navigation */
@@ -273,7 +265,7 @@ body.users #nav li.users a {
   clear: both;
   padding: 10px 0;
   background-color: #dbdbdb;
-  border-radius: 0 4px 4px 4px;
+  border-radius: 4px;
 }
 
 /* Sidebar */
@@ -285,7 +277,7 @@ body.users #nav li.users a {
 }
 
 #sidebar ul li {
-  padding: 14px 0 10px;
+  padding: 4px 0 10px;
   border-bottom: 1px solid #c9c9c9;
   box-shadow: 0 1px 0 #e9e9e9;
 }
@@ -601,8 +593,7 @@ body.edit #main h2[class*=" icon-"]:before{
   padding: 7px;
 }
 
-#main table td.icons a,
-#main table td.icons input[type=submit] {
+#main table td.icons a {
   display: block;
   width: 18px;
   height: 18px;
@@ -623,6 +614,29 @@ body.edit #main h2[class*=" icon-"]:before{
 #main table td.icons [class^="icon-"]:before, 
 #main table td.icons [class*=" icon-"]:before {
   font-size: 1.25em;
+}
+
+#main div table td.del {
+  width: 20px;
+  padding: 0 5px 0 4px;
+  vertical-align: middle;
+  text-align: center;
+}
+
+#main div table td.del a {
+  display: block;
+  width: 20px;
+  height: 20px;
+  overflow: hidden;
+  color: #666;
+}
+
+#main div table td.del a:hover {
+  color: #444;
+}
+
+#main div table td.del a:before {
+  font-size: 1.2em;
 }
 
 #main table thead tr {
@@ -828,13 +842,14 @@ body.show #main div.info table.within tr:last-child td {
 }
 
 #main input[type=submit],
-div.button {
+div.button,
+a.button {
   float: left;
   cursor: pointer;
   padding: 6px 14px 7px 14px;
   margin-left: 5px;
-  font-size: .7em;
   font-weight: bold;
+  font-size: .7em;
   color: #444;
   border: 0 none transparent;
   background: #f0f0f0;
@@ -843,12 +858,18 @@ div.button {
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), 0 1px 1px rgba(0, 0, 0, .4);
 }
 
+a.button {
+  padding-bottom: 4px;
+  floaT: right;
+}
+
 div.button {
   padding: 5px 14px;
 }
 
 #main input[type=submit]:hover,
-div.button:hover {
+div.button:hover,
+a.button:hover {
   color: #222;
   text-shadow: 0 1px 0px rgba(255, 255, 255, .2);
   background: rgb(236,236,236);
