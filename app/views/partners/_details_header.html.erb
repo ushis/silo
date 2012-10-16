@@ -1,0 +1,28 @@
+<div class="header details">
+  <h2>
+    <%= @partner.company %>
+  </h2>
+  <h3>
+    <%= Partner.human_attribute_name(:updated_at) %>
+    <%= l @partner.updated_at, format: :short %>
+    <%= t 'labels.generic.by', name: @partner.user.try(:full_name) %>
+  </h3>
+  <ul class="tools">
+    <% if current_user.access?(:partners) %>
+      <li>
+        <%= link_to(t('actions.edit'), edit_partner_path(@partner),
+                    class: 'icon-pencil') %>
+      </li>
+      <li>
+        <%= link_to t('actions.delete'), partner_path(@partner),
+                    class: 'icon-trash password',
+                    confirm: t('messages.partner.confirm.delete') %>
+      </li>
+    <% end %>
+  </ul>
+  <ul class="tabs">
+    <li class="show">
+      <%= link_to t('labels.partner.details'), partner_path(@partner) %>
+    </li>
+  </ul>
+</div>

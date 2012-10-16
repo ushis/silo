@@ -143,6 +143,10 @@ body.experts div.pagination.bottom ul.pagination {
 }
 
 /* Form */
+body.experts #main div.form-wrapper div.birthday {
+  margin-right: 20px;
+}
+
 body.experts #main div.form-wrapper div.degree input {
   width: 120px;
 }
@@ -167,7 +171,7 @@ body.experts #main div.form-wrapper div.fee {
 }
 
 body.experts #main div.form-wrapper div.former-collaboration {
-  margin-top: 10px;
+  margin: 10px 0 0 20px;
 }
 
 body.experts #main div.form-wrapper div.former-collaboration input + label {
@@ -190,196 +194,27 @@ body.experts #main div.form-wrapper form input[type=submit] {
 }
 
 /* Details & Documents */
-body.experts.show #main div.personal {
-  float: left;
-  position: relative;
-  width: 60%;
-  padding: 10px;
-  border-radius: 4px;
-  background-color: #f7f7f7;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
-}
-
-body.experts.show #main div.personal div.tools {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 28px;
-  height: 100%;
-  border-radius: 0 4px 4px 0;
-  background-color: #efefef;
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
-}
-
-body.experts.show #main div.personal div.row {
-  float: left;
-  width: 100%;
-  padding: 7px 0;
-  border-bottom: 1px solid #e5e5e5;
-  box-shadow: 0 1px 1px rgba(255, 255, 255, 1);
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
-}
-
-body.experts.show #main div.personal div.row:first-child {
-  padding-top: 0;
-}
-
-body.experts.show #main div.personal div.row.last {
-  border-bottom: none;
-  box-shadow: none;
-}
-
-body.experts.show #main div.personal div.row div {
-  float: left;
-  width: 100%;
-}
-
-body.experts.show #main div.personal div.row div.citizenship,
-body.experts.show #main div.personal div.row div.fee,
-body.experts.show #main div.personal div.row div.firstname,
-body.experts.show #main div.personal div.row div.name {
+body.experts.show #main div.info div.row div.citizenship,
+body.experts.show #main div.info div.row div.fee,
+body.experts.show #main div.info div.row div.firstname,
+body.experts.show #main div.info div.row div.name {
   width: 45%;
   margin-right: 10px;
 }
 
-body.experts.show #main div.personal div.row div.citizenship,
-body.experts.show #main div.personal div.row div.fee,
-body.experts.show #main div.personal div.row div.firstname,
-body.experts.show #main div.personal div.row div.birthday {
+body.experts.show #main div.info div.row div.citizenship,
+body.experts.show #main div.info div.row div.fee,
+body.experts.show #main div.info div.row div.firstname,
+body.experts.show #main div.info div.row div.birthday {
   width: 45%;
   margin-right: 10px;
   border-right: 1px solid #e5e5e5;
 }
 
-body.experts.show #main div.personal div.row div.birthday,
-body.experts.show #main div.personal div.row div.gender,
-body.experts.show #main div.personal div.row div.former-collaboration {
+body.experts.show #main div.info div.row div.birthday,
+body.experts.show #main div.info div.row div.gender,
+body.experts.show #main div.info div.row div.former-collaboration {
   width: 25%;
-}
-
-body.experts.show #main div.personal div.row h4 {
-  color: #7a7a7a;
-  font-size: .7em;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, .9);
-}
-
-body.experts.show #main div.personal div.row p {
-  color: #444;
-  font-size: .8em;
-}
-
-body.experts.show #main div.personal div.row div.comments p {
-  font-size: 1em;
-}
-
-body.experts.show #main div.personal div.row p:empty:after,
-body.experts.show #main div.personal div.row div.markdown:empty:after {
-  content: '-';
-}
-
-body.experts.show #main div.communication {
-  float: right;
-  position: relative;
-  width: 38%;
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
-}
-
-body.experts.show #main div.communication div.addresses {
-  margin-top: -8px;
-}
-
-body.experts.show #main div.communication div.contacts h4,
-body.experts.show #main div.communication div.addresses h4 {
-  padding: 1px 0 0 20px;
-  font-size: .9em;
-}
-
-body.experts.show #main div.communication div table td.del {
-  width: 20px;
-  padding: 0 5px 0 4px;
-  vertical-align: middle;
-}
-
-body.experts.show #main div.communication div table td.del input[type=submit] {
-  width: 12px;
-  height: 12px;
-  padding: 0;
-  box-shadow: none;
-  text-indent: -99999px;
-  display: block;
-}
-
-div.communication div.forms {
-  margin-top: 35px;
-  position: relative;
-}
-
-div.communication div.forms div.tab {
-  float: left;
-  width: 100%;
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
-}
-
-body.experts #main div.communication div.forms div.tab div.form-wrapper {
-  float: left;
-  position: relative;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  background: #DBDBDB;
-  border-radius: 4px;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, .2);
-}
-
-body.experts #main div.communication div.forms div.tab div.form-wrapper div textarea,
-body.experts #main div.communication div.forms div.tab div.form-wrapper div input[type=text] {
-  margin-bottom: 10px;
-}
-
-body.experts #main div.communication div.forms div.tab div.form-wrapper div select {
-  margin: 0;
-  width: 150px;
-}
-
-div.communication div.forms ul.tabs {
-  width: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: block;
-  margin-top: -29px;
-  z-index: 99;
-}
-
-div.communication div.forms ul.tabs li {
-  float: left;
-  cursor: pointer;
-  background: transparent;
-  margin-right: 3px;
-  border-radius: 4px 4px 0 0;
-  padding: 2px;
-}
-
-div.communication div.forms ul.tabs li a {
-  font-size: .75em;
-  color: #777777;
-  text-shadow: 0 1px 0 rgba(255,255,255,.5);
-  padding: 10px;
-}
-
-div.communication div.forms ul.tabs li.ui-state-active {
-  background: #DBDBDB;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, .2);
-  color: #525252;
-  border-bottom: 5px solid #DBDBDB;
-  margin-bottom: -10px;
-  z-index: 99;
 }
 
 body.experts.documents #main h4 {
