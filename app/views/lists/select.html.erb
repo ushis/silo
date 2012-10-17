@@ -8,7 +8,8 @@
     </div>
   </div>
   <div class="select">
-    <%= form_tag select_lists_path, method: :get, 'data-type' => :json, remote: true do %>
+    <%= form_tag select_lists_path, method: :get, 'data-type' => :json,
+                                    remote: true, class: 'search' do %>
       <div>
         <%= text_field_tag :title, nil, placeholder: List.human_attribute_name(:title) %>
         <%= submit_tag t('actions.search') %>
@@ -29,5 +30,14 @@
         <% end %>
       </tbody>
     </table>
+    <%= form_for List.new, method: :post, remote: true,
+                           html: {'data-type' => :json, class: 'new'} do |f| %>
+      <div>
+        <%= f.text_field :title, placeholder: List.human_attribute_name(:title) %>
+        <%= f.check_box :private %>
+        <%= f.label :private %>
+        <%= f.submit t('actions.save') %>
+      </div>
+    <% end %>
   </div>
 </div>

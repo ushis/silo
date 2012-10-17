@@ -18,6 +18,8 @@ class List < ActiveRecord::Base
   has_and_belongs_to_many :experts,  uniq: true
   has_and_belongs_to_many :partners, uniq: true
 
+  has_many :current_users, class_name: :User, foreign_key: :current_list_id
+
   belongs_to :user
 
   # Searches for lists. Taks a hash of conditions:

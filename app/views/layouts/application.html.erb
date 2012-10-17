@@ -43,27 +43,19 @@
             <%= link_to t('labels.sections.references'), references_path %>
           </li>
           <li class="lists">
-            <div class="left">
-              <%= link_to t('labels.sections.lists'), lists_path,
-                          class: 'icon-list-ul' %>
+            <div id="select-list">
+              <%= link_to t('actions.open'), select_lists_path, class: 'icon-folder-open' %>
             </div>
-            <div class="right">
-              <ul>
-                <li class="open-list">
-                  <% if current_user.current_list %>
-                    <span>
-                      <%= t 'labels.list.current' %>:
-                    </span>
-                    <span id="current-list">
-                      <%= current_user.current_list.title %>
-                    </span>
-                  <% end %>
-                </li>
-                <li class="button">
-                  <%= link_to t('actions.open'), select_lists_path,
-                              class: 'icon-folder-open' %>
-                </li>
-              </ul>
+            <div id="current-list" data-list-id="<%= current_user.current_list.try(:id) %>">
+              <span>
+                <%= t 'labels.list.current' %>:
+              </span>
+              <span class="title">
+                <%= current_user.current_list.try(:title) %>
+              </span>
+            </div>
+            <div class="lists">
+              <%= link_to t('labels.sections.lists'), lists_path, class: 'icon-list-ul' %>
             </div>
           </li>
         </ul>
@@ -85,7 +77,8 @@
         passwordText: <%= t('messages.user.confirm.password').to_json.html_safe %>
       });
 
-      $('#nav li.button a').siloSelectList();
+      $('#current-list').siloCurrentList();
+      $('#select-list a').siloSelectList();
     </script>
   </body>
 </html>

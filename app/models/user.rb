@@ -7,7 +7,7 @@ require 'securerandom'
 # Database scheme:
 #
 # - *id*               integer
-# - *list_id*          integer
+# - *current_list_id*  integer
 # - *username*         string
 # - *email*            string
 # - *password_digest*  string
