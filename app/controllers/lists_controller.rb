@@ -2,7 +2,9 @@
 class ListsController < ApplicationController
   skip_before_filter :authorize
 
-  layout false, only: [:select]
+  layout false, only: [:select, :use]
+
+  respond_to :html, :json
 
   #
   def index
@@ -11,21 +13,29 @@ class ListsController < ApplicationController
   #
   def select
     @lists = List.search(params).limit(20).order(:title)
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @lists }
-    end
+    respond_with(@lists)
   end
 
-  # FIXME
+  #
   def use
     current_user.current_list = List.find_by_id(params[:id])
 
-    respond_to do |format|
-      if current_user.save
-        format.json { render json: current_user.current_list }
-      end
+    if current_user.save
+      render json: current_user.current_list
+    else
+      respond_with(t('messages.list.errors.use'), status: 422)
+    end
+  end
+
+  def create
+    @list = List.new(params[:list])
+    @list.user = current_user
+    @list.current_users << current_user
+
+    if @list.save
+      respond_with(@list)
+    else
+      respond_with(t('messages.list.errors.create'), status: 422)
     end
   end
 end

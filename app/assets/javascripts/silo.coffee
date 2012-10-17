@@ -261,64 +261,6 @@ do($ = jQuery) ->
           el.closest('form').submit ->
             localStorage[storageKey] = el.val() if hasStorage
 
-  #
-  $.fn.siloSelectListOverlay = (url, options) ->
-    settings = $.extend {
-      abortClass: 'abort'
-      selectClass: 'select'
-      useText: 'Use'
-      useUrl: '/lists/:id/use'
-      linkAttributes:
-        'data-method': 'put'
-        'data-remote': 'true'
-        'data-type': 'json'
-    }, options
-
-    $.fn.prepare = ->
-      @each ->
-        el = $(@)
-        el.bind 'ajax:beforeSend', -> el.addClass('loading')
-        el.bind 'ajax:complete', -> el.removeClass('loading')
-
-    makeTr = (list) ->
-      $('<tr>').append($('<td>').text(list.title)).append ->
-        $('<td>').append ->
-          $('<a>', settings.linkAttributes)
-            .attr(href: settings.useUrl.replace(':id', list.id))
-            .text(settings.useText)
-
-    # CLEAN!
-    @each ->
-      el = $(@).siloOverlay()
-      el.find(".#{settings.abortClass}").click -> el.trigger('close')
-      select = el.find(".#{settings.selectClass}")
-      form = select.find('form')
-
-      table = select.find('tbody').bind 'ready', ->
-        $(@).find('a').prepare().bind 'ajax:success', (e, data) ->
-          $('#current-list').text(data.title)
-          el.trigger('close')
-
-      form.prepare().bind 'ajax:success', (e, data) ->
-        table.empty()
-        for list in data
-          table.append -> makeTr(list)
-        table.trigger('ready')
-
-      table.trigger('ready')
-
-  #
-  $.fn.siloSelectList = (options) ->
-    @each ->
-      el = $(@).css(visibility: 'hidden')
-
-      $.ajax el.attr('href'), dataType: 'html', success: (select) ->
-        select = $(select).siloSelectListOverlay(options)
-
-        el.css(visibility: 'visible').click ->
-          select.trigger('show')
-          return false
-
   # Downloads possible values and intializes comma separated autocompletion
   # for the connected text fields.
   $.fn.siloAutocomplete = (url, attribute, options) ->
@@ -345,6 +287,75 @@ do($ = jQuery) ->
               @value = terms.join(', ')
               false
           }
+
+  #
+  SiloCurrentList =
+    init: (el) ->
+      @el = el
+      @title = el.find('.title')
+
+    set: (list) ->
+      @el.data('list-id', list.id).show()
+      @title.text(list.title)
+
+  #
+  $.fn.siloCurrentList = -> SiloCurrentList.init(@.first())
+
+  #
+  $.fn.siloSelectListOverlay = (url, options) ->
+    settings = $.extend {
+      abortClass: 'abort'
+      selectClass: 'select'
+      useText: 'Use'
+      useUrl: '/lists/:id/use'
+      linkAttributes:
+        'data-method': 'put'
+        'data-remote': 'true'
+        'data-type': 'json'
+    }, options
+
+    makeTr = (list) ->
+      $('<tr>').append($('<td>').text(list.title)).append ->
+        $('<td>').append ->
+          $('<a>', settings.linkAttributes)
+            .attr(href: settings.useUrl.replace(':id', list.id))
+            .text(settings.useText)
+
+    @each ->
+      el = $(@).siloOverlay()
+      el.find(".#{settings.abortClass}").click -> el.trigger('close')
+      select = el.find(".#{settings.selectClass}")
+      table = select.find('tbody')
+
+      select.delegate '*', 'ajax:beforeSend', -> $(@).addClass('loading')
+      select.delegate '*', 'ajax:complete', -> $(@).removeClass('loading')
+
+      select.delegate 'a', 'ajax:success', (e, data) ->
+        SiloCurrentList.set(data)
+        el.trigger('close')
+
+      select.find('form.new').bind 'ajax:success', (e, data)->
+        $(@).get(0).reset()
+        SiloCurrentList.set(data)
+        el.trigger('close')
+
+      select.find('form.search').bind 'ajax:success', (e, data) ->
+        table.empty()
+        for list in data
+          table.append -> makeTr(list)
+
+
+  #
+  $.fn.siloSelectList = (options) ->
+    @each ->
+      el = $(@).css(visibility: 'hidden')
+
+      $.ajax el.attr('href'), dataType: 'html', success: (select) ->
+        select = $(select).siloSelectListOverlay(options)
+
+        el.css(visibility: 'visible').click ->
+          select.trigger('show')
+          return false
 
   # We use our own confirm dialog.
   $.rails.confirm = -> true
