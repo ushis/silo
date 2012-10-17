@@ -57,8 +57,11 @@
             <td class="<%= expert.gender %>">
               <%= link_to expert.name, expert_path(expert) %>
             </td>
-            <td>
+            <td class="list-tools">
               <%= link_to expert.prename, expert_path(expert) %>
+              <div class="list-marker">
+                <div class="list-btn"></div>
+              </div>
             </td>
             <td>
               <%= expert.degree %>
