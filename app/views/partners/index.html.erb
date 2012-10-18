@@ -49,7 +49,7 @@
       <tbody>
         <% @partners.each do |partner| %>
           <tr>
-            <td>
+            <td class="list-tools" data-id="<%= partner.id %>">
               <%= link_to partner.company, partner_path(partner) %>
             </td>
             <td>
@@ -91,4 +91,5 @@
   });
 
   $('#filter input.fulltext').siloHelp('<%= help_path section: :fulltext %>');
+  $('#main table td.list-tools').siloListable('partners');
 </script>
