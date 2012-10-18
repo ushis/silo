@@ -28,6 +28,12 @@ class PartnersController < ApplicationController
     @title = @partner.company
   end
 
+  # Serves the experts documents page.
+  def documents
+    @partner = Partner.find(params[:id])
+    @title = @partner.company
+  end
+
   #
   def new
     @partner = Partner.new
