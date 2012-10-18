@@ -40,6 +40,7 @@ Silo::Application.routes.draw do
   resources :partners, except: [:index] do
     resources :attachments, only: [:show, :create, :destroy], controller: 'attachments/partners'
     resources :contacts,    only: [:create, :destroy], controller: 'contacts/partners'
+    resources :employees
 
     collection do
       get 'search(/page/:page)' => 'partners#search', as: :search
