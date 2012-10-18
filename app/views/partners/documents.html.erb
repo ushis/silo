@@ -1,0 +1,56 @@
+<%= render 'sidebar' %>
+
+<div id="main">
+  <%= render 'details_header' %>
+
+  <div class="attachments">
+    <table>
+      <tbody>
+        <% if @partner.attachments.empty? %>
+          <tr>
+            <td>
+              <%= t 'messages.partner.errors.no_attachments' %>
+            </td>
+          </tr>
+        <% else %>
+          <% @partner.attachments.each do |attachment| %>
+            <tr>
+              <td class="icon-attachment">
+                <%= link_to attachment.title, [@partner, attachment] %>
+              </td>
+              <td>
+                <%= attachment.ext %>
+              </td>
+              <td>
+                <%= l attachment.created_at, format: :long %>
+              </td>
+              <% if current_user.access?(:partners) %>
+                <td class="del">
+                  <%= link_to t('actions.delete'), [@partner, attachment],
+                              method: :delete, class: 'icon-trash',
+                              confirm: t('messages.attachment.confirm.delete') %>
+                </td>
+              <% end %>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div><!-- attachments -->
+  <% if current_user.access?(:partners) %>
+    <div class="forms">
+      <div class="attachment">
+        <%= form_for Attachment.new, url: partner_attachments_path(@partner) do |f| %>
+          <div class="input">
+            <%= f.text_field :title,
+                             placeholder: Attachment.human_attribute_name(:title) %>
+          </div>
+          <div>
+            <%= f.file_field :file %>
+            <%= f.submit t('actions.add') %>
+          </div>
+        <% end %>
+      </div>
+    </div><!-- forms -->
+  <% end %>
+</div>
