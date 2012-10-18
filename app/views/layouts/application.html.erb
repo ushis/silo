@@ -77,7 +77,12 @@
         passwordText: <%= t('messages.user.confirm.password').to_json.html_safe %>
       });
 
-      $('#current-list').siloCurrentList();
+      $('#current-list').siloCurrentList({
+        show: <%= list_path(id: ':id', format: :json).to_json.html_safe %>,
+        add: <%= add_lists_path(format: :json).to_json.html_safe %>,
+        remove: <%= remove_lists_path(format: :json).to_json.html_safe %>
+      });
+
       $('#select-list a').siloSelectList();
     </script>
   </body>

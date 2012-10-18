@@ -123,7 +123,7 @@ CREATE TABLE `experts_languages` (
 CREATE TABLE `experts_lists` (
   `expert_id` int(11) NOT NULL,
   `list_id` int(11) NOT NULL,
-  KEY `index_experts_lists_on_expert_id_and_list_id` (`expert_id`,`list_id`)
+  UNIQUE KEY `index_experts_lists_on_expert_id_and_list_id` (`expert_id`,`list_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `languages` (
@@ -208,7 +208,8 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_users_on_username` (`username`),
   KEY `index_users_on_email` (`email`),
-  KEY `index_users_on_login_hash` (`login_hash`)
+  KEY `index_users_on_login_hash` (`login_hash`),
+  KEY `index_users_on_current_list_id` (`current_list_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO schema_migrations (version) VALUES ('1');

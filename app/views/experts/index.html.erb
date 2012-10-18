@@ -57,11 +57,8 @@
             <td class="<%= expert.gender %>">
               <%= link_to expert.name, expert_path(expert) %>
             </td>
-            <td class="list-tools">
+            <td class="list-tools" data-id="<%= expert.id %>">
               <%= link_to expert.prename, expert_path(expert) %>
-              <div class="list-marker active">
-                <div class="list-btn"></div>
-              </div>
             </td>
             <td>
               <%= expert.degree %>
@@ -105,4 +102,5 @@
   });
 
   $('#filter input.fulltext').siloHelp('<%= help_path section: :fulltext %>');
+  $('#main table td.list-tools').siloListable('experts');
 </script>

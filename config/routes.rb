@@ -57,7 +57,9 @@ Silo::Application.routes.draw do
   # Lists
   resources :lists do
     collection do
-      get :select
+      get  :select
+      post :add
+      post :remove
     end
 
     member do
