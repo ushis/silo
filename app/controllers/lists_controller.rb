@@ -12,19 +12,33 @@ class ListsController < ApplicationController
 
   #
   def select
-    @lists = List.search(params).limit(20).order(:title)
+    @lists = List.search(params).with_items.limit(20).order(:title)
     respond_with(@lists)
+  end
+
+  def show
+    respond_with(List.with_items.find(params[:id]))
   end
 
   #
   def use
-    current_user.current_list = List.find_by_id(params[:id])
+    current_user.current_list = List.with_items.find_by_id(params[:id])
 
     if current_user.save
       render json: current_user.current_list
     else
       respond_with(t('messages.list.errors.use'), status: 422)
     end
+  end
+
+  def add
+    current_user.current_list.try(:add, params[:type], params[:id])
+    render json: current_user.current_list
+  end
+
+  def remove
+    current_user.current_list.try(:remove, params[:type], params[:id])
+    render json: current_user.current_list
   end
 
   def create

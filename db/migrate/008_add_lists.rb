@@ -16,7 +16,7 @@ class AddLists < ActiveRecord::Migration
       t.integer :list_id,   null: false
     end
 
-    add_index :experts_lists, [:expert_id, :list_id], unqiue: true
+    add_index :experts_lists, [:expert_id, :list_id], unique: true
 
     create_table :lists_partners, id: false do |t|
       t.integer :list_id,    null: false
@@ -26,6 +26,7 @@ class AddLists < ActiveRecord::Migration
     add_index :lists_partners, [:list_id, :partner_id], unique: true
 
     add_column :users, :current_list_id, :integer, null: true
+    add_index  :users, :current_list_id
   end
 
   def down

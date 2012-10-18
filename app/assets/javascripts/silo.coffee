@@ -288,20 +288,72 @@ do($ = jQuery) ->
               false
           }
 
-  #
+  # Handles the current list. Use $.fn.siloCurrentList() to specify a
+  # representation in the view.
   SiloCurrentList =
-    init: (el) ->
-      @el = el
-      @title = el.find('.title')
 
+    # Initializes the current list object and performs the initial sync.
+    init: (@el, @urls) ->
+      @title = @el.find('.title')
+
+      if (id = @el.data('list-id'))
+        @sync url: @urls.show.replace(':id', id)
+
+    # Syncs with the server and updates the view.
+    sync: (options) ->
+      do (that = @) ->
+        $.ajax $.extend {
+          dataType: 'json',
+          success: (data) -> that.set(data)
+        }, options
+
+    # Moves an item in to or out of the list.
+    move: (type, el) ->
+      @sync {
+        url: if el.hasClass('active') then @urls.remove else @urls.add
+        data: {type: type, id: el.data('id')}
+        type: 'post'
+      }
+
+    # Updates the view.
     set: (list) ->
       @el.data('list-id', list.id).show()
       @title.text(list.title)
+      @updateCollection(list)
 
-  #
-  $.fn.siloCurrentList = -> SiloCurrentList.init(@.first())
+    # Connects a collection with the current list.
+    connectWith: (type, collection) ->
+      @collection ||= {}
+      @collection[type] ||= {}
 
-  #
+      do (that =  @) ->
+        collection.each ->
+          el = $(@).append ->
+            $('<div>', class: 'list-marker').append ->
+              $('<div>', class: 'list-btn').click ->
+                that.move type, el
+
+          that.collection[type][el.data('id')] = el
+
+    # Updates the collection.
+    updateCollection: (list) ->
+      for type, elements of @collection
+        break unless list[type]?
+        ids = (obj.id for obj in list[type])
+
+        for id, el of elements
+          if $.inArray(Number(id), ids) > -1
+            el.addClass('active')
+          else
+            el.removeClass('active')
+
+  # Links an element with the current list.
+  $.fn.siloCurrentList = (urls) -> SiloCurrentList.init(@.first(), urls)
+
+  # Connects a collection with the current list.
+  $.fn.siloListable = (type) -> SiloCurrentList.connectWith(type, @)
+
+  # Handles the select list overlay.
   $.fn.siloSelectListOverlay = (url, options) ->
     settings = $.extend {
       abortClass: 'abort'
@@ -344,8 +396,7 @@ do($ = jQuery) ->
         for list in data
           table.append -> makeTr(list)
 
-
-  #
+  # Triggers the select list overlay.
   $.fn.siloSelectList = (options) ->
     @each ->
       el = $(@).css(visibility: 'hidden')

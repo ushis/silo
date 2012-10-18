@@ -12,8 +12,8 @@ class InitSilo < ActiveRecord::Migration
     end
 
     add_index :users, :username,   unique: true
-    add_index :users, :email,      unqiue: true
-    add_index :users, :login_hash, unqiue: true
+    add_index :users, :email,      unique: true
+    add_index :users, :login_hash, unique: true
 
     create_table :privileges do |t|
       t.integer :user_id,    null: false
