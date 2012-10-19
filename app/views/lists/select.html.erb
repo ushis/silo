@@ -1,4 +1,4 @@
-<div class="overlay">
+<div class="overlay open-list">
   <div class="header">
     <h2>
       <%= t 'label.list.lists' %>
@@ -16,7 +16,7 @@
         </div>
       <% end %>
     </div>
-    <div class="form-wrapper">
+    <div class="form-wrapper last">
       <%= form_for List.new, method: :post, remote: true,
                              html: {'data-type' => :json, class: 'new'} do |f| %>
         <div>
@@ -33,8 +33,8 @@
               <%= list.title %>
             </td>
             <td>
-              <%= link_to t('actions.use'), class: use_list_path(list),
-                          method: :put, remote: true, 'data-type' => :json %>
+              <%= link_to t('actions.use'), use_list_path(list),
+                          method: :put, remote: true, 'data-type' => :json, class: 'icon-folder-open' %>
             </td>
           </tr>
         <% end %>
