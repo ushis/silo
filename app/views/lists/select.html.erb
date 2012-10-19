@@ -8,12 +8,25 @@
     </div>
   </div>
   <div class="select">
-    <%= form_tag select_lists_path, method: :get, remote: true, class: 'search' do %>
-      <div>
-        <%= text_field_tag :title, nil, placeholder: List.human_attribute_name(:title) %>
-        <%= submit_tag t('actions.search') %>
-      </div>
-    <% end %>
+    <div class="form-wrapper">
+      <%= form_tag select_lists_path, method: :get, remote: true, class: 'search' do %>
+        <div>
+          <%= text_field_tag :title, nil, placeholder: List.human_attribute_name(:title) %>
+          <%= submit_tag t('actions.search') %>
+        </div>
+      <% end %>
+    </div>
+    <div class="form-wrapper">
+      <%= form_for List.new, method: :post, remote: true,
+                             html: {'data-type' => :json, class: 'new'} do |f| %>
+        <div>
+          <%= f.text_field :title, placeholder: List.human_attribute_name(:title) %>
+          <%= f.check_box :private %>
+          <%= f.label :private %>
+          <%= f.submit t('actions.save') %>
+        </div>
+      <% end %>
+    </div>
     <table>
       <tbody>
         <% @lists.each do |list| %>
@@ -22,21 +35,12 @@
               <%= list.title %>
             </td>
             <td>
-              <%= link_to t('actions.use'), use_list_path(list),
+              <%= link_to t('actions.use'), class: use_list_path(list),
                           method: :put, remote: true, 'data-type' => :json %>
             </td>
           </tr>
         <% end %>
       </tbody>
     </table>
-    <%= form_for List.new, method: :post, remote: true,
-                           html: {'data-type' => :json, class: 'new'} do |f| %>
-      <div>
-        <%= f.text_field :title, placeholder: List.human_attribute_name(:title) %>
-        <%= f.check_box :private %>
-        <%= f.label :private %>
-        <%= f.submit t('actions.save') %>
-      </div>
-    <% end %>
   </div>
 </div>
