@@ -367,7 +367,7 @@ do($ = jQuery) ->
   $.fn.siloListable = (type) -> SiloCurrentList.connectWith(type, @)
 
   # Handles the select list overlay.
-  $.fn.siloSelectListOverlay = (url, options) ->
+  $.fn.siloSelectListOverlay = (options) ->
     settings = $.extend {
       abortClass: 'abort'
       selectClass: 'select'
