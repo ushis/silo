@@ -8,8 +8,7 @@
     </div>
   </div>
   <div class="select">
-    <%= form_tag select_lists_path, method: :get, 'data-type' => :json,
-                                    remote: true, class: 'search' do %>
+    <%= form_tag select_lists_path, method: :get, remote: true, class: 'search' do %>
       <div>
         <%= text_field_tag :title, nil, placeholder: List.human_attribute_name(:title) %>
         <%= submit_tag t('actions.search') %>
