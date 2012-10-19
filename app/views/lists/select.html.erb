@@ -11,7 +11,7 @@
     <div>
       <%= form_tag select_lists_path, method: :get, remote: true, class: 'search' do %>
         <div>
-          <%= text_field_tag :title, nil, placeholder: List.human_attribute_name(:search_for_a_list) %>
+          <%= text_field_tag :title, nil, placeholder: t('labels.list.search') %>
           <%= submit_tag t('actions.search') %>
         </div>
       <% end %>
@@ -21,7 +21,7 @@
                              html: {'data-type' => :json, class: 'new'} do |f| %>
         <div>
           <%= f.submit t('actions.save') %>
-          <%= f.text_field :title, placeholder: List.human_attribute_name(:create_new_list) %>
+          <%= f.text_field :title, placeholder: t('labels.list.create') %>
         </div>
       <% end %>
     </div>
@@ -33,8 +33,8 @@
               <%= list.title %>
             </td>
             <td>
-              <%= link_to t('actions.use'), use_list_path(list),
-                          method: :put, remote: true, 'data-type' => :json, class: 'icon-folder-open' %>
+              <%= link_to t('actions.use'), use_list_path(list), method: :put,
+                          remote: true, 'data-type' => :json, class: 'icon-folder-open' %>
             </td>
           </tr>
         <% end %>

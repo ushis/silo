@@ -124,6 +124,9 @@ en:
       search: 'Search Experts'
     language:
       languages: 'Languages'
+    list:
+      create: 'Create a new list'
+      search: 'Search for a list'
     partner:
       all: 'All Partners'
       new: 'New Partner'

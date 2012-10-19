@@ -137,6 +137,9 @@ de:
       search: 'Experten suchen'
     language:
       languages: 'Sprachen'
+    list:
+      create: 'Neue Liste erstellen'
+      search: 'Liste suchen'
     partner:
       all: 'Alle Partner'
       new: 'Neuer Partner'
