@@ -4,22 +4,39 @@ div.overlay.open-list {
   margin-left: -300px;
 }
 
-div.overlay.open-list div.form-wrapper {
+div.overlay.open-list div.select {
+  float: left;
+  width: 100%;
+}
+
+div.overlay.open-list div.select > div {
   float: left;
   width: 49%;
 }
 
-div.overlay.open-list div.form-wrapper.last {
+div.overlay.open-list div.select > div.last {
   float: right;
+  border-left: 1px solid #CCC;
 }
 
 div.overlay.open-list form input[type="text"] {
   float: left;
-  width: 180px;
+  width: 200px;
 }
 
 div.overlay.open-list form input[type="submit"] {
+  float: left;
+}
+
+div.overlay.open-list div.select > div.last input[type="text"],
+div.overlay.open-list div.select > div.last input[type="submit"] {
   float: right;
+}
+
+div.overlay.open-list table {
+  position: relative;
+  float: left;
+  margin: 20px 0 -5px 0;
 }
 
 div.overlay.open-list table td:last-child {
