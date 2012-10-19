@@ -73,7 +73,7 @@ div.clear {
 
 #header h1 {
   float: left;
-  margin: 18px 0 0 -13px;
+  margin: 18px 0 0 -9px;
 }
 
 #header h1 a {
@@ -111,7 +111,7 @@ div.clear {
   display: block;
   line-height: 24px;
   padding: 0 10px;
-  color: #666;
+  color: #7a7a7a;
   text-shadow: 0 1px 0 rgba(0,0,0,.5);
 }
 
@@ -759,7 +759,37 @@ body.index #main td.listable.active div.marker div.btn:before {
   content: "\f213";
   font-size: 1.1em;
   margin: 2px 0 0 4px;
-  color: #222;
+}
+
+body.index #main table td a {
+  display: block;
+}
+
+body.index #main table td.attachments a {
+  height: 18px;
+  width: 0;
+  overflow: hidden;
+  position: relative;
+  padding-left: 12px;
+}
+
+body.index #main table td.attachments a:before,
+body.index #main table td.attachments a:after {
+  position: absolute;
+  left: 0;
+  font-size: 1.45em;
+  line-height: 1em;
+}
+
+body.index #main table td.attachments a:before {
+  top: 0;
+  color: #fff;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, .4);
+}
+
+body.index #main table td.attachments a:after {
+  top: 1px;
+  color: #5c5c5c;
 }
 
 /* Show Tables */
@@ -931,6 +961,42 @@ body.show #main div.info table.within tr:last-child td {
   border-bottom: none;
   box-shadow: none;
   padding: 0;
+}
+
+/* Documents */
+
+body.documents div.attachments table td a.icon-attachment,
+body.documents div.cvs table td a.icon-file {
+  position: relative;
+  padding-left: 20px;
+  display: block;
+}
+
+body.documents div.attachments table td a.icon-attachment:before,
+body.documents div.attachments table td a.icon-attachment:after,
+body.documents div.cvs table td a.icon-file:before,
+body.documents div.cvs table td a.icon-file:after {
+  position: absolute;
+  left: 0;
+  font-size: 1.45em;
+  line-height: 1em;
+}
+
+body.documents div.attachments table td a.icon-attachment:before,
+body.documents div.cvs table td a.icon-file:before {
+  top: 0;
+  color: #fff;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, .4);
+}
+
+body.documents div.attachments table td a.icon-attachment:after,
+body.documents div.cvs table td a.icon-file:after {
+  top: 1px;
+  color: #5c5c5c;
+}
+
+body.documents div.cvs table td a.icon-file:after {
+  top: -1px;
 }
 
 /* Forms */

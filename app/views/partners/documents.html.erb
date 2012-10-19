@@ -15,8 +15,8 @@
         <% else %>
           <% @partner.attachments.each do |attachment| %>
             <tr>
-              <td class="icon-attachment">
-                <%= link_to attachment.title, [@partner, attachment] %>
+              <td>
+                <%= link_to attachment.title, [@partner, attachment], class: 'icon-attachment' %>
               </td>
               <td>
                 <%= attachment.ext %>
@@ -39,7 +39,7 @@
   </div><!-- attachments -->
   <% if current_user.access?(:partners) %>
     <div class="forms">
-      <div class="attachment">
+      <div class="attachment form-wrapper">
         <%= form_for Attachment.new, url: partner_attachments_path(@partner) do |f| %>
           <div class="input">
             <%= f.text_field :title,
@@ -53,4 +53,5 @@
       </div>
     </div><!-- forms -->
   <% end %>
+  <div class="clear"></div>
 </div>
