@@ -6,6 +6,8 @@ class BusinessesController < ApplicationController
 
   layout false
 
+  caches_action :select
+
   # Serves all businesses in a multiselect box or as JSON.
   def select
     @businesses = Business.order(:business)

@@ -2,6 +2,8 @@
 class PartnersController < ApplicationController
   skip_before_filter :authorize, only: [:index, :search, :show]
 
+  cache_sweeper :business_sweeper, only: [:create, :update]
+
   #
   def authorize
     super(:partners, partners_url)
