@@ -294,6 +294,7 @@ do($ = jQuery) ->
 
     # Initializes the current list object and performs the initial sync.
     init: (@el, @urls) ->
+      @label = @el.find('.label')
       @title = @el.find('.title')
       @open = @el.find('.open').css(visibility: 'hidden')
 
@@ -306,8 +307,7 @@ do($ = jQuery) ->
           that.open.css(visibility: 'visible').click -> that.openSelect()
 
     # Opens the select overlay.
-    openSelect: ->
-      @select.trigger('show') if @select?
+    openSelect: -> @select.trigger('show') if @select?
 
     # Syncs with the server and updates the view.
     sync: (options) ->
@@ -330,8 +330,9 @@ do($ = jQuery) ->
 
     # Updates the view.
     set: (list) ->
-      @el.data('list-id', list.id).show()
-      @title.text(list.title)
+      @el.data('list-id', list.id)
+      @title.text(list.title).show()
+      @label.show()
       @updateCollection(list)
 
     # Connects a collection with the current list.

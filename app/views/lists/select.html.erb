@@ -21,8 +21,6 @@
                              html: {'data-type' => :json, class: 'new'} do |f| %>
         <div>
           <%= f.text_field :title, placeholder: List.human_attribute_name(:title) %>
-          <%= f.check_box :private %>
-          <%= f.label :private %>
           <%= f.submit t('actions.save') %>
         </div>
       <% end %>

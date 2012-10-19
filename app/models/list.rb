@@ -11,7 +11,7 @@
 #
 # A title must be present and unique.
 class List < ActiveRecord::Base
-  attr_accessible :title, :private
+  attr_accessible :title
 
   validates :title, presence: true, uniqueness: true
 
@@ -26,6 +26,23 @@ class List < ActiveRecord::Base
   ITEM_TYPES = Hash[reflect_on_all_associations.map { |r| [r.name, r] }]
 
   scope :with_items, includes(ITEM_TYPES.keys)
+
+  # Selects lists, that are accessible for a user, which means that they
+  # are associated with the user or that they are not private.
+  #
+  #   current_user.id  #=> 2
+  #
+  #   List.accessible_fur(current_user)
+  #   #=> [
+  #   #     #<List id: 21, user_id: 2, private: true>,
+  #   #     #<List id: 33, user_id: 2, private: false>,
+  #   #     #<List id: 11, user_id: 7, private: false>
+  #   #   ]
+  #
+  # Returns a ActiveRecord::Relation.
+  def self.accessible_for(user)
+    where('lists.user_id = ? OR lists.private = 0', user)
+  end
 
   # Searches for lists. Taks a hash of conditions:
   #
@@ -44,7 +61,7 @@ class List < ActiveRecord::Base
       rel = rel.where(user_id: params[:user])
     end
 
-    rel
+    rel.order(:title)
   end
 
   # Adds an item to the list.

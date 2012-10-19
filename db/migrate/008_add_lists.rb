@@ -4,7 +4,7 @@ class AddLists < ActiveRecord::Migration
     create_table :lists do |t|
       t.integer  :user_id, null: false
       t.string   :title,   null: false
-      t.boolean  :private, null: false, default: false
+      t.boolean  :private, null: false, default: true
       t.timestamps
     end
 
