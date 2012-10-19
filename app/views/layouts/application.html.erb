@@ -43,16 +43,16 @@
             <%= link_to t('labels.sections.references'), references_path %>
           </li>
           <li class="lists">
-            <div id="select-list">
-              <%= link_to t('actions.open'), select_lists_path, class: 'icon-folder-open' %>
-            </div>
             <div id="current-list" data-list-id="<%= current_user.current_list.try(:id) %>">
-              <span>
+              <div>
                 <%= t 'labels.list.current' %>:
-              </span>
-              <span class="title">
+              </div>
+              <div class="title">
                 <%= current_user.current_list.try(:title) %>
-              </span>
+              </div>
+              <div class="open icon-folder-open">
+                <%= t('actions.open') %>
+              </div>
             </div>
             <div class="lists">
               <%= link_to t('labels.sections.lists'), lists_path, class: 'icon-list-ul' %>
@@ -78,12 +78,11 @@
       });
 
       $('#current-list').siloCurrentList({
+        select: <%= select_lists_path.to_json.html_safe %>,
         show: <%= list_path(id: ':id', format: :json).to_json.html_safe %>,
         add: <%= add_lists_path(format: :json).to_json.html_safe %>,
         remove: <%= remove_lists_path(format: :json).to_json.html_safe %>
       });
-
-      $('#select-list a').siloSelectList();
     </script>
   </body>
 </html>

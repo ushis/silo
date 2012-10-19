@@ -663,12 +663,12 @@ body.edit #main h2[class*=" icon-"]:before{
   float: right;
 }
 
-body.index #main td.list-tools {
+body.index #main td.listable {
   position: relative;
   padding-right: 55px;
 }
 
-body.index #main td.list-tools div.list-marker {
+body.index #main td.listable div.list-marker {
   position: absolute;
   top: 50%;
   margin-top: -3px;
@@ -680,7 +680,7 @@ body.index #main td.list-tools div.list-marker {
   box-shadow: inset 0 1px 1px rgba(0,0,0,.3);
 }
 
-body.index #main td.list-tools.active div.list-marker:after {
+body.index #main td.listable.active div.list-marker:after {
   content: ' ';
   position: absolute;
   top: 1px;
@@ -691,7 +691,7 @@ body.index #main td.list-tools.active div.list-marker:after {
   background: #666;
 }
 
-body.index #main td.list-tools div.list-marker div.list-btn {
+body.index #main td.listable div.list-marker div.list-btn {
   display: none;
   cursor: pointer;
   height: 22px;
@@ -706,16 +706,16 @@ body.index #main td.list-tools div.list-marker div.list-btn {
   box-shadow: inset 0 1px 0 rgba(255,255,255,.5), inset 0 -1px 0 rgba(0,0,0,.2), 0 1px 1px rgba(0,0,0,.075);
 }
 
-body.index #main td.list-tools:hover div.list-marker div.list-btn {
+body.index #main td.listable:hover div.list-marker div.list-btn {
   display: block;
 }
 
-body.index #main td.list-tools div.list-marker div.list-btn:hover {
+body.index #main td.listable div.list-marker div.list-btn:hover {
   background: #eee;
   color: #222;
 }
 
-body.index #main td.list-tools div.list-marker div.list-btn:after {
+body.index #main td.listable div.list-marker div.list-btn:after {
   content: ' ';
   position: absolute;
   top: 50%;
@@ -729,7 +729,7 @@ body.index #main td.list-tools div.list-marker div.list-btn:after {
   border-left-color: #ececec;
 }
 
-body.index #main td.list-tools div.list-marker div.list-btn:before {
+body.index #main td.listable div.list-marker div.list-btn:before {
   font-family: FontAwesome;
   font-weight: normal;
   font-style: normal;
@@ -740,7 +740,7 @@ body.index #main td.list-tools div.list-marker div.list-btn:before {
   margin: 2px 0 0 4px;
 }
 
-body.index #main td.list-tools.active div.list-marker div.list-btn:before {
+body.index #main td.listable.active div.list-marker div.list-btn:before {
   font-family: FontAwesome;
   font-weight: normal;
   font-style: normal;
@@ -753,7 +753,6 @@ body.index #main td.list-tools.active div.list-marker div.list-btn:before {
 }
 
 /* Show Tables */
-
 body.show #main div.left {
   float: left;
   width: 60%

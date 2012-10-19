@@ -295,9 +295,19 @@ do($ = jQuery) ->
     # Initializes the current list object and performs the initial sync.
     init: (@el, @urls) ->
       @title = @el.find('.title')
+      @open = @el.find('.open').css(visibility: 'hidden')
 
       if (id = @el.data('list-id'))
         @sync url: @urls.show.replace(':id', id)
+
+      do (that = @) ->
+        $.ajax that.urls.select, dataType: 'html', success: (select) ->
+          that.select = $(select).siloSelectListOverlay()
+          that.open.css(visibility: 'visible').click -> that.openSelect()
+
+    # Opens the select overlay.
+    openSelect: ->
+      @select.trigger('show') if @select?
 
     # Syncs with the server and updates the view.
     sync: (options) ->
@@ -309,6 +319,9 @@ do($ = jQuery) ->
 
     # Moves an item in to or out of the list.
     move: (type, el) ->
+      unless @el.data('list-id')
+        return @openSelect()
+
       @sync {
         url: if el.hasClass('active') then @urls.remove else @urls.add
         data: {type: type, id: el.data('id')}
@@ -354,30 +367,17 @@ do($ = jQuery) ->
   $.fn.siloListable = (type) -> SiloCurrentList.connectWith(type, @)
 
   # Handles the select list overlay.
-  $.fn.siloSelectListOverlay = (url, options) ->
+  $.fn.siloSelectListOverlay = (options) ->
     settings = $.extend {
       abortClass: 'abort'
       selectClass: 'select'
-      useText: 'Use'
-      useUrl: '/lists/:id/use'
-      linkAttributes:
-        'data-method': 'put'
-        'data-remote': 'true'
-        'data-type': 'json'
     }, options
-
-    makeTr = (list) ->
-      $('<tr>').append($('<td>').text(list.title)).append ->
-        $('<td>').append ->
-          $('<a>', settings.linkAttributes)
-            .attr(href: settings.useUrl.replace(':id', list.id))
-            .text(settings.useText)
 
     @each ->
       el = $(@).siloOverlay()
       el.find(".#{settings.abortClass}").click -> el.trigger('close')
       select = el.find(".#{settings.selectClass}")
-      table = select.find('tbody')
+      table = select.find('table')
 
       select.delegate '*', 'ajax:beforeSend', -> $(@).addClass('loading')
       select.delegate '*', 'ajax:complete', -> $(@).removeClass('loading')
@@ -387,26 +387,12 @@ do($ = jQuery) ->
         el.trigger('close')
 
       select.find('form.new').bind 'ajax:success', (e, data)->
-        $(@).get(0).reset()
         SiloCurrentList.set(data)
         el.trigger('close')
+        $(@).get(0).reset()
 
       select.find('form.search').bind 'ajax:success', (e, data) ->
-        table.empty()
-        for list in data
-          table.append -> makeTr(list)
-
-  # Triggers the select list overlay.
-  $.fn.siloSelectList = (options) ->
-    @each ->
-      el = $(@).css(visibility: 'hidden')
-
-      $.ajax el.attr('href'), dataType: 'html', success: (select) ->
-        select = $(select).siloSelectListOverlay(options)
-
-        el.css(visibility: 'visible').click ->
-          select.trigger('show')
-          return false
+        table.html($(data).find(".#{settings.selectClass} table").html())
 
   # We use our own confirm dialog.
   $.rails.confirm = -> true
