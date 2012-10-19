@@ -203,12 +203,14 @@ div.clear {
 }
 
 #nav ul li.lists div a {
-  background: none;
+  margin-right: 20px;
   padding: 0;
+  background: none;
 }
 
-#nav ul li.lists div.lists a:before {
+#nav ul li.lists a:before {
   margin-right: 7px;
+  line-height: 1.75em;
 }
 
 #nav ul li.lists #current-list div {
@@ -225,7 +227,9 @@ div.clear {
 }
 
 #nav ul li.lists #current-list div.title {
-  margin-right: 7px;
+  max-width: 200px;
+  margin-right: 12px;
+  overflow: hidden;
 }
 
 #nav ul li.lists #current-list div.open {
@@ -246,10 +250,6 @@ div.clear {
 #nav ul li.lists #current-list[data-list-id=""] div.title,
 #nav ul li.lists #current-list[data-list-id=""] div.label {
   display: none;
-}
-
-#nav ul li.lists a:before {
-  line-height: 1.75em;
 }
 
 body.experts #nav li.experts a,

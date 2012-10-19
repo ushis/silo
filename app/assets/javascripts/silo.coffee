@@ -307,8 +307,7 @@ do($ = jQuery) ->
           that.open.css(visibility: 'visible').click -> that.openSelect()
 
     # Opens the select overlay.
-    openSelect: ->
-      @select.trigger('show') if @select?
+    openSelect: -> @select.trigger('show') if @select?
 
     # Syncs with the server and updates the view.
     sync: (options) ->
