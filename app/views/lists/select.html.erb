@@ -7,21 +7,21 @@
       <%= t 'actions.abort' %>
     </div>
   </div>
-  <div class="select">
-    <div class="form-wrapper">
+  <div class="select form-wrapper">
+    <div>
       <%= form_tag select_lists_path, method: :get, remote: true, class: 'search' do %>
         <div>
-          <%= text_field_tag :title, nil, placeholder: List.human_attribute_name(:title) %>
+          <%= text_field_tag :title, nil, placeholder: List.human_attribute_name(:search_for_a_list) %>
           <%= submit_tag t('actions.search') %>
         </div>
       <% end %>
     </div>
-    <div class="form-wrapper last">
+    <div class="last">
       <%= form_for List.new, method: :post, remote: true,
                              html: {'data-type' => :json, class: 'new'} do |f| %>
         <div>
-          <%= f.text_field :title, placeholder: List.human_attribute_name(:title) %>
           <%= f.submit t('actions.save') %>
+          <%= f.text_field :title, placeholder: List.human_attribute_name(:create_new_list) %>
         </div>
       <% end %>
     </div>
