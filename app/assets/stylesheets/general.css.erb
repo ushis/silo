@@ -230,6 +230,7 @@ div.clear {
   max-width: 200px;
   margin-right: 12px;
   overflow: hidden;
+  white-space: nowrap;
 }
 
 #nav ul li.lists #current-list div.open {
@@ -331,15 +332,20 @@ body.index #main {
 
 /* Main Header & Form Wrapper */
 #main div.header,
-#main div.form-wrapper {
+div.form-wrapper {
   float: left;
   position: relative;
   width: 100%;
-  margin: -8px 0 -8px -10px;
+  margin: 0 0 10px 0;
   padding: 10px;
   background: #dbdbdb;
   border-radius: 4px;
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, .2);
+}
+
+#main div.header,
+#main div.form-wrapper {
+  margin: -8px 0 -8px -10px;
 }
 
 #main div.header {
@@ -565,7 +571,7 @@ body.edit #main h2[class*=" icon-"]:before{
 }
 
 /* Tables */
-#main table {
+table {
   width: 100%;
   color: #5b5b5b;
   clear: left;
@@ -575,33 +581,33 @@ body.edit #main h2[class*=" icon-"]:before{
   position: relative;
 }
 
-#main table td {
+table td {
   padding: 7px 10px 5px 10px;
   background-color: #efefef;
   box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
 }
 
-#main table td:first-child {
+table td:first-child {
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
   background-color: #f7f7f7;
   border-left: none;
 }
 
-#main table td:last-child {
+table td:last-child {
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;
 }
 
-#main table td a {
+table td a {
   color: #444;
 }
 
-#main table td.icons {
+table td.icons {
   padding: 7px;
 }
 
-#main table td.icons a {
+table td.icons a {
   display: block;
   width: 18px;
   height: 18px;
@@ -610,7 +616,7 @@ body.edit #main h2[class*=" icon-"]:before{
   background-repeat: no-repeat;
 }
 
-#main table td.icons input[type=submit].delete {
+table td.icons input[type=submit].delete {
   padding: 0;
   margin: 0;
   text-shadow: none;
@@ -619,19 +625,19 @@ body.edit #main h2[class*=" icon-"]:before{
   background: none;
 }
 
-#main table td.icons [class^="icon-"]:before,
-#main table td.icons [class*=" icon-"]:before {
+table td.icons [class^="icon-"]:before,
+table td.icons [class*=" icon-"]:before {
   font-size: 1.25em;
 }
 
-#main div table td.del {
+table td.del {
   width: 20px;
   padding: 0 5px 0 4px;
   vertical-align: middle;
   text-align: center;
 }
 
-#main div table td.del a {
+table td.del a {
   display: block;
   width: 20px;
   height: 20px;
@@ -639,19 +645,19 @@ body.edit #main h2[class*=" icon-"]:before{
   color: #666;
 }
 
-#main div table td.del a:hover {
+table td.del a:hover {
   color: #444;
 }
 
-#main div table td.del a:before {
+table td.del a:before {
   font-size: 1.2em;
 }
 
-#main table thead tr {
+table thead tr {
   line-height: 0;
 }
 
-#main table thead th {
+table thead th {
   text-align: left;
   border-spacing: 0;
   background: none;
@@ -663,7 +669,7 @@ body.edit #main h2[class*=" icon-"]:before{
   padding: 0 0 0 5px;
 }
 
-#main table thead th span {
+table thead th span {
   float: right;
 }
 
@@ -1004,12 +1010,12 @@ body.documents div.cvs table td a.icon-file:after {
   position: relative;
 }
 
-#main form div.field_with_errors input[type=text],
-#main form div.field_with_errors input[type=password] {
+form div.field_with_errors input[type=text],
+form div.field_with_errors input[type=password] {
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, .3), inset 3px 0px 0 rgba(160, 20, 40, .65);
 }
 
-#main input[type=submit],
+input[type=submit],
 div.button,
 a.button {
   float: left;
@@ -1035,7 +1041,7 @@ div.button {
   padding: 5px 14px;
 }
 
-#main input[type=submit]:hover,
+input[type=submit]:hover,
 div.button:hover,
 a.button:hover {
   color: #222;
@@ -1048,35 +1054,35 @@ a.button:hover {
   background: linear-gradient(top bottom, rgba(236,236,236,1) 0%, rgba(227,227,227,1) 100%);
 }
 
-#main div.form-wrapper > form {
+div.form-wrapper > form {
   padding: 10px;
 }
 
-#main form p, #main form table {
+form p, #main form table {
   margin: 10px 0;
   padding: 0 10px 10px 10px;
   font-size: 1em;
 }
 
-#main form table {
+ form table {
   border-spacing: 0;
 }
 
-#main div.form-wrapper div.row div:nth-child(2n) {
+div.form-wrapper div.row div:nth-child(2n) {
   margin-right: 0;
 }
 
-#main form div.field-box p:last-child,
-#main form div.field-box table:last-child,
-#main form div.field-box.buttons table,
-#main form div.field-box.buttons p {
+form div.field-box p:last-child,
+form div.field-box table:last-child,
+form div.field-box.buttons table,
+form div.field-box.buttons p {
   padding-bottom: 0;
   border: none;
 }
 
-#main form textarea,
-#main form input[type=text],
-#main form input[type=password],
+form textarea,
+form input[type=text],
+form input[type=password],
 #main div.header input[type=text] {
   float: left;
   padding: 7px 10px 5px 10px;
@@ -1091,31 +1097,31 @@ a.button:hover {
   -moz-box-sizing: border-box;
 }
 
-#main form textarea:focus,
-#main form input[type=text]:focus,
-#main form input[type=password]:focus,
+form textarea:focus,
+form input[type=text]:focus,
+form input[type=password]:focus,
 #main div.header input[type=text]:focus {
   background: #f5f5f5;
   color: #444;
 }
 
-#main form div.field-box.buttons * {
+form div.field-box.buttons * {
   float: right;
 }
 
-#main form table td,
-#main form table td:first-child,
-#main form table td:last-child {
+form table td,
+form table td:first-child,
+form table td:last-child {
   padding: 0 10px 0 0;
   background: transparent;
   box-shadow: none;
 }
 
-#main form table td:last-child {
+form table td:last-child {
   padding: 0;
 }
 
-#main form label {
+form label {
   display: block;
   color: #888;
   font-size: .7em;
@@ -1125,13 +1131,13 @@ a.button:hover {
   cursor: pointer;
 }
 
-#main div.form-wrapper form textarea,
-#main div.form-wrapper form input[type=text],
-#main div.form-wrapper form input[type=password] {
+div.form-wrapper form textarea,
+div.form-wrapper form input[type=text],
+div.form-wrapper form input[type=password] {
   width: 100%;
 }
 
-#main div.form-wrapper div.row {
+div.form-wrapper div.row {
   width: 721px;
   float: left;
   position: relative;
@@ -1144,13 +1150,13 @@ a.button:hover {
   -moz-box-sizing: border-box;
 }
 
-#main div.form-wrapper div.row:last-child {
+div.form-wrapper div.row:last-child {
   border-bottom: 0;
   box-shadow: none;
   margin-bottom: 0;
 }
 
-#main form div.row > div {
+form div.row > div {
   float: left;
   margin-right: 20px;
 }
@@ -1162,3 +1168,7 @@ a.button:hover {
 #main #filter div.row div:last-child {
   margin-right: 0;
 }
+
+/* Lists */
+
+
