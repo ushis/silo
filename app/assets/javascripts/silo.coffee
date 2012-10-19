@@ -341,10 +341,11 @@ do($ = jQuery) ->
 
       do (that =  @) ->
         collection.each ->
-          el = $(@).append ->
-            $('<div>', class: 'list-marker').append ->
-              $('<div>', class: 'list-btn').click ->
-                that.move type, el
+          el = $(@).prepend ->
+            $('<div>', class: 'list-item').append ->
+              $('<div>', class: 'marker').append ->
+                $('<div>', class: 'btn').click ->
+                  that.move type, el
 
           that.collection[type][el.data('id')] = el
 
