@@ -22,7 +22,7 @@ Silo::Application.routes.draw do
   resources :experts, except: [:index] do
     resources :cvs,         only: [:show, :create, :destroy]
     resources :attachments, only: [:show, :create, :destroy]
-    resources :contacts,    only: [:create, :destroy],        controller: 'contacts/experts'
+    resources :contacts,    only: [:create, :destroy]
     resources :addresses,   only: [:create, :destroy],        controller: 'addresses/experts'
 
     collection do
@@ -39,7 +39,7 @@ Silo::Application.routes.draw do
 
   resources :partners, except: [:index] do
     resources :attachments, only: [:show, :create, :destroy]
-    resources :contacts,    only: [:create, :destroy], controller: 'contacts/partners'
+    resources :contacts,    only: [:create, :destroy]
     resources :employees
 
     collection do

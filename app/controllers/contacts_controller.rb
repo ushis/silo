@@ -1,9 +1,13 @@
-# The ContactsController the parent class of all Controllers in the Contacts
-# module. It provides generic methods to manipulate the polymorphic Contact
-# model.
+# The ContactsController provides all actions needed to add/remove contacts
+# to/from a associated model.
 class ContactsController < ApplicationController
 
-  protected
+  polymorphic_parent :experts, :partners
+
+  # Checks the users privileges.
+  def authorize
+    super(parent[:controller], parent_url)
+  end
 
   # Adds a contact to a model, that has a _has_one_ association to the Contact
   # model. It uses the _params_ hash to determine the contact field and the
@@ -14,8 +18,9 @@ class ContactsController < ApplicationController
   #    params[:contact][:field]    # Fieldname, such as :emails or :phones
   #    params[:contact][:contact]  # Value, such as 'hello@aol.com'
   #
-  # It is ensured, the user is redirected to the specified url.
-  def add_to(model, url)
+  # The user is redirected to the parents show page.
+  def create
+    model = parent[:model].find(parent[:id])
     field, contact = params[:contact].values_at(:field, :contact)
     contact.strip!
 
@@ -30,15 +35,18 @@ class ContactsController < ApplicationController
     end
 
     flash[:notice] = t('messages.contact.success.save')
+    redirect_to parent_url
+  rescue ActiveRecord::RecordNotFound
+    parent_not_found
   rescue
     flash[:alert] = t('messages.contact.errors.save')
-  ensure
-    redirect_to url
+    redirect_to parent_url
   end
 
   # Removes a contact from a field. It behaves like
   # ContactsController#add_to(), but vice versa.
-  def remove_from(model, url)
+  def destroy
+    model = parent[:model].find(parent[:id])
     field, contact = params.values_at(:field, :contact)
 
     unless model.contact.field(field).delete(contact) && model.contact.save
@@ -46,9 +54,19 @@ class ContactsController < ApplicationController
     end
 
     flash[:notice] = t('messages.contact.success.delete')
+    redirect_to parent_url
+  rescue ActiveRecord::RecordNotFound
+    parent_not_found
   rescue
     flash[:alert] = t('messages.contact.errors.delete')
-  ensure
-    redirect_to url
+    redirect_to parent_url
+  end
+
+  private
+
+  # Sets a flash message and redirects the user.
+  def parent_not_found
+    flash[:alert] = t(:"messages.#{parent[:model].to_s.downcase}.errors.find")
+    redirect_to parents_url
   end
 end
