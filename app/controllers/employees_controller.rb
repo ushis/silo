@@ -11,6 +11,7 @@ class EmployeesController < ApplicationController
   def index
     @partner = Partner.find(params[:partner_id])
     @title = t('labels.employees.all')
+    body_class.delete('index')
   end
 
 end

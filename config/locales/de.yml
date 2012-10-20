@@ -138,6 +138,8 @@ de:
     language:
       languages: 'Sprachen'
     list:
+      add: 'Zur Liste hinzufügen'
+      remove: 'Aus Liste entfernen'
       create: 'Neue Liste erstellen'
       search: 'Liste suchen'
     partner:

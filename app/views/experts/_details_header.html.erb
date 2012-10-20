@@ -1,24 +1,26 @@
 <div class="header details">
   <h2>
-    <%= @expert.full_name_with_degree %>
+    <%= expert.full_name_with_degree %>
   </h2>
   <h3>
     <%= Expert.human_attribute_name(:updated_at) %>
-    <%= l @expert.updated_at, format: :short %>
-    <%= t 'labels.generic.by', name: @expert.user.try(:full_name) %>
+    <%= l expert.updated_at, format: :short %>
+    <%= t 'labels.generic.by', name: expert.user.try(:full_name) %>
   </h3>
   <ul class="tools">
+    <li class="listable" data-id="<%= expert.id %>">
+    </li>
     <li>
-      <%= link_to t('actions.print'), expert_path(@expert, format: :pdf),
+      <%= link_to t('actions.print'), expert_path(expert, format: :pdf),
                   class: 'icon-print' %>
     </li>
     <% if current_user.access?(:experts) %>
       <li>
-        <%= link_to t('actions.edit'), edit_expert_path(@expert),
+        <%= link_to t('actions.edit'), edit_expert_path(expert),
                     class: 'icon-pencil' %>
       </li>
       <li>
-        <%= link_to t('actions.delete'), expert_path(@expert),
+        <%= link_to t('actions.delete'), expert_path(expert),
                     class: 'icon-trash password',
                     confirm: t('messages.expert.confirm.delete') %>
       </li>
@@ -26,10 +28,17 @@
   </ul>
   <ul class="tabs">
     <li class="show">
-      <%= link_to t('labels.expert.details'), expert_path(@expert) %>
+      <%= link_to t('labels.expert.details'), expert_path(expert) %>
     </li>
     <li class="documents">
-      <%= link_to t('labels.expert.documents'), documents_expert_path(@expert) %>
+      <%= link_to t('labels.expert.documents'), documents_expert_path(expert) %>
     </li>
   </ul>
 </div>
+
+<script>
+  $('ul.tools li.listable').siloListable('experts', {
+    active: <%= t('labels.list.remove').to_json.html_safe %>,
+    inactive: <%= t('labels.list.add').to_json.html_safe %>
+  });
+</script>

@@ -336,7 +336,8 @@ do($ = jQuery) ->
       @updateCollection(list)
 
     # Connects a collection with the current list.
-    connectWith: (type, collection) ->
+    connectWith: (type, collection, options) ->
+      options ||= {}
       @collection ||= {}
       @collection[type] ||= {}
 
@@ -347,6 +348,10 @@ do($ = jQuery) ->
               $('<div>', class: 'marker').append ->
                 $('<div>', class: 'btn').click ->
                   that.move type, el
+
+          for state in ['active', 'inactive']
+            if options[state]?
+              el.append $('<span>', class: state).text(options[state])
 
           that.collection[type][el.data('id')] = el
 
@@ -361,12 +366,14 @@ do($ = jQuery) ->
             el.addClass('active')
           else
             el.removeClass('active')
+          el.addClass('ready')
 
   # Links an element with the current list.
   $.fn.siloCurrentList = (urls) -> SiloCurrentList.init(@.first(), urls)
 
   # Connects a collection with the current list.
-  $.fn.siloListable = (type) -> SiloCurrentList.connectWith(type, @)
+  $.fn.siloListable = (type, options) ->
+    SiloCurrentList.connectWith(type, @, options)
 
   # Handles the select list overlay.
   $.fn.siloSelectListOverlay = (options) ->

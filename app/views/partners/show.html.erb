@@ -1,7 +1,7 @@
 <%= render 'sidebar' %>
 
 <div id="main">
-  <%= render 'details_header' %>
+  <%= render 'details_header', partner: @partner %>
 
   <div class="left">
     <div class="info">
@@ -48,7 +48,7 @@
       </div>
     </div>
   </div>
-  
+
   <div class="right">
     <div class="info">
         <div class="row address">

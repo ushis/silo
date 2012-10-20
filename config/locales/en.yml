@@ -125,6 +125,8 @@ en:
     language:
       languages: 'Languages'
     list:
+      add: 'Add to list'
+      remove: 'Remove from list'
       create: 'Create a new list'
       search: 'Search for a list'
     partner:

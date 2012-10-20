@@ -245,7 +245,7 @@ div.clear {
 }
 
 #nav ul li.lists #current-list div.open:hover {
-  background: #606060; 
+  background: #606060;
 }
 
 #nav ul li.lists #current-list div.open:before {
@@ -259,6 +259,7 @@ div.clear {
 
 body.experts #nav li.experts a,
 body.partners #nav li.partners a,
+body.employees #nav li.partners a,
 body.references #nav li.references a,
 body.users #nav li.users a {
   color: #444;
@@ -541,16 +542,16 @@ body.edit #main h2[class*=" icon-"]:before{
 
 #main div.header ul.tools li {
   float: left;
-  margin-left: 15px;
+  margin-left: 18px;
 }
 
 #main div.header ul.tools li a,
-#main div.header ul.tools li input[type=submit] {
-  float: left;
+#main div.header ul.tools li.listable span,
+#main div.header ul.tools li.listable div.btn {
   display: block;
   height: 24px;
   margin: 0;
-  padding: 0 0 0 7px;
+  padding: 0;
   line-height: 24px;
   color: #444;
   text-shadow: 0 1px 0 #efefef;
@@ -563,15 +564,57 @@ body.edit #main h2[class*=" icon-"]:before{
 }
 
 #main div.header ul.tools li a:hover,
-#main div.header ul.tools li input[type=submit]:hover {
+#main div.header ul.tools li.listable div.btn:hover {
   color: #111;
 }
 
 #main div.header ul.tools li [class^="icon-"]:before,
-#main div.header ul.tools li [class*=" icon-"]:before {
-  margin-right: 7px;
+#main div.header ul.tools li [class*=" icon-"]:before,
+#main div.header ul.tools li.listable div.btn:before {
+  padding-right: 7px;
   font-size: 1.25em;
   vertical-align: bottom;
+}
+
+#main div.header ul.tools li.listable {
+  position: relative;
+  opacity: 0;
+  -webkit-transition: opacity .6s;
+  -moz-transition: opacity .6s;
+}
+
+#main div.header ul.tools li.listable.ready {
+  opacity: 1;
+}
+
+#main div.header ul.tools li.listable span.active,
+#main div.header ul.tools li.listable.active span.inactive {
+  display: none;
+}
+
+#main div.header ul.tools li.listable.active span.active {
+  display: block;
+}
+
+#main div.header ul.tools li.listable div.btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  cursor: pointer;
+}
+
+#main div.header ul.tools li.listable div.btn:before {
+  font-family: FontAwesome;
+  content: '\f212';
+  display: block;
+  position: absolute;
+  right: 100%;
+}
+
+#main div.header ul.tools li.listable.active div.btn:before {
+  content: '\f213';
 }
 
 /* Tables */
