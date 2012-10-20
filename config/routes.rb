@@ -21,7 +21,7 @@ Silo::Application.routes.draw do
 
   resources :experts, except: [:index] do
     resources :cvs,         only: [:show, :create, :destroy]
-    resources :attachments, only: [:show, :create, :destroy], controller: 'attachments/experts'
+    resources :attachments, only: [:show, :create, :destroy]
     resources :contacts,    only: [:create, :destroy],        controller: 'contacts/experts'
     resources :addresses,   only: [:create, :destroy],        controller: 'addresses/experts'
 
@@ -38,7 +38,7 @@ Silo::Application.routes.draw do
   get 'partners(/page/:page)' => 'partners#index', as: :partners
 
   resources :partners, except: [:index] do
-    resources :attachments, only: [:show, :create, :destroy], controller: 'attachments/partners'
+    resources :attachments, only: [:show, :create, :destroy]
     resources :contacts,    only: [:create, :destroy], controller: 'contacts/partners'
     resources :employees
 
