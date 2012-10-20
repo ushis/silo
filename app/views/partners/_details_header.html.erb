@@ -9,6 +9,12 @@
   </h3>
   <ul class="tools">
     <li class="listable" data-id="<%= partner.id %>">
+      <span class="inactive">
+        <%= t 'labels.list.add' %>
+      </span>
+      <span class="active">
+        <%= t 'labels.list.remove' %>
+      </span>
     </li>
     <% if current_user.access?(:partners) %>
       <li>
@@ -36,8 +42,5 @@
 </div>
 
 <script>
-  $('ul.tools li.listable').siloListable('partners', {
-    active: <%= t('labels.list.remove').to_json.html_safe %>,
-    inactive: <%= t('labels.list.add').to_json.html_safe %>
-  });
+  $('ul.tools li.listable').siloListable('partners');
 </script>

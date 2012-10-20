@@ -111,7 +111,7 @@ do($ = jQuery) ->
 
         collection.after ->
           $('<div>').addClass(settings.helpClass).text(settings.helpText)
-          .fadeIn(600).click -> help.trigger('show')
+          .fadeIn(500).click -> help.trigger('show')
 
   # Shows a simple confirmation dialog.
   $.fn.siloConfirmDelete = (options) ->
@@ -304,7 +304,7 @@ do($ = jQuery) ->
       do (that = @) ->
         $.ajax that.urls.select, dataType: 'html', success: (select) ->
           that.select = $(select).siloSelectListOverlay()
-          that.open.animate(opacity: 1, 600).click -> that.openSelect()
+          that.open.animate(opacity: 1, 500).click -> that.openSelect()
 
     # Opens the select overlay.
     openSelect: -> @select.trigger('show') if @select?
@@ -336,8 +336,7 @@ do($ = jQuery) ->
       @updateCollection(list)
 
     # Connects a collection with the current list.
-    connectWith: (type, collection, options) ->
-      options ||= {}
+    connectWith: (type, collection) ->
       @collection ||= {}
       @collection[type] ||= {}
 
@@ -348,10 +347,6 @@ do($ = jQuery) ->
               $('<div>', class: 'marker').append ->
                 $('<div>', class: 'btn').click ->
                   that.move type, el
-
-          for state in ['active', 'inactive']
-            if options[state]?
-              el.append $('<span>', class: state).text(options[state])
 
           that.collection[type][el.data('id')] = el
 
@@ -372,8 +367,7 @@ do($ = jQuery) ->
   $.fn.siloCurrentList = (urls) -> SiloCurrentList.init(@.first(), urls)
 
   # Connects a collection with the current list.
-  $.fn.siloListable = (type, options) ->
-    SiloCurrentList.connectWith(type, @, options)
+  $.fn.siloListable = (type) -> SiloCurrentList.connectWith(type, @)
 
   # Handles the select list overlay.
   $.fn.siloSelectListOverlay = (options) ->

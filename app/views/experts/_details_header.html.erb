@@ -9,6 +9,12 @@
   </h3>
   <ul class="tools">
     <li class="listable" data-id="<%= expert.id %>">
+      <span class="inactive">
+        <%= t 'labels.list.add' %>
+      </span>
+      <span class="active">
+        <%= t 'labels.list.remove' %>
+      </span>
     </li>
     <li>
       <%= link_to t('actions.print'), expert_path(expert, format: :pdf),
@@ -37,8 +43,5 @@
 </div>
 
 <script>
-  $('ul.tools li.listable').siloListable('experts', {
-    active: <%= t('labels.list.remove').to_json.html_safe %>,
-    inactive: <%= t('labels.list.add').to_json.html_safe %>
-  });
+  $('ul.tools li.listable').siloListable('experts');
 </script>
