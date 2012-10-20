@@ -53,7 +53,7 @@ class ListsController < ApplicationController
       List.where(id: params[:id]).accessible_for(current_user).first
 
     if current_user.save
-      render json: current_user.current_list
+      render json: current_list
     else
       render json: t('messages.list.errors.use'), status: 422
     end
@@ -62,15 +62,15 @@ class ListsController < ApplicationController
   # Adds an item to the current list. This action responds with the current
   # list as JSON.
   def add
-    current_user.current_list.try(:add, params[:type], params[:id])
-    render json: current_user.current_list
+    current_list.try(:add, params[:type], params[:id])
+    render json: current_list
   end
 
   # Removes an item from the current list. This action responds with the
   # current list as JSON.
   def remove
-    current_user.current_list.try(:remove, params[:type], params[:id])
-    render json: current_user.current_list
+    current_list.try(:remove, params[:type], params[:id])
+    render json: current_list
   end
 
   private

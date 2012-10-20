@@ -13,6 +13,7 @@ class ApplicationController < ActionController::Base
 
   helper_method :body_class
   helper_method :arrayified_param
+  helper_method :current_list
   helper_method :current_user
   helper_method :current_user?
 
@@ -105,6 +106,11 @@ class ApplicationController < ActionController::Base
   # Redirects the user to the login, unless he/she is already logged in.
   def authenticate
     redirect_to login_url unless current_user
+  end
+
+  # Returns the current list of the current user.
+  def current_list
+    current_user.try(:current_list)
   end
 
   # Checks if a user is the current user. Returns true if the user is the

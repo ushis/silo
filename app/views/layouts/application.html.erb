@@ -43,12 +43,12 @@
             <%= link_to t('labels.sections.references'), references_path %>
           </li>
           <li class="lists">
-            <div id="current-list" data-list-id="<%= current_user.current_list.try(:id) %>">
+            <div id="current-list" data-list-id="<%= current_list.try(:id) %>">
               <div class="label">
                 <%= t 'labels.list.current' %>:
               </div>
               <div class="title">
-                <%= current_user.current_list.try(:title) %>
+                <%= current_list.try(:title) %>
               </div>
               <div class="open icon-folder-open">
                 <%= t('actions.open') %>
