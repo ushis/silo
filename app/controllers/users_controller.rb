@@ -8,6 +8,9 @@ class UsersController < ApplicationController
 
   layout false, only: [:select]
 
+  caches_action :select
+  cache_sweeper :user_sweeper, only: [:create, :update, :update_profile, :destroy]
+
   # Serves a multi select box.
   def select
     @users = User.order(:name, :prename)
