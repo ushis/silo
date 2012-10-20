@@ -23,7 +23,9 @@ class List < ActiveRecord::Base
   belongs_to :user
 
   # Hash of all possible list item types.
-  ITEM_TYPES = Hash[reflect_on_all_associations.map { |r| [r.name, r] }]
+  ITEM_TYPES = Hash[
+    reflect_on_all_associations(:has_and_belongs_to_many).map { |r| [r.name, r] }
+  ]
 
   scope :with_items, includes(ITEM_TYPES.keys)
 

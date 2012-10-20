@@ -296,7 +296,7 @@ do($ = jQuery) ->
     init: (@el, @urls) ->
       @label = @el.find('.label')
       @title = @el.find('.title')
-      @open = @el.find('.open').css(visibility: 'hidden')
+      @open = @el.find('.open').css(opacity: 0)
 
       if (id = @el.data('list-id'))
         @sync url: @urls.show.replace(':id', id)
@@ -304,7 +304,7 @@ do($ = jQuery) ->
       do (that = @) ->
         $.ajax that.urls.select, dataType: 'html', success: (select) ->
           that.select = $(select).siloSelectListOverlay()
-          that.open.css(visibility: 'visible').click -> that.openSelect()
+          that.open.animate(opacity: 1, 600).click -> that.openSelect()
 
     # Opens the select overlay.
     openSelect: -> @select.trigger('show') if @select?
