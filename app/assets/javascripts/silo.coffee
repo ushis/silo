@@ -299,7 +299,7 @@ do($ = jQuery) ->
       @open = @el.find('.open').css(opacity: 0)
 
       if (id = @el.data('list-id'))
-        @sync url: @urls.show.replace(':id', id)
+        @sync(url: @urls.show.replace(':id', id))
 
       do (that = @) ->
         $.ajax that.urls.select, dataType: 'html', success: (select) ->
@@ -312,21 +312,16 @@ do($ = jQuery) ->
     # Syncs with the server and updates the view.
     sync: (options) ->
       do (that = @) ->
-        $.ajax $.extend {
-          dataType: 'json',
-          success: (data) -> that.set(data)
-        }, options
+        settings = { dataType: 'json', success: (data) -> that.set(data) }
+        $.ajax($.extend(settings, options))
 
     # Moves an item in to or out of the list.
     move: (type, el) ->
       unless @el.data('list-id')
         return @openSelect()
 
-      @sync {
-        url: if el.hasClass('active') then @urls.remove else @urls.add
-        data: {type: type, id: el.data('id')}
-        type: 'post'
-      }
+      url = if el.hasClass('active') then @urls.remove else @urls.add
+      @sync(url: url, data: {type: type, id: el.data('id')}, type: 'post')
 
     # Updates the view.
     set: (list) ->
@@ -353,7 +348,7 @@ do($ = jQuery) ->
     # Updates the collection.
     updateCollection: (list) ->
       for type, elements of @collection
-        break unless list[type]?
+        continue unless list[type]?
         ids = (obj.id for obj in list[type])
 
         for id, el of elements
