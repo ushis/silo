@@ -300,6 +300,8 @@ do($ = jQuery) ->
 
       if (id = @el.data('list-id'))
         @sync(url: @urls.show.replace(':id', id))
+      else
+        @set(null)
 
       do (that = @) ->
         $.ajax that.urls.select, dataType: 'html', success: (select) ->
@@ -317,23 +319,25 @@ do($ = jQuery) ->
 
     # Moves an item in to or out of the list.
     move: (type, el) ->
-      unless @el.data('list-id')
-        return @openSelect()
-
+      return @openSelect() unless @el.data('list-id')
       url = if el.hasClass('active') then @urls.remove else @urls.add
       @sync(url: url, data: {type: type, id: el.data('id')}, type: 'post')
 
     # Updates the view.
     set: (list) ->
+      list ||= {id: '', title: ''}
       @el.data('list-id', list.id)
-      @title.text(list.title).show()
-      @label.show()
+      @title.text(list.title)
       @updateCollection(list)
+
+      for el in [@title, @label]
+        if list.title then el.show() else el.hide()
 
     # Connects a collection with the current list.
     connectWith: (type, collection) ->
       @collection ||= {}
-      @collection[type] ||= {}
+      @collection[type] ||= $()
+      @collection[type] = @collection[type].add(collection)
 
       do (that =  @) ->
         collection.each ->
@@ -343,20 +347,14 @@ do($ = jQuery) ->
                 $('<div>', class: 'btn').click ->
                   that.move type, el
 
-          that.collection[type][el.data('id')] = el
-
     # Updates the collection.
     updateCollection: (list) ->
       for type, elements of @collection
-        continue unless list[type]?
-        ids = (obj.id for obj in list[type])
+        ids = (obj.id for obj in list[type] || [])
 
-        for id, el of elements
-          if $.inArray(Number(id), ids) > -1
-            el.addClass('active')
-          else
-            el.removeClass('active')
-          el.addClass('ready')
+        elements.each ->
+          el = $(@).addClass('ready')
+          el.toggleClass('active', $.inArray(Number(el.data('id')), ids) > -1)
 
   # Links an element with the current list.
   $.fn.siloCurrentList = (urls) -> SiloCurrentList.init(@.first(), urls)
