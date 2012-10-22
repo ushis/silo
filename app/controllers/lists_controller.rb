@@ -37,22 +37,64 @@ class ListsController < ApplicationController
 
   alias partners experts
 
+  # Copies a list.
+  def copy
+    original = List.find(params[:id])
+
+    unless original.accessible_for?(current_user)
+      return forbidden
+    end
+
+    copy = original.copy
+    copy.user = current_user
+    copy.private = true
+    copy.title = params[:title] if params[:title]
+
+    if copy.save
+      flash[:notice] = t('messages.list.success.copy')
+      redirect_to list_experts_url(copy)
+    else
+      flash[:alert] = t('messages.list.errors.copy')
+      redirect_to list_experts_url(original)
+    end
+  end
+
   # Creates a new list and sets the users current list. Responds to HTML
   # and JSON.
   def create
-    @list = List.new(params[:list])
-    @list.user = current_user
-    @list.current_users << current_user
+    list = List.new(params[:list])
+    list.user = current_user
+    list.current_users << current_user
 
     respond_to do |format|
-      if @list.save
-        format.html { redirect_to list_experts_url(@list) }
-        format.json { render json: @list }
+      if list.save
+        format.html { redirect_to list_experts_url(list) }
+        format.json { render json: list }
       else
         format.html { redirect_to lists_url, alert: t('messages.list.erros.create') }
         format.json { render json: t('messages.list.errors.create'), status: 422 }
       end
     end
+  end
+
+  # Updates a list.
+  def update
+    list = List.find(params[:id])
+
+    unless list.accessible_for?(current_user)
+      return forbidden
+    end
+
+    list.title = params[:title] if params[:title]
+    list.private = params[:private] if params[:private] && list.private?
+
+    if list.save
+      flash[:notice] = t('messages.list.success.save')
+    else
+      flash[:alert] = t('messages.list.errors.save')
+    end
+
+    redirect_to list_experts_path(list)
   end
 
   # Destroys a list.

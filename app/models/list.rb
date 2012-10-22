@@ -74,6 +74,17 @@ class List < ActiveRecord::Base
     ! private? || user_id == user.id
   end
 
+  # Returns a copy of the list with all its list items.
+  def copy
+    copy = dup
+
+    ITEM_TYPES.keys.each do |assoc|
+      copy.association(assoc).ids_writer(association(assoc).ids_reader)
+    end
+
+    copy
+  end
+
   # Adds an item to the list.
   #
   #   list.add(:experts, 12)

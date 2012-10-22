@@ -9,6 +9,16 @@
                   'data-type' => :json, 'data-id' => list.id,
                   class: 'icon-folder-open' %>
     </li>
+    <% if list.private? %>
+      <li>
+        <%= link_to t('actions.share'), list_path(list), method: :put,
+                    'data-private' => 0, class: 'icon-globe' %>
+      </li>
+    <% end %>
+    <li>
+      <%= link_to t('actions.copy'), copy_list_path(list),
+                  method: :post, class: 'icon-copy' %>
+    </li>
     <li>
       <%= link_to t('actions.edit'), edit_list_path(list),
                   class: 'icon-pencil' %>
