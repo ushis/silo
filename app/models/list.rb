@@ -9,11 +9,11 @@
 # - *created_at*  datetime
 # - *updated_at*  datetime
 #
-# A title must be present and unique.
+# A title must be present.
 class List < ActiveRecord::Base
   attr_accessible :title
 
-  validates :title, presence: true, uniqueness: true
+  validates :title, presence: true
 
   has_and_belongs_to_many :experts, uniq: true
   has_and_belongs_to_many :partners, uniq: true
@@ -28,6 +28,8 @@ class List < ActiveRecord::Base
   ]
 
   scope :with_items, includes(ITEM_TYPES.keys)
+
+  default_scope order(:title)
 
   # Selects lists, that are accessible for a user, which means that they
   # are associated with the user or that they are not private.
@@ -48,8 +50,8 @@ class List < ActiveRecord::Base
 
   # Searches for lists. Taks a hash of conditions:
   #
-  # - *:title*  A (partial) title
-  # - *:user*   A user or a user id.
+  # - *:title*    A (partial) title
+  # - *:private*  Wether the list should be private or not.
   #
   # Returns a ActiveRecord::Relation.
   def self.search(params)
@@ -59,11 +61,17 @@ class List < ActiveRecord::Base
       rel = rel.where('title LIKE ?', "%#{params[:title]}%")
     end
 
-    unless params[:user].blank?
-      rel = rel.where(user_id: params[:user])
+    unless params[:private].blank?
+      rel = rel.where(private: params[:private])
     end
 
-    rel.order(:title)
+    rel
+  end
+
+  # Checks if a list is accessible for a user. Returns true if the user
+  # has access to the list else false.
+  def accessible_for?(user)
+    ! private? || user_id == user.id
   end
 
   # Adds an item to the list.

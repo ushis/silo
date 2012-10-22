@@ -137,12 +137,12 @@ CREATE TABLE `lists` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
-  `private` tinyint(1) NOT NULL DEFAULT '0',
+  `private` tinyint(1) NOT NULL DEFAULT '1',
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `index_lists_on_title` (`title`),
-  KEY `index_lists_on_user_id` (`user_id`)
+  KEY `index_lists_on_user_id` (`user_id`),
+  KEY `index_lists_on_title` (`title`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `lists_partners` (

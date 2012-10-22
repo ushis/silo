@@ -11,9 +11,7 @@ Silo::Application.routes.draw do
   put 'profile' => 'users#update_profile'
 
   resources :users, except: [:show] do
-    collection do
-      get :select
-    end
+    get :select, on: :collection
   end
 
   # Experts
@@ -25,13 +23,8 @@ Silo::Application.routes.draw do
     resources :contacts,    only: [:create, :destroy]
     resources :addresses,   only: [:create, :destroy]
 
-    collection do
-      get 'search(/page/:page)' => 'experts#search', as: :search
-    end
-
-    member do
-      get :documents
-    end
+    get 'search(/page/:page)' => 'experts#search', as: :search, on: :collection
+    get :documents, on: :member
   end
 
   # Partners
@@ -42,28 +35,32 @@ Silo::Application.routes.draw do
     resources :contacts,    only: [:create, :destroy]
     resources :employees
 
-    collection do
-      get 'search(/page/:page)' => 'partners#search', as: :search
-    end
-
-    member do
-      get :documents
-    end
+    get 'search(/page/:page)' => 'partners#search', as: :search, on: :collection
+    get :documents, on: :member
   end
 
   # References
   resources :references
 
   # Lists
-  resources :lists do
+  get 'lists(/page/:page)' => 'lists#index', as: :lists
+
+  resources :lists, except: [:index, :show] do
     collection do
+      get  'search(/page/:page)' => 'lists#search', as: :search
       get  :select
+      get  :current
       post :add
       post :remove
     end
 
-    member do
-      put :use
+    put  :open, on: :member
+
+    [:experts, :partners].each do |resource|
+      resources resource, only: [], controller: :lists do
+        get    :index,   action: resource, on: :collection
+        delete :destroy, action: :remove,  on: :member
+      end
     end
   end
 

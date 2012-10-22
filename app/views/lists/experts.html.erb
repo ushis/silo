@@ -1,0 +1,24 @@
+<%= render 'sidebar' %>
+
+<div id="main">
+  <%= render 'details_header', list: @list %>
+
+  <table class="experts">
+    <tbody>
+      <% @list.experts.each do |expert| %>
+        <tr>
+          <td>
+            <%= link_to expert.name, expert_path(expert) %>
+          </td>
+          <td>
+            <%= link_to expert.prename, expert_path(expert) %>
+          </td>
+          <td class="remove">
+            <%= link_to t('actions.remove'), [@list, expert], method: :delete,
+                        'data-type' => :experts, class: 'icon-removefromlist' %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

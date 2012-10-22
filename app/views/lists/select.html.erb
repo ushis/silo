@@ -33,7 +33,7 @@
               <%= list.title %>
             </td>
             <td>
-              <%= link_to t('actions.use'), use_list_path(list), method: :put,
+              <%= link_to t('actions.open'), open_list_path(list), method: :put,
                           remote: true, 'data-type' => :json, class: 'icon-folder-open' %>
             </td>
           </tr>

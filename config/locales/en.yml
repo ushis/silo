@@ -126,6 +126,7 @@ en:
       languages: 'Languages'
     list:
       add: 'Add to list'
+      all: 'All Lists'
       remove: 'Remove from list'
       create: 'Create a new list'
       search: 'Search for a list'
@@ -216,6 +217,9 @@ en:
     language:
       errors:
         find: 'Language not found'
+    list:
+      confirm:
+        delete: 'Do you really want to delete this list?'
     partner:
       confirm:
         delete: 'Do you really want to delete this partner with all its attachments?'

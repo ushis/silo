@@ -9,7 +9,7 @@ class AddLists < ActiveRecord::Migration
     end
 
     add_index :lists, :user_id
-    add_index :lists, :title,   unique: true
+    add_index :lists, :title
 
     create_table :experts_lists, id: false do |t|
       t.integer :expert_id, null: false

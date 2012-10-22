@@ -152,15 +152,12 @@ div.clear {
   -moz-box-sizing: border-box;
 }
 
-#nav ul li.users {
-  width: 15%;
-}
-
 #nav ul li:first-child {
   padding-left: 0;
 }
 
-#nav ul li a {
+#nav ul li a,
+#nav ul #current-list {
   font-size: .9em;
   display: block;
   padding: 8px 20px 9px 20px;
@@ -175,37 +172,16 @@ div.clear {
   text-shadow: 0 1px 0px rgba(0, 0, 0, .5);
 }
 
-#nav ul li.lists {
+#nav ul li.lists,
+#nav ul #current-list {
   float: right;
   font-size: 1em;
   width: auto;
-  max-width: 400px;
-  display: block;
-  padding: 8px 10px 9px 15px;
-  text-transform: uppercase;
-  line-height: 18px;
-  background: -moz-linear-gradient(top, #515151 0%, #464646 100%);
-  background: -webkit-linear-gradient(top, #515151 0%, #464646 100%);
-  background: -o-linear-gradient(top, #515151 0%, #464646 100%);
-  background: -ms-linear-gradient(top, #515151 0%, #464646 100%);
-  background: linear-gradient(to bottom, #515151 0%, #464646 100%);
-  border-radius: 6px 6px 0 0;
-  text-shadow: 0 1px 0px rgba(0, 0, 0, .5);
+  padding-right: 0;
 }
 
-#nav ul li.lists > div {
-  float: right;
-  margin-left: 10px;
-}
-
-#nav ul li.lists > div:last-child {
-  margin-left: 0;
-}
-
-#nav ul li.lists div a {
-  margin-right: 20px;
-  padding: 0;
-  background: none;
+#nav ul li.lists a {
+  border-top-right-radius: 0;
 }
 
 #nav ul li.lists a:before {
@@ -213,7 +189,14 @@ div.clear {
   line-height: 1.75em;
 }
 
-#nav ul li.lists #current-list div {
+#nav ul #current-list {
+  max-width: 400px;
+  padding: 8px 10px 9px 15px;
+  line-height: 18px;
+  border-radius: 0 6px 0 0;
+}
+
+#nav ul #current-list div {
   float: left;
   text-align: right;
   text-transform: none;
@@ -221,19 +204,26 @@ div.clear {
   line-height: 1.5em;
 }
 
-#nav ul li.lists #current-list div.label {
+#nav ul #current-list div.label {
+  display: none;
   margin-right: 7px;
   color: #888;
 }
 
-#nav ul li.lists #current-list div.title {
+#nav ul #current-list div.title {
+  display: none;
   max-width: 200px;
   padding-right: 12px;
   overflow: hidden;
   white-space: nowrap;
 }
 
-#nav ul li.lists #current-list div.open {
+#nav ul #current-list.active div.title,
+#nav ul #current-list.active div.label {
+  display: block;
+}
+
+#nav ul #current-list div.open {
   cursor: pointer;
   border-radius: 3px;
   height: 20px;
@@ -244,24 +234,19 @@ div.clear {
   box-shadow: inset 0 -1px 0 rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.1);
 }
 
-#nav ul li.lists #current-list div.open:hover {
+#nav ul #current-list div.open:hover {
   background: #606060;
 }
 
-#nav ul li.lists #current-list div.open:before {
+#nav ul #current-list div.open:before {
   margin: 0 99999px 0 5px;
-}
-
-#nav ul li.lists #current-list[data-list-id=""] div.title,
-#nav ul li.lists #current-list[data-list-id=""] div.label {
-  display: none;
 }
 
 body.experts #nav li.experts a,
 body.partners #nav li.partners a,
 body.employees #nav li.partners a,
 body.references #nav li.references a,
-body.users #nav li.users a {
+body.lists #nav li.lists a {
   color: #444;
   background: #dbdbdb;
   text-shadow: 0 1px 0px #efefef;
@@ -478,12 +463,16 @@ div.form-wrapper {
 }
 
 body.show #main div.header ul.tabs li.show,
-body.documents #main div.header ul.tabs li.documents {
+body.documents #main div.header ul.tabs li.documents,
+body.experts-list #main div.header ul.tabs li.experts-list,
+body.partners-list #main div.header ul.tabs li.partners-list {
   background: #f9f9f9;
 }
 
 body.show #main div.header ul.tabs li.show a,
-body.documents #main div.header ul.tabs li.documents a {
+body.documents #main div.header ul.tabs li.documents a,
+body.experts-list #main div.header ul.tabs li.experts-list a,
+body.partners-list #main div.header ul.tabs li.partners-list a {
   color: #3b3b3b;
 }
 

@@ -139,6 +139,7 @@ de:
       languages: 'Sprachen'
     list:
       add: 'Zur Liste hinzufügen'
+      all: 'Alle Listen'
       remove: 'Aus Liste entfernen'
       create: 'Neue Liste erstellen'
       search: 'Liste suchen'
@@ -235,6 +236,9 @@ de:
     language:
       errors:
         find: 'Sprache nicht gefunden.'
+    list:
+      confirm:
+        delete: 'Möchtest du wirklich diese Liste löschen?'
     partner:
       confirm:
         delete: 'Möchtest du wirklich diesen Partner mit all seinen

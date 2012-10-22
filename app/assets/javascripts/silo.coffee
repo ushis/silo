@@ -297,11 +297,7 @@ do($ = jQuery) ->
       @label = @el.find('.label')
       @title = @el.find('.title')
       @open = @el.find('.open').css(opacity: 0)
-
-      if (id = @el.data('list-id'))
-        @sync(url: @urls.show.replace(':id', id))
-      else
-        @set(null)
+      @sync(url: @urls.current)
 
       do (that = @) ->
         $.ajax that.urls.select, dataType: 'html', success: (select) ->
@@ -319,25 +315,35 @@ do($ = jQuery) ->
 
     # Moves an item in to or out of the list.
     move: (type, el) ->
-      return @openSelect() unless @el.data('list-id')
+      return @openSelect() unless @el.hasClass('active')
       url = if el.hasClass('active') then @urls.remove else @urls.add
       @sync(url: url, data: {type: type, id: el.data('id')}, type: 'post')
 
     # Updates the view.
     set: (list) ->
-      list ||= {id: '', title: ''}
-      @el.data('list-id', list.id)
+      @el.toggleClass('active', !! list)
       @title.text(list.title)
-      @updateCollection(list)
+      @updateItems(list)
+      @updateOpeners(list)
 
-      for el in [@title, @label]
-        if list.title then el.show() else el.hide()
+    # Connects some list openers with the current list.
+    connectWithListOpeners: (collection) ->
+      @listOpeners ||= $()
+      @listOpeners = @listOpeners.add(collection)
+
+      do (that = @) ->
+        collection.bind 'ajax:success', (e, data) -> that.set(data)
+
+    # Updates all list openers.
+    updateOpeners: (list) ->
+      @listOpeners.each ->
+        $(@).toggleClass('active', Number($(@).data('id')) == list.id)
 
     # Connects a collection with the current list.
-    connectWith: (type, collection) ->
-      @collection ||= {}
-      @collection[type] ||= $()
-      @collection[type] = @collection[type].add(collection)
+    connectWithListItems: (type, collection) ->
+      @listItems ||= {}
+      @listItems[type] ||= $()
+      @listItems[type] = @listItems[type].add(collection)
 
       do (that =  @) ->
         collection.each ->
@@ -347,9 +353,9 @@ do($ = jQuery) ->
                 $('<div>', class: 'btn').click ->
                   that.move type, el
 
-    # Updates the collection.
-    updateCollection: (list) ->
-      for type, elements of @collection
+    # Updates the list items.
+    updateItems: (list) ->
+      for type, elements of @listItems
         ids = (obj.id for obj in list[type] || [])
 
         elements.each ->
@@ -360,7 +366,10 @@ do($ = jQuery) ->
   $.fn.siloCurrentList = (urls) -> SiloCurrentList.init(@.first(), urls)
 
   # Connects a collection with the current list.
-  $.fn.siloListable = (type) -> SiloCurrentList.connectWith(type, @)
+  $.fn.siloListable = (type) -> SiloCurrentList.connectWithListItems(type, @)
+
+  # Turns a link into a "open this list" link.
+  $.fn.siloOpenList = -> SiloCurrentList.connectWithListOpeners(@)
 
   # Handles the select list overlay.
   $.fn.siloSelectListOverlay = (options) ->
@@ -382,7 +391,7 @@ do($ = jQuery) ->
         SiloCurrentList.set(data)
         el.trigger('close')
 
-      select.find('form.new').bind 'ajax:success', (e, data)->
+      select.find('form.new').bind 'ajax:success', (e, data) ->
         SiloCurrentList.set(data)
         el.trigger('close')
         $(@).get(0).reset()

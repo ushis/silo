@@ -1,0 +1,44 @@
+<%= render 'sidebar' %>
+
+<div id="main">
+  <div>
+    <div class="header">
+      <div id="filter">
+        <%= form_tag search_lists_path, method: :get do %>
+          <div>
+            <%= text_field_tag :title, params[:title],
+                               placeholder: List.human_attribute_name(:title) %>
+            <%= submit_tag t('actions.search') %>
+          </div>
+        <% end %>
+      </div>
+      <%= paginate @lists %>
+    </div><!-- header -->
+    <table class="lists">
+      <tbody>
+        <% @lists.each do |list| %>
+          <tr>
+            <td>
+              <%= icon(list.private? ? :lock : :unlock) %>
+            </td>
+            <td>
+              <%= link_to list.title, list_experts_path(list) %>
+            </td>
+            <td class="open">
+              <%= link_to t('actions.open'), open_list_path(list),
+                          method: :put, remote: true, 'data-type' => :json,
+                          'data-id' => list.id, class: 'icon-folder-open' %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <div class="pagination bottom">
+      <%= paginate @experts %>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('#main table td.open a').siloOpenList();
+</script>

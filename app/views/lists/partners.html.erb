@@ -1,0 +1,21 @@
+<%= render 'sidebar' %>
+
+<div id="main">
+  <%= render 'details_header', list: @list %>
+
+  <table class="partners">
+    <tbody>
+      <% @list.partners.each do |partner| %>
+        <tr>
+          <td>
+            <%= link_to partner.company, partner_path(partner) %>
+          </td>
+          <td class="remove">
+            <%= link_to t('actions.remove'), [@list, partner], method: :delete,
+                        'data-type' => :partners, class: 'icon-removefromlist' %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

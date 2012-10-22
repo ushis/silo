@@ -22,6 +22,13 @@ module ApplicationHelper
     end
   end
 
+  # Returns an empty <div> with a proper icon-* class.
+  #
+  #   icon(:lock)  #=> '<div class="icon-lock"></div>'
+  def icon(icon_name)
+    content_tag :div, nil, class: "icon-#{icon_name}"
+  end
+
   # Checks if the current user has access to the section and adds a
   # 'disabled' class to the link if not.
   #

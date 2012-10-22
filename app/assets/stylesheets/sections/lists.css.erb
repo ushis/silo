@@ -1,6 +1,50 @@
+/**
+ * lists.css.erb
+ *
+ * Defines some list styles.
+ */
+/* Tables */
+body.lists #main table.lists td:first-child {
+  width: 8px;
+}
+
+body.lists #main table.lists td:nth-child(2),
+body.lists #main table.experts td:nth-child(2) {
+  background-color: #f7f7f7;
+}
+
+body.lists #main table.lists td.open {
+  width: 10px;
+  padding-right: 0;
+}
+
+body.lists #main table td.remove {
+  width: 10px;
+}
+
+body.lists #main table.lists td.open a,
+body.lists #main table td.remove a {
+  display: block;
+  width: 20px;
+  height: 20px;
+  overflow: hidden;
+}
+
+body.lists #main table.lists td.open a.active {
+  color: #999;
+  cursor: default;
+}
+
+
+/* Header */
+body.lists #main div.header ul.tools li.open a.active {
+  color: #999;
+  cursor: default;
+}
+
 /* Overlay "Open List" */
 div.overlay.open-list {
-  width: 600px; 
+  width: 600px;
   margin-left: -300px;
 }
 

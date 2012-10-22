@@ -1,0 +1,34 @@
+<div class="header details">
+  <h2>
+    <%= list.title %>
+  </h2>
+  <ul class="tools">
+    <li class="open">
+      <%= link_to t('actions.open'), open_list_path(list),
+                  remote: true, method: :put,
+                  'data-type' => :json, 'data-id' => list.id,
+                  class: 'icon-folder-open' %>
+    </li>
+    <li>
+      <%= link_to t('actions.edit'), edit_list_path(list),
+                  class: 'icon-pencil' %>
+    </li>
+    <li>
+      <%= link_to t('actions.delete'), list_path(list),
+                  class: 'icon-trash password',
+                  confirm: t('messages.list.confirm.delete') %>
+    </li>
+  </ul>
+  <ul class="tabs">
+    <li class="experts-list">
+      <%= link_to List.human_attribute_name(:experts), list_experts_path(list) %>
+    </li>
+    <li class="partners-list">
+      <%= link_to List.human_attribute_name(:partners), list_partners_path(list) %>
+    </li>
+  </ul>
+</div>
+
+<script>
+  $('div.header li.open a').siloOpenList();
+</script>
