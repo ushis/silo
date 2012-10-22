@@ -1,7 +1,7 @@
 <div class="overlay open-list">
   <div class="header">
     <h2>
-      <%= t 'label.list.lists' %>
+      <%= t 'labels.sections.lists' %>
     </h2>
     <div class="abort button">
       <%= t 'actions.abort' %>
@@ -29,6 +29,9 @@
       <tbody>
         <% @lists.each do |list| %>
           <tr>
+            <td>
+              <%= icon(list.private? ? :lock : :globe) %>
+            </td>
             <td>
               <%= list.title %>
             </td>

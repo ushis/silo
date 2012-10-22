@@ -76,11 +76,13 @@ class ListsController < ApplicationController
 
     respond_to do |format|
       if list.save
-        format.html { redirect_to list_experts_url(list) }
+        msg = t('messages.list.success.create', title: list.title)
+        format.html { redirect_to list_experts_url(list), notice: msg }
         format.json { render json: list }
       else
-        format.html { redirect_to lists_url, alert: t('messages.list.erros.create') }
-        format.json { render json: t('messages.list.errors.create'), status: 422 }
+        msg = t('messages.list.erros.create')
+        format.html { redirect_to lists_url, alert: msg }
+        format.json { render json: msg , status: 422 }
       end
     end
   end
@@ -130,10 +132,10 @@ class ListsController < ApplicationController
     end
 
     if list.destroy
-      flash[:notice] = t('messages.list.success.destroy', title: list.title)
+      flash[:notice] = t('messages.list.success.delete', title: list.title)
       redirect_to lists_url
     else
-      flash[:alert] = t('messages.list.errors.destroy')
+      flash[:alert] = t('messages.list.errors.delete')
       redirect_to list_url(list)
     end
   end
@@ -147,7 +149,7 @@ class ListsController < ApplicationController
     if current_user.save
       render json: current_list
     else
-      render json: t('messages.list.errors.use'), status: 422
+      render json: t('messages.list.errors.open'), status: 422
     end
   end
 
@@ -192,7 +194,7 @@ class ListsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to((list && available_action?(item_type)) ?
-                                { action: item_type, id: list } : lists_url) }
+                                { action: item_type, list_id: list } : lists_url) }
       format.json { render json: list }
     end
   end
@@ -200,16 +202,18 @@ class ListsController < ApplicationController
   # Redirects to the lists index or sends a JSON error message.
   def not_found
     respond_to do |format|
-      format.html { redirect_to lists_url, alert: t('messages.list.errors.find') }
-      format.json { render json: t('messages.list.errors.find'), status: 404 }
+      msg = t('messages.list.errors.find')
+      format.html { redirect_to lists_url, alert: msg }
+      format.json { render json: msg, status: 404 }
     end
   end
 
   # Redirects to the lists index or sends a JSON error message.
   def forbidden
     respond_to do |format|
-      format.html { redirect_to lists_url, alert: t('messages.user.errors.access') }
-      format.json { render json: t('messages.user.errors.access'), status: 403 }
+      msg = t('messages.generics.errors.access')
+      format.html { redirect_to lists_url, alert:  msg }
+      format.json { render json: msg, status: 403 }
     end
   end
 end

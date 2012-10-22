@@ -19,7 +19,7 @@
         <% @lists.each do |list| %>
           <tr>
             <td>
-              <%= icon(list.private? ? :lock : :unlock) %>
+              <%= icon(list.private? ? :lock : :globe) %>
             </td>
             <td>
               <%= link_to list.title, list_experts_path(list) %>

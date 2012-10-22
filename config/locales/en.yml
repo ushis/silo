@@ -5,13 +5,17 @@ en:
     abort: 'Abort'
     add: 'Add'
     close: 'Close'
+    copy: 'Copy'
     delete: 'Delete'
     edit: 'Edit'
     login: 'Login'
     logout: 'Logout'
+    open: 'Open'
     print: 'Print'
+    remove: 'Remove'
     save: 'Save'
     search: 'Search'
+    share: 'Share'
     submit: 'Submit'
   activerecord:
     attributes:
@@ -127,6 +131,7 @@ en:
     list:
       add: 'Add to list'
       all: 'All Lists'
+      current: 'Current'
       edit: 'Edit List'
       new: 'New List'
       remove: 'Remove from list'
@@ -139,6 +144,7 @@ en:
       all: 'All References'
     sections:
       experts: 'Experts'
+      lists: 'Lists'
       partners: 'Partners'
       references: 'References'
       users: 'Users'
@@ -223,6 +229,18 @@ en:
       confirm:
         delete: 'Do you really want to delete this list?'
         title: 'Give your list a name.'
+      errors:
+        copy: 'Could not copy list.'
+        create: 'Could not create list.'
+        delete: 'Could not delete list.'
+        find: 'Could not find list.'
+        open: 'Could not open list.'
+        save: 'Could not save list.'
+      success:
+        copy: 'Copied list.'
+        create: 'Created list: %{title}'
+        delete: 'Deleted list: %{title}'
+        save: 'Saved list.'
     partner:
       confirm:
         delete: 'Do you really want to delete this partner with all its attachments?'

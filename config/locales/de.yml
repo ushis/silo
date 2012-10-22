@@ -5,13 +5,17 @@ de:
     abort: 'Abbrechen'
     add: 'Hinzufügen'
     close: 'Schließen'
+    copy: 'Kopieren'
     delete: 'Löschen'
     edit: 'Bearbeiten'
     login: 'Anmelden'
     logout: 'Abmelden'
+    open: 'Öffnen'
     print: 'Drucken'
+    remove: 'Entfernen'
     save: 'Speichern'
     search: 'Suchen'
+    share: 'Teilen'
     submit: 'Übernehmen'
   activerecord:
     attributes:
@@ -140,6 +144,7 @@ de:
     list:
       add: 'Zur Liste hinzufügen'
       all: 'Alle Listen'
+      current: 'Offene Liste'
       edit: 'Liste bearbeiten'
       new: 'Neue Liste'
       remove: 'Aus Liste entfernen'
@@ -158,6 +163,7 @@ de:
       all: 'Alle Referenzen'
     sections:
       experts: 'Experten'
+      lists: 'Listen'
       partners: 'Partner'
       references: 'Referenzen'
       users: 'Benutzer'
@@ -242,6 +248,18 @@ de:
       confirm:
         delete: 'Möchtest du wirklich diese Liste löschen?'
         title: 'Gib deiner Liste einen Namen.'
+      errors:
+        copy: 'Liste konnte nicht kopiert werden.'
+        create: 'Liste konnte nicht hinzugefügt werden.'
+        delete: 'Liste konnte nicht gelöscht werden.'
+        find: 'Liste nicht gefunden.'
+        open: 'Liste konnte nicht geöffnet werden.'
+        save: 'Liste konnte nicht gespeichert werden.'
+      success:
+        copy: 'Liste kopiert.'
+        create: 'Liste hinzugefügt: %{title}'
+        delete: 'Liste gelöscht: %{title}'
+        save: 'Liste gespeichert.'
     partner:
       confirm:
         delete: 'Möchtest du wirklich diesen Partner mit all seinen
