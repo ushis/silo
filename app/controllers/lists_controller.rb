@@ -15,6 +15,7 @@ class ListsController < ApplicationController
   def search
     @lists = List.search(params).accessible_for(current_user).limit(50).page(params[:page])
     @title = t('labels.list.search')
+    body_class << :index
     render :index
   end
 
@@ -45,7 +46,7 @@ class ListsController < ApplicationController
 
     respond_to do |format|
       if @list.save
-        format.html { redirect_to list_url(@list) }
+        format.html { redirect_to list_experts_url(@list) }
         format.json { render json: @list }
       else
         format.html { redirect_to lists_url, alert: t('messages.list.erros.create') }

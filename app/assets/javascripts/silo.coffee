@@ -321,7 +321,8 @@ do($ = jQuery) ->
 
     # Updates the view.
     set: (list) ->
-      @el.toggleClass('active', !! list)
+      list ||= {}
+      @el.toggleClass('active', !! list.title)
       @title.text(list.title)
       @updateItems(list)
       @updateOpeners(list)
@@ -336,7 +337,7 @@ do($ = jQuery) ->
 
     # Updates all list openers.
     updateOpeners: (list) ->
-      @listOpeners.each ->
+      @listOpeners?.each ->
         $(@).toggleClass('active', Number($(@).data('id')) == list.id)
 
     # Connects a collection with the current list.
