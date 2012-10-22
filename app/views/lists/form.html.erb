@@ -1,0 +1,23 @@
+<div class="overlay list-form">
+  <div class="header">
+    <h2>
+      <%= t params[:action], scope: [:labels, :list] %>
+    </h2>
+    <div class="submit button">
+      <%= t 'actions.save' %>
+    </div>
+    <div class="abort button">
+      <%= t 'actions.abort' %>
+    </div>
+  </div>
+  <div class="select form-wrapper">
+    <%= form_for @list do |f| %>
+      <div class="message">
+        <%= t 'messages.list.confirm.title' %>
+      </div>
+      <div>
+        <%= f.text_field :title, placeholder: List.human_attribute_name(:title) %>
+      </div>
+    <% end %>
+  </div>
+</div>

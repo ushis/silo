@@ -19,7 +19,7 @@
       <%= link_to t('actions.copy'), copy_list_path(list),
                   method: :post, class: 'icon-copy' %>
     </li>
-    <li>
+    <li class="edit">
       <%= link_to t('actions.edit'), edit_list_path(list),
                   class: 'icon-pencil' %>
     </li>
@@ -41,4 +41,5 @@
 
 <script>
   $('div.header li.open a').siloOpenList();
+  $('div.header li.edit a').siloListForm();
 </script>

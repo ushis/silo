@@ -140,6 +140,8 @@ de:
     list:
       add: 'Zur Liste hinzufügen'
       all: 'Alle Listen'
+      edit: 'Liste bearbeiten'
+      new: 'Neue Liste'
       remove: 'Aus Liste entfernen'
       create: 'Neue Liste erstellen'
       search: 'Liste suchen'
@@ -239,6 +241,7 @@ de:
     list:
       confirm:
         delete: 'Möchtest du wirklich diese Liste löschen?'
+        title: 'Gib deiner Liste einen Namen.'
     partner:
       confirm:
         delete: 'Möchtest du wirklich diesen Partner mit all seinen

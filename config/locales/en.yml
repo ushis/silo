@@ -127,6 +127,8 @@ en:
     list:
       add: 'Add to list'
       all: 'All Lists'
+      edit: 'Edit List'
+      new: 'New List'
       remove: 'Remove from list'
       create: 'Create a new list'
       search: 'Search for a list'
@@ -220,6 +222,7 @@ en:
     list:
       confirm:
         delete: 'Do you really want to delete this list?'
+        title: 'Give your list a name.'
     partner:
       confirm:
         delete: 'Do you really want to delete this partner with all its attachments?'

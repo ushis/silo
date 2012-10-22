@@ -261,6 +261,22 @@ do($ = jQuery) ->
           el.closest('form').submit ->
             localStorage[storageKey] = el.val() if hasStorage
 
+  # Connects an anchor with a list form.
+  $.fn.siloListForm = (options) ->
+    settings = $.extend {
+      abortClass: 'abort'
+      submitClass: 'submit'
+    }, options
+
+    @each ->
+      el = $(@).click -> false
+
+      $.ajax url: el.attr('href'), dataType: 'html', success: (form) ->
+        form = $(form).siloOverlay()
+        form.find(".#{settings.abortClass}").click -> form.trigger('close')
+        form.find(".#{settings.submitClass}").click -> form.find('form').submit()
+        el.click -> form.trigger('show')
+
   # Downloads possible values and intializes comma separated autocompletion
   # for the connected text fields.
   $.fn.siloAutocomplete = (url, attribute, options) ->

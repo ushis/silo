@@ -3,7 +3,9 @@
 class ListsController < ApplicationController
   skip_before_filter :authorize
 
-  layout false, only: [:select]
+  layout false, only: [:select, :new, :edit]
+
+  caches_action :new
 
   # Serves all lists.
   def index
@@ -59,6 +61,12 @@ class ListsController < ApplicationController
     end
   end
 
+  # Serves an empty list form without a layout.
+  def new
+    @list = List.new
+    render :form
+  end
+
   # Creates a new list and sets the users current list. Responds to HTML
   # and JSON.
   def create
@@ -77,6 +85,17 @@ class ListsController < ApplicationController
     end
   end
 
+  # Serves a list form without a layout.
+  def edit
+    @list = List.find(params[:id])
+
+    unless @list.accessible_for?(current_user)
+      return forbidden
+    end
+
+    render :form
+  end
+
   # Updates a list.
   def update
     list = List.find(params[:id])
@@ -85,7 +104,7 @@ class ListsController < ApplicationController
       return forbidden
     end
 
-    list.title = params[:title] if params[:title]
+    list.attributes = params[:list]
     list.private = params[:private] if params[:private] && list.private?
 
     if list.save
