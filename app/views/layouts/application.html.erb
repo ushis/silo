@@ -43,11 +43,9 @@
             <%= link_to t('labels.sections.references'), references_path %>
           </li>
           <li id="current-list" class="<%= 'active' if current_list %>">
-            <div class="label">
-              <%= t 'labels.list.current' %>:
-            </div>
             <div class="title">
-              <%= current_list.try(:title) %>
+              <%= t 'labels.list.current' %>:
+              <%= link_to current_list.try(:title), current_lists_path %>
             </div>
             <div class="open icon-folder-open">
               <%= t('actions.open') %>

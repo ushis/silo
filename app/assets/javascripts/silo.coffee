@@ -310,8 +310,7 @@ do($ = jQuery) ->
 
     # Initializes the current list object and performs the initial sync.
     init: (@el, @urls) ->
-      @label = @el.find('.label')
-      @title = @el.find('.title')
+      @title = @el.find('.title a')
       @open = @el.find('.open').css(opacity: 0)
       @sync(url: @urls.current)
 

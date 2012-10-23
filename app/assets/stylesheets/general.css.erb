@@ -198,28 +198,29 @@ div.clear {
 
 #nav ul #current-list div {
   float: left;
-  text-align: right;
-  text-transform: none;
   color: #d0d0d0;
   line-height: 1.5em;
 }
 
-#nav ul #current-list div.label {
+#nav ul #current-list div.title {
   display: none;
-  margin-right: 7px;
+  margin-right: 12px;
+  text-transform: none;
   color: #888;
 }
 
-#nav ul #current-list div.title {
-  display: none;
+#nav ul #current-list div.title a {
+  display: inline;
   max-width: 200px;
-  padding-right: 12px;
+  margin-left: 3px;
+  padding: 0;
   overflow: hidden;
   white-space: nowrap;
+  text-transform: none;
+  font-size: 1em;
 }
 
-#nav ul #current-list.active div.title,
-#nav ul #current-list.active div.label {
+#nav ul #current-list.active div.title {
   display: block;
 }
 

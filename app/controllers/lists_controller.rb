@@ -1,6 +1,7 @@
 # The ListsController provides the actions to handle all list specific
 # requests.
 class ListsController < ApplicationController
+  skip_before_filter :authenticate, only: [:select, :new, :edit]
   skip_before_filter :authorize
 
   layout false, only: [:select, :new, :edit]
@@ -26,9 +27,15 @@ class ListsController < ApplicationController
     @lists = List.search(params).accessible_for(current_user).limit(20)
   end
 
-  # Serves the current list.
+  # Redirects to the current list or serves it as JSON. If the user has no
+  # current_list, ListsController#not_found is triggered for HTML requests.
   def current
-    show(current_list)
+    respond_to do |format|
+      format.html { redirect_to list_experts_url(current_list) }
+      format.json { render json: current_list }
+    end
+  rescue ActionController::RoutingError
+    not_found
   end
 
   # Serves a list.
@@ -165,19 +172,12 @@ class ListsController < ApplicationController
 
   private
 
-  # Serves a list as HTML or JSON, if it is accessible for the current user.
+  # Serves a list, if it is accessible for the current user.
   def show(list)
+    return forbidden unless list.accessible_for?(current_user)
+
     @list = list
-    @title = @list.try(:title)
-
-    if @list && ! @list.accessible_for?(current_user)
-      return forbidden
-    end
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @list }
-    end
+    @title = list.title
   end
 
   # Adds/Removes an item to/from a list. Responds with a JSON representation
@@ -193,10 +193,11 @@ class ListsController < ApplicationController
     list.try(op, item_type, item_id)
 
     respond_to do |format|
-      format.html { redirect_to((list && available_action?(item_type)) ?
-                                { action: item_type, list_id: list } : lists_url) }
+      format.html { redirect_to action: item_type, list_id: list }
       format.json { render json: list }
     end
+  rescue ActionController::RoutingError
+    redirect_to lists_url
   end
 
   # Redirects to the lists index or sends a JSON error message.

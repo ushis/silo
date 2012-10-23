@@ -71,7 +71,7 @@ class List < ActiveRecord::Base
   # Checks if a list is accessible for a user. Returns true if the user
   # has access to the list else false.
   def accessible_for?(user)
-    ! private? || user_id == user.id
+    ! private? || user_id == user.try(:id)
   end
 
   # Returns a copy of the list with all its list items.
