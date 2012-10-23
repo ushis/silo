@@ -11,7 +11,7 @@
     </div>
   </div>
   <div class="select form-wrapper">
-    <%= form_for @list do |f| %>
+    <%= form_for @list, url: { action: @action } do |f| %>
       <div class="message">
         <%= t 'messages.list.confirm.title' %>
       </div>

@@ -144,6 +144,7 @@ de:
     list:
       add: 'Zur Liste hinzufügen'
       all: 'Alle Listen'
+      copy: 'Liste kopieren'
       current: 'Offene Liste'
       edit: 'Liste bearbeiten'
       new: 'Neue Liste'

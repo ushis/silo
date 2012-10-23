@@ -54,8 +54,11 @@ Silo::Application.routes.draw do
       post :remove
     end
 
-    put  :open, on: :member
-    post :copy, on: :member
+    member do
+      put :open
+      get :copy
+      put :copy, action: :duplicate
+    end
 
     [:experts, :partners].each do |resource|
       resources resource, only: [], controller: :lists do

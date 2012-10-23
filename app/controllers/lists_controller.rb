@@ -1,10 +1,10 @@
 # The ListsController provides the actions to handle all list specific
 # requests.
 class ListsController < ApplicationController
-  skip_before_filter :authenticate, only: [:select, :new, :edit]
+  skip_before_filter :authenticate, only: [:select, :new, :edit, :copy]
   skip_before_filter :authorize
 
-  layout false, only: [:select, :new, :edit]
+  layout false, only: [:select, :new, :edit, :copy]
 
   caches_action :new
 
@@ -46,31 +46,10 @@ class ListsController < ApplicationController
 
   alias partners experts
 
-  # Copies a list.
-  def copy
-    original = List.find(params[:id])
-
-    unless original.accessible_for?(current_user)
-      return forbidden
-    end
-
-    copy = original.copy
-    copy.user = current_user
-    copy.private = true
-    copy.title = params[:title] if params[:title]
-
-    if copy.save
-      flash[:notice] = t('messages.list.success.copy')
-      redirect_to list_experts_url(copy)
-    else
-      flash[:alert] = t('messages.list.errors.copy')
-      redirect_to list_experts_url(original)
-    end
-  end
-
   # Serves an empty list form without a layout.
   def new
     @list = List.new
+    @action = :create
     render :form
   end
 
@@ -97,11 +76,7 @@ class ListsController < ApplicationController
   # Serves a list form without a layout.
   def edit
     @list = List.find(params[:id])
-
-    unless @list.accessible_for?(current_user)
-      return forbidden
-    end
-
+    @action = :update
     render :form
   end
 
@@ -123,6 +98,35 @@ class ListsController < ApplicationController
     end
 
     redirect_to list_experts_path(list)
+  end
+
+  # Serves a list form without a layout.
+  def copy
+    @list = List.find(params[:id])
+    @action = :duplicate
+    render :form
+  end
+
+  # Duplicates a list.
+  def duplicate
+    original = List.find(params[:id])
+
+    unless original.accessible_for?(current_user)
+      return forbidden
+    end
+
+    copy = original.copy
+    copy.attributes = params[:list]
+    copy.user = current_user
+    copy.private = true
+
+    if copy.save
+      flash[:notice] = t('messages.list.success.copy')
+      redirect_to list_experts_url(copy)
+    else
+      flash[:alert] = t('messages.list.errors.copy')
+      redirect_to list_experts_url(original)
+    end
   end
 
   # Destroys a list.

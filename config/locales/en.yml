@@ -131,6 +131,7 @@ en:
     list:
       add: 'Add to list'
       all: 'All Lists'
+      copy: 'Copy List'
       current: 'Current'
       edit: 'Edit List'
       new: 'New List'
