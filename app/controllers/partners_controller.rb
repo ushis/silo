@@ -1,15 +1,15 @@
-#
+# Handles all partner related requests.
 class PartnersController < ApplicationController
   skip_before_filter :authorize, only: [:index, :show]
 
   cache_sweeper :business_sweeper, only: [:create, :update]
 
-  #
+  # Checks the users permissions.
   def authorize
     super(:partners, partners_url)
   end
 
-  #
+  # Searches for partners.
   def index
     _params = params.merge(arrayified_params(:businesses, :countries))
     @partners = Partner.with_meta.search(_params).limit(50).page(params[:page])
@@ -28,14 +28,14 @@ class PartnersController < ApplicationController
     @title = @partner.company
   end
 
-  #
+  # Serves an empty partner form.
   def new
     @partner = Partner.new
     @title = t('labels.partner.new')
     render :form
   end
 
-  #
+  # Creates a new partner.
   def create
     @partner = Partner.new(params[:partner])
     @partner.user = current_user
@@ -52,14 +52,14 @@ class PartnersController < ApplicationController
     render :form
   end
 
-  #
+  # Serves an edit form.
   def edit
     @partner = Partner.find(params[:id])
     @title = t('labels.partner.edit')
     render :form
   end
 
-  #
+  # Updates the partner.
   def update
     @partner = Partner.find(params[:id])
     @partner.user = current_user
@@ -77,7 +77,7 @@ class PartnersController < ApplicationController
     render :form
   end
 
-  #
+  # Deletes the partner.
   def destroy
     partner = Partner.find(params[:id])
 
@@ -95,9 +95,11 @@ class PartnersController < ApplicationController
     end
   end
 
-  #
+  private
+
+  # Sets an error message and redirects the user.
   def not_found
     flash[:alert] = t('messages.partner.errors.find')
-    refirect_to partners_url
+    redirect_to partners_url
   end
 end
