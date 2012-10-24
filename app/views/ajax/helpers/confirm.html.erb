@@ -1,0 +1,22 @@
+<div class="overlay confirm">
+  <div class="header">
+    <h2>
+      <%= t 'messages.generics.confirm.sure' %>
+    </h2>
+    <a class="button submit">
+      <%= t 'actions.delete' %>
+    </a>
+    <div class="button abort">
+      <%= t 'actions.abort' %>
+    </div>
+  </div>
+  <div class="text">
+    <div class="confirmation">
+      <%= t 'messages.generics.confirm.sure' %>
+    </div>
+    <div class="password">
+      <%= password_field_tag :password, nil,
+                             placeholder: t('messages.user.confirm.password') %>
+    </div>
+  </div>
+</div>

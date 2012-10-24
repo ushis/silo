@@ -66,7 +66,7 @@ class ApplicationController < ActionController::Base
   # Returns cache a path for a actions view, dependent on current controller,
   # action and locale.
   def action_cache_path
-    [I18n.locale, params[:controller], params[:action]].join('/')
+    I18n.locale.to_s << request.path
   end
 
   # Returns a hash of arrayified params.

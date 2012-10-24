@@ -13,11 +13,4 @@ class Ajax::HelpController < AjaxController
   rescue ActionView::MissingTemplate
     raise ActionController::RoutingError, 'Help not found.'
   end
-
-  private
-
-  # Sets a proper cache path.
-  def action_cache_path
-    super << "/#{params[:id]}"
-  end
 end

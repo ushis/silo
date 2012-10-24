@@ -30,13 +30,15 @@ do($ = jQuery) ->
   # "close" event.
   $.fn.siloOverlay = (options) ->
     settings = $.extend {
-      class: 'overlay'
+      overlayClass: 'overlay'
+      abortClass: 'abort'
     }, options
 
     @each ->
-      el = $(@).addClass(settings.class)
+      el = $(@).addClass(settings.overlayClass)
       el.bind 'show', -> SiloLayer.fadeIn(el)
-      el.bind 'close', -> SiloLayer.fadeOut(el)
+      el.bind 'close', -> SiloLayer.fadeOut()
+      el.find(".#{settings.abortClass}").click -> el.trigger('close')
 
   # Writes the username to localStorage on submit and sets the focus
   # to the first empty input field.
@@ -68,10 +70,8 @@ do($ = jQuery) ->
       duration: 400
     }, options
 
-    @each ->
-      do(el = $(@)) ->
-        el.toggleClass settings.class, settings.duration, ->
-          el.toggleClass settings.class, settings.duration
+    @toggleClass settings.class, settings.duration, ->
+      $(@).toggleClass settings.class, settings.duration
 
   # Disables links
   $.fn.siloDisabledLinks = -> @.click -> false
@@ -95,8 +95,6 @@ do($ = jQuery) ->
       el.not(".#{settings.masterClass}").change ->
         master.prop('checked', false) if $(@).not(':checked')
 
-      return el
-
   # Loads the specified help and connects it with an element.
   $.fn.siloHelp = (url, options) ->
     settings = $.extend {
@@ -107,62 +105,36 @@ do($ = jQuery) ->
     do (collection = @) ->
       $.ajax url: url, dataType: 'html', success: (help) ->
         help = $(help).siloOverlay()
-        help.find('div.button').click -> help.trigger('close')
 
         collection.after ->
-          $('<div>').addClass(settings.helpClass).text(settings.helpText)
+          $('<div>', class: settings.helpClass, text: settings.helpText)
           .fadeIn(500).click -> help.trigger('show')
 
   # Shows a simple confirmation dialog.
-  $.fn.siloConfirmDelete = (options) ->
+  $.fn.siloConfirm = (url, options) ->
     settings = $.extend {
-      buttonClass: 'button'
       submitClass: 'submit'
-      submitText: 'Ok'
       abortClass: 'abort'
-      abortText: 'Abort'
-      textClass: 'text'
-      headerClass: 'header'
-      headerText: 'Are you sure?'
-      wrapperClass: 'confirm-delete'
+      confirmClass: 'confirmation'
       passwordClass: 'password'
-      passwordText: 'Confirm with your password.'
     }, options
 
-    makeBox = (type) ->
-      $('<div>').addClass(settings["#{type}Class"])
+    collection = @click -> return false
 
-    makeButton = (type) ->
-      makeBox(type).addClass(settings.buttonClass).text(settings["#{type}Text"])
+    $.ajax url: url, dataType: 'html', success: (dialog) ->
+      dialog = $(dialog).siloOverlay()
+      submit = dialog.find(".#{settings.submitClass}")
+      password = dialog.find(".#{settings.passwordClass} input")
+      confirmation = dialog.find(".#{settings.confirmClass}")
 
-    makePassword = ->
-      $('<input name="password" type="password">')
-      .attr(placeholder: settings.passwordText)
-
-    @each ->
-      do (el = $(@)) ->
-        el.click ->
-          dialog = makeBox('wrapper').siloOverlay()
-          password = makePassword()
-
-          submit = el.clone().attr(class: settings.buttonClass).click ->
-            $(@).data({method: 'delete', password: password.val()})
-
-          abort = makeButton('abort').click -> dialog.trigger('close')
-
-          dialog.append ->
-            makeBox('header').append(submit, abort).prepend ->
-              $('<h2>').text(settings.headerText)
-
-          dialog.append ->
-            makeBox('text').append ->
-              makeBox('content').text(el.data('confirm'))
-            .append ->
-              if el.hasClass(settings.passwordClass)
-                makeBox('password').append(password)
-
-          dialog.trigger('show')
-          return false
+      collection.click ->
+        oldSubmit = submit
+        submit = $(@).clone().attr('class', oldSubmit.attr('class'))
+        submit.click -> $(@).data(password: password.val())
+        oldSubmit.replaceWith(submit)
+        password.toggle( !! submit.data('password')).val(null)
+        confirmation.text(submit.data('confirm'))
+        dialog.trigger('show')
 
   # Handles groups in multi select boxes.
   $.fn.siloMultiSelectGroup = (options) ->
@@ -219,16 +191,14 @@ do($ = jQuery) ->
 
     # Inits the overlay
     @each ->
-      do (el = $(@)) ->
-        el.siloOverlay()
-        el.find(".#{settings.abortClass}").click -> el.trigger('close')
-        el.find(".#{settings.submitClass}").click -> el.trigger('submit')
+      el = $(@).siloOverlay()
+      el.find(".#{settings.submitClass}").click -> el.trigger('submit')
 
-        for id in settings.selected
-          el.find("input[name=#{id}]").prop('checked', true)
+      for id in settings.selected
+        el.find("input[name=#{id}]").prop('checked', true)
 
-        if settings.grouped
-          el.find(".#{settings.selectClass}").siloMultiSelectGroup(settings)
+      if settings.grouped
+        el.find(".#{settings.selectClass}").siloMultiSelectGroup(settings)
 
   # Makes a text field multi selectable.
   $.fn.siloMultiSelect = (name, url, options) ->
@@ -237,29 +207,25 @@ do($ = jQuery) ->
       storagePrefix: 'multi-select-'
     }, options
 
-    do (collection = @) ->
-      # Retrieve the multi select overlay and boot it up.
-      $.ajax url: url, dataType: 'html', success: (select) ->
-        select = $(select).siloMultiSelectOverlay(settings)
+    # Disable input while loading and prevent sending of the long text
+    # values by submitting the form to avoid 414. Use localStorage instead.
+    collection = @prop('disabled', true).each ->
+      el = $(@)
+      storageKey = settings.storagePrefix + el.attr('name')
+      el.removeAttr('name')
 
-        collection.prop('disabled', false).focus ->
-          select.trigger('show')
+      if settings.selected.length > 0 && ! el.val().trim() && hasStorage
+        el.val(localStorage[storageKey])
 
-        collection.each ->
-          select.connectWith($(@), name)
+      el.closest('form').submit ->
+        localStorage[storageKey] = el.val() if hasStorage
 
-      # Disable input while loading and prevent sending of the long text
-      # values by submitting the form to avoid 414. Use localStorage instead.
-      collection.prop('disabled', true).each ->
-        do (el = $(@)) ->
-          storageKey = settings.storagePrefix + el.attr('name')
-          el.removeAttr('name')
+    # Retrieve the multi select overlay and boot it up.
+    $.ajax url: url, dataType: 'html', success: (select) ->
+      select = $(select).siloMultiSelectOverlay(settings)
+      collection.prop('disabled', false).focus -> select.trigger('show')
+      collection.each -> select.connectWith($(@), name)
 
-          if settings.selected.length > 0 && ! el.val().trim() && hasStorage
-            el.val(localStorage[storageKey])
-
-          el.closest('form').submit ->
-            localStorage[storageKey] = el.val() if hasStorage
 
   # Connects an anchor with a list form.
   $.fn.siloListForm = (options) ->
@@ -273,7 +239,6 @@ do($ = jQuery) ->
 
       $.ajax url: el.attr('href'), dataType: 'html', success: (form) ->
         form = $(form).siloOverlay()
-        form.find(".#{settings.abortClass}").click -> form.trigger('close')
         form.find(".#{settings.submitClass}").click -> form.find('form').submit()
         el.click -> form.trigger('show')
 
@@ -334,8 +299,8 @@ do($ = jQuery) ->
     # Moves an item in to or out of the list.
     move: (type, el) ->
       return @openSelect() unless @el.hasClass('active')
-      data = { '_method': if el.hasClass('active') then 'delete' else 'put' }
-      @sync(url: el.attr('href'), data: data, type: 'post')
+      method = if el.hasClass('active') then 'delete' else 'put'
+      @sync(url: el.attr('href'), data: { '_method': method }, type: 'post')
 
     # Updates the view.
     set: (list) ->
@@ -397,7 +362,6 @@ do($ = jQuery) ->
 
     @each ->
       el = $(@).siloOverlay()
-      el.find(".#{settings.abortClass}").click -> el.trigger('close')
       select = el.find(".#{settings.selectClass}")
       table = select.find('table')
 
