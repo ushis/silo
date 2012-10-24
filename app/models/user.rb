@@ -129,6 +129,11 @@ class User < ActiveRecord::Base
 
   alias :to_s :full_name
 
+  # Sets the fields for the JSON representation of the user.
+  def as_json(options = {})
+    super(options.merge(only: [:id, :name, :prename]))
+  end
+
   private
 
   # Returns a unique hash.

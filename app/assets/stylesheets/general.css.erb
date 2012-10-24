@@ -224,22 +224,22 @@ div.clear {
   display: block;
 }
 
-#nav ul #current-list div.open {
-  cursor: pointer;
+#nav ul #current-list div.open a {
   border-radius: 3px;
   height: 20px;
   width: 20px;
+  padding: 0;
   overflow: hidden;
   white-space: nowrap;
   background: #676767;
   box-shadow: inset 0 -1px 0 rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.1);
 }
 
-#nav ul #current-list div.open:hover {
+#nav ul #current-list div.open a:hover {
   background: #606060;
 }
 
-#nav ul #current-list div.open:before {
+#nav ul #current-list div.open a:before {
   margin: 0 99999px 0 5px;
 }
 
@@ -535,9 +535,7 @@ body.edit #main h2[class*=" icon-"]:before{
   margin-left: 18px;
 }
 
-#main div.header ul.tools li a,
-#main div.header ul.tools li.listable span,
-#main div.header ul.tools li.listable div.btn {
+#main div.header ul.tools li a {
   display: block;
   height: 24px;
   margin: 0;
@@ -553,57 +551,43 @@ body.edit #main h2[class*=" icon-"]:before{
   box-shadow: 0 0 0 transparent;
 }
 
-#main div.header ul.tools li a:hover,
-#main div.header ul.tools li.listable div.btn:hover {
-  color: #111;
-}
-
-#main div.header ul.tools li [class^="icon-"]:before,
-#main div.header ul.tools li [class*=" icon-"]:before,
-#main div.header ul.tools li.listable div.btn:before {
-  padding-right: 7px;
-  font-size: 1.25em;
-  vertical-align: bottom;
-}
-
-#main div.header ul.tools li.listable {
-  position: relative;
+#main div.header ul.tools li a.listable {
   opacity: 0;
   -webkit-transition: opacity .5s;
   -moz-transition: opacity .5s;
 }
 
-#main div.header ul.tools li.listable.ready {
+#main div.header ul.tools li a.listable.ready {
   opacity: 1;
 }
 
-#main div.header ul.tools li.listable span.active,
-#main div.header ul.tools li.listable.active span.inactive {
+#main div.header ul.tools li a:hover {
+  color: #111;
+}
+
+#main div.header ul.tools li [class^="icon-"]:before,
+#main div.header ul.tools li [class*=" icon-"]:before,
+#main div.header ul.tools li a.listable:before {
+  padding-right: 7px;
+  font-size: 1.25em;
+  vertical-align: bottom;
+}
+
+#main div.header ul.tools li a.listable span.active,
+#main div.header ul.tools li a.listable.active span.inactive {
   display: none;
 }
 
-#main div.header ul.tools li.listable.active span.active {
-  display: block;
+#main div.header ul.tools li a.listable.active span.active {
+  display: inline;
 }
 
-#main div.header ul.tools li.listable div.btn {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  cursor: pointer;
-}
-
-#main div.header ul.tools li.listable div.btn:before {
+#main div.header ul.tools li a.listable:before {
   font-family: FontAwesome;
   content: '\f212';
-  display: block;
-  position: absolute;
-  right: 100%;
 }
 
-#main div.header ul.tools li.listable.active div.btn:before {
+#main div.header ul.tools li a.listable.active:before {
   content: '\f213';
 }
 
@@ -710,65 +694,41 @@ table thead th span {
   float: right;
 }
 
-body.index #main td.listable a {
-  margin-right: 40px;
-}
-
-body.index #main td.listable div.list-item {
-  float: right;
-  height: 19px;
-  width: 30px;
-  margin: -5px -10px;
-  padding: 5px 10px;
-}
-
-body.index #main td.listable div.marker {
+body.index #main td a.listable {
   position: relative;
   float: right;
-  margin-top: 6px;
-  height: 6px;
-  width: 6px;
-  border-radius: 3px;
-  background: #f7f7f7;
-  box-shadow: inset 0 1px 1px rgba(0,0,0,.3);
-}
-
-body.index #main td.listable.active div.marker:after {
-  content: ' ';
-  position: absolute;
-  top: 1px;
-  left: 1px;
-  height: 4px;
-  width: 4px;
-  border-radius: 2px;
-  background: #666;
-}
-
-body.index #main td.listable div.marker div.btn {
-  display: none;
-  cursor: pointer;
-  height: 22px;
+  height: 19px;
   width: 28px;
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  margin-top: -12px;
-  background: #ececec;
-  color: #666;
-  border-radius: 3px;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.5), inset 0 -1px 0 rgba(0,0,0,.2), 0 1px 1px rgba(0,0,0,.075);
+  margin: -2px 10px -1px 0;
+  padding: 2px 0 1px 0;
 }
 
-body.index #main td.listable div.list-item:hover div.marker div.btn {
-  display: block;
-}
-
-body.index #main td.listable div.marker div.btn:hover {
-  background: #eee;
+body.index #main td a.listable:hover {
+  cursor: pointer;
   color: #222;
+  background-color: #eee;
+  border-radius: 3px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.5),
+              inset 0 -1px 0 rgba(0,0,0,.2),
+              0 1px 1px rgba(0,0,0,.075);
 }
 
-body.index #main td.listable div.marker div.btn:after {
+body.index #main td a.listable:hover:before {
+  font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  display: inline-block;
+  text-decoration: inherit;
+  content: "\f212";
+  font-size: 12px;
+  margin: 0px 0 0 5px;
+}
+
+body.index #main td a.listable.active:hover:before {
+  content: "\f213";
+}
+
+body.index #main td a.listable:hover:after {
   content: ' ';
   position: absolute;
   top: 50%;
@@ -782,26 +742,27 @@ body.index #main td.listable div.marker div.btn:after {
   border-left-color: #ececec;
 }
 
-body.index #main td.listable div.marker div.btn:before {
-  font-family: FontAwesome;
-  font-weight: normal;
-  font-style: normal;
-  display: inline-block;
-  text-decoration: inherit;
-  content: "\f212";
-  font-size: 1.1em;
-  margin: 2px 0 0 4px;
+body.index #main td a.listable div.marker {
+  position: absolute;
+  top: 50%;
+  right: -10px;
+  margin-top: -3px;
+  height: 6px;
+  width: 6px;
+  border-radius: 3px;
+  background-color: #f7f7f7;
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.3);
 }
 
-body.index #main td.listable.active div.marker div.btn:before {
-  font-family: FontAwesome;
-  font-weight: normal;
-  font-style: normal;
-  display: inline-block;
-  text-decoration: inherit;
-  content: "\f213";
-  font-size: 1.1em;
-  margin: 2px 0 0 4px;
+body.index #main td a.listable.active div.marker:after {
+  content: ' ';
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  height: 4px;
+  width: 4px;
+  border-radius: 2px;
+  background-color: #666;
 }
 
 body.index #main table td a {

@@ -10,9 +10,7 @@ Silo::Application.routes.draw do
   get 'profile' => 'users#profile'
   put 'profile' => 'users#update_profile'
 
-  resources :users, except: [:show] do
-    get :select, on: :collection
-  end
+  resources :users, except: [:show]
 
   # Experts
   get 'experts(/page/:page)' => 'experts#index', as: :experts
@@ -23,7 +21,6 @@ Silo::Application.routes.draw do
     resources :contacts,    only: [:create, :destroy]
     resources :addresses,   only: [:create, :destroy]
 
-    get 'search(/page/:page)' => 'experts#search', as: :search, on: :collection
     get :documents, on: :member
   end
 
@@ -35,7 +32,6 @@ Silo::Application.routes.draw do
     resources :contacts,    only: [:create, :destroy]
     resources :employees
 
-    get 'search(/page/:page)' => 'partners#search', as: :search, on: :collection
     get :documents, on: :member
   end
 
@@ -45,34 +41,38 @@ Silo::Application.routes.draw do
   # Lists
   get 'lists(/page/:page)' => 'lists#index', as: :lists
 
-  resources :lists, except: [:index, :show] do
-    collection do
-      get  'search(/page/:page)' => 'lists#search', as: :search
-      get  :select
-      get  :current
-      post :add
-      post :remove
-    end
-
-    member do
-      put :open
-      get :copy
-      put :copy, action: :duplicate
-    end
+  resources :lists, only: [:create, :update, :destroy] do
+    get :current, on: :collection
+    put :copy,    on: :member
 
     [:experts, :partners].each do |resource|
       resources resource, only: [], controller: :lists do
-        get    :index,   action: resource, on: :collection
-        delete :destroy, action: :remove,  on: :member
+        get    :index,   action: resource,              on: :collection
+        delete :destroy, action: :"remove_#{resource}", on: :member
       end
     end
   end
 
-  # Help
-  get 'help/:section' => 'help#show', as: :help
+  # Ajax
+  namespace :ajax do
+    resources :help, only: :show
 
-  # Areas, Languages, Businesses
-  [:areas, :languages, :businesses].each do |controller|
-    get "#{controller}/select" => "#{controller}#select"
+    [:areas, :languages, :businesses, :users].each do |controller|
+      resources controller, only: :index
+    end
+
+    resources :lists, except: [:update, :destroy] do
+      [:experts, :partners].each do |resource|
+        resources resource, only: [], controller: :lists do
+          put    :update,  action: :"add_#{resource}",    on: :member
+          delete :destroy, action: :"remove_#{resource}", on: :member
+        end
+      end
+
+      member do
+        put :open
+        get :copy
+      end
+    end
   end
 end

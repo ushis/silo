@@ -47,8 +47,8 @@
               <%= t 'labels.list.current' %>:
               <%= link_to current_list.try(:title), current_lists_path %>
             </div>
-            <div class="open icon-folder-open">
-              <%= t('actions.open') %>
+            <div class="open">
+              <%= link_to t('actions.open'), ajax_lists_path, class: 'icon-folder-open' %>
             </div>
           </li>
           <li class="lists">
@@ -73,12 +73,9 @@
         passwordText: <%= t('messages.user.confirm.password').to_json.html_safe %>
       });
 
-      $('#current-list').siloCurrentList({
-        select: <%= select_lists_path.to_json.html_safe %>,
-        current: <%= current_lists_path(format: :json).to_json.html_safe %>,
-        add: <%= add_lists_path(format: :json).to_json.html_safe %>,
-        remove: <%= remove_lists_path(format: :json).to_json.html_safe %>
-      });
+      $('#current-list').siloCurrentList(
+        <%= ajax_list_path(id: :current, format: :json).to_json.html_safe %>
+      );
     </script>
   </body>
 </html>

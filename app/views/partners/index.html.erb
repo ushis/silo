@@ -4,7 +4,7 @@
   <div>
     <div class="header">
       <div id="filter">
-        <%= form_tag search_partners_path, method: :get do %>
+        <%= form_tag partners_path, method: :get do %>
           <div class="row name">
             <div class="company">
               <%= text_field_tag(:company, params[:company],
@@ -49,7 +49,9 @@
       <tbody>
         <% @partners.each do |partner| %>
           <tr>
-            <td class="listable" data-id="<%= partner.id %>">
+            <td>
+              <%= link_to '', ajax_list_partner_path(list_id: :current, id: partner, format: :json),
+                          'data-id' => partner.id, class: 'listable' %>
               <%= link_to partner.company, partner_path(partner) %>
             </td>
             <td>
@@ -80,16 +82,16 @@
 
 <script>
   $('#filter div.business input')
-  .siloMultiSelect('businesses', '<%= businesses_select_path %>', {
+  .siloMultiSelect('businesses', '<%= ajax_businesses_path %>', {
     selected: <%= arrayified_param(:businesses).to_json.html_safe %>
   });
 
   $('#filter div.country input')
-  .siloMultiSelect('countries', '<%= areas_select_path %>', {
+  .siloMultiSelect('countries', '<%= ajax_areas_path %>', {
     selected: <%= arrayified_param(:countries).to_json.html_safe %>,
     grouped: true
   });
 
-  $('#filter input.fulltext').siloHelp('<%= help_path section: :fulltext %>');
-  $('#main table td.listable').siloListable('partners');
+  $('#filter input.fulltext').siloHelp('<%= ajax_help_path id: :fulltext %>');
+  $('#main table a.listable').siloListable('partners');
 </script>

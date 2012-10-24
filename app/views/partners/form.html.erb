@@ -71,10 +71,10 @@
 
 <script>
   $('div.businesses input')
-  .siloAutocomplete('<%= businesses_select_path format: :json %>', 'business');
+  .siloAutocomplete('<%= ajax_businesses_path format: :json %>', 'business');
 
   $('div.contact-persons input')
-  .siloMultiSelect('contact_persons', '<%= select_users_path %>', {
+  .siloMultiSelect('contact_persons', '<%= ajax_users_path %>', {
     selected: <%= @partner.contact_persons.map(&:id).to_json.html_safe %>
   });
 </script>

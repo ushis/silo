@@ -84,7 +84,7 @@
 </div>
 <script>
   $('div.languages input')
-  .siloMultiSelect('languages', '<%= languages_select_path %>', {
+  .siloMultiSelect('languages', '<%= ajax_languages_path %>', {
     selected: <%= @expert.languages.collect { |l| l.id }.to_json.html_safe %>
   });
 </script>

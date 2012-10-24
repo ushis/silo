@@ -309,13 +309,13 @@ do($ = jQuery) ->
   SiloCurrentList =
 
     # Initializes the current list object and performs the initial sync.
-    init: (@el, @urls) ->
+    init: (@el, url) ->
       @title = @el.find('.title a')
-      @open = @el.find('.open').css(opacity: 0)
-      @sync(url: @urls.current)
+      @open = @el.find('.open a').css(opacity: 0).click -> false
+      @sync(url: url)
 
       do (that = @) ->
-        $.ajax that.urls.select, dataType: 'html', success: (select) ->
+        $.ajax that.open.attr('href'), dataType: 'html', success: (select) ->
           that.select = $(select).siloSelectListOverlay()
           that.open.animate(opacity: 1, 500).click -> that.openSelect()
 
@@ -325,17 +325,21 @@ do($ = jQuery) ->
     # Syncs with the server and updates the view.
     sync: (options) ->
       do (that = @) ->
-        settings = { dataType: 'json', success: (data) -> that.set(data) }
-        $.ajax($.extend(settings, options))
+        $.ajax $.extend {
+          dataType: 'json',
+          success: (data) -> that.set(data),
+          error: -> that.set(null)
+        }, options
 
     # Moves an item in to or out of the list.
     move: (type, el) ->
       return @openSelect() unless @el.hasClass('active')
-      url = if el.hasClass('active') then @urls.remove else @urls.add
-      @sync(url: url, data: {type: type, id: el.data('id')}, type: 'post')
+      data = { '_method': if el.hasClass('active') then 'delete' else 'put' }
+      @sync(url: el.attr('href'), data: data, type: 'post')
 
     # Updates the view.
     set: (list) ->
+      console.log(list)
       list ||= {}
       @el.toggleClass('active', !! list.title)
       @title.text(list.title)
@@ -363,11 +367,9 @@ do($ = jQuery) ->
 
       do (that =  @) ->
         collection.each ->
-          el = $(@).prepend ->
-            $('<div>', class: 'list-item').append ->
-              $('<div>', class: 'marker').append ->
-                $('<div>', class: 'btn').click ->
-                  that.move type, el
+          el = $(@).append($('<div>', class: 'marker')).click ->
+            that.move type, el
+            false
 
     # Updates the list items.
     updateItems: (list) ->

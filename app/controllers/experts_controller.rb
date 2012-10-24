@@ -1,6 +1,6 @@
 # The ExpertsController provides basic CRUD actions for the experts data.
 class ExpertsController < ApplicationController
-  skip_before_filter :authorize, only: [:index, :search, :show, :documents]
+  skip_before_filter :authorize, only: [:index, :show, :documents]
 
   # Checks if the user has access to the experts section.
   def authorize
@@ -9,21 +9,9 @@ class ExpertsController < ApplicationController
 
   # Serves a paginated table of all experts.
   def index
-    @experts = Expert.with_documents.limit(50).page(params[:page]).order(:name)
-    @title = t('labels.expert.all')
-
-    respond_to do |format|
-      format.html
-      format.pdf { search_report(@experts, params) }
-    end
-  end
-
-  # Searches for experts.
-  def search
     _params = params.merge(arrayified_params(:countries, :languages))
     @experts = Expert.with_documents.search(_params).limit(50).page(params[:page])
-    @title = t('labels.expert.search')
-    body_class << :index
+    @title = t('labels.expert.all')
 
     respond_to do |format|
       format.html { render :index }

@@ -4,7 +4,7 @@
   </h2>
   <ul class="tools">
     <li class="open">
-      <%= link_to t('actions.open'), open_list_path(list),
+      <%= link_to t('actions.open'), open_ajax_list_path(list),
                   remote: true, method: :put,
                   'data-type' => :json, 'data-id' => list.id,
                   class: 'icon-folder-open' %>
@@ -16,11 +16,11 @@
       </li>
     <% end %>
     <li class="copy">
-      <%= link_to t('actions.copy'), copy_list_path(list),
+      <%= link_to t('actions.copy'), copy_ajax_list_path(list),
                   class: 'icon-copy' %>
     </li>
     <li class="edit">
-      <%= link_to t('actions.edit'), edit_list_path(list),
+      <%= link_to t('actions.edit'), edit_ajax_list_path(list),
                   class: 'icon-pencil' %>
     </li>
     <li>

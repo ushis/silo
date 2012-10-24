@@ -1,20 +1,10 @@
 # The UsersController provides CRUD actions for the users data. It is
 # accessibles as admin only. Exceptions are the methods
-# UsersController#profile, UsersController#update_profile and
-# UsersController#select.
+# UsersController#profile and UsersController#update_profile.
 class UsersController < ApplicationController
-  skip_before_filter :authorize,    only: [:profile, :update_profile, :select]
-  skip_before_filter :authenticate, only: [:select]
+  skip_before_filter :authorize,    only: [:profile, :update_profile]
 
-  layout false, only: [:select]
-
-  caches_action :select
   cache_sweeper :user_sweeper, only: [:create, :update, :update_profile, :destroy]
-
-  # Serves a multi select box.
-  def select
-    @users = User.order(:name, :prename)
-  end
 
   # Serves the users profile. Admins are redirected to their edit page.
   def profile

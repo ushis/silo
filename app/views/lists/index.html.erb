@@ -4,7 +4,7 @@
   <div>
     <div class="header">
       <div id="filter">
-        <%= form_tag search_lists_path, method: :get do %>
+        <%= form_tag lists_path, method: :get do %>
           <div>
             <%= text_field_tag :title, params[:title],
                                placeholder: List.human_attribute_name(:title) %>
@@ -25,7 +25,7 @@
               <%= link_to list.title, list_experts_path(list) %>
             </td>
             <td class="open">
-              <%= link_to t('actions.open'), open_list_path(list),
+              <%= link_to t('actions.open'), open_ajax_list_path(list),
                           method: :put, remote: true, 'data-type' => :json,
                           'data-id' => list.id, class: 'icon-folder-open' %>
             </td>

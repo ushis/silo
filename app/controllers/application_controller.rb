@@ -2,6 +2,7 @@
 # methods, used by several other controllers. All controllers extend the
 # ApplicationController.
 class ApplicationController < ActionController::Base
+  rescue_from UnauthorizedError,             with: :unauthorized
   rescue_from ActiveRecord::RecordNotFound,  with: :not_found
   rescue_from ActionController::MissingFile, with: :file_not_found
 
@@ -23,6 +24,14 @@ class ApplicationController < ActionController::Base
     super *actions, cache_path: lambda { |_| action_cache_path }
   end
 
+  private
+
+  # Sets an error message and redirects the the root url.
+  def unauthorized(url = root_url)
+    flash[:alert] = t('messages.generics.errors.access')
+    redirect_to url
+  end
+
   # Sets a not found alert and redirects to the root url.
   def not_found
     flash[:alert] = t('messages.generics.errors.find')
@@ -33,6 +42,25 @@ class ApplicationController < ActionController::Base
   def file_not_found
     flash[:alert] = t('messages.generics.errors.file_not_found')
     redirect_to root_url
+  end
+
+  # Sets the users preferred locale.
+  def set_locale
+    I18n.locale = current_user.try(:locale) || locale_from_header
+  end
+
+  # Authorizes the user (or not) to complete a request. If the the user has
+  # not the corresponding permissions, a flash message is set and the user
+  # is redirected.
+  def authorize(section = nil, url = root_url)
+    unless (section ? current_user.access?(section) : current_user.admin?)
+      unauthorized(url)
+    end
+  end
+
+  # Redirects the user to the login, unless he/she is already logged in.
+  def authenticate
+    redirect_to login_url unless current_user
   end
 
   # Returns cache a path for a actions view, dependent on current controller,
@@ -88,26 +116,6 @@ class ApplicationController < ActionController::Base
     @body_class
   end
 
-  # Sets the users preferred locale.
-  def set_locale
-    I18n.locale = current_user.try(:locale) || locale_from_header
-  end
-
-  # Authorizes the user (or not) to complete a request. If the the user has
-  # not the corresponding permissions, a flash message is set and the user
-  # is redirected.
-  def authorize(section = nil, url = root_url)
-    unless (section ? current_user.access?(section) : current_user.admin?)
-      flash[:alert] = t('messages.generics.errors.access')
-      redirect_to url
-    end
-  end
-
-  # Redirects the user to the login, unless he/she is already logged in.
-  def authenticate
-    redirect_to login_url unless current_user
-  end
-
   # Returns the current list of the current user.
   def current_list
     current_user.try(:current_list)
@@ -118,8 +126,6 @@ class ApplicationController < ActionController::Base
   def current_user?(user)
     user == current_user
   end
-
-  private
 
   # Returns the current user, if he/she is logged in.
   def current_user

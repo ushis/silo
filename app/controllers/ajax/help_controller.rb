@@ -4,23 +4,20 @@
 # To add a new help section create the view
 # _app/views/help/my_section.html.erb_. You can vistit it at
 # _/help/my_section_.
-class HelpController < ApplicationController
-  skip_before_filter :authenticate, :authorize, only: [:show]
-
-  layout false
-
+class Ajax::HelpController < AjaxController
   caches_action :show
 
   # Serves a help section.
   def show
-    render params[:section]
+    render params[:id]
   rescue ActionView::MissingTemplate
     raise ActionController::RoutingError, 'Help not found.'
   end
 
   private
 
+  # Sets a proper cache path.
   def action_cache_path
-    super << "/#{params[:section]}"
+    super << "/#{params[:id]}"
   end
 end

@@ -8,13 +8,16 @@
     <%= t 'labels.generic.by', name: partner.user.try(:full_name) %>
   </h3>
   <ul class="tools">
-    <li class="listable" data-id="<%= partner.id %>">
-      <span class="inactive">
-        <%= t 'labels.list.add' %>
-      </span>
-      <span class="active">
-        <%= t 'labels.list.remove' %>
-      </span>
+    <li>
+      <%= link_to(ajax_list_partner_path(list_id: :current, id: partner, format: :json),
+                  'data-id' => partner.id, class: 'listable') do %>
+        <span class="inactive">
+          <%= t 'labels.list.add' %>
+        </span>
+        <span class="active">
+          <%= t 'labels.list.remove' %>
+        </span>
+      <% end %>
     </li>
     <% if current_user.access?(:partners) %>
       <li>
@@ -42,5 +45,5 @@
 </div>
 
 <script>
-  $('ul.tools li.listable').siloListable('partners');
+  $('ul.tools li a.listable').siloListable('partners');
 </script>

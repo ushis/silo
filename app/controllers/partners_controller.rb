@@ -1,6 +1,6 @@
 #
 class PartnersController < ApplicationController
-  skip_before_filter :authorize, only: [:index, :search, :show]
+  skip_before_filter :authorize, only: [:index, :show]
 
   cache_sweeper :business_sweeper, only: [:create, :update]
 
@@ -11,17 +11,9 @@ class PartnersController < ApplicationController
 
   #
   def index
-    @partners = Partner.with_meta.limit(50).page(params[:page]).order(:company)
-    @title = t('labels.partner.all')
-  end
-
-  #
-  def search
     _params = params.merge(arrayified_params(:businesses, :countries))
     @partners = Partner.with_meta.search(_params).limit(50).page(params[:page])
-    @title = t('labels.partner.search')
-    body_class << :index
-    render :index
+    @title = t('labels.partner.all')
   end
 
   # Serves the partners details page.
