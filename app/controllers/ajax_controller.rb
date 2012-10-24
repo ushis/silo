@@ -17,8 +17,8 @@ class AjaxController < ApplicationController
   end
 
   # Renders an error message and sets the 404 status.
-  def not_found
-    error(t('messages.generics.errors.find'), 404)
+  def not_found(message = t('messages.generics.errors.find'))
+    error(message, 404)
   end
 
   # Renders an error message and sets the 401, if the user is not logged in.

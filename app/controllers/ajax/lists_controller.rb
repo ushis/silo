@@ -62,9 +62,7 @@ class Ajax::ListsController < AjaxController
   # Defines needed actions the add/remove subresources to/from the list.
   [:experts, :partners].each do |resource|
     [:add, :remove].each do |op|
-      define_method(:"#{op}_#{resource}") do
-        move(op, resource)
-      end
+      define_method(:"#{op}_#{resource}") { move(op, resource) }
     end
   end
 
@@ -88,5 +86,10 @@ class Ajax::ListsController < AjaxController
     end
 
     list
+  end
+
+  # Sets a proper error message.
+  def not_found
+    super(t('messages.list.errors.find'))
   end
 end
