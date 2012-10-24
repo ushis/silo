@@ -339,7 +339,6 @@ do($ = jQuery) ->
 
     # Updates the view.
     set: (list) ->
-      console.log(list)
       list ||= {}
       @el.toggleClass('active', !! list.title)
       @title.text(list.title)
