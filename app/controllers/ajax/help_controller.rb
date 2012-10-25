@@ -2,8 +2,8 @@
 # via AJAX, so they were not rendered within a layout.
 #
 # To add a new help section create the view
-# _app/views/help/my_section.html.erb_. You can vistit it at
-# _/help/my_section_.
+# _app/views/ajax/help/my_section.html.erb_. You can vistit it at
+# _/ajax/help/my_section_.
 class Ajax::HelpController < AjaxController
   caches_action :show
 

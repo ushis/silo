@@ -13,5 +13,4 @@ class EmployeesController < ApplicationController
     @title = t('labels.employees.all')
     body_class.delete('index')
   end
-
 end

@@ -5,7 +5,7 @@ class Ajax::ListsController < AjaxController
 
   # Serves a list of all lists.
   def index
-    @lists = List.search(params).accessible_for(current_user).limit(20)
+    @lists = List.search(params).accessible_for(current_user).limit(10)
     respond_with(@list)
   end
 
