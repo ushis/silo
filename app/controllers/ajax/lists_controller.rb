@@ -3,6 +3,8 @@ class Ajax::ListsController < AjaxController
   respond_to :html, only:   [:index, :new, :edit, :copy]
   respond_to :json, except: [:index, :new, :edit, :copy]
 
+  caches_action :new
+
   # Serves a list of all lists.
   def index
     @lists = List.search(params).accessible_for(current_user).limit(10)
