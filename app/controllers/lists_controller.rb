@@ -83,7 +83,7 @@ class ListsController < ApplicationController
   end
 
   # Defines the actions need for the subclasses.
-  [:experts, :partners].each do |resource|
+  List::ITEM_TYPES.keys.each do |resource|
     define_method(resource) { show(resource) }
     define_method(:"remove_#{resource}") { remove(resource) }
   end

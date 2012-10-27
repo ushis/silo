@@ -57,8 +57,9 @@
               <%= link_to expert.name, expert_path(expert) %>
             </td>
             <td>
-              <%= link_to '', ajax_list_expert_path(list_id: :current, id: expert, format: :json),
-                          'data-id' => expert.id, class: 'listable' %>
+              <%= listable_expert_tag(expert) %>
+              <% link_to '', ajax_list_expert_path(list_id: :current, id: expert),
+                          remote: true, 'data-id' => expert.id, class: 'listable' %>
               <%= link_to expert.prename, expert_path(expert) %>
             </td>
             <td>
@@ -103,5 +104,4 @@
   });
 
   $('#filter input.fulltext').siloHelp('<%= ajax_help_path id: :fulltext %>');
-  $('#main table a.listable').siloListable('experts');
 </script>

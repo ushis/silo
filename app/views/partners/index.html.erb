@@ -50,8 +50,7 @@
         <% @partners.each do |partner| %>
           <tr>
             <td>
-              <%= link_to '', ajax_list_partner_path(list_id: :current, id: partner, format: :json),
-                          'data-id' => partner.id, class: 'listable' %>
+              <%= listable_partner_tag partner %>
               <%= link_to partner.company, partner_path(partner) %>
             </td>
             <td>
@@ -93,5 +92,4 @@
   });
 
   $('#filter input.fulltext').siloHelp('<%= ajax_help_path id: :fulltext %>');
-  $('#main table a.listable').siloListable('partners');
 </script>

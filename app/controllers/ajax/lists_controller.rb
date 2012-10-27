@@ -62,7 +62,7 @@ class Ajax::ListsController < AjaxController
   end
 
   # Defines needed actions the add/remove subresources to/from the list.
-  [:experts, :partners].each do |resource|
+  List::ITEM_TYPES.keys.each do |resource|
     [:add, :remove].each do |op|
       define_method(:"#{op}_#{resource}") { move(op, resource) }
     end

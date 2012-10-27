@@ -9,8 +9,7 @@
   </h3>
   <ul class="tools">
     <li>
-      <%= link_to(ajax_list_expert_path(list_id: :current, id: expert, format: :json),
-                  'data-id' => expert.id, class: 'listable') do %>
+      <%= listable_expert_tag expert do %>
         <span class="inactive">
           <%= t 'labels.list.add' %>
         </span>
@@ -44,7 +43,3 @@
     </li>
   </ul>
 </div>
-
-<script>
-  $('ul.tools li a.listable').siloListable('experts');
-</script>

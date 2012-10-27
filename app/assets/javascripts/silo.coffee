@@ -185,14 +185,15 @@ do($ = jQuery) ->
 
           hidden.val ids.join(' ')
           input.val val.join(', ')
-          el.trigger('close')
 
         el.trigger('submit')
 
     # Inits the overlay
     @each ->
       el = $(@).siloOverlay()
-      el.find(".#{settings.submitClass}").click -> el.trigger('submit')
+
+      el.find(".#{settings.submitClass}").click ->
+        el.trigger('submit').trigger('close')
 
       for id in settings.selected
         el.find("input[name=#{id}]").prop('checked', true)
@@ -254,25 +255,24 @@ do($ = jQuery) ->
       minLength: 0
     }, options
 
-    do (collection = @) ->
-      $.ajax url: url, dataType: 'json', success: (data) ->
-        values = (model[attribute] for model in data)
+    $.ajax url: url, dataType: 'json', success: (data) =>
+      values = (model[attribute] for model in data)
 
-        collection.each ->
-          $(@).autocomplete {
-            minLength: settings.minLength
-            appendTo: $(@).parent()
-            source: (req, res) ->
-              res($.ui.autocomplete.filter(values, req.term.split(/,\s*/).pop()))
-            focus: -> false
-            select: (e, ui) ->
-              terms = @value.split(/,\s*/)
-              terms.pop()
-              terms.push(ui.item.value)
-              terms.push('')
-              @value = terms.join(', ')
-              false
-          }
+      @each ->
+        $(@).autocomplete {
+          minLength: settings.minLength
+          appendTo: $(@).parent()
+          source: (req, res) ->
+            res($.ui.autocomplete.filter(values, req.term.split(/,\s*/).pop()))
+          focus: -> false
+          select: (e, ui) ->
+            terms = @value.split(/,\s*/)
+            terms.pop()
+            terms.push(ui.item.value)
+            terms.push('')
+            @value = terms.join(', ')
+            false
+        }
 
   # Handles the current list. Use $.fn.siloCurrentList() to specify a
   # representation in the view.
@@ -282,30 +282,37 @@ do($ = jQuery) ->
     init: (@el, url) ->
       @title = @el.find('.title a')
       @open = @el.find('.open a').css(opacity: 0).click -> false
-      @sync(url: url)
 
-      do (that = @) ->
-        $.ajax that.open.attr('href'), dataType: 'html', success: (select) ->
-          that.select = $(select).siloSelectListOverlay()
-          that.open.animate(opacity: 1, 500).click -> that.openSelect()
+      $.ajax url, success: ((data) => @set(data)), error: (=> @set(null))
+
+      $.ajax @open.attr('href'), dataType: 'html', success: (select) =>
+        @select = $(select).siloSelectListOverlay()
+        @open.animate(opacity: 1, 500).click => @openSelect()
 
     # Opens the select overlay.
     openSelect: -> @select.trigger('show') if @select?
 
-    # Syncs with the server and updates the view.
-    sync: (options) ->
-      do (that = @) ->
-        $.ajax $.extend {
-          dataType: 'json',
-          success: (data) -> that.set(data),
-          error: -> that.set(null)
-        }, options
+    # Binds ajax events to the syncro links.
+    bindSynchronizer: (el) ->
+      el.bind 'ajax:success', (e, data) => @set(data)
+      el.bind 'ajax:error', => @set(null)
 
-    # Moves an item in to or out of the list.
-    move: (type, el) ->
-      return @openSelect() unless @el.hasClass('active')
-      method = if el.hasClass('active') then 'delete' else 'put'
-      @sync(url: el.attr('href'), data: { '_method': method }, type: 'post')
+    # Connects some list openers with the current list.
+    connectWithListOpeners: (collection) ->
+      @listOpeners ||= $()
+      @listOpeners = @listOpeners.add(collection)
+      @bindSynchronizer(collection)
+
+    # Connects a collection with the current list.
+    connectWithListItems: (collection) ->
+      @listItems ||= $()
+      @listItems = @listItems.add(collection)
+      @bindSynchronizer(collection)
+
+      collection.append($('<div>', class: 'marker')).click =>
+        unless @el.hasClass('active')
+          @openSelect()
+          return false
 
     # Updates the view.
     set: (list) ->
@@ -315,45 +322,28 @@ do($ = jQuery) ->
       @updateItems(list)
       @updateOpeners(list)
 
-    # Connects some list openers with the current list.
-    connectWithListOpeners: (collection) ->
-      @listOpeners ||= $()
-      @listOpeners = @listOpeners.add(collection)
-
-      do (that = @) ->
-        collection.bind 'ajax:success', (e, data) -> that.set(data)
-
     # Updates all list openers.
     updateOpeners: (list) ->
       @listOpeners?.each ->
         $(@).toggleClass('active', Number($(@).data('id')) == list.id)
 
-    # Connects a collection with the current list.
-    connectWithListItems: (type, collection) ->
-      @listItems ||= {}
-      @listItems[type] ||= $()
-      @listItems[type] = @listItems[type].add(collection)
-
-      do (that =  @) ->
-        collection.each ->
-          el = $(@).append($('<div>', class: 'marker')).click ->
-            that.move type, el
-            false
-
     # Updates the list items.
     updateItems: (list) ->
-      for type, elements of @listItems
-        ids = (obj.id for obj in list[type] || [])
+      ids = {}
 
-        elements.each ->
-          el = $(@).addClass('ready')
-          el.toggleClass('active', $.inArray(Number(el.data('id')), ids) > -1)
+      @listItems.each ->
+        el = $(@).addClass('ready')
+        type = el.data('item-type')
+        ids[type] ||= (obj.id for obj in list[type] || [])
+        active = $.inArray(Number(el.data('id')), ids[type]) > -1
+        el.toggleClass('active', active)
+        el.data('method', if active then 'delete' else 'put')
 
   # Links an element with the current list.
-  $.fn.siloCurrentList = (urls) -> SiloCurrentList.init(@.first(), urls)
+  $.fn.siloCurrentList = (url) -> SiloCurrentList.init(@first(), url)
 
   # Connects a collection with the current list.
-  $.fn.siloListable = (type) -> SiloCurrentList.connectWithListItems(type, @)
+  $.fn.siloListable = -> SiloCurrentList.connectWithListItems(@)
 
   # Turns a link into a "open this list" link.
   $.fn.siloOpenList = -> SiloCurrentList.connectWithListOpeners(@)
