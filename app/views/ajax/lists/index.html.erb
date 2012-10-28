@@ -36,8 +36,7 @@
               <%= list.title %>
             </td>
             <td>
-              <%= link_to t('actions.open'), open_ajax_list_path(list), method: :put,
-                          remote: true, 'data-type' => :json, class: 'icon-folder-open' %>
+              <%= open_list_tag list %>
             </td>
           </tr>
         <% end %>

@@ -1,6 +1,19 @@
 # Defines several list related helpers.
 module ListHelper
 
+  # Creates an "open this list" link.
+  def open_list_tag(list)
+    options = {
+      remote: true,
+      method: :put,
+      'data-id' => list.id,
+      'data-type' => :json,
+      class: 'icon-folder-open open-list'
+    }
+
+    link_to(t('actions.open'), open_ajax_list_path(list), options)
+  end
+
   # Generic helper to create "listable" tags. You should not use this
   # directly. There are higher level methods for each listable resource.
   #
@@ -17,7 +30,7 @@ module ListHelper
     options = {
       remote: true,
       'data-id' => record.id,
-      'data-type' => 'json',
+      'data-type' => :json,
       'data-item-type' => item_type,
       class: 'listable'
     }

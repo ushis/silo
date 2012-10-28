@@ -66,6 +66,7 @@
       $('div.flash').siloFlash();
       $('a.disabled').siloDisabledLinks();
       $('a.listable').siloListable();
+      $('a.open-list').siloOpenList();
       $('a[data-confirm]').siloConfirm('<%= ajax_helper_path id: :confirm %>');
       $('#current-list').siloCurrentList('<%= ajax_list_path id: :current, format: :json %>');
     </script>

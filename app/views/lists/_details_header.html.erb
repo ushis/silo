@@ -4,10 +4,7 @@
   </h2>
   <ul class="tools">
     <li class="open">
-      <%= link_to t('actions.open'), open_ajax_list_path(list),
-                  remote: true, method: :put,
-                  'data-type' => :json, 'data-id' => list.id,
-                  class: 'icon-folder-open' %>
+      <%= open_list_tag list %>
     </li>
     <% if list.private? %>
       <li>
@@ -40,6 +37,5 @@
 </div>
 
 <script>
-  $('div.header li.open a').siloOpenList();
   $('div.header li.edit a, div.header li.copy a').siloListForm();
 </script>
