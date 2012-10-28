@@ -29,9 +29,7 @@
                 </td>
                 <% if current_user.access?(:experts) %>
                   <td class="del">
-                    <%= link_to t('actions.delete'), [@expert, cv],
-                                method: :delete, class: 'icon-trash',
-                                confirm: t('messages.cv.confirm.delete') %>
+                    <%= delete_button_for cv, url: [@expert, cv], password: false %>
                   </td>
                 <% end %>
               </tr>
@@ -66,9 +64,8 @@
                 </td>
                 <% if current_user.access?(:experts) %>
                   <td class="del">
-                    <%= link_to t('actions.delete'), [@expert, attachment],
-                                method: :delete, class: 'icon-trash',
-                                confirm: t('messages.attachment.confirm.delete') %>
+                    <%= delete_button_for attachment, password: false,
+                                          url: [@expert, attachment] %>
                   </td>
                 <% end %>
               </tr>

@@ -16,16 +16,18 @@ module ContactHelper
     val
   end
 
-  # Returns a delete contact link.
+  # Returns a "delete contact" link.
   #
-  #   delete_contact_link('x', contact_url(contact), :emails, 'alf@aol.com')
-  def contact_delete_link(txt, url, field, contact, html_options = {})
+  #   delete_contact_button(expert, :emails, 'alf@aol.com')
+  #
+  # The parent argument must be a parent model of the contact.
+  def delete_contact_button(parent, field, contact, options = {})
     options = {
-      method: :delete,
+      url: [parent, parent.contact],
       'data-field' => field,
       'data-contact' => contact
-    }
+    }.merge(options)
 
-    link_to txt, url, options.merge(html_options)
+    delete_button_for(parent.contact, options)
   end
 end

@@ -29,6 +29,20 @@ module ApplicationHelper
     content_tag :div, nil, class: "icon-#{icon_name}"
   end
 
+  # Creates a delete button for a record.
+  def delete_button_for(record, options = {})
+    options = {
+      url: record,
+      method: :delete,
+      password: true,
+      class: 'icon-trash',
+      confirm: t(:"messages.#{record.class.name.downcase}.confirm.delete")
+    }.merge(options)
+
+    options['data-password'] = options.delete(:password)
+    link_to(t('actions.delete'), options.delete(:url), options)
+  end
+
   # Checks if the current user has access to the section and adds a
   # 'disabled' class to the link if not.
   #

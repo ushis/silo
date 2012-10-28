@@ -24,9 +24,7 @@
                     class: 'icon-pencil') %>
       </li>
       <li>
-        <%= link_to t('actions.delete'), partner_path(partner), class: 'icon-trash',
-                    method: :delete, 'data-password' => true,
-                    confirm: t('messages.partner.confirm.delete') %>
+        <%= delete_button_for(partner) %>
       </li>
     <% end %>
   </ul>

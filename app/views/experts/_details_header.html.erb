@@ -28,9 +28,7 @@
                     class: 'icon-pencil' %>
       </li>
       <li>
-        <%= link_to t('actions.delete'), expert_path(expert), class: 'icon-trash',
-                    method: :delete, 'data-password' => true,
-                    confirm: t('messages.expert.confirm.delete') %>
+        <%= delete_button_for(expert) %>
       </li>
     <% end %>
   </ul>

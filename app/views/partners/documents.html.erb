@@ -26,9 +26,8 @@
               </td>
               <% if current_user.access?(:partners) %>
                 <td class="del">
-                  <%= link_to t('actions.delete'), [@partner, attachment],
-                              method: :delete, class: 'icon-trash',
-                              confirm: t('messages.attachment.confirm.delete') %>
+                  <%= delete_button_for attachment, password: false,
+                                        url: [@partner, attachment]%>
                 </td>
               <% end %>
             </tr>

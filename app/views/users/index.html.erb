@@ -27,13 +27,11 @@
           <td class="icons">
             <ul>
               <li>
-                <%= link_to(t('actions.edit'), edit_user_path(user),
-                            class: 'icon-pencil') %>
+                <%= link_to t('actions.edit'), edit_user_path(user),
+                            class: 'icon-pencil' %>
               </li>
               <li>
-                <%= link_to t('actions.delete'), user_path(user),
-                              method: :delete, class: 'delete icon-trash',
-                              confirm: t('messages.user.confirm.delete') %>
+                <%= delete_button_for user %>
               </li>
             </ul>
           </td>

@@ -11,8 +11,8 @@
             <%= link_to partner.company, partner_path(partner) %>
           </td>
           <td class="remove">
-            <%= link_to t('actions.remove'), [@list, partner], method: :delete,
-                        'data-type' => :partners, class: 'icon-removefromlist' %>
+            <%= link_to t('actions.remove'), [@list, partner],
+                        method: :delete, class: 'icon-removefromlist' %>
           </td>
         </tr>
       <% end %>

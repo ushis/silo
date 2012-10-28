@@ -14,8 +14,8 @@
             <%= link_to expert.prename, expert_path(expert) %>
           </td>
           <td class="remove">
-            <%= link_to t('actions.remove'), [@list, expert], method: :delete,
-                        'data-type' => :experts, class: 'icon-removefromlist' %>
+            <%= link_to t('actions.remove'), [@list, expert],
+                        method: :delete, class: 'icon-removefromlist' %>
           </td>
         </tr>
       <% end %>

@@ -82,10 +82,7 @@
                   </td>
                   <% if current_user.access?(:partners) %>
                     <td class="del">
-                      <%= contact_delete_link(
-                            t('actions.delete'), [@partner, @partner.contact],
-                            field, val, class: 'icon-trash',
-                            confirm: t('messages.contact.confirm.delete')) %>
+                      <%= delete_contact_button @partner, field, val, password: false %>
                     </td>
                   <% end %>
                 </tr>
