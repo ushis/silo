@@ -287,10 +287,7 @@ do($ = jQuery) ->
 
       $.ajax @open.attr('href'), dataType: 'html', success: (select) =>
         @select = $(select).siloSelectListOverlay()
-        @open.animate(opacity: 1, 500).click => @openSelect()
-
-    # Opens the select overlay.
-    openSelect: -> @select.trigger('show') if @select?
+        @open.animate(opacity: 1, 500).click => @select.trigger('show')
 
     # Binds ajax events to the syncro links.
     bindSynchronizer: (el) ->
@@ -311,7 +308,7 @@ do($ = jQuery) ->
 
       collection.append($('<div>', class: 'marker')).click =>
         unless @el.hasClass('active')
-          @openSelect()
+          @select?.trigger('show')
           return false
 
     # Updates the view.
@@ -331,7 +328,7 @@ do($ = jQuery) ->
     updateItems: (list) ->
       ids = {}
 
-      @listItems.each ->
+      @listItems?.each ->
         el = $(@).addClass('ready')
         type = el.data('item-type')
         ids[type] ||= (obj.id for obj in list[type] || [])
