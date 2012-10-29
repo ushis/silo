@@ -113,7 +113,7 @@ class ListsController < ApplicationController
   def remove(item_type)
     list = find_list(params[:list_id])
     list.remove(item_type, params[:id])
-    redirect_to action: item_type, id: list
+    redirect_to action: item_type, list_id: list
   end
 
   # Sets a flash and redirects to the lists index.
