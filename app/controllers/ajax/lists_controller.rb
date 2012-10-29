@@ -3,7 +3,7 @@ class Ajax::ListsController < AjaxController
   respond_to :html, only:   [:index, :new, :edit, :copy]
   respond_to :json, except: [:index, :new, :edit, :copy]
 
-  caches_action :new
+  caches_action :new, :edit, :copy
 
   # Serves a list of all lists.
   def index

@@ -59,14 +59,14 @@ Silo::Application.routes.draw do
     resources :helpers,   only: :show
 
     resources :experts, only: [] do
-      resources :addresses, only: :new
-      resources :contacts, only: :new
+      resources :addresses,   only: :new
+      resources :contacts,    only: :new
       resources :attachments, only: :new
-      resources :cvs, only: :new
+      resources :cvs,         only: :new
     end
 
     resources :partners, only: [] do
-      resources :contacts, only: :new
+      resources :contacts,    only: :new
       resources :attachments, only: :new
     end
 

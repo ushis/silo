@@ -3,6 +3,8 @@
 class ListsController < ApplicationController
   skip_before_filter :authorize
 
+  cache_sweeper :list_sweeper, only: :update
+
   # Serves all lists.
   def index
     @lists = List.search(params).accessible_for(current_user).limit(50).page(params[:page])
