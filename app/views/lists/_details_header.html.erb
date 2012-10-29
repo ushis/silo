@@ -14,11 +14,11 @@
     <% end %>
     <li class="copy">
       <%= link_to t('actions.copy'), copy_ajax_list_path(list),
-                  class: 'icon-copy' %>
+                  class: 'hidden-form icon-copy' %>
     </li>
     <li class="edit">
       <%= link_to t('actions.edit'), edit_ajax_list_path(list),
-                  class: 'icon-pencil' %>
+                  class: 'hidden-form icon-pencil' %>
     </li>
     <li>
       <%= delete_button_for(list) %>
@@ -33,7 +33,3 @@
     </li>
   </ul>
 </div>
-
-<script>
-  $('div.header li.edit a, div.header li.copy a').siloListForm();
-</script>

@@ -47,20 +47,21 @@
         </div>
       </div>
     </div>
-  </div>
+  </div><!-- left -->
 
   <div class="right">
-    <div class="info">
-        <div class="row address">
-          <h4><%= Partner.human_attribute_name :address %></h4>
-          <p><%= @partner.street %></p>
-          <p><%= @partner.zip %> <%= @partner.city %></p>
-          <p><%= @partner.region %></p>
-        </div>
-        <div class="row last address">
-          <p><%= @partner.country %></p>
-        </div>
-    </div>
+    <div class="info address">
+      <div class="row">
+        <h4><%= Partner.human_attribute_name :address %></h4>
+        <p><%= @partner.street %></p>
+        <p><%= @partner.zip %> <%= @partner.city %></p>
+        <p><%= @partner.region %></p>
+      </div>
+      <div class="row last">
+        <p><%= @partner.country %></p>
+      </div>
+    </div><!-- address -->
+
     <div class="info contacts">
       <table>
         <tbody>
@@ -91,33 +92,13 @@
           <% end %>
         </tbody>
       </table>
-    </div>
-    <% if current_user.access?(:partners) %>
-      <div id="tabs" class="forms">
-        <ul class="tabs">
-          <li>
-            <%= link_to t('labels.contact.new'), '#tab-contact' %>
-          </li>
-        </ul>
-        <div id="tab-contact" class="contact tab">
-          <div class="form-wrapper">
-            <%= form_tag partner_contacts_path(@partner) do %>
-              <div>
-                <%= text_field_tag 'contact[contact]' %>
-              </div>
-              <div>
-                <%= contact_field_select_tag 'contact[field]' %>
-                <%= submit_tag t('actions.add') %>
-              </div>
-            <% end %>
-          </div>
+      <% if current_user.access?(:partners) %>
+        <div>
+          <%= link_to t('labels.contact.new'), new_ajax_partner_contact_path(@partner),
+                      class: 'hidden-form icon-plus' %>
         </div>
-      </div>
-    <% end %>
-  </div>
+      <% end %>
+    </div><!-- contacts -->
+  </div><!-- right -->
   <div class="clear"></div>
 </div>
-
-<script>
-  $("#tabs").tabs();
-</script>

@@ -55,8 +55,20 @@ Silo::Application.routes.draw do
 
   # Ajax
   namespace :ajax do
-    resources :help,    only: :show
-    resources :helpers, only: :show
+    resources :help,      only: :show
+    resources :helpers,   only: :show
+
+    resources :experts, only: [] do
+      resources :addresses, only: :new
+      resources :contacts, only: :new
+      resources :attachments, only: :new
+      resources :cvs, only: :new
+    end
+
+    resources :partners, only: [] do
+      resources :contacts, only: :new
+      resources :attachments, only: :new
+    end
 
     [:areas, :languages, :businesses, :users].each do |controller|
       resources controller, only: :index

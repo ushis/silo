@@ -1,0 +1,25 @@
+<table>
+  <tbody>
+    <% if parent.addresses.empty? %>
+      <tr>
+        <td class="empty">
+          <%= t "messages.#{parent.class.name.downcase}.errors.no_addresses" %>
+        </td>
+      </tr>
+    <% else %>
+      <% parent.addresses.each do |address| %>
+        <tr>
+          <td>
+            <%= simple_format address.address %>
+            <%= address.country.try(:human) %>
+          </td>
+          <% if current_user.access?(parent.class.name.downcase.pluralize) %>
+            <td class="del">
+              <%= delete_button_for address, url: [parent, address], password: false %>
+            </td>
+          <% end %>
+        </tr>
+      <%end %>
+    <% end %>
+  </tbody>
+</table>

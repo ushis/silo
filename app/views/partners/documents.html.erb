@@ -4,53 +4,15 @@
   <%= render 'details_header', partner: @partner %>
 
   <div class="attachments">
-    <table>
-      <tbody>
-        <% if @partner.attachments.empty? %>
-          <tr>
-            <td>
-              <%= t 'messages.partner.errors.no_attachments' %>
-            </td>
-          </tr>
-        <% else %>
-          <% @partner.attachments.each do |attachment| %>
-            <tr>
-              <td>
-                <%= link_to attachment.title, [@partner, attachment], class: 'icon-attachment' %>
-              </td>
-              <td>
-                <%= attachment.ext %>
-              </td>
-              <td>
-                <%= l attachment.created_at, format: :long %>
-              </td>
-              <% if current_user.access?(:partners) %>
-                <td class="del">
-                  <%= delete_button_for attachment, password: false,
-                                        url: [@partner, attachment]%>
-                </td>
-              <% end %>
-            </tr>
-          <% end %>
-        <% end %>
-      </tbody>
-    </table>
-  </div><!-- attachments -->
-  <% if current_user.access?(:partners) %>
-    <div class="forms">
-      <div class="attachment form-wrapper">
-        <%= form_for Attachment.new, url: partner_attachments_path(@partner) do |f| %>
-          <div class="input">
-            <%= f.text_field :title,
-                             placeholder: Attachment.human_attribute_name(:title) %>
-          </div>
-          <div>
-            <%= f.file_field :file %>
-            <%= f.submit t('actions.add') %>
-          </div>
-        <% end %>
+    <%= render 'shared/attachments_table', parent: @partner %>
+
+    <% if current_user.access?(:partners) %>
+      <div>
+        <%= link_to t('labels.attachment.new'),
+                    new_ajax_partner_attachment_path(@partner),
+                    class: 'hidden-form icon-plus' %>
       </div>
-    </div><!-- forms -->
-  <% end %>
+    <% end %>
+  </div>
   <div class="clear"></div>
 </div>

@@ -48,111 +48,32 @@
         </div>
       </div>
     </div>
-  </div>
+  </div><!-- left -->
 
   <div class="right">
     <div class="info addresses">
-        <table>
-          <tbody>
-            <% if @expert.addresses.empty? %>
-              <tr>
-                <td class="empty">
-                  <%= t 'messages.expert.errors.no_addresses' %>
-                </td>
-              </tr>
-            <% else %>
-              <% @expert.addresses.each do |address| %>
-                <tr>
-                  <td>
-                    <%= simple_format address.address %>
-                    <%= address.country.try(:human) %>
-                  </td>
-                  <% if current_user.access?(:experts) %>
-                    <td class="del">
-                      <%= delete_button_for address, url: [@expert, address],
-                                            password: false %>
-                    </td>
-                  <% end %>
-                </tr>
-              <%end %>
-            <% end %>
-          </tbody>
-        </table>
-      </div>
-      <div class="info contacts">
-        <table>
-          <tbody>
-            <% if @expert.contact.empty? %>
-              <tr>
-                <td>
-                  <%= t 'messages.expert.errors.no_contacts' %>
-                </td>
-              </tr>
-            <% else %>
-              <% Contact::FIELDS.each do |field| %>
-                <% @expert.contact.send(field).each do |val| %>
-                  <tr>
-                    <td>
-                      <%= contact_value val, field %>
-                    </td>
-                    <td>
-                      <%= t field.to_s.singularize, scope: [:values, :contacts] %>
-                    </td>
-                    <% if current_user.access?(:experts) %>
-                      <td class="del">
-                        <%= delete_contact_button @expert, field, val, password: false %>
-                      </td>
-                    <% end %>
-                  </tr>
-                <% end %>
-              <% end %>
-            <% end %>
-          </tbody>
-        </table>
-      </div><!-- contacts -->
-      <% if current_user.access?(:experts) %>
-        <div id="tabs" class="forms">
-          <ul class="tabs">
-            <li>
-              <%= link_to t('labels.contact.new'), '#tab-contact' %>
-            </li>
-            <li>
-              <%= link_to t('labels.address.new'), '#tab-address' %>
-            </li>
-          </ul>
-          <div id="tab-contact" class="contact tab">
-            <div class="form-wrapper">
-              <%= form_tag expert_contacts_path(@expert) do %>
-                <div>
-                  <%= text_field_tag 'contact[contact]' %>
-                </div>
-                <div>
-                  <%= contact_field_select_tag 'contact[field]' %>
-                  <%= submit_tag t('actions.add') %>
-                </div>
-              <% end %>
-            </div>
-          </div>
-          <div id="tab-address" class="address tab">
-            <div class="form-wrapper">
-              <%= form_for Address.new, url: expert_addresses_path(@expert) do |f| %>
-                <div>
-                  <%= f.text_area :address, rows: 4 %>
-                </div>
-                <div>
-                  <%= f.country_select :country %>
-                  <%= f.submit t('actions.add') %>
-                </div>
-              <% end %>
-            </div>
-          </div>
-        </div><!-- forms -->
-      <% end %>
-    </div>
-    <div class="clear"></div>
-  </div>
-</div>
+      <%= render 'shared/addresses_table', parent: @expert %>
 
-<script>
-  $("#tabs").tabs();
-</script>
+      <% if current_user.access?(:experts) %>
+        <div>
+          <%= link_to t('labels.address.new'),
+                      new_ajax_expert_address_path(@expert),
+                      class: 'hidden-form icon-plus' %>
+        </div>
+      <% end %>
+    </div><!-- addresses -->
+
+    <div class="info contacts">
+      <%= render 'shared/contacts_table', parent: @expert %>
+
+      <% if current_user.access?(:experts) %>
+        <div>
+          <%= link_to t('labels.contact.new'),
+                      new_ajax_expert_contact_path(@expert),
+                      class: 'hidden-form icon-plus' %>
+        </div>
+      <% end %>
+    </div><!-- contacts -->
+  </div><!-- right -->
+  <div class="clear"></div>
+</div>

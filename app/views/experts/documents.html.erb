@@ -2,105 +2,39 @@
 
 <div id="main">
   <%= render 'details_header', expert: @expert %>
+
   <div class="documents">
     <div class="cvs">
       <h4>
         <%= t 'labels.cv.index' %>
       </h4>
-      <table>
-        <tbody>
-          <% if @expert.cvs.empty? %>
-            <tr>
-              <td>
-                <%= t 'messages.expert.errors.no_cvs' %>
-              </td>
-            </tr>
-          <% else %>
-            <% @expert.cvs.each do |cv| %>
-              <tr>
-                <td>
-                  <%= link_to cv.language.human, [@expert, cv], class: 'icon-file' %>
-                </td>
-                <td>
-                  <%= cv.ext %>
-                </td>
-                <td>
-                  <%= l cv.created_at, format: :long %>
-                </td>
-                <% if current_user.access?(:experts) %>
-                  <td class="del">
-                    <%= delete_button_for cv, url: [@expert, cv], password: false %>
-                  </td>
-                <% end %>
-              </tr>
-            <% end %>
-          <% end %>
-        </tbody>
-      </table>
+
+      <%= render 'shared/cvs_table', parent: @expert %>
+
+      <% if current_user.access?(:experts) %>
+        <div>
+          <%= link_to t('labels.cv.new'),
+                      new_ajax_expert_cv_path(@expert),
+                      class: 'hidden-form icon-plus' %>
+        </div>
+      <% end %>
     </div><!-- cvs -->
+
     <div class="attachments">
       <h4>
         <%= t 'labels.attachment.index' %>
       </h4>
-      <table>
-        <tbody>
-          <% if @expert.attachments.empty? %>
-            <tr>
-              <td>
-                <%= t 'messages.expert.errors.no_attachments' %>
-              </td>
-            </tr>
-          <% else %>
-            <% @expert.attachments.each do |attachment| %>
-              <tr>
-                <td>
-                  <%= link_to attachment.title, [@expert, attachment], class: 'icon-attachment' %>
-                </td>
-                <td>
-                  <%= attachment.ext %>
-                </td>
-                <td>
-                  <%= l attachment.created_at, format: :long %>
-                </td>
-                <% if current_user.access?(:experts) %>
-                  <td class="del">
-                    <%= delete_button_for attachment, password: false,
-                                          url: [@expert, attachment] %>
-                  </td>
-                <% end %>
-              </tr>
-            <% end %>
-          <% end %>
-        </tbody>
-      </table>
+
+      <%= render 'shared/attachments_table', parent: @expert %>
+
+      <% if current_user.access?(:experts) %>
+        <div>
+          <%= link_to t('labels.attachment.new'),
+                      new_ajax_expert_attachment_path(@expert),
+                      class: 'hidden-form icon-plus' %>
+        </div>
+      <% end %>
     </div><!-- attachments -->
-    <% if current_user.access?(:experts) %>
-      <div class="forms">
-        <div class="cv">
-          <%= form_for Cv.new, url: expert_cvs_path(@expert) do |f| %>
-            <div class="input">
-              <%= f.language_select(:language_id) %>
-            </div>
-            <div>
-              <%= f.file_field :file %>
-              <%= f.submit t('actions.add') %>
-            </div>
-          <% end %>
-        </div>
-        <div class="attachment">
-          <%= form_for Attachment.new, url: expert_attachments_path(@expert) do |f| %>
-            <div class="input">
-              <%= f.text_field :title,
-                               placeholder: Attachment.human_attribute_name(:title) %>
-            </div>
-            <div>
-              <%= f.file_field :file %>
-              <%= f.submit t('actions.add') %>
-            </div>
-          <% end %>
-        </div>
-      </div><!-- forms -->
-    <% end %>
     <div class="clear"></div>
   </div>
 </div>

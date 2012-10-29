@@ -1,7 +1,7 @@
 # The AjaxController is the parent of all AJAX controllers. It provides
 # special error handling and some tools to ensure a nice ajaxified day.
 class AjaxController < ApplicationController
-  before_filter :check_xhr
+  #before_filter :check_xhr
 
   skip_before_filter :authorize
 

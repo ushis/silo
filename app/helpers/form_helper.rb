@@ -22,9 +22,6 @@ module FormHelper
   # Silos custom FormBuilder defines several helpers such as
   # FormBuilder#country_select and FormBuilder#language_select.
   class FormBuilder < ActionView::Helpers::FormBuilder
-    require_dependency 'area'
-    require_dependency 'country'
-    require_dependency 'language'
 
     # Returns a grouped collection select box containing all countries grouped
     # by area and ordered by their localized names.
@@ -58,16 +55,12 @@ module FormHelper
 
     # Returns all areas with their ordered countries.
     def all_areas
-      @all_areas ||= Rails.cache.fetch("#{I18n.locale}/all_areas") do
-        Area.with_ordered_countries
-      end
+      @all_areas ||= Area.with_ordered_countries
     end
 
     # Returns all languages ordered by priority.
     def all_languages
-      @all_languages ||= Rails.cache.fetch("#{I18n.locale}/all_languages") do
-        Language.priority_ordered
-      end
+      @all_languages ||= Language.priority_ordered
     end
   end
 end

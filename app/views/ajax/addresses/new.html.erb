@@ -1,7 +1,7 @@
-<div class="overlay list-form">
+<div class="overlay address-form">
   <div class="header">
     <h2>
-      <%= t params[:action], scope: [:labels, :list] %>
+      <%= t 'labels.address.new' %>
     </h2>
     <div class="submit button">
       <%= t 'actions.save' %>
@@ -11,12 +11,12 @@
     </div>
   </div>
   <div class="form-wrapper">
-    <%= form_for @list, url: @url do |f| %>
-      <div class="message">
-        <%= t 'messages.list.confirm.title' %>
+    <%= form_for @address, url: @url do |f| %>
+      <div>
+        <%= f.text_area :address, rows: 4 %>
       </div>
       <div>
-        <%= f.text_field :title, placeholder: List.human_attribute_name(:title) %>
+        <%= f.country_select :country %>
       </div>
     <% end %>
   </div>

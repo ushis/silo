@@ -43,7 +43,8 @@ module PolymorphicParent
         @parent = {
           id: params[key],
           model: controller.to_s.classify.constantize,
-          controller: controller
+          controller: controller,
+          foreign_key: key
         }
       end
 

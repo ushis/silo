@@ -229,7 +229,7 @@ do($ = jQuery) ->
 
 
   # Connects an anchor with a list form.
-  $.fn.siloListForm = (options) ->
+  $.fn.siloHiddenForm = (options) ->
     settings = $.extend {
       abortClass: 'abort'
       submitClass: 'submit'

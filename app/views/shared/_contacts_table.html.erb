@@ -1,0 +1,29 @@
+<table>
+  <tbody>
+    <% if parent.contact.empty? %>
+      <tr>
+        <td>
+          <%= t "messages.#{parent.class.name.downcase}.errors.no_contacts" %>
+        </td>
+      </tr>
+    <% else %>
+      <% Contact::FIELDS.each do |field| %>
+        <% parent.contact.send(field).each do |val| %>
+          <tr>
+            <td>
+              <%= contact_value val, field %>
+            </td>
+            <td>
+              <%= t field.to_s.singularize, scope: [:values, :contacts] %>
+            </td>
+            <% if current_user.access?(parent.class.name.downcase.pluralize) %>
+              <td class="del">
+                <%= delete_contact_button parent, field, val, password: false %>
+              </td>
+            <% end %>
+          </tr>
+        <% end %>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

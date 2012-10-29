@@ -1,0 +1,30 @@
+<table>
+  <tbody>
+    <% if parent.cvs.empty? %>
+      <tr>
+        <td>
+          <%= t "messages.#{parent.class.name.downcase}.errors.no_cvs" %>
+        </td>
+      </tr>
+    <% else %>
+      <% parent.cvs.each do |cv| %>
+        <tr>
+          <td>
+            <%= link_to cv.language.human, [parent, cv], class: 'icon-file' %>
+          </td>
+          <td>
+            <%= cv.ext %>
+          </td>
+          <td>
+            <%= l cv.created_at, format: :long %>
+          </td>
+          <% if current_user.access?(parent.class.name.downcase.pluralize) %>
+            <td class="del">
+              <%= delete_button_for cv, url: [parent, cv], password: false %>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

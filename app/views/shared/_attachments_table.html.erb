@@ -1,0 +1,30 @@
+<table>
+  <tbody>
+    <% if parent.attachments.empty? %>
+      <tr>
+        <td>
+          <%= t "messages.#{parent.class.name.downcase}.errors.no_attachments" %>
+        </td>
+      </tr>
+    <% else %>
+      <% parent.attachments.each do |attachment| %>
+        <tr>
+          <td>
+            <%= link_to attachment.title, [parent, attachment], class: 'icon-attachment' %>
+          </td>
+          <td>
+            <%= attachment.ext %>
+          </td>
+          <td>
+            <%= l attachment.created_at, format: :long %>
+          </td>
+          <% if current_user.access?(parent.class.name.downcase.pluralize) %>
+            <td class="del">
+              <%= delete_button_for attachment, password: false, url: [parent, attachment] %>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
