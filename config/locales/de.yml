@@ -225,6 +225,18 @@ de:
       success:
         delete: 'CV gelöscht.'
         store: 'Neuer CV hinzugefügt.'
+    employee:
+      confirm:
+        delete: 'Möchtest du wirklich diesen Mitarbeiter löschen?'
+      errors:
+        create: 'Mitarbeiter konnte nicht hinzugefügt werden.'
+        delete: 'Mitarbeiter konnte nicht gelöscht werden.'
+        find: 'Mitarbeiter konnte nicht gefunden werden.'
+        save: 'Mitarbeiter konnte nicht gespeichert werden.'
+      success:
+        create: 'Mitarbeiter hinzugefügt: %{name}'
+        delete: 'Mitarbeiter gelöscht: %{name}'
+        save: 'Mitarbeiter gespeichert.'
     expert:
       confirm:
         delete: 'Möchtest du wirklich diesen Experten mit all seinen

@@ -16,10 +16,11 @@ class ListSweeper < ActionController::Caching::Sweeper
 
   # Expires the cache for the specified list.
   def expire_cache_for(list)
+    key = "/ajax/lists/#{list.id}"
+
     I18n.available_locales.each do |locale|
-      key = [locale, :ajax, :lists, list.id].join('/')
-      expire_fragment(key + '/edit')
-      expire_fragment(key + '/copy')
+      expire_fragment("#{locale}#{key}/edit")
+      expire_fragment("#{locale}#{key}/copy")
     end
   end
 end

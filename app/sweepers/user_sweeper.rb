@@ -23,8 +23,10 @@ class UserSweeper < ActionController::Caching::Sweeper
 
   # Expires all users/select caches.
   def expire_caches
+    key = '/ajax/users'
+
     I18n.available_locales.each do |locale|
-      expire_fragment([locale, :ajax, :users].join('/'))
+      expire_fragment("#{locale}#{key}")
     end
   end
 end

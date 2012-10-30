@@ -2,5 +2,51 @@
 
 <div id="main">
   <%= render 'partners/details_header', partner: @partner %>
-  yeah
+
+  <div class="employees">
+    <% if current_user.access?(:partners) %>
+      <div>
+         <%= link_to t('labels.employee.new'),
+                     new_ajax_partner_employee_path(@partner),
+                     class: 'hidden-form icon-plus' %>
+      </div>
+    <%end %>
+
+    <div class="employees">
+      <% if @partner.employees.empty? %>
+        <div class="empty">
+          <%= t 'messages.partner.errors.no_employees' %>
+        </div>
+      <% else %>
+        <% @partner.employees.each do |employee| %>
+          <div class="employee">
+            <div class="head">
+              <h4>
+                <%= employee.name %>
+              </h4>
+              <h5>
+                <%= employee.job %>
+              </h5>
+              <% if current_user.access?(:partners) %>
+                <%= link_to t('actions.edit'),
+                            edit_ajax_partner_employee_path(@partner, employee),
+                            class: 'hidden-form icon-pencil' %>
+
+                <%= delete_button_for employee,
+                                      url: partner_employee_path(@partner, employee),
+                                      password: false %>
+
+                <%= link_to t('labels.contact.new'),
+                            new_ajax_employee_contact_path(employee),
+                            class: 'hidden-form icon-plus' %>
+              <% end %>
+            </div>
+
+            <%= render 'shared/contacts_table', parent: employee %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <div class="clear"></div>
 </div>
