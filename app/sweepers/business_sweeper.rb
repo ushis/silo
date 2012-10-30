@@ -4,13 +4,14 @@ class BusinessSweeper < ActionController::Caching::Sweeper
 
   # Expires all business/select caches.
   def after_create(business)
+    key = '/ajax/businesses'
+
     I18n.available_locales.each do |locale|
-      fragment = [locale, :ajax, :businesses].join('/')
-      expire_fragment(fragment)
-      expire_fragment("#{fragment}.json")
+      expire_fragment("#{locale}#{key}")
+      expire_fragment("#{locale}#{key}.json")
     end
   end
 
-  alias after_update after_create
+  alias after_update  after_create
   alias after_destroy after_create
 end

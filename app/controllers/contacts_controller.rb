@@ -1,8 +1,7 @@
 # The ContactsController provides all actions needed to add/remove contacts
 # to/from a associated model.
 class ContactsController < ApplicationController
-
-  polymorphic_parent :experts, :partners
+  polymorphic_parent :experts, :partners, :employees
 
   # Checks the users privileges.
   def authorize

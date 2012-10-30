@@ -30,9 +30,13 @@ Silo::Application.routes.draw do
   resources :partners, except: [:index] do
     resources :attachments, only: [:show, :create, :destroy]
     resources :contacts,    only: [:create, :destroy]
-    resources :employees
+    resources :employees,   only: [:index, :create, :update, :destroy]
 
     get :documents, on: :member
+  end
+
+  resources :employees, only: [] do
+    resources :contacts, only: [:create, :destroy]
   end
 
   # References
@@ -55,8 +59,8 @@ Silo::Application.routes.draw do
 
   # Ajax
   namespace :ajax do
-    resources :help,      only: :show
-    resources :helpers,   only: :show
+    resources :help,    only: :show
+    resources :helpers, only: :show
 
     resources :experts, only: [] do
       resources :addresses,   only: :new
@@ -68,6 +72,11 @@ Silo::Application.routes.draw do
     resources :partners, only: [] do
       resources :contacts,    only: :new
       resources :attachments, only: :new
+      resources :employees,   only: [:new, :edit]
+    end
+
+    resources :employees, only: [] do
+      resources :contacts, only: :new
     end
 
     [:areas, :languages, :businesses, :users].each do |controller|
@@ -75,16 +84,14 @@ Silo::Application.routes.draw do
     end
 
     resources :lists, except: [:update, :destroy] do
+      put :open, on: :member
+      get :copy, on: :member
+
       [:experts, :partners].each do |resource|
         resources resource, only: [], controller: :lists do
           put    :update,  action: :"add_#{resource}",    on: :member
           delete :destroy, action: :"remove_#{resource}", on: :member
         end
-      end
-
-      member do
-        put :open
-        get :copy
       end
     end
   end
