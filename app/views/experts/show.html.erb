@@ -53,27 +53,21 @@
   <div class="right">
     <div class="info addresses">
       <%= render 'shared/addresses_table', parent: @expert %>
-
-      <% if current_user.access?(:experts) %>
-        <div>
-          <%= link_to t('labels.address.new'),
-                      new_ajax_expert_address_path(@expert),
-                      class: 'hidden-form icon-plus' %>
-        </div>
-      <% end %>
     </div><!-- addresses -->
 
     <div class="info contacts">
       <%= render 'shared/contacts_table', parent: @expert %>
-
-      <% if current_user.access?(:experts) %>
-        <div>
-          <%= link_to t('labels.contact.new'),
-                      new_ajax_expert_contact_path(@expert),
-                      class: 'hidden-form icon-plus' %>
-        </div>
-      <% end %>
     </div><!-- contacts -->
+    <% if current_user.access?(:experts) %>
+      <div class="tools">
+        <%= link_to t('labels.address.new'),
+                    new_ajax_expert_address_path(@expert),
+                    class: 'hidden-form icon-plus tool' %>
+        <%= link_to t('labels.contact.new'),
+                    new_ajax_expert_contact_path(@expert),
+                    class: 'hidden-form icon-plus tool' %>
+      </div>
+    <% end %>
   </div><!-- right -->
   <div class="clear"></div>
 </div>

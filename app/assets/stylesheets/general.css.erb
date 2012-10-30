@@ -228,6 +228,11 @@ div.clear {
   background: none;
 }
 
+body.lists #nav ul #current-list div.title a {
+  color: #444;
+  text-shadow: 0 1px 0 rgba(255,255,255,.5);
+}
+
 #nav ul #current-list div.open a {
   border-radius: 3px;
   height: 20px;
@@ -244,11 +249,24 @@ div.clear {
   margin: 0 99999px 0 5px;
 }
 
+body.lists #nav #current-list div.open a {
+  background: #cdcdcd;
+  color: #666;
+  text-shadow: 0 1px 0 rgba(255,255,255,.5);
+  box-shadow: inset 0 -1px 0 rgba(0,0,0,.2), inset 0 1px 0 rgba(255,255,255,.1);
+}
+
+body.lists #nav #current-list div.open a:hover {
+  background: #cdcdcd;
+  color: #444;
+}
+
 body.experts #nav li.experts a,
 body.partners #nav li.partners a,
 body.employees #nav li.partners a,
 body.references #nav li.references a,
-body.lists #nav li.lists a {
+body.lists #nav li.lists a,
+body.lists #nav #current-list {
   color: #444;
   background: #dbdbdb;
   text-shadow: 0 1px 0px #efefef;
@@ -286,11 +304,17 @@ body.lists #nav li.lists a {
 #sidebar ul li a {
   display: block;
   padding: 0;
-  color: #222;
+  color: #555;
+  text-shadow: 0 1px 0 rgba(255,255,255,.66);
   text-align: center;
-  background-color: transparent;
-  background-position: center top;
-  background-repeat: no-repeat;
+}
+
+#sidebar ul li a:hover {
+  display: block;
+  padding: 0;
+  color: #333;
+  text-shadow: 0 1px 0 rgba(255,255,255,.33);
+  text-align: center;
 }
 
 body.index #sidebar ul li.index,
@@ -301,6 +325,11 @@ body.new #sidebar li.new {
   border: 0 none transparent;
   border-radius: 4px 0 0 4px;
   box-shadow: -1px 1px 1px rgba(0, 0, 0, .2);
+}
+
+body.index #sidebar ul li.index a,
+body.new #sidebar li.new a{
+  color: #444;
 }
 
 #sidebar ul li [class^="icon-"]:before,
@@ -342,6 +371,7 @@ div.form-wrapper {
 
 #main div.header {
   overflow: hidden;
+  margin-bottom: 30px;
 }
 
 #main div.header h2 {
@@ -430,10 +460,6 @@ div.form-wrapper {
 }
 
 /* Tabs */
-#main div.header {
-  margin-bottom: 20px;
-}
-
 #main div.header ul.tabs {
   position: absolute;
   bottom: 0;
@@ -482,10 +508,6 @@ body.partners-list #main div.header ul.tabs li.partners-list a {
   min-height: 66px;
 }
 
-#main div.header {
-  margin-bottom: 30px;
-}
-
 #main div.header h2,
 #main div.form-wrapper h2 {
   padding: 0;
@@ -528,12 +550,11 @@ body.edit #main h2[class*=" icon-"]:before{
   top: 5px;
   right: 10px;
   font-size: .8em;
-  color: #666;
 }
 
 #main div.header ul.tools li {
   float: left;
-  margin-left: 18px;
+  margin-left: 16px;
 }
 
 #main div.header ul.tools li a {
@@ -542,9 +563,9 @@ body.edit #main h2[class*=" icon-"]:before{
   margin: 0;
   padding: 0;
   line-height: 24px;
-  color: #444;
+  color: #666;
   text-shadow: 0 1px 0 #efefef;
-  font-size: 1em;
+  font-size: .9em;
   font-weight: normal;
   background-color: transparent;
   background-position: left center;
@@ -622,7 +643,7 @@ table td:last-child {
 }
 
 table td a {
-  color: #444;
+  color: #555;
 }
 
 table td.icons {
@@ -860,9 +881,14 @@ body.show #main div.info div.row h4 {
   text-shadow: 0 1px 0 rgba(255, 255, 255, .9);
 }
 
-body.show #main div.info div.row p {
+body.show #main div.info p {
   color: #444;
-  font-size: .8em;
+  font-size: .75em;
+}
+
+body.show #main div.info table p {
+  color: #444;
+  font-size: 1em;
 }
 
 body.show #main div.info div.row div.comments p {
@@ -872,6 +898,27 @@ body.show #main div.info div.row div.comments p {
 body.show #main div.info div.row p:empty:after,
 body.show #main div.info div.row div.markdown:empty:after {
   content: '-';
+}
+
+div.tools {
+  float: right;
+  text-align: right;
+  margin: 0 5px 5px 0;
+}
+
+a.tool {
+  font-size: .75em;
+  color: #777;
+  text-shadow: 0 1px 0 #EFEFEF;
+  font-weight: normal;
+  background-color: transparent;
+  background-position: left center;
+  background-repeat: no-repeat;
+  box-shadow: 0 0 0 transparent;
+}
+
+a.tool:before {
+  margin: 0 6px 0 15px;
 }
 
 body.show #main div.right div.tab div.form-wrapper {
@@ -1023,17 +1070,17 @@ a.button {
   margin-left: 5px;
   font-weight: bold;
   font-size: .7em;
-  color: #444;
+  color: #555;
   border: 0 none transparent;
   background: #f0f0f0;
   text-shadow: 0 1px 0px rgba(255, 255, 255, 1);
   border-radius: 3px;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), 0 1px 1px rgba(0, 0, 0, .4);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), 0 1px 1px rgba(0, 0, 0, .3);
 }
 
 a.button {
   padding-bottom: 4px;
-  floaT: right;
+  float: right;
 }
 
 div.button {
@@ -1043,14 +1090,14 @@ div.button {
 input[type=submit]:hover,
 div.button:hover,
 a.button:hover {
-  color: #222;
+  color: #333;
   text-shadow: 0 1px 0px rgba(255, 255, 255, .2);
-  background: rgb(236,236,236);
-  background: -moz-linear-gradient(top, rgba(236,236,236,1) 0%, rgba(227,227,227,1) 100%);
-  background: -webkit-linear-gradient(top, rgba(236,236,236,1) 0%, rgba(227,227,227,1) 100%);
-  background: -o-linear-gradient(top, rgba(236,236,236,1) 0%, rgba(227,227,227,1) 100%);
-  background: -ms-linear-gradient(top, rgba(236,236,236,1) 0%, rgba(227,227,227,1) 100%);
-  background: linear-gradient(top bottom, rgba(236,236,236,1) 0%, rgba(227,227,227,1) 100%);
+  background: #e9e9e9;
+}
+
+input[type=submit]:before,
+a.button:before {
+  margin-right: 7px;
 }
 
 div.form-wrapper > form {
@@ -1063,7 +1110,7 @@ form p, #main form table {
   font-size: 1em;
 }
 
- form table {
+form table {
   border-spacing: 0;
 }
 
