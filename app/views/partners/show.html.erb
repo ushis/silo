@@ -63,38 +63,12 @@
     </div><!-- address -->
 
     <div class="info contacts">
-      <table>
-        <tbody>
-          <% if @partner.contact.empty? %>
-            <tr>
-              <td>
-                <%= t 'messages.partner.errors.no_contacts' %>
-              </td>
-            </tr>
-          <% else %>
-            <% Contact::FIELDS.each do |field| %>
-              <% @partner.contact.send(field).each do |val| %>
-                <tr>
-                  <td>
-                    <%= contact_value val, field %>
-                  </td>
-                  <td>
-                    <%= t field.to_s.singularize, scope: [:values, :contacts] %>
-                  </td>
-                  <% if current_user.access?(:partners) %>
-                    <td class="del">
-                      <%= delete_contact_button @partner, field, val, password: false %>
-                    </td>
-                  <% end %>
-                </tr>
-              <% end %>
-            <% end %>
-          <% end %>
-        </tbody>
-      </table>
+      <%= render 'shared/contacts_table', parent: @partner %>
+
       <% if current_user.access?(:partners) %>
         <div>
-          <%= link_to t('labels.contact.new'), new_ajax_partner_contact_path(@partner),
+          <%= link_to t('labels.contact.new'),
+                      new_ajax_partner_contact_path(@partner),
                       class: 'hidden-form icon-plus' %>
         </div>
       <% end %>

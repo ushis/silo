@@ -1,6 +1,6 @@
 # Handles all partner related requests.
 class PartnersController < ApplicationController
-  skip_before_filter :authorize, only: [:index, :show]
+  skip_before_filter :authorize, only: [:index, :show, :documents]
 
   cache_sweeper :business_sweeper, only: [:create, :update]
 
