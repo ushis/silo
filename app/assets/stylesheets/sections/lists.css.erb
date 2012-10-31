@@ -43,6 +43,32 @@ body.lists #main div.header ul.tools li.open a.active  {
   cursor: default;
 }
 
+body.lists #main table td.removefromlist {
+  width: 18px;
+}
+
+body.lists #main table td.removefromlist a {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 18px;
+}
+
+body.lists #main table td.removefromlist a:before {
+  margin-right: 99999px;
+}
+
+/* Expert-Lists */
+
+body.experts-list #main table td:first-child {
+  width: 6px;
+  padding: 0;
+}
+
+body.experts-list #main table td:nth-child(3) {
+  background: #f7f7f7;
+}
+
 /* List form overlay */
 div.overlay.list-form {
   top: 50%;

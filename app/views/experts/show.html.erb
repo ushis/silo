@@ -52,22 +52,32 @@
 
   <div class="right">
     <div class="info addresses">
-      <%= render 'shared/addresses_table', parent: @expert %>
+      <div class="row last">
+        <% if current_user.access?(:experts) %>
+          <div class="tools">
+            <%= link_to t('labels.address.new'),
+                        new_ajax_expert_address_path(@expert),
+                        class: 'hidden-form icon-plus tool' %>
+          </div>
+        <% end %>
+        <h4><%= Expert.human_attribute_name :addresses %></h4>
+        <%= render 'shared/addresses_table', parent: @expert %>
+      </div>
     </div><!-- addresses -->
 
     <div class="info contacts">
-      <%= render 'shared/contacts_table', parent: @expert %>
-    </div><!-- contacts -->
-    <% if current_user.access?(:experts) %>
-      <div class="tools">
-        <%= link_to t('labels.address.new'),
-                    new_ajax_expert_address_path(@expert),
-                    class: 'hidden-form icon-plus tool' %>
-        <%= link_to t('labels.contact.new'),
-                    new_ajax_expert_contact_path(@expert),
-                    class: 'hidden-form icon-plus tool' %>
+      <div class="row last">
+        <% if current_user.access?(:experts) %>
+          <div class="tools">
+            <%= link_to t('labels.contact.new'),
+                        new_ajax_expert_contact_path(@expert),
+                        class: 'hidden-form icon-plus tool' %>
+          </div>
+        <% end %>
+        <h4><%= Expert.human_attribute_name :contacts %></h4>
+        <%= render 'shared/contacts_table', parent: @expert %>
       </div>
-    <% end %>
+    </div><!-- contacts -->
   </div><!-- right -->
   <div class="clear"></div>
 </div>

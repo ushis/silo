@@ -793,11 +793,11 @@ body.index #main td a.listable.active div.marker:after {
   background-color: #666;
 }
 
-body.index #main table td a {
+#main table td a {
   display: block;
 }
 
-body.index #main table td.attachments a {
+#main table td.attachments a {
   height: 18px;
   width: 0;
   overflow: hidden;
@@ -805,23 +805,74 @@ body.index #main table td.attachments a {
   padding-left: 12px;
 }
 
-body.index #main table td.attachments a:before,
-body.index #main table td.attachments a:after {
+#main table td.attachments a:before,
+#main table td.attachments a:after {
   position: absolute;
   left: 0;
   font-size: 1.45em;
   line-height: 1em;
 }
 
-body.index #main table td.attachments a:before {
+#main table td.attachments a:before {
   top: 0;
   color: #fff;
   text-shadow: 0 1px 1px rgba(0, 0, 0, .4);
 }
 
-body.index #main table td.attachments a:after {
+#main table td.attachments a:after {
   top: 1px;
   color: #5c5c5c;
+}
+
+#main table td.cvs a {
+  border-radius: 2px;
+  padding: 0;
+  margin-right: 8px;
+  display: inline;
+  text-transform: uppercase;
+  color: #444;
+  font-size: .9em;
+}
+
+#main table td.cvs a {
+  display: inline;
+  position: relative;
+  padding-left: 15px;
+}
+
+#main table td.cvs a[class^="icon-"]:before, 
+#main table td.cvs a[class*=" icon-"]:before,
+#main table td.cvs a[class^="icon-"]:after, 
+#main table td.cvs a[class*=" icon-"]:after {
+  position: absolute;
+  left: 0;
+  top: -2px;
+  font-size: 1.45em;
+  line-height: 1em;
+}
+
+#main table td.cvs a[class^="icon-"]:before, 
+#main table td.cvs a[class*=" icon-"]:before {
+  color: #fff;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, .4);
+}
+
+#main table td.cvs a[class^="icon-"]:after, 
+#main table td.cvs a[class*=" icon-"]:after {
+  color: #777;
+  top: -3px;
+}
+
+#main table th.attachments {
+  width: 14px;
+}
+
+#main table td.male {
+  border-left: 2px solid #7c99b6;
+}
+
+#main table td.female {
+  border-left: 2px solid #b67c84;
 }
 
 /* Show Tables */
@@ -832,18 +883,16 @@ body.show #main div.left {
 
 body.show #main div.right {
   float: right;
-  width: 38%
+  width: 37%
 }
 
 body.show #main div.info {
   float: left;
   position: relative;
   width: 100%;
-  padding: 10px;
+  padding: 0;
   margin-bottom: 10px;
   border-radius: 4px;
-  background-color: #f7f7f7;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
   box-sizing: border-box;
   -moz-box-sizing: border-box;
 }
@@ -853,13 +902,12 @@ body.show #main div.info.addresses {
   background: none;
   box-shadow: none;
   padding: 0;
-  margin-top: -8px;
 }
 
 body.show #main div.info div.row {
   float: left;
   width: 100%;
-  padding: 7px 0;
+  padding: 10px 0;
   border-bottom: 1px solid #e5e5e5;
   box-shadow: 0 1px 1px rgba(255, 255, 255, 1);
   box-sizing: border-box;
@@ -906,13 +954,14 @@ body.show #main div.info div.row div.markdown:empty:after {
   content: '-';
 }
 
-div.tools {
+body.show #main div.info div.row div.tools {
   float: right;
+  width: auto;
   text-align: right;
-  margin: 0 5px 5px 0;
+  margin: -4px 3px -7px 0;
 }
 
-a.tool {
+body.show #main div.info div.row div.tools a.tool {
   font-size: .75em;
   color: #777;
   text-shadow: 0 1px 0 #EFEFEF;
@@ -923,7 +972,7 @@ a.tool {
   box-shadow: 0 0 0 transparent;
 }
 
-a.tool:before {
+body.show #main div.info div.row div.tools a.tool:before {
   margin: 0 6px 0 15px;
 }
 
