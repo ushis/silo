@@ -4,13 +4,38 @@
   <%= render 'details_header', list: @list %>
 
   <table class="partners">
+    <thead>
+      <tr>
+        <% [:company, :city, :country].each do |col| %>
+          <th>
+            <%= Partner.human_attribute_name(col) %>
+          </th>
+        <% end %>
+        <th class="attachments">
+        </th>
+      </tr>
+    </thead>
     <tbody>
       <% @list.partners.each do |partner| %>
         <tr>
           <td>
+            <%= listable_partner_tag partner %>
             <%= link_to partner.company, partner_path(partner) %>
           </td>
-          <td class="remove">
+          <td>
+            <%= partner.city %>
+          </td>
+          <td>
+            <%= partner.country.try(:human) %>
+          </td>
+          <td class="attachments">
+            <% unless partner.attachments.empty? %>
+              <%= link_to t('labels.partner.documents'),
+                          documents_partner_path(partner),
+                          class: 'icon-attachment' %>
+            <% end %>
+          </td>
+          <td class="removefromlist">
             <%= link_to t('actions.remove'), [@list, partner],
                         method: :delete, class: 'icon-removefromlist' %>
           </td>
