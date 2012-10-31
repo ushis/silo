@@ -51,28 +51,21 @@
 
   <div class="right">
     <div class="info address">
-      <div class="row">
-        <h4><%= Partner.human_attribute_name :address %></h4>
-        <p><%= @partner.street %></p>
-        <p><%= @partner.zip %> <%= @partner.city %></p>
-        <p><%= @partner.region %></p>
-      </div>
-      <div class="row last">
-        <p><%= @partner.country %></p>
-      </div>
+      <p><%= @partner.street %></p>
+      <p><%= @partner.zip %> <%= @partner.city %> <%= @partner.region %></p>
+      <p><%= @partner.country %></p>
     </div><!-- address -->
 
     <div class="info contacts">
       <%= render 'shared/contacts_table', parent: @partner %>
-
-      <% if current_user.access?(:partners) %>
-        <div>
-          <%= link_to t('labels.contact.new'),
-                      new_ajax_partner_contact_path(@partner),
-                      class: 'hidden-form icon-plus' %>
-        </div>
-      <% end %>
     </div><!-- contacts -->
+    <% if current_user.access?(:partners) %>
+      <div class="tools">
+        <%= link_to t('labels.contact.new'),
+                    new_ajax_partner_contact_path(@partner),
+                    class: 'hidden-form icon-plus tool' %>
+      </div>
+    <% end %>
   </div><!-- right -->
   <div class="clear"></div>
 </div>

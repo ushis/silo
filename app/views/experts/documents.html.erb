@@ -12,10 +12,10 @@
       <%= render 'shared/cvs_table', parent: @expert %>
 
       <% if current_user.access?(:experts) %>
-        <div>
+        <div class="tools">
           <%= link_to t('labels.cv.new'),
                       new_ajax_expert_cv_path(@expert),
-                      class: 'hidden-form icon-plus' %>
+                      class: 'hidden-form icon-plus tool' %>
         </div>
       <% end %>
     </div><!-- cvs -->
@@ -28,10 +28,10 @@
       <%= render 'shared/attachments_table', parent: @expert %>
 
       <% if current_user.access?(:experts) %>
-        <div>
+        <div class="tools">
           <%= link_to t('labels.attachment.new'),
                       new_ajax_expert_attachment_path(@expert),
-                      class: 'hidden-form icon-plus' %>
+                      class: 'hidden-form icon-plus tool' %>
         </div>
       <% end %>
     </div><!-- attachments -->
