@@ -26,6 +26,9 @@ do($ = jQuery) ->
       @layer.fadeOut(200, -> $(@).detach())
       @child.fadeOut(200, -> $(@).detach()) if @child
 
+  # Close layer on ESC.
+  $(document).keyup (e) -> SiloLayer.fadeOut() if e.keyCode is 27
+
   # Adds the overlay class to an element and bindes the "show" and the
   # "close" event.
   $.fn.siloOverlay = (options) ->
@@ -224,9 +227,11 @@ do($ = jQuery) ->
     # Retrieve the multi select overlay and boot it up.
     $.ajax url: url, dataType: 'html', success: (select) ->
       select = $(select).siloMultiSelectOverlay(settings)
-      collection.prop('disabled', false).focus -> select.trigger('show')
       collection.each -> select.connectWith($(@), name)
 
+      collection.prop('disabled', false).focus ->
+        $(@).blur()
+        select.trigger('show')
 
   # Connects an anchor with a list form.
   $.fn.siloHiddenForm = (options) ->
