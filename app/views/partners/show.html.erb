@@ -13,14 +13,12 @@
           </p>
         </div>
       </div>
-      <div class="row last">
+      <div class="row">
         <div class="comments">
           <h4><%= Partner.human_attribute_name :comment %></h4>
           <%= markdown @partner.comment %>
         </div>
       </div>
-    </div>
-    <div class="info">
       <div class="row last">
         <div class="contact-persons">
           <h4><%= Partner.human_attribute_name :contact_persons %></h4>
@@ -51,21 +49,26 @@
 
   <div class="right">
     <div class="info address">
-      <p><%= @partner.street %></p>
-      <p><%= @partner.zip %> <%= @partner.city %> <%= @partner.region %></p>
-      <p><%= @partner.country %></p>
-    </div><!-- address -->
-
-    <div class="info contacts">
-      <%= render 'shared/contacts_table', parent: @partner %>
-    </div><!-- contacts -->
-    <% if current_user.access?(:partners) %>
-      <div class="tools">
-        <%= link_to t('labels.contact.new'),
-                    new_ajax_partner_contact_path(@partner),
-                    class: 'hidden-form icon-plus tool' %>
+      <div class="row">
+        <h4><%= Partner.human_attribute_name :address %></h4>
+        <p><%= @partner.street %></p>
+        <p><%= @partner.zip %> <%= @partner.city %> <%= @partner.region %></p>
+        <p><%= @partner.country %></p>
       </div>
-    <% end %>
+    </div><!-- address -->
+    <div class="info contacts">
+      <div class="row last">
+        <% if current_user.access?(:partners) %>
+          <div class="tools">
+            <%= link_to t('labels.contact.new'),
+                        new_ajax_partner_contact_path(@partner),
+                        class: 'hidden-form icon-plus tool' %>
+          </div>
+        <% end %>
+        <h4><%= Partner.human_attribute_name :contacts %></h4>
+        <%= render 'shared/contacts_table', parent: @partner %>
+      </div>
+    </div><!-- contacts -->
   </div><!-- right -->
   <div class="clear"></div>
 </div>

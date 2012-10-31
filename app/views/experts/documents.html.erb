@@ -5,12 +5,6 @@
 
   <div class="documents">
     <div class="cvs">
-      <h4>
-        <%= t 'labels.cv.index' %>
-      </h4>
-
-      <%= render 'shared/cvs_table', parent: @expert %>
-
       <% if current_user.access?(:experts) %>
         <div class="tools">
           <%= link_to t('labels.cv.new'),
@@ -18,15 +12,13 @@
                       class: 'hidden-form icon-plus tool' %>
         </div>
       <% end %>
+      <h4>
+        <%= t 'labels.cv.index' %>
+      </h4>
+      <%= render 'shared/cvs_table', parent: @expert %>
     </div><!-- cvs -->
 
     <div class="attachments">
-      <h4>
-        <%= t 'labels.attachment.index' %>
-      </h4>
-
-      <%= render 'shared/attachments_table', parent: @expert %>
-
       <% if current_user.access?(:experts) %>
         <div class="tools">
           <%= link_to t('labels.attachment.new'),
@@ -34,6 +26,10 @@
                       class: 'hidden-form icon-plus tool' %>
         </div>
       <% end %>
+      <h4>
+        <%= t 'labels.attachment.index' %>
+      </h4>
+      <%= render 'shared/attachments_table', parent: @expert %>
     </div><!-- attachments -->
     <div class="clear"></div>
   </div>

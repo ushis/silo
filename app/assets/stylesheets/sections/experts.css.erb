@@ -23,68 +23,16 @@ body.experts.index #main input[type="submit"] {
   float: right;
 }
 
-/* Tables */
-body.experts #main table td.cvs a {
-  border-radius: 2px;
-  padding: 0;
-  margin-right: 8px;
-  display: inline;
-  text-transform: uppercase;
-  color: #444;
-  font-size: .9em;
-}
-
-body.experts #main table td.cvs a {
-  position: relative;
-  padding-left: 15px;
-}
-
-body.experts #main table td.cvs a[class^="icon-"]:before, 
-body.experts #main table td.cvs a[class*=" icon-"]:before,
-body.experts #main table td.cvs a[class^="icon-"]:after, 
-body.experts #main table td.cvs a[class*=" icon-"]:after {
-  position: absolute;
-  left: 0;
-  top: -2px;
-  font-size: 1.45em;
-  line-height: 1em;
-}
-
-body.experts #main table td.cvs a[class^="icon-"]:before, 
-body.experts #main table td.cvs a[class*=" icon-"]:before {
-  color: #fff;
-  text-shadow: 0 1px 1px rgba(0, 0, 0, .4);
-}
-
-body.experts #main table td.cvs a[class^="icon-"]:after, 
-body.experts #main table td.cvs a[class*=" icon-"]:after {
-  color: #777;
-  top: -3px;
-}
-
-body.experts #main table th.attachments {
-  width: 14px;
-}
-
 /* Index Table */
 body.experts #main table.experts td:first-child {
   width: 6px;
   padding: 0;
 }
 
-body.experts #main table.experts td:nth-child(2).male {
-  border-left: 2px solid #7c99b6;
-}
-
-body.experts #main table.experts td:nth-child(2).female {
-  border-left: 2px solid #b67c84;
-}
-
 body.experts #main table.experts td:first-child,
 body.experts #main table.experts td:nth-child(2),
 body.experts #main table.experts td:nth-child(3) {
   background: #f7f7f7;
-  border-right: 1px solid #EEE;
 }
 
 /* Pagination */
@@ -292,11 +240,15 @@ body.experts.documents #main div.forms form input[type=submit] {
 body.experts.documents #main div.cvs,
 body.experts.documents #main div.attachments,
 body.experts.documents #main div.forms > div {
-  width: 49%;
+  width: 48%;
   float: left;
 }
 
 body.experts.documents #main div.attachments,
 body.experts.documents #main div.forms div.attachment {
   float: right;
+}
+
+body.experts.documents #main div.tools {
+  margin: -3px 3px -7px 0;
 }
