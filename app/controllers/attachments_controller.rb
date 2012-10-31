@@ -7,7 +7,7 @@ class AttachmentsController < ApplicationController
 
   # Checks if the user is authorized and redirects if not.
   def authorize
-    super(parent[:controller], parents_url)
+    super(parent[:controller], :back)
   end
 
   # Sends the stored file to the user.
@@ -21,19 +21,18 @@ class AttachmentsController < ApplicationController
     model = parent[:model].find(parent[:id])
     attachment = Attachment.from_upload(params[:attachment])
 
-    unless (model.attachments << attachment)
-      attachment.destroy
-      raise 'Could not save attachment.'
+    if (model.attachments << attachment)
+      flash[:notice] = t('messages.attachment.success.store') and return
     end
 
-    flash[:notice] = t('messages.attachment.success.store')
-    redirect_to parent_url
+    attachment.destroy
+    flash[:alert] = t('messages.attachment.errors.store')
   rescue ActiveRecord::RecordNotFound
     flash[:alert] = t(:"messages.#{parent[:model].to_s.downcase}.errors.find")
-    redirect_to parents_url
   rescue
     flash[:alert] = t('messages.attachment.errors.store')
-    redirect_to parent_url
+  ensure
+    redirect_to :back
   end
 
   # Destroys an attachment and redirects to the document page of the parent.
@@ -41,8 +40,7 @@ class AttachmentsController < ApplicationController
     attachment = Attachment.find(params[:id])
 
     if attachment.attachable_type != parent[:model].to_s
-      flash[:alert] = t('messages.generics.errors.access')
-      redirect_to parent_url and return
+      unauthorized(:back) and return
     end
 
     if attachment.destroy
@@ -51,19 +49,19 @@ class AttachmentsController < ApplicationController
       flash[:alert] = t('messages.attachment.errors.delete')
     end
 
-    redirect_to parent_url
+    redirect_to :back
   end
 
   private
 
-  # Returns the url to the document page of the parent.
-  def parent_url
-    { controller: parent[:controller], action: :documents, id: parent[:id] }
+  # Sets an error message an redirects back.
+  def file_not_found
+    super(:back)
   end
 
-  # Sets a not found flash message and redirects the user.
-  def not_found(url = root_url)
+  # Sets an error message and redirects back.
+  def not_found
     flash[:alert] = t('messages.attachment.errors.find')
-    redirect_to parent_url
+    redirect_to :back
   end
 end

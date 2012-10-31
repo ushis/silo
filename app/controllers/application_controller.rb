@@ -2,9 +2,10 @@
 # methods, used by several other controllers. All controllers extend the
 # ApplicationController.
 class ApplicationController < ActionController::Base
-  rescue_from UnauthorizedError,             with: :unauthorized
-  rescue_from ActiveRecord::RecordNotFound,  with: :not_found
-  rescue_from ActionController::MissingFile, with: :file_not_found
+  rescue_from UnauthorizedError,                   with: :unauthorized
+  rescue_from ActiveRecord::RecordNotFound,        with: :not_found
+  rescue_from ActionController::MissingFile,       with: :file_not_found
+  rescue_from ActionController::RedirectBackError, with: :go_home
 
   protect_from_forgery
 
@@ -39,8 +40,13 @@ class ApplicationController < ActionController::Base
   end
 
   # Sets a file not found alert and redirects to the root url.
-  def file_not_found
+  def file_not_found(url = root_url)
     flash[:alert] = t('messages.generics.errors.file_not_found')
+    redirect_to url
+  end
+
+  # Redirects the user to the root url.
+  def go_home
     redirect_to root_url
   end
 

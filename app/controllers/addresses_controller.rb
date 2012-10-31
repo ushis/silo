@@ -2,11 +2,10 @@
 # Addresses module. It provides generic methods to manipulate the polymorphic
 # Address model.
 class AddressesController < ApplicationController
-
   polymorphic_parent :experts
 
   def authorize
-    super(parent[:controller], parent_url)
+    super(parent[:controller], :back)
   end
 
   # Adds a new address to a model and redirects the user to a url. It is
@@ -20,11 +19,10 @@ class AddressesController < ApplicationController
     else
       flash[:alert] = t('messages.address.errors.save')
     end
-
-    redirect_to parent_url
   rescue ActiveRecord::RecordNotFound
     flash[:alert] = t(:"messages.#{parent[:model].to_s.downcase}.errors.find")
-    redirect_to partners_url
+  ensure
+    redirect_to :back
   end
 
   # Destroys an Address.
@@ -32,8 +30,7 @@ class AddressesController < ApplicationController
     address = Address.find(params[:id])
 
     if address.addressable_type != parent[:model].to_s
-      flash[:alert] = t('messages.generics.errors.access')
-      redirect_to parent_url and return
+      unauthorized(:back) and return
     end
 
     if address.destroy
@@ -42,14 +39,14 @@ class AddressesController < ApplicationController
       flash[:alert] = t('messages.address.errors.delete')
     end
 
-    redirect_to parent_url
+    redirect_to :back
   end
 
   private
 
-  # Sets a flash message and redirect the user.
-  def not_found(url = root_url)
+  # Sets a proper error message and redirects back.
+  def not_found
     flash[:alert] = t('messages.address.errors.find')
-    redirect_to parent_url
+    redirect_to :back
   end
 end

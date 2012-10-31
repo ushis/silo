@@ -47,16 +47,6 @@ module PolymorphicParent
           foreign_key: key
         }
       end
-
-      # Returns a hash describing the url to the parents index action.
-      define_method(:parents_url) do
-        { controller: parent[:controller], action: :index }
-      end
-
-      # Returns a hash describing the url to the parents show action.
-      define_method(:parent_url) do
-        parents_url.merge(action: :show, id: parent[:id])
-      end
     end
   end
 end

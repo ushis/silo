@@ -5,7 +5,7 @@ class ContactsController < ApplicationController
 
   # Checks the users privileges.
   def authorize
-    super(parent[:controller], parent_url)
+    super(parent[:controller], :back)
   end
 
   # Adds a contact to a model, that has a _has_one_ association to the Contact
@@ -20,26 +20,24 @@ class ContactsController < ApplicationController
   # The user is redirected to the parents show page.
   def create
     model = parent[:model].find(parent[:id])
-    field, contact = params[:contact].values_at(:field, :contact)
-    contact.strip!
+    field, contact = params[:contact].try(:values_at, :field, :contact)
+    contact.try(:strip!)
 
     if contact.blank? || model.contact.field(field).include?(contact)
-      raise 'I am not going to save blanks or duplicates!'
+      error(:save) and return
     end
 
     model.contact.field(field) << contact
 
     unless model.contact.save
-      raise 'Could not save contact.'
+      error(:save) and return
     end
 
-    flash[:notice] = t('messages.contact.success.save')
-    redirect_to parent_url
-  rescue ActiveRecord::RecordNotFound
-    parent_not_found
-  rescue
-    flash[:alert] = t('messages.contact.errors.save')
-    redirect_to parent_url
+    success(:save)
+  rescue ArgumentError
+    error(:save)
+  ensure
+    redirect_to(:back)
   end
 
   # Removes a contact from a field. It behaves like
@@ -49,23 +47,30 @@ class ContactsController < ApplicationController
     field, contact = params.values_at(:field, :contact)
 
     unless model.contact.field(field).delete(contact) && model.contact.save
-      raise 'Could not delete contact.'
+      error(:delete) and return
     end
 
-    flash[:notice] = t('messages.contact.success.delete')
-    redirect_to parent_url
-  rescue ActiveRecord::RecordNotFound
-    parent_not_found
-  rescue
-    flash[:alert] = t('messages.contact.errors.delete')
-    redirect_to parent_url
+    success(:delete)
+  rescue ArgumentError
+    error(:delete)
+  ensure
+    redirect_to(:back)
   end
 
   private
 
-  # Sets a flash message and redirects the user.
-  def parent_not_found
+  # Sets a success flash message.
+  def success(action)
+    flash[:notice] = t(action, scope: [:messages, :contact, :success])
+  end
+
+  # Sets an error flash message.
+  def error(action)
+    flash[:alert] = t(action, scope: [:messages, :contact, :errors])
+  end
+
+  # Sets a proper flash message.
+  def not_found
     flash[:alert] = t(:"messages.#{parent[:model].to_s.downcase}.errors.find")
-    redirect_to parents_url
   end
 end

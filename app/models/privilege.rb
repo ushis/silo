@@ -29,4 +29,10 @@ class Privilege < ActiveRecord::Base
       Hash[SECTIONS.collect { |s| [s, send(s)] }]
     end
   end
+
+  # Checks permissions to write some employees data. Employee is a subresource
+  # of Partner, so the user needs the permissions to write partners data.
+  def employees
+    partners?
+  end
 end
