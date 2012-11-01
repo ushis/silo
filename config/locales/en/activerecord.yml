@@ -1,0 +1,83 @@
+---
+en:
+  activerecord:
+    attributes:
+      address:
+        address: 'Address'
+        country: 'Country'
+      area:
+        area: 'Area'
+        countries: 'Countries'
+      attachment:
+        filename: 'Filename'
+        title: 'Title'
+      comment:
+        comment: 'Comment'
+      cv:
+        cv: 'CV'
+        expert: 'Expert'
+        language: 'Language'
+      employee:
+        name: 'Name'
+        gender: 'Gender'
+        job: 'Job'
+      expert:
+        addresses: 'Addresses'
+        age: 'Age'
+        birthday: 'Date of birth'
+        country: 'Citizenship'
+        comment: 'Comment'
+        cvs: 'CVs'
+        degree: 'Degree'
+        fee: 'Fee'
+        former_collaboration: 'Former Collaboration'
+        gender: 'Gender'
+        job: 'Job'
+        language: 'Language'
+        languages: 'Languages'
+        name: 'Name'
+        prename: 'First Name'
+        updated_at: 'Updated At'
+      partner:
+        address: 'Adress'
+        businesses: 'Business Fields'
+        comment: 'Comment'
+        company: 'Company'
+        contact_persons: 'Contact Persons'
+        country: 'Country'
+        region: 'Region'
+        street: 'Street'
+        updated_at: 'Updated At'
+        zip: 'Zip Code'
+      privilege:
+        admin: 'Admin'
+        experts: 'Experts'
+        partners: 'Partners'
+        references: 'References'
+      user:
+        email: 'Email'
+        locale: 'Locale'
+        name: 'Name'
+        password: 'Password'
+        password_confirmation: 'Password Confirmation'
+        password_old: 'Old Password'
+        prename: 'First Name'
+        privileges: 'Privileges'
+        username: 'Username'
+        created_at: 'Registered On'
+    errors:
+      messages:
+        blank: 'Can not be blank.'
+        taken: 'Is already taken.'
+      models:
+        user:
+          attributes:
+            username:
+              invalid: 'Must only contain lower case letters and numbers.'
+            password:
+              confirmation: 'Passwords do not match.'
+    symbolizes:
+      values:
+        gender:
+          female: 'Female'
+          male: 'Male'

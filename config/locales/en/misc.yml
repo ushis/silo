@@ -1,0 +1,43 @@
+---
+en:
+  date:
+    formats:
+      short: '%B %e, %Y'
+    month_names: [~, January, February, March, April, May, June, July, August,
+                  September, October, November, December]
+    order:
+      - :year
+      - :month
+      - :day
+  datetime:
+    prompts:
+      year: 'Year'
+      month: 'Month'
+      day: 'Day'
+  support:
+    array:
+      words_connector: ', '
+      two_words_connector: ' and '
+      last_word_connector: ', and '
+  time:
+    formats:
+      save: '%Y-%m-%d'
+      short: '%B %e, %Y'
+      long: '%Y/%m/%d %H:%M'
+  values:
+    boolean:
+      'false': 'No'
+      'true': 'Yes'
+    contacts:
+      b_phone: 'Phone (Business)'
+      b_phones: 'Phones (Business)'
+      email: 'Email'
+      emails: 'Emails'
+      m_phone: 'Phone (Mobile)'
+      m_phones: 'Phones (Mobile)'
+      p_phone: 'Phone (Private)'
+      p_phones: 'Phones (Private)'
+      skype: 'Skype'
+      skypes: 'Skypes'
+      website: 'Website'
+      websites: 'Websites'

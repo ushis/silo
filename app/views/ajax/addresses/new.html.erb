@@ -13,9 +13,11 @@
   <div class="form-wrapper">
     <%= form_for @address, url: @url do |f| %>
       <div>
+        <%= f.label :address %>
         <%= f.text_area :address, rows: 4 %>
       </div>
       <div>
+        <%= f.label :country %>
         <%= f.country_select :country %>
       </div>
     <% end %>

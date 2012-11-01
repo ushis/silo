@@ -661,15 +661,6 @@ table td.icons a {
   background-repeat: no-repeat;
 }
 
-table td.icons input[type=submit].delete {
-  padding: 0;
-  margin: 0;
-  text-shadow: none;
-  box-shadow: none;
-  border: none;
-  background: none;
-}
-
 table td.icons [class^="icon-"]:before,
 table td.icons [class*=" icon-"]:before {
   font-size: 1.25em;
@@ -840,9 +831,9 @@ body.index #main td a.listable.active div.marker:after {
   padding-left: 15px;
 }
 
-#main table td.cvs a[class^="icon-"]:before, 
+#main table td.cvs a[class^="icon-"]:before,
 #main table td.cvs a[class*=" icon-"]:before,
-#main table td.cvs a[class^="icon-"]:after, 
+#main table td.cvs a[class^="icon-"]:after,
 #main table td.cvs a[class*=" icon-"]:after {
   position: absolute;
   left: 0;
@@ -851,13 +842,13 @@ body.index #main td a.listable.active div.marker:after {
   line-height: 1em;
 }
 
-#main table td.cvs a[class^="icon-"]:before, 
+#main table td.cvs a[class^="icon-"]:before,
 #main table td.cvs a[class*=" icon-"]:before {
   color: #fff;
   text-shadow: 0 1px 1px rgba(0, 0, 0, .4);
 }
 
-#main table td.cvs a[class^="icon-"]:after, 
+#main table td.cvs a[class^="icon-"]:after,
 #main table td.cvs a[class*=" icon-"]:after {
   color: #777;
   top: -3px;
@@ -1184,6 +1175,7 @@ form div.field-box.buttons p {
 form textarea,
 form input[type=text],
 form input[type=password],
+form input[type=file],
 #main div.header input[type=text] {
   float: left;
   padding: 7px 10px 5px 10px;
@@ -1196,6 +1188,11 @@ form input[type=password],
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, .3);
   box-sizing: border-box;
   -moz-box-sizing: border-box;
+}
+
+form input[type=file] {
+  padding: 0;
+  border-radius: 0 3px 3px 0;
 }
 
 form textarea:focus,

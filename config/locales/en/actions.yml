@@ -1,0 +1,18 @@
+---
+en:
+  actions:
+    abort: 'Abort'
+    add: 'Add'
+    close: 'Close'
+    copy: 'Copy'
+    delete: 'Delete'
+    edit: 'Edit'
+    login: 'Login'
+    logout: 'Logout'
+    open: 'Open'
+    print: 'Print'
+    remove: 'Remove'
+    save: 'Save'
+    search: 'Search'
+    share: 'Share'
+    submit: 'Submit'

@@ -1,0 +1,71 @@
+---
+de:
+  labels:
+    address:
+      index: 'Adressen'
+      new: 'Neue Adresse'
+    attachment:
+      index: 'Anhänge'
+      new: 'Neuer Anhang'
+    contact:
+      index: 'Kontakte'
+      new: 'Neuer Kontakt'
+    cv:
+      index: 'CVs'
+      new: 'Neuer CV'
+    generic:
+      all: 'Alle'
+      by: 'von %{name}'
+      fulltext: 'Volltext'
+      page: 'Seite'
+      results: 'Ergebnisse'
+      search: 'Suche'
+      search_params: 'Suchparameter'
+      welcome: 'Willkommen'
+    employee:
+      all: 'Mitarbeiter'
+      edit: 'Mitarbeiter bearbeiten'
+      new: 'Neuer Mitarbeiter'
+    expert:
+      all: 'Alle Experten'
+      contact: 'Kontakt'
+      details: 'Details'
+      documents: 'Dokumente'
+      edit: 'Experten bearbeiten'
+      index: 'Experten'
+      new: 'Neuer Experte'
+      search: 'Experten suchen'
+    language:
+      languages: 'Sprachen'
+    list:
+      add: 'Zur Liste hinzufügen'
+      all: 'Alle Listen'
+      copy: 'Liste kopieren'
+      current: 'Offene Liste'
+      edit: 'Liste bearbeiten'
+      new: 'Neue Liste'
+      remove: 'Aus Liste entfernen'
+      create: 'Neue Liste erstellen'
+      search: 'Liste suchen'
+    partner:
+      all: 'Alle Partner'
+      details: 'Details'
+      documents: 'Dokumente'
+      edit: 'Partner bearbeiten'
+      employees: 'Mitarbeiter'
+      new: 'Neuer Partner'
+      search: 'Partner suchen'
+    reference:
+      all: 'Alle Referenzen'
+    sections:
+      experts: 'Experten'
+      lists: 'Listen'
+      partners: 'Partner'
+      references: 'Referenzen'
+      users: 'Benutzer'
+    user:
+      all: 'Alle Benutzer'
+      edit: 'Benutzer bearbeiten'
+      new: 'Neuer Benutzer'
+      profile: 'Profil'
+      users: 'Benutzer'

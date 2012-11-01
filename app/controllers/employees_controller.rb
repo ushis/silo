@@ -14,7 +14,7 @@ class EmployeesController < ApplicationController
   # GET /partners/:partner_id/employees
   def index
     @partner = Partner.find(params[:partner_id])
-    @title = t('labels.employees.all')
+    @title = t('labels.employee.all')
     body_class.delete('index')
   end
 

@@ -203,8 +203,23 @@ div.overlay div.form-wrapper {
   -moz-box-sizing: border-box;
 }
 
-div.overlay div.form-wrapper > form {
+div.overlay div.form-wrapper form {
   padding: 0;
+}
+
+div.overlay div.form-wrapper form input,
+div.overlay div.form-wrapper form textarea,
+div.overlay div.form-wrapper form select {
+  float: none;
+  width: 100%;
+}
+
+div.overlay div.form-wrapper form > div {
+  margin-bottom: 10px;
+}
+
+div.overlay div.form-wrapper form > div:last-child {
+  margin-bottom: 0;
 }
 
 /* Confirm Dialog */

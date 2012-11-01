@@ -12,11 +12,12 @@
   </div>
   <div class="form-wrapper">
     <%= form_for @attachment, url: @url do |f| %>
-      <div class="input">
-        <%= f.text_field :title,
-                         placeholder: Attachment.human_attribute_name(:title) %>
+      <div>
+        <%= f.label :title %>
+        <%= f.text_field :title %>
       </div>
       <div>
+        <%= f.label :file %>
         <%= f.file_field :file %>
      </div>
     <% end %>

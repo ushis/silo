@@ -1,0 +1,18 @@
+---
+de:
+  actions:
+    abort: 'Abbrechen'
+    add: 'Hinzufügen'
+    close: 'Schließen'
+    copy: 'Kopieren'
+    delete: 'Löschen'
+    edit: 'Bearbeiten'
+    login: 'Anmelden'
+    logout: 'Abmelden'
+    open: 'Öffnen'
+    print: 'Drucken'
+    remove: 'Entfernen'
+    save: 'Speichern'
+    search: 'Suchen'
+    share: 'Teilen'
+    submit: 'Übernehmen'

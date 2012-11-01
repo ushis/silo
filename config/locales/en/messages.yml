@@ -1,0 +1,132 @@
+---
+en:
+  messages:
+    generics:
+      confirm:
+        sure: 'Are you sure?'
+      errors:
+        access: 'Access denied.'
+        error: 'Sorry, but something went wrong.'
+        file_not_found: 'File not found.'
+        find: 'Record not found.'
+        save: 'Could not save changes.'
+      success:
+        save: 'Saved changes.'
+    address:
+      confirm:
+        delete: 'Do you really want to delete this address?'
+      errors:
+        delete: 'Could not delete address.'
+        find: 'Address not found.'
+        save: 'Could not save address.'
+      success:
+        delete: 'Deleted address.'
+        save: 'Saved address.'
+    attachment:
+      confirm:
+        delete: 'Do you really want to delete this attachment?'
+      errors:
+        delete: 'Could not delete attachment.'
+        find: 'Attachment not found.'
+        store: 'Could not store attachment.'
+      success:
+        delete: 'Deleted attachment.'
+        store: 'Stored new attachment.'
+    contact:
+      confirm:
+        delete: 'Do you really want to delete this contact?'
+      errors:
+        delete: 'Could not delete contact.'
+        save: 'Could not save contact.'
+      success:
+        delete: 'Deleted contact.'
+        save: 'Saved contact.'
+    cv:
+      confirm:
+        delete: 'Do you really want to delete this CV?'
+      errors:
+        delete: 'Could not delete CV.'
+        find: 'CV not found.'
+        store: 'Could not store CV.'
+      success:
+        delete: 'Deleted CV.'
+        store: 'Stored new CV.'
+    employee:
+      confirm:
+        delete: 'Do you really want to delete this employee?'
+      errors:
+        create: 'Could not create employee.'
+        delete: 'Could not delete employee.'
+        find: 'Employee not found.'
+        save: 'Could not save employee.'
+      success:
+        create: 'Created employee: %{name}'
+        delete: 'Deleted employee: %{name}'
+        save: 'Saved employee.'
+    expert:
+      confirm:
+        delete: 'Do you really want to delete this expert along with all its
+                 addresses, contacts, CVs and attachments?'
+      errors:
+        create: 'Could not create expert.'
+        delete: 'Could not delete expert.'
+        find: 'Expert not found.'
+        no_addresses: 'This expert has no addresses.'
+        no_attachments: 'This expert has no attachments.'
+        no_contacts: 'This expert has no contacts.'
+        no_cvs: 'This expert has no cvs.'
+        save: 'Could not save expert.'
+      success:
+        create: 'Created expert: %{name}'
+        delete: 'Deleted expert: %{name}'
+        save: 'Saved expert.'
+    language:
+      errors:
+        find: 'Language not found'
+    list:
+      confirm:
+        delete: 'Do you really want to delete this list?'
+      errors:
+        copy: 'Could not copy list.'
+        create: 'Could not create list.'
+        delete: 'Could not delete list.'
+        find: 'Could not find list.'
+        open: 'Could not open list.'
+        save: 'Could not save list.'
+      success:
+        copy: 'Copied list.'
+        create: 'Created list: %{title}'
+        delete: 'Deleted list: %{title}'
+        save: 'Saved list.'
+    partner:
+      confirm:
+        delete: 'Do you really want to delete this partner with all its
+                 attachments?'
+      errors:
+        create: 'Could not create partner.'
+        delete: 'Could not delete partner.'
+        find: 'Partner not found.'
+        no_addresses: 'This partner has no addresses.'
+        no_attachments: 'This partner has no attachments.'
+        no_contacts: 'This partner has no contacts.'
+        save: 'Could not save partner.'
+      success:
+        create: 'Created partner: %{name}'
+        delete: 'Deleted partner: %{name}'
+        save: 'Saved partner'
+    user:
+      confirm:
+        delete: 'Do you really want to delete this user?'
+        password: 'Confirm with your password.'
+      errors:
+        create: 'Could not create user.'
+        credentials: 'Wrong username or password.'
+        delete: 'Could not delete user.'
+        delete_current_user: 'You can not delete yourself.'
+        find: 'User not found.'
+        password: 'Wrong password.'
+        save: 'Could not save user.'
+      success:
+        create: 'Created user: %{name}'
+        delete: 'Deleted user: %{name}'
+        save: 'Saved user.'

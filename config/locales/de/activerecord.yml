@@ -1,0 +1,83 @@
+---
+de:
+  activerecord:
+    attributes:
+      address:
+        address: 'Adresse'
+        country: 'Land'
+      area:
+        area: 'Region'
+        countries: 'Länder'
+      attachment:
+        filename: 'Dateiname'
+        title: 'Titel'
+      comment:
+        comment: 'Kommentar'
+      cv:
+        cv: 'CV'
+        expert: 'Experte'
+        language: 'Sprache'
+      employee:
+        name: 'Name'
+        gender: 'Geschlecht'
+        job: 'Tätigkeit'
+      expert:
+        addresses: 'Adressen'
+        age: 'Alter'
+        birthday: 'Geburtsdatum'
+        country: 'Staatsangehörigkeit'
+        comment: 'Kommentar'
+        cvs: 'CVs'
+        degree: 'Abschluss'
+        fee: 'Honorar'
+        former_collaboration: 'Frühere Zusammenarbeit'
+        gender: 'Geschlecht'
+        job: 'Tätigkeit'
+        language: 'Sprache'
+        languages: 'Sprachen'
+        name: 'Name'
+        prename: 'Vorname'
+        updated_at: 'Zuletzt bearbeitet am'
+      partner:
+        address: 'Adresse'
+        businesses: 'Geschäftsfelder'
+        comment: 'Kommentar'
+        company: 'Firma'
+        contact_persons: 'Ansprechpartner'
+        country: 'Land'
+        region: 'Region'
+        street: 'Straße'
+        updated_at: 'Zuletzt bearbeitet am'
+        zip: 'Postleitzahl'
+      privilege:
+        admin: 'Admin'
+        experts: 'Experten'
+        partners: 'Partner'
+        references: 'Referenzen'
+      user:
+        email: 'Email'
+        locale: 'Sprache'
+        name: 'Name'
+        password: 'Passwort'
+        password_confirmation: 'Passwortbestätigung'
+        password_old: 'Altes Passwort'
+        prename: 'Vorname'
+        privileges: 'Rechte'
+        username: 'Benutzername'
+        created_at: 'Registriert seit'
+    errors:
+      messages:
+        blank: 'Kann nicht leer sein.'
+        taken: 'Ist schon vergeben.'
+      models:
+        user:
+          attributes:
+            username:
+              invalid: 'Darf nur aus Kleinbuchstaben und Zahlen bestehen.'
+            password:
+              confirmation: 'Passwörter stimmen nicht überein.'
+    symbolizes:
+      values:
+        gender:
+          female: 'Weiblich'
+          male: 'Männlich'
