@@ -8,7 +8,7 @@
       <tr>
         <th>
         </th>
-        <% [:name, :prename, :degree, :age, :country, :cvs].each do |attr| %>
+        <% [:name, :prename, :degree, :age, :country].each do |attr| %>
           <th>
             <%= Expert.human_attribute_name(attr) %>
           </th>
@@ -26,7 +26,6 @@
             <%= link_to expert.name, expert_path(expert) %>
           </td>
           <td>
-            <%= listable_expert_tag(expert) %>
             <%= link_to expert.prename, expert_path(expert) %>
           </td>
           <td>
@@ -38,19 +37,8 @@
           <td>
             <%= expert.country.try(:human) %>
           </td>
-          <td class="cvs">
-            <%= list_cvs expert, class: 'icon-file' %>
-          </td>
-          <td class="attachments">
-            <% unless expert.attachments.empty? %>
-              <%= link_to(t('labels.expert.documents'),
-                          documents_expert_path(expert),
-                          class: 'icon-attachment') %>
-            <% end %>
-          </td>
           <td class="removefromlist">
-            <%= link_to t('actions.remove'), [@list, expert],
-                        method: :delete, class: 'icon-removefromlist' %>
+            <%= remove_from_list_tag @list, expert %>
           </td>
         </tr>
       <% end %>

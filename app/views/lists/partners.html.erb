@@ -19,7 +19,6 @@
       <% @list.partners.each do |partner| %>
         <tr>
           <td>
-            <%= listable_partner_tag partner %>
             <%= link_to partner.company, partner_path(partner) %>
           </td>
           <td>
@@ -28,16 +27,8 @@
           <td>
             <%= partner.country.try(:human) %>
           </td>
-          <td class="attachments">
-            <% unless partner.attachments.empty? %>
-              <%= link_to t('labels.partner.documents'),
-                          documents_partner_path(partner),
-                          class: 'icon-attachment' %>
-            <% end %>
-          </td>
           <td class="removefromlist">
-            <%= link_to t('actions.remove'), [@list, partner],
-                        method: :delete, class: 'icon-removefromlist' %>
+            <%= remove_from_list_tag @list, partner %>
           </td>
         </tr>
       <% end %>

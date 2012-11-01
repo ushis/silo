@@ -1,6 +1,16 @@
 # Defines several list related helpers.
 module ListHelper
 
+  # Renders a "Remove item from this list" link.
+  def remove_from_list_tag(list, record, options = {})
+    options = {
+      method: :delete,
+      class: 'icon-removefromlist'
+    }.merge(options)
+
+    link_to(t('actions.remove'), [list, record], options)
+  end
+
   # Creates an "open this list" link.
   def open_list_tag(list)
     options = {
