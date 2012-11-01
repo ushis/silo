@@ -8,6 +8,8 @@ de:
       index: 'Anhänge'
       new: 'Neuer Anhang'
     contact:
+      contact: 'Kontakt'
+      field: 'Art des Kontaktes'
       index: 'Kontakte'
       new: 'Neuer Kontakt'
     cv:

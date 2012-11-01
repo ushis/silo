@@ -109,6 +109,7 @@ en:
         no_addresses: 'This partner has no addresses.'
         no_attachments: 'This partner has no attachments.'
         no_contacts: 'This partner has no contacts.'
+        no_employees: 'This partner has no employees.'
         save: 'Could not save partner.'
       success:
         create: 'Created partner: %{name}'

@@ -109,6 +109,7 @@ de:
         no_addresses: 'Dieser Partner hat keine Adressen.'
         no_attachments: 'Dieser Partner hat keine Anhänge.'
         no_contacts: 'Dieser Partner hat keine Kontakte.'
+        no_employees: 'Dieser Partner hat keine Mitarbeiter.'
         save: 'Partner konnte nicht gespeichert werden.'
       success:
         create: 'Partner hinzugefügt: %{name}'
