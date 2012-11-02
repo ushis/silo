@@ -8,6 +8,16 @@
           <div>
             <%= text_field_tag :title, params[:title],
                                placeholder: List.human_attribute_name(:title) %>
+          </div>
+          <label>
+            <%= radio_button_tag :private, '1', params[:private] == '1' %>
+            Private
+          </label>
+          <label>
+            <%= radio_button_tag :private, '0', params[:private] == '0' %>
+            Shared
+          </label>
+          <div>
             <%= submit_tag t('actions.search') %>
           </div>
         <% end %>
