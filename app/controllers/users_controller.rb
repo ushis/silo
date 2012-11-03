@@ -139,6 +139,8 @@ class UsersController < ApplicationController
     redirect_to users_url
   end
 
+  private
+
   # Sets a "user not found" alert and redirects to the users index page.
   def not_found
     flash[:alert] = t('messages.user.errors.find')

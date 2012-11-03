@@ -4,6 +4,7 @@
 class AddressesController < ApplicationController
   polymorphic_parent :experts
 
+  # Checks the users permissions sends a redirect if necessary.
   def authorize
     super(parent[:controller], :back)
   end
