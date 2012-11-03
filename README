@@ -1,0 +1,7 @@
+= Silo
+
+== How to generate this document?
+
+Go into the the silo root directory and run
+
+  $ sdoc -a -t Silo --op doc/app app/ lib/ README

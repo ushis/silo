@@ -103,6 +103,9 @@ GEM
       railties (~> 3.2.0)
       sass (>= 3.1.10)
       tilt (~> 1.3)
+    sdoc (0.3.19)
+      json (>= 1.1.3)
+      rdoc (~> 3.10)
     sprockets (2.1.3)
       hike (~> 1.2)
       rack (~> 1.0)
@@ -136,6 +139,7 @@ DEPENDENCIES
   prawn (~> 0.12.0)
   rails (= 3.2.8)
   sass-rails (~> 3.2.3)
+  sdoc (~> 0.3.19)
   therubyracer
   uglifier (>= 1.0.3)
   will_paginate (~> 3.0)
