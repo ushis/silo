@@ -3,6 +3,7 @@
 module HumanAttributeNames
   extend ActiveSupport::Concern
 
+  # Defines the the modules class methods.
   module ClassMethods
 
     # Returns a string containing comma separated localized attribute names.

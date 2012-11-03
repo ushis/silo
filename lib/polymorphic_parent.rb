@@ -17,35 +17,34 @@ module PolymorphicParent
     #     polymorphic_parent :user, :galleries
     #   end
     #
-    # Several methods were defined, such as:
+    # Now the parent method is available in the controller:
     #
     #   # URL: /users/12/attachments/7
     #
     #   parent
-    #   #=> { controller: :users, model: User(id: integer, ...), id: 12 }
-    #
-    #   parent_url
-    #   #=> { controller: :users, action: :show, id: 12 }
-    #
-    #   parents_url
-    #   #=> { controller: :users, action: :index }
+    #   #=> {
+    #   #     id: 12,
+    #   #     model: User(id: integer, ...),
+    #   #     controller: :users,
+    #   #     foreign_key: :user_id
+    #   #   }
     #
     # Thats it.
     def polymorphic_parent(*parents)
-      parents = Hash[parents.map { |p| [p, p.to_s.singularize.foreign_key] }]
+      parents = parents.map { |p| [p, p.to_s.singularize.foreign_key] }
 
       # Returns a hash with basic information about the parent.
       define_method(:parent) do
-        return @parent if @parent
+        @parent ||= begin
+          controller, key = parents.find { |_, key| params.include?(key) }
 
-        controller, key = parents.find { |_, key| params.include?(key) }
-
-        @parent = {
-          id: params[key],
-          model: controller.to_s.classify.constantize,
-          controller: controller,
-          foreign_key: key
-        }
+          {
+            id: params[key],
+            model: controller.to_s.classify.constantize,
+            controller: controller,
+            foreign_key: key
+          }
+        end
       end
     end
   end
