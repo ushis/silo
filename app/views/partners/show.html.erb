@@ -8,9 +8,13 @@
       <div class="row">
         <div class="businesses">
           <h4><%= Partner.human_attribute_name :businesses %></h4>
-          <p>
-            <%= @partner.businesses.join(', ') %>
-          </p>
+          <p><%= @partner.businesses.join(', ') %></p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="comments">
+          <h4><%= Partner.human_attribute_name :description %></h4>
+          <%= markdown @partner.description %>
         </div>
       </div>
       <div class="row">

@@ -21,7 +21,7 @@
           </div>
           <div class="row q">
             <%= text_field_tag(:q, params[:q], class: 'fulltext',
-                               placeholder: Partner.human_attribute_name(:comment)) %>
+                               placeholder: Partner.human_attribute_names(:description, :comment)) %>
             <%= submit_tag t('actions.search') %>
           </div>
         <% end %>

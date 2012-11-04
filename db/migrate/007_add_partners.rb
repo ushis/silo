@@ -24,6 +24,17 @@ class AddPartners < ActiveRecord::Migration
       add_index :partners, col
     end
 
+    create_table :descriptions do |t|
+      t.integer    :partner_id,  null: false
+      t.text       :description, null: false
+      t.timestamps
+    end
+
+    add_index :descriptions, :partner_id
+
+    execute('ALTER TABLE descriptions ENGINE = MyISAM')
+    execute('CREATE FULLTEXT INDEX fulltext_description ON descriptions (description)')
+
     create_table :businesses_partners, id: false do |t|
       t.integer :business_id, null: false
       t.integer :partner_id, null: false
@@ -53,6 +64,7 @@ class AddPartners < ActiveRecord::Migration
     drop_table :employees
     drop_table :partners_users
     drop_table :businesses_partners
+    drop_table :descriptions
     drop_table :partners
     drop_table :businesses
   end

@@ -65,6 +65,14 @@
           </div>
         </div>
         <div class="row">
+          <%= f.fields_for :description do |fields| %>
+            <div class="comment">
+              <%= fields.label :description %>
+              <%= fields.text_area :description %>
+            </div>
+          <% end %>
+        </div>
+        <div class="row">
           <%= f.fields_for :comment do |fields| %>
             <div class="comment">
               <%= fields.label :comment %>

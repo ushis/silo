@@ -19,7 +19,8 @@
 # The company attribute is required.
 class Partner < ActiveRecord::Base
   attr_accessible :country_id, :company, :street, :city, :zip, :region,
-                  :website, :email, :phone, :businesses, :comment_attributes
+                  :website, :email, :phone, :businesses, :comment_attributes,
+                  :description_attributes
 
   validates :company, presence: true
 
@@ -30,11 +31,13 @@ class Partner < ActiveRecord::Base
   has_many :employees,   autosave: true, dependent: :destroy
   has_many :attachments, autosave: true, dependent: :destroy, as: :attachable
 
-  has_one :comment, autosave: true, dependent: :destroy, as: :commentable
+  has_one :description, autosave: true, dependent: :destroy
+  has_one :comment,     autosave: true, dependent: :destroy, as: :commentable
 
   belongs_to :user
   belongs_to :country
 
+  accepts_nested_attributes_for :description
   accepts_nested_attributes_for :comment
 
   scope :with_meta, includes(:businesses, :attachments)
@@ -98,7 +101,7 @@ class Partner < ActiveRecord::Base
     )).map(&:first)
   end
 
-  # Searches the fulltext associations, such as Comment.
+  # Searches the fulltext associations, such as Comment and Description.
   #
   #   Partner.search_fulltext('Banana Split')
   #   #=> [4, 34, 1, 23]
@@ -106,14 +109,27 @@ class Partner < ActiveRecord::Base
   # Returns an array of partner ids ordered by relevance.
   def self.search_fulltext(query)
     sql = <<-SQL
-      SELECT comments.commentable_id
-      FROM comments
-      WHERE comments.commentable_type = 'Partner'
-        AND MATCH (comments.comment) AGAINST (:q IN BOOLEAN MODE)
-      ORDER BY MATCH (comments.comment) AGAINST (:q IN BOOLEAN MODE) DESC
+      (
+        SELECT comments.commentable_id AS partner_id,
+          MATCH (comments.comment) AGAINST (:q IN BOOLEAN MODE) AS score
+        FROM comments
+        WHERE comments.commentable_type = 'Partner'
+          AND MATCH (comments.comment) AGAINST (:q IN BOOLEAN MODE)
+      ) UNION (
+        SELECT descriptions.partner_id,
+          MATCH (descriptions.description) AGAINST (:q IN BOOLEAN MODE) AS score
+        FROM descriptions
+        WHERE MATCH (descriptions.description) AGAINST (:q IN BOOLEAN MODE)
+      )
+      ORDER BY score DESC
     SQL
 
     connection.select_rows(sanitize_sql([sql, q: query])).map(&:first)
+  end
+
+  # Returns the partners description. A new one is initialized if necessary.
+  def description
+    super || self.description = Description.new
   end
 
   # Returns the partners comment. A new one is initialized if necessary.

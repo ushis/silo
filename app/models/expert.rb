@@ -113,16 +113,18 @@ class Expert < ActiveRecord::Base
   # Returns an array of expert ids ordered by relevance.
   def self.search_fulltext(query)
     sql = <<-SQL
-      ( SELECT comments.commentable_id AS expert_id,
+      (
+        SELECT comments.commentable_id AS expert_id,
           MATCH (comments.comment) AGAINST (:q IN BOOLEAN MODE) AS score
         FROM comments
         WHERE comments.commentable_type = 'Expert'
-          AND MATCH (comments.comment) AGAINST (:q IN BOOLEAN MODE) )
-      UNION
-      ( SELECT cvs.expert_id,
+          AND MATCH (comments.comment) AGAINST (:q IN BOOLEAN MODE)
+      ) UNION (
+        SELECT cvs.expert_id,
           MATCH (cvs.cv) AGAINST (:q IN BOOLEAN MODE) AS score
         FROM cvs
-        WHERE MATCH (cvs.cv) AGAINST (:q IN BOOLEAN MODE) )
+        WHERE MATCH (cvs.cv) AGAINST (:q IN BOOLEAN MODE)
+      )
       ORDER BY score DESC
     SQL
 
