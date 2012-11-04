@@ -55,20 +55,20 @@
         <p><%= @partner.zip %> <%= @partner.city %> <%= @partner.region %></p>
         <p><%= @partner.country %></p>
       </div>
-    </div><!-- address -->
-    <div class="info contacts">
-      <div class="row last">
-        <% if current_user.access?(:partners) %>
-          <div class="tools">
-            <%= link_to t('labels.contact.new'),
-                        new_ajax_partner_contact_path(@partner),
-                        class: 'hidden-form icon-plus tool' %>
-          </div>
-        <% end %>
-        <h4><%= Partner.human_attribute_name :contacts %></h4>
-        <%= render 'shared/contacts_table', parent: @partner %>
+      <div class="row">
+        <h4><%= Partner.human_attribute_name :website %></h4>
+        <p><%= @partner.website %></p>
       </div>
-    </div><!-- contacts -->
+      <div class="row">
+        <h4><%= Partner.human_attribute_name :email %></h4>
+        <p><%= @partner.email %></p>
+      </div>
+      <div class="row last">
+        <h4><%= Partner.human_attribute_name :phone %></h4>
+        <p><%= @partner.phone %></p>
+      </div>
+    </div>
   </div><!-- right -->
+
   <div class="clear"></div>
 </div>

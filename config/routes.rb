@@ -29,7 +29,6 @@ Silo::Application.routes.draw do
 
   resources :partners, except: [:index] do
     resources :attachments, only: [:show, :create, :destroy]
-    resources :contacts,    only: [:create, :destroy]
     resources :employees,   only: [:index, :create, :update, :destroy]
 
     get :documents, on: :member
@@ -70,7 +69,6 @@ Silo::Application.routes.draw do
     end
 
     resources :partners, only: [] do
-      resources :contacts,    only: :new
       resources :attachments, only: :new
       resources :employees,   only: [:new, :edit]
     end

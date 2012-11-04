@@ -14,6 +14,9 @@ class AddPartners < ActiveRecord::Migration
       t.string     :city,       null: true
       t.string     :zip,        null: true
       t.string     :region,     null: true
+      t.string     :website,    null: true
+      t.string     :email,      null: true
+      t.string     :phone,      null: true
       t.timestamps
     end
 

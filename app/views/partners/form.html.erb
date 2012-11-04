@@ -45,6 +45,20 @@
           </div>
         </div>
         <div class="row">
+          <div>
+            <%= f.label :website %>
+            <%= f.text_field :website %>
+          </div>
+          <div>
+            <%= f.label :email %>
+            <%= f.text_field :email %>
+          </div>
+          <div>
+            <%= f.label :phone %>
+            <%= f.text_field :phone %>
+          </div>
+        </div>
+        <div class="row">
           <div class="contact-persons">
             <%= f.label :contact_persons %>
             <%= f.text_field :contact_persons, value: @partner.contact_persons.join(', ') %>
