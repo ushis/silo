@@ -29,7 +29,7 @@ class List < ActiveRecord::Base
 
   scope :with_items, includes(ITEM_TYPES.keys)
 
-  default_scope order(:title)
+  default_scope order('lists.private DESC, lists.title ASC')
 
   # Selects lists, that are accessible for a user, which means that they
   # are associated with the user or that they are not private.
