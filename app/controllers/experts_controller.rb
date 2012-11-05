@@ -10,7 +10,7 @@ class ExpertsController < ApplicationController
   # Serves a paginated table of all experts.
   def index
     _params = params.merge(arrayified_params(:countries, :languages))
-    @experts = Expert.with_documents.search(_params).limit(50).page(params[:page])
+    @experts = Expert.with_meta.search(_params).limit(50).page(params[:page])
     @title = t('labels.expert.all')
 
     respond_to do |format|

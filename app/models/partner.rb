@@ -40,10 +40,10 @@ class Partner < ActiveRecord::Base
   accepts_nested_attributes_for :description
   accepts_nested_attributes_for :comment
 
-  scope :with_meta, includes(:businesses, :attachments)
-  scope :none,      where('1 < 0')
+  scope :with_meta, includes(:country, :attachments)
 
-  default_scope includes(:country)
+  # A little workaround, while waiting for ActiveRecord::NullRelation.
+  scope :none, where('1 < 0')
 
   # Searches for partners. Takes a hash of conditions.
   #

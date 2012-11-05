@@ -41,12 +41,10 @@ class Expert < ActiveRecord::Base
 
   accepts_nested_attributes_for :comment
 
-  scope :with_documents, includes(:attachments, :cvs)
+  scope :with_meta, includes(:country, :attachments, :cvs)
 
   # A little workaround, while waiting for ActiveRecord::NullRelation.
   scope :none, where('1 < 0')
-
-  default_scope includes(:country)
 
   # Searches for experts. Takes a hash with condtions:
   #
