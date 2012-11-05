@@ -15,8 +15,8 @@ class List < ActiveRecord::Base
 
   validates :title, presence: true
 
-  has_and_belongs_to_many :experts, uniq: true
-  has_and_belongs_to_many :partners, uniq: true
+  has_and_belongs_to_many :experts,  uniq: true, include: :country
+  has_and_belongs_to_many :partners, uniq: true, include: :country
 
   has_many :current_users, class_name: :User, foreign_key: :current_list_id
 
@@ -121,10 +121,11 @@ class List < ActiveRecord::Base
   # The return value depends on the specified operation. On error,
   # false is returned.
   def process_item(op, item_type, item_id)
-    if (type = ITEM_TYPES[item_type.to_s.to_sym])
-      send(type.name).send(op, type.class_name.constantize.find(item_id))
-    end
+    type = ITEM_TYPES.fetch(item_type)
+    send(type.name).send(op, type.class_name.constantize.find(item_id))
   rescue ActiveRecord::RecordNotFound, ActiveRecord::RecordNotUnique
     false
+  rescue KeyError
+    raise ArgumentError, "Invalid item type: #{item_type}"
   end
 end
