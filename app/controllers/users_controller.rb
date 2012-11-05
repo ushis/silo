@@ -2,9 +2,7 @@
 # accessibles as admin only. Exceptions are the methods
 # UsersController#profile and UsersController#update_profile.
 class UsersController < ApplicationController
-  skip_before_filter :authorize,    only: [:profile, :update_profile]
-
-  cache_sweeper :user_sweeper, only: [:create, :update, :update_profile, :destroy]
+  skip_before_filter :authorize, only: [:profile, :update_profile]
 
   # Serves the users profile. Admins are redirected to their edit page.
   def profile

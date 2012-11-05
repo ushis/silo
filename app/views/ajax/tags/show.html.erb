@@ -1,7 +1,7 @@
-<div class="multi-select businesses">
+<div class="multi-select tags">
   <div class="header">
     <h2>
-      <%= t 'labels.businesses.businesses' %>
+      <%= @title %>
     </h2>
     <div class="submit button">
       <%= t 'actions.submit' %>
@@ -11,16 +11,15 @@
     </div>
   </div>
   <div class="select">
-    <% unless @businesses.empty? %>
+    <% unless @tags.empty? %>
       <ul>
-        <% @businesses.each_slice(@businesses.length.fdiv(4).ceil) do |slice| %>
+        <% @tags.each_slice(@tags.length.fdiv(4).ceil) do |slice| %>
           <li class="col">
             <ul>
-              <% slice.each do |business| %>
+              <% slice.each do |tag| %>
                 <li class="item">
-                  <%= check_box_tag business.id, 1, false,
-                                    'data-name' => business.to_s %>
-                  <%= label_tag business.id, business.to_s %>
+                  <%= check_box_tag tag.id, 1, false, 'data-name' => tag.to_s %>
+                  <%= label_tag tag.id, tag.to_s %>
                 </li>
               <% end %>
             </ul>

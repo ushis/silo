@@ -6,6 +6,12 @@ class AddPartners < ActiveRecord::Migration
 
     add_index :businesses, :business, unique: true
 
+    create_table :advisers do |t|
+      t.string :adviser, null: false
+    end
+
+    add_index :advisers, :adviser, unique: true
+
     create_table :partners do |t|
       t.integer    :user_id,    null: false
       t.integer    :country_id, null: true
@@ -24,6 +30,20 @@ class AddPartners < ActiveRecord::Migration
       add_index :partners, col
     end
 
+    create_table :businesses_partners, id: false do |t|
+      t.integer :business_id, null: false
+      t.integer :partner_id, null: false
+    end
+
+    add_index :businesses_partners, [:business_id, :partner_id], unique: true
+
+    create_table :advisers_partners, id: false do |t|
+      t.integer :adviser_id, null: false
+      t.integer :partner_id, null: false
+    end
+
+    add_index :advisers_partners, [:adviser_id, :partner_id], unique: true
+
     create_table :descriptions do |t|
       t.integer    :partner_id,  null: false
       t.text       :description, null: false
@@ -34,20 +54,6 @@ class AddPartners < ActiveRecord::Migration
 
     execute('ALTER TABLE descriptions ENGINE = MyISAM')
     execute('CREATE FULLTEXT INDEX fulltext_description ON descriptions (description)')
-
-    create_table :businesses_partners, id: false do |t|
-      t.integer :business_id, null: false
-      t.integer :partner_id, null: false
-    end
-
-    add_index :businesses_partners, [:business_id, :partner_id], unique: true
-
-    create_table :partners_users, id: false do |t|
-      t.integer :partner_id, null: false
-      t.integer :user_id,    null: false
-    end
-
-    add_index :partners_users, [:partner_id, :user_id], unique: true
 
     create_table :employees do |t|
       t.integer    :partner_id, null: false
@@ -62,10 +68,11 @@ class AddPartners < ActiveRecord::Migration
 
   def down
     drop_table :employees
-    drop_table :partners_users
-    drop_table :businesses_partners
     drop_table :descriptions
+    drop_table :advisers_partners
+    drop_table :businesses_partners
     drop_table :partners
+    drop_table :advisers
     drop_table :businesses
   end
 end

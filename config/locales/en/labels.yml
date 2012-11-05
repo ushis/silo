@@ -4,9 +4,13 @@ en:
     address:
       index: 'Addresses'
       new: 'New Address'
+    adviser:
+      index: 'Advisers (Internal)'
     attachment:
       index: 'Attachments'
       new: 'New Attachment'
+    business:
+      index: 'Business Fields'
     contact:
       contact: 'Contact'
       field: 'Type of Contact'

@@ -23,6 +23,12 @@
           </div>
         </div>
         <div class="row">
+          <div class="advisers">
+            <%= f.label :advisers %>
+            <%= f.text_field :advisers, value: @partner.advisers.join(', ') %>
+          </div>
+        </div>
+        <div class="row">
           <div>
             <%= f.label :street %>
             <%= f.text_field :street %>
@@ -59,12 +65,6 @@
           </div>
         </div>
         <div class="row">
-          <div class="contact-persons">
-            <%= f.label :contact_persons %>
-            <%= f.text_field :contact_persons, value: @partner.contact_persons.join(', ') %>
-          </div>
-        </div>
-        <div class="row">
           <%= f.fields_for :description do |fields| %>
             <div class="comment">
               <%= fields.label :description %>
@@ -93,10 +93,8 @@
 
 <script>
   $('div.businesses input')
-  .siloAutocomplete('<%= ajax_businesses_path format: :json %>', 'business');
+  .siloAutocomplete('<%= ajax_tag_path id: :businesses, format: :json %>', 'business');
 
-  $('div.contact-persons input')
-  .siloMultiSelect('contact_persons', '<%= ajax_users_path %>', {
-    selected: <%= @partner.contact_persons.map(&:id).to_json.html_safe %>
-  });
+  $('div.advisers input')
+  .siloAutocomplete('<%= ajax_tag_path id: :advisers, format: :json %>', 'adviser');
 </script>

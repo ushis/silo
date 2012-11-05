@@ -12,40 +12,21 @@
         </div>
       </div>
       <div class="row">
+        <div class="advisers">
+          <h4><%= Partner.human_attribute_name :advisers %></h4>
+          <p><%= @partner.advisers.join(', ') %></p>
+        </div>
+      </div>
+      <div class="row">
         <div class="comments">
           <h4><%= Partner.human_attribute_name :description %></h4>
           <%= markdown @partner.description %>
         </div>
       </div>
-      <div class="row">
+      <div class="row last">
         <div class="comments">
           <h4><%= Partner.human_attribute_name :comment %></h4>
           <%= markdown @partner.comment %>
-        </div>
-      </div>
-      <div class="row last">
-        <div class="contact-persons">
-          <h4><%= Partner.human_attribute_name :contact_persons %></h4>
-          <table class="within">
-            <% if @partner.contact_persons.empty? %>
-              <tr>
-                <td class="empty">
-                  <%= t 'messages.partner.errors.no_contact_persons' %>
-                </td>
-              </tr>
-            <% else %>
-              <% @partner.contact_persons.each do |user| %>
-                <tr>
-                  <td>
-                    <%= user.full_name %>
-                  </td>
-                  <td>
-                    <%= mail_to user.email %>
-                  </td>
-                </tr>
-              <%end %>
-            <% end %>
-          </table>
         </div>
       </div>
     </div>

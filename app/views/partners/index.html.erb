@@ -78,7 +78,7 @@
 
 <script>
   $('#filter div.business input')
-  .siloMultiSelect('businesses', '<%= ajax_businesses_path %>', {
+  .siloMultiSelect('businesses', '<%= ajax_tag_path(:businesses) %>', {
     selected: <%= arrayified_param(:businesses).to_json.html_safe %>
   });
 

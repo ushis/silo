@@ -4,9 +4,13 @@ de:
     address:
       index: 'Adressen'
       new: 'Neue Adresse'
+    adviser:
+      index: 'Ansprechpartner (Intern)'
     attachment:
       index: 'Anhänge'
       new: 'Neuer Anhang'
+    business:
+      index: 'Geschäftsfelder'
     contact:
       contact: 'Kontakt'
       field: 'Art des Kontaktes'

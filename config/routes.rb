@@ -60,6 +60,7 @@ Silo::Application.routes.draw do
   namespace :ajax do
     resources :help,    only: :show
     resources :helpers, only: :show
+    resources :tags,    only: :show
 
     resources :experts, only: [] do
       resources :addresses,   only: :new
@@ -77,7 +78,7 @@ Silo::Application.routes.draw do
       resources :contacts, only: :new
     end
 
-    [:areas, :languages, :businesses, :users].each do |controller|
+    [:areas, :languages].each do |controller|
       resources controller, only: :index
     end
 

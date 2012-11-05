@@ -28,16 +28,13 @@ class AjaxController < ApplicationController
 
   # Redirects the user the root url, if this is no ajax request.
   def check_xhr
-    redirect_to root_url unless request.xhr?
+    unless request.xhr? || Rails.env.development?
+      redirect_to root_url
+    end
   end
 
   # Renders an error message and sets the response status code.
   def error(message, status = 422)
-    @message = message
-
-    respond_with(@message) do |format|
-      format.json { render status: status }
-      format.html { render :error }
-    end
+    render text: message, status: status
   end
 end

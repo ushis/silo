@@ -8,6 +8,19 @@ CREATE TABLE `addresses` (
   KEY `index_addresses_on_addressable_id_and_addressable_type` (`addressable_id`,`addressable_type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE `advisers` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `adviser` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_advisers_on_adviser` (`adviser`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `advisers_partners` (
+  `adviser_id` int(11) NOT NULL,
+  `partner_id` int(11) NOT NULL,
+  UNIQUE KEY `index_advisers_partners_on_adviser_id_and_partner_id` (`adviser_id`,`partner_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 CREATE TABLE `areas` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `area` varchar(255) NOT NULL,
@@ -184,12 +197,6 @@ CREATE TABLE `partners` (
   KEY `index_partners_on_city` (`city`),
   KEY `index_partners_on_zip` (`zip`),
   KEY `index_partners_on_region` (`region`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TABLE `partners_users` (
-  `partner_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  UNIQUE KEY `index_partners_users_on_partner_id_and_user_id` (`partner_id`,`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `privileges` (

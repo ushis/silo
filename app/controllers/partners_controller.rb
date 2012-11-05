@@ -2,7 +2,7 @@
 class PartnersController < ApplicationController
   skip_before_filter :authorize, only: [:index, :show, :documents]
 
-  cache_sweeper :business_sweeper, only: [:create, :update]
+  cache_sweeper :tag_sweeper, only: [:create, :update]
 
   # Checks the users permissions.
   def authorize
@@ -39,7 +39,6 @@ class PartnersController < ApplicationController
   def create
     @partner = Partner.new(params[:partner])
     @partner.user = current_user
-    @partner.contact_persons = arrayified_param(:contact_persons)
 
     if @partner.save
       flash[:notice] = t('messages.partner.success.create', name: @partner.company)
@@ -63,7 +62,6 @@ class PartnersController < ApplicationController
   def update
     @partner = Partner.find(params[:id])
     @partner.user = current_user
-    @partner.contact_persons = arrayified_param(:contact_persons)
     @partner.attributes = params[:partner]
 
     if @partner.save
