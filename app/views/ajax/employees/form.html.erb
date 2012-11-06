@@ -13,13 +13,19 @@
   <div class="form-wrapper">
     <%= form_for @employee, url: @url do |f| %>
       <div class="row">
+        <div class="form-of-address">
+          <%= f.label :form_of_address %>
+          <%= f.text_field :form_of_address %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="prename">
+          <%= f.label :prename %>
+          <%= f.text_field :prename %>
+        </div>
         <div class="name">
           <%= f.label :name %>
           <%= f.text_field :name %>
-        </div>
-        <div class="gender">
-          <%= f.label :gender %>
-          <%= f.select :gender, Employee.gender_values %>
         </div>
       </div>
       <div class="row">

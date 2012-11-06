@@ -16,6 +16,8 @@ class EmployeesController < ApplicationController
     @partner = Partner.find(params[:partner_id])
     @title = t('labels.employee.all')
     body_class.delete('index')
+  rescue ActiveRecord::RecordNotFound
+    partner_not_found
   end
 
   # Adds an employee to the partner.
@@ -32,6 +34,8 @@ class EmployeesController < ApplicationController
     end
 
     redirect_to partner_employees_url(partner)
+  rescue ActiveRecord::RecordNotFound
+    partner_not_found
   end
 
   # Updates the employees attributes.
@@ -66,9 +70,15 @@ class EmployeesController < ApplicationController
 
   private
 
-  # Sets an error message and redirects the user.
+  # Sets an error message and redirects the user to the partners employees page.
   def not_found
     flash[:alert] = t('messages.employee.errors.find')
     redirect_to partner_employees_url(params[:partner_id])
+  end
+
+  # Sets an error message an redirects the user to the partners index page.
+  def partner_not_found
+    flash[:alert] = t('messages.partner.errors.find')
+    redirect_to partners_url
   end
 end

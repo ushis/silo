@@ -19,9 +19,10 @@ en:
         language: 'Language'
       employee:
         contacts: 'Contacts'
-        gender: 'Gender'
+        form_of_address: 'Form of Address'
         job: 'Job'
         name: 'Name'
+        prename: 'First Name'
       expert:
         addresses: 'Addresses'
         age: 'Age'

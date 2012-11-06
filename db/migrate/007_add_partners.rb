@@ -56,10 +56,11 @@ class AddPartners < ActiveRecord::Migration
     execute('CREATE FULLTEXT INDEX fulltext_description ON descriptions (description)')
 
     create_table :employees do |t|
-      t.integer    :partner_id, null: false
-      t.string     :name,       null: false
-      t.string     :gender,     null: true
-      t.string     :job,        null: true
+      t.integer    :partner_id,      null: false
+      t.string     :name,            null: false
+      t.string     :prename,         null: true
+      t.string     :form_of_address, null: true
+      t.string     :job,             null: true
       t.timestamps
     end
 

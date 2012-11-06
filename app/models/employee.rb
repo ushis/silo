@@ -3,19 +3,18 @@
 #
 # Database schema:
 #
-# - *id*          integer
-# - *partner_id*  integer
-# - *name*        string
-# - *gender*      string
-# - *job*         string
-# - *created_at*  datetime
-# - *updated_at*  datetime
+# - *id:*               integer
+# - *partner_id:*       integer
+# - *name:*             string
+# - *prename:*          string
+# - *form_of_address:*  string
+# - *job:*              string
+# - *created_at:*       datetime
+# - *updated_at:*       datetime
 #
 # Every employee has one Contact.
 class Employee < ActiveRecord::Base
-  attr_accessible :name, :gender, :job
-
-  symbolize :gender, in: [:female, :male]
+  attr_accessible :name, :prename, :form_of_address, :job
 
   validates :name, presence: true
 
@@ -26,5 +25,10 @@ class Employee < ActiveRecord::Base
   # Returns the employees Contact and initializes one if necessary.
   def contact
     super || self.contact = Contact.new
+  end
+
+  # Returns a string containing first name and last name.
+  def full_name
+    "#{prename} #{name}"
   end
 end
