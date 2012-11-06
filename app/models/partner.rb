@@ -81,26 +81,6 @@ class Partner < ActiveRecord::Base
     s.where(id: ids).order('FIELD(partners.id, %s)' % ids.join(', '))
   end
 
-  # Searches for partners tagged with all of the specified businesses.
-  #
-  #   Partner.search_businesses([3, 23, 12, 1])
-  #   #=> [43, 1, 103]
-  #
-  # Returns an unordered Array of partner ids.
-  def self.search_businesses(business_ids)
-    sql = <<-SQL
-      SELECT businesses_partners.partner_id, COUNT(*) AS num
-      FROM businesses_partners
-      WHERE businesses_partners.business_id IN (:ids)
-      GROUP BY businesses_partners.partner_id
-      HAVING num >= :num
-    SQL
-
-    connection.select_rows(sanitize_sql(
-      [sql, ids: business_ids, num: business_ids.size]
-    )).map(&:first)
-  end
-
   # Searches the fulltext associations, such as Comment and Description.
   #
   #   Partner.search_fulltext('Banana Split')

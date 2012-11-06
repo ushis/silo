@@ -1,7 +1,7 @@
 require 'set'
 
-# Tha ActsAsTag module defines methods making arbitrary models act like a
-# tag and other models taggable, using the tag like models as associations.
+# Tha ActsAsTag module defines methods making arbitrary models acting as
+# tags or taggable, using the tag like models as associations.
 #
 # To make a model acting as a tag, you can do something like:
 #
@@ -35,7 +35,7 @@ require 'set'
 #     is_taggable_with :key_words
 #   end
 #
-# Now its is possible to use it like this:
+# Now it is possible to use it like this:
 #
 #   article = Article.last
 #
@@ -49,7 +49,15 @@ require 'set'
 #   article.key_words.join(', ')
 #   #=> 'Ruby, CSS, JavaScript'
 #
-# ==== A SECURITY NOTE:
+# Its is also possible to find records, that are associated with specific tags:
+#
+#   # Some key word ids from else where.
+#   key_word_ids = [12, 67, 24, 11]
+#
+#   # Find articles, that are associated with all of the specified key words.
+#   Article.search_key_words(key_word_ids)  #=> [3, 12, 44]
+#
+# ==== SECURITY NOTE:
 #
 # Every association used with is_taggable_on is white listed for
 # mass assignment using attr_accessible. This is very useful, if
@@ -62,7 +70,7 @@ module ActsAsTag
   extend ActiveSupport::Concern
 
   # Defines the magic methods ClassMethods#acts_as_tag and
-  # ClassMethods#is_taggable_on.
+  # ClassMethods#is_taggable_with.
   module ClassMethods
 
     # Makes a model acting like a tag. See the ActsAsTag module for further
@@ -110,6 +118,26 @@ module ActsAsTag
 
         attr_accessible(assoc)
         has_and_belongs_to_many(assoc, uniq: true)
+
+        reflection = reflect_on_association(assoc)
+
+        search_sql = <<-SQL
+          SELECT #{reflection.foreign_key}, COUNT(*) AS num
+          FROM #{reflection.options[:join_table]}
+          WHERE #{reflection.association_foreign_key} IN (:ids)
+          GROUP BY #{reflection.foreign_key}
+          HAVING num >= :num
+        SQL
+
+        # Defines Model.search_tags()
+        #
+        # Takes an Array of tag ids and returns ids of taggable models, that
+        # are associated with all of the specified tags.
+        define_singleton_method(:"search_#{assoc}") do |ids|
+          connection.select_rows(sanitize_sql(
+            [search_sql, ids: ids, num: ids.length]
+          )).map(&:first)
+        end
 
         # Defines the tags writer method to handle strings containing tags.
         define_method(:"#{assoc}=") do |tags|
