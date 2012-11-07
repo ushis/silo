@@ -88,8 +88,8 @@ Silo::Application.routes.draw do
 
       [:experts, :partners].each do |resource|
         resources resource, only: [], controller: :lists do
-          put    :update,  action: :"add_#{resource}",    on: :member
-          delete :destroy, action: :"remove_#{resource}", on: :member
+          post   :create,  action: :"add_#{resource}",    on: :collection
+          delete :destroy, action: :"remove_#{resource}", on: :collection
         end
       end
     end

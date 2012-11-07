@@ -73,7 +73,7 @@ class Ajax::ListsController < AjaxController
   # Adds/Removes a subresource to/from a list.
   def move(op, resource)
     list = find_list(params[:list_id])
-    list.send(op, resource, params[:id])
+    list.send(op, resource, arrayified_param(:ids))
     render json: list
   end
 

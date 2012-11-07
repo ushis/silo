@@ -46,7 +46,7 @@ module ListHelper
     }
 
     txt = block.nil? ? '' : capture(&block)
-    link_to(txt, send(url_method_name, list_id: :current, id: record), options)
+    link_to(txt, send(url_method_name, list_id: :current), options)
   end
 
   # Defines the listable_{resource}_tag for all listable resources. See
@@ -55,7 +55,7 @@ module ListHelper
     resource = type.to_s.singularize
 
     define_method(:"listable_#{resource}_tag") do |record, &block|
-      listable_tag(record, type, :"ajax_list_#{resource}_path", &block)
+      listable_tag(record, type, :"ajax_list_#{type}_path", &block)
     end
   end
 end

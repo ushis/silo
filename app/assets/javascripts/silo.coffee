@@ -311,7 +311,11 @@ do($ = jQuery) ->
       @listItems = @listItems.add(collection)
       @bindSynchronizer(collection)
 
-      collection.append($('<div>', class: 'marker')).click =>
+      collection.each ->
+        el = $(@).append($('<div>', class: 'marker'))
+        el.data('params', "ids=#{el.data('id')}")
+
+      collection.click =>
         unless @el.hasClass('active')
           @select?.trigger('show')
           return false
@@ -339,7 +343,7 @@ do($ = jQuery) ->
         ids[type] ||= (obj.id for obj in list[type] || [])
         active = $.inArray(Number(el.data('id')), ids[type]) > -1
         el.toggleClass('active', active)
-        el.data('method', if active then 'delete' else 'put')
+        el.data('method', if active then 'delete' else 'post')
 
   # Links an element with the current list.
   $.fn.siloCurrentList = (url) -> SiloCurrentList.init(@first(), url)

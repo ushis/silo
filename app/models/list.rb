@@ -85,25 +85,50 @@ class List < ActiveRecord::Base
     copy
   end
 
-  # Adds an item to the list.
+  # Adds one or more items to the list.
   #
   #   list.add(:experts, 12)
-  #   #=> [#<Expert id: 3>, #<Expert id: 12>]
+  #   #=> [#<Expert id: 12>]
   #
-  # Returns the list containing the items of the specified type or
-  # false on error.
-  def add(item_type, item_id)
-    process_item(:<<, item_type, item_id)
+  #   list.add(:experts, [13, 44])
+  #   #=> [#<Expert id: 13>, #<Expert id: 44>]
+  #
+  #   list.experts
+  #   #=> [#<Expert id: 12>, #<Expert id: 13>, #<Expert id: 44>]
+  #
+  # Returns a collection of the added items.
+  def add(item_type, item_ids)
+    association, item_class = item_info(item_type)
+
+    connection.transaction do
+      item_class.where(id: item_ids).each do |item|
+        begin
+          association << item
+        rescue ActiveRecord::RecordNotUnique
+          next
+        end
+      end
+    end
   end
 
-  # Removes an item from the list.
+  # Removes one or more items from the list.
+  #
+  #   list.partners
+  #   #=> [#<Partner id: 42>, #<Partner id: 11>, #<Partner id: 43>]
   #
   #   list.remove(:partners, 42)
-  #   #=> #<Partner id: 42>
+  #   #=> [#<Partner id: 42>]
   #
-  # Returns the removed item or false on error.
-  def remove(item_type, item_id)
-    process_item(:delete, item_type, item_id)
+  #   list.remove(:partners, [11, 43])
+  #   #=> [#<Partner id: 11>, #<Partner id: 43>]
+  #
+  #   list.partners
+  #   #=> []
+  #
+  # Returns a collection of the removed items.
+  def remove(item_type, item_ids)
+    association, item_class = item_info(item_type)
+    association.delete(item_class.where(id: item_ids))
   end
 
   # Adds the list items to the JSON reprensentation.
@@ -113,19 +138,11 @@ class List < ActiveRecord::Base
 
   private
 
-  # Removes or adds an item from/to the list.
-  #
-  #   list.process_item(:<<, :experts, 12)
-  #   #=> [#<Expert id: 3>, #<Expert id: 12>]
-  #
-  # The return value depends on the specified operation. On error,
-  # false is returned.
-  def process_item(op, item_type, item_id)
+  # Returns the association and the model class for the specified item type.
+  def item_info(item_type)
     type = ITEM_TYPES.fetch(item_type)
-    send(type.name).send(op, type.class_name.constantize.find(item_id))
-  rescue ActiveRecord::RecordNotFound, ActiveRecord::RecordNotUnique
-    false
+    [send(type.name), type.class_name.constantize]
   rescue KeyError
-    raise ArgumentError, "Invalid item type: #{item_type}"
+    raise ArgumentError, "Ivalid item type: #{item_type}"
   end
 end
