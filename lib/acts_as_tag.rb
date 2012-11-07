@@ -96,7 +96,7 @@ module ActsAsTag
           tags.delete(tag.to_s)
         end
 
-        results += tags.map { |tag| new(attribute_name => tag) }
+        results + tags.map { |tag| new(attribute_name => tag) }
       end
 
       # Defines Model.acts_as_tag?
