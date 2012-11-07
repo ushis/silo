@@ -35,14 +35,14 @@
               <%= link_to list.title, list_experts_path(list) %>
             </td>
             <td class="open">
-              <%= open_list_tag list %>
+              <%= open_list_button_for list %>
             </td>
           </tr>
         <% end %>
       </tbody>
     </table>
     <div class="pagination bottom">
-      <%= paginate @experts %>
+      <%= paginate @lists %>
     </div>
   </div>
 </div>

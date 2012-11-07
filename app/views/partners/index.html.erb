@@ -37,7 +37,11 @@
     <table class="partners">
       <thead>
         <tr>
-          <% [:company, :city, :country].each do |col| %>
+          <th>
+            <%= listable_button_for @partners %>
+            <%= Partner.human_attribute_name :company %>
+          </th>
+          <% [:city, :country].each do |col| %>
             <th>
               <%= Partner.human_attribute_name(col) %>
             </th>
@@ -50,7 +54,7 @@
         <% @partners.each do |partner| %>
           <tr>
             <td>
-              <%= listable_partner_tag partner %>
+              <%= listable_button_for partner %>
               <%= link_to partner.company, partner_path(partner) %>
             </td>
             <td>

@@ -313,7 +313,7 @@ do($ = jQuery) ->
 
       collection.each ->
         el = $(@).append($('<div>', class: 'marker'))
-        el.data('params', "ids=#{el.data('id')}")
+        el.data('params', "ids=#{el.data('ids')}")
 
       collection.click =>
         unless @el.hasClass('active')
@@ -341,7 +341,10 @@ do($ = jQuery) ->
         el = $(@).addClass('ready')
         type = el.data('item-type')
         ids[type] ||= (obj.id for obj in list[type] || [])
-        active = $.inArray(Number(el.data('id')), ids[type]) > -1
+
+        active = $.trim(el.data('ids')).split(/\s+/).every (id) ->
+          ids[type].indexOf(Number(id)) > -1
+
         el.toggleClass('active', active)
         el.data('method', if active then 'delete' else 'post')
 

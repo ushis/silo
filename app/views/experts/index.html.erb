@@ -39,7 +39,14 @@
         <tr>
           <th>
           </th>
-          <% [:name, :prename, :degree, :age, :country, :cvs].each do |attr| %>
+          <th>
+            <%= Expert.human_attribute_name(:name) %>
+          </th>
+          <th>
+            <%= listable_button_for(@experts) %>
+            <%= Expert.human_attribute_name(:prename) %>
+          </th>
+          <% [:degree, :age, :country, :cvs].each do |attr| %>
             <th>
               <%= Expert.human_attribute_name(attr) %>
             </th>
@@ -57,7 +64,7 @@
               <%= link_to expert.name, expert_path(expert) %>
             </td>
             <td>
-              <%= listable_expert_tag(expert) %>
+              <%= listable_button_for(expert) %>
               <%= link_to expert.prename, expert_path(expert) %>
             </td>
             <td>

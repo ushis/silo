@@ -709,7 +709,7 @@ table thead th span {
   float: right;
 }
 
-body.index #main td a.listable {
+body.index #main table a.listable {
   position: relative;
   float: right;
   height: 19px;
@@ -718,11 +718,15 @@ body.index #main td a.listable {
   padding: 2px 0 1px 0;
 }
 
-body.index #main td a.listable + a {
+body.index #main table th a.listable {
+  margin: -11px 20px -11px 0;
+}
+
+body.index #main table a.listable + a {
   margin-right: 40px;
 }
 
-body.index #main td a.listable:hover {
+body.index #main table a.listable:hover {
   cursor: pointer;
   color: #222;
   background-color: #eee;
@@ -732,7 +736,7 @@ body.index #main td a.listable:hover {
               0 1px 1px rgba(0,0,0,.075);
 }
 
-body.index #main td a.listable:hover:before {
+body.index #main table a.listable:hover:before {
   font-family: FontAwesome;
   font-weight: normal;
   font-style: normal;
@@ -740,14 +744,15 @@ body.index #main td a.listable:hover:before {
   text-decoration: inherit;
   content: "\f212";
   font-size: 12px;
+  line-height: 19px;
   margin: 0px 0 0 5px;
 }
 
-body.index #main td a.listable.active:hover:before {
+body.index #main table a.listable.active:hover:before {
   content: "\f213";
 }
 
-body.index #main td a.listable:hover:after {
+body.index #main table a.listable:hover:after {
   content: ' ';
   position: absolute;
   top: 50%;
@@ -761,7 +766,7 @@ body.index #main td a.listable:hover:after {
   border-left-color: #ececec;
 }
 
-body.index #main td a.listable div.marker {
+body.index #main table a.listable div.marker {
   position: absolute;
   top: 50%;
   right: -10px;
@@ -773,7 +778,7 @@ body.index #main td a.listable div.marker {
   box-shadow: inset 0 1px 1px rgba(0,0,0,.3);
 }
 
-body.index #main td a.listable.active div.marker:after {
+body.index #main table a.listable.active div.marker:after {
   content: ' ';
   position: absolute;
   top: 1px;

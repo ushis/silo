@@ -4,7 +4,7 @@
   </h2>
   <ul class="tools">
     <li class="open">
-      <%= open_list_tag list %>
+      <%= open_list_button_for list %>
     </li>
     <% if list.private? %>
       <li>
@@ -21,7 +21,7 @@
                   class: 'hidden-form icon-pencil' %>
     </li>
     <li>
-      <%= delete_button_for(list) %>
+      <%= delete_button_for list %>
     </li>
   </ul>
   <ul class="tabs">

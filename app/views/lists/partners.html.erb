@@ -28,7 +28,7 @@
             <%= partner.country.try(:human) %>
           </td>
           <td class="removefromlist">
-            <%= remove_from_list_tag @list, partner %>
+            <%= remove_from_list_button_for @list, partner %>
           </td>
         </tr>
       <% end %>

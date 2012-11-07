@@ -98,7 +98,7 @@ class List < ActiveRecord::Base
   #
   # Returns a collection of the added items.
   def add(item_type, item_ids)
-    association, item_class = item_info(item_type)
+    association, item_class = item_type_info(item_type)
 
     connection.transaction do
       item_class.where(id: item_ids).each do |item|
@@ -127,7 +127,7 @@ class List < ActiveRecord::Base
   #
   # Returns a collection of the removed items.
   def remove(item_type, item_ids)
-    association, item_class = item_info(item_type)
+    association, item_class = item_type_info(item_type)
     association.delete(item_class.where(id: item_ids))
   end
 
@@ -139,7 +139,7 @@ class List < ActiveRecord::Base
   private
 
   # Returns the association and the model class for the specified item type.
-  def item_info(item_type)
+  def item_type_info(item_type)
     type = ITEM_TYPES.fetch(item_type)
     [send(type.name), type.class_name.constantize]
   rescue KeyError

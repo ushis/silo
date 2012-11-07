@@ -38,7 +38,7 @@
             <%= expert.country.try(:human) %>
           </td>
           <td class="removefromlist">
-            <%= remove_from_list_tag @list, expert %>
+            <%= remove_from_list_button_for @list, expert %>
           </td>
         </tr>
       <% end %>

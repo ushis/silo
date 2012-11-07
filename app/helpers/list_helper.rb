@@ -2,7 +2,7 @@
 module ListHelper
 
   # Renders a "Remove item from this list" link.
-  def remove_from_list_tag(list, record, options = {})
+  def remove_from_list_button_for(list, record, options = {})
     options = {
       method: :delete,
       class: 'icon-removefromlist'
@@ -12,7 +12,7 @@ module ListHelper
   end
 
   # Creates an "open this list" link.
-  def open_list_tag(list)
+  def open_list_button_for(list)
     options = {
       remote: true,
       method: :put,
@@ -24,38 +24,41 @@ module ListHelper
     link_to(t('actions.open'), open_ajax_list_path(list), options)
   end
 
-  # Generic helper to create "listable" tags. You should not use this
-  # directly. There are higher level methods for each listable resource.
-  #
-  #  # Create a "listable" tag for an expert.
-  #  listable_expert_tag(expert)
-  #
-  #  # Create a "listable" tag for a partner with his name inside.
-  #  <%= listable_partner_tag(partner) do %>
-  #     <span><%= partner.name %></span>
-  #  <% end %>
-  #
-  # Returns a string.
-  def listable_tag(record, item_type, url_method_name, &block)
-    options = {
-      remote: true,
-      'data-id' => record.id,
-      'data-type' => :json,
-      'data-item-type' => item_type,
-      class: 'listable'
-    }
-
-    txt = block.nil? ? '' : capture(&block)
-    link_to(txt, send(url_method_name, list_id: :current), options)
+  # Returns the lilstable url for the specified item type.
+  def listable_url(item_type)
+    send(:"ajax_list_#{item_type}_path", list_id: :current)
   end
 
-  # Defines the listable_{resource}_tag for all listable resources. See
-  # ListHelper#listable_tag for mroe info.
-  List::ITEM_TYPES.keys.each do |type|
-    resource = type.to_s.singularize
+  # Returns the item type for the specified record.
+  def listable_type_for(record)
+    record.class.name.downcase.pluralize
+  end
 
-    define_method(:"listable_#{resource}_tag") do |record, &block|
-      listable_tag(record, type, :"ajax_list_#{type}_path", &block)
+  # Renders a listable button for a single record or a collection of records.
+  #
+  #   listable_button_for(expert)
+  #   #=> '<a href="/ajax/lists/current/experts" data-ids="432" ...></a>'
+  #
+  #   listable_button_for(partners)
+  #   #=> '<a href="/ajax/lists/current/partners" data-ids="12 54 7" ...></a>'
+  #
+  # If a block is given, it is captured and used as the buttons content.
+  def listable_button_for(record_or_collection, &block)
+    options = { remote: true, 'data-type' => :json, class: 'listable' }
+
+    case record_or_collection
+    when Array, ActiveRecord::Relation
+      return nil if record_or_collection.empty?
+      options['data-ids'] = record_or_collection.map(&:id).join(' ')
+      options['data-item-type'] = listable_type_for(record_or_collection.first)
+    when ActiveRecord::Base
+      options['data-ids'] = record_or_collection.id
+      options['data-item-type'] = listable_type_for(record_or_collection)
+    else
+      raise TypeError, "First argument is wether a record nor a collection."
     end
+
+    txt = block.nil? ? '' : capture(&block)
+    link_to(txt, listable_url(options['data-item-type']), options)
   end
 end
