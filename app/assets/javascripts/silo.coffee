@@ -3,8 +3,8 @@
 # The main coffee script of the silo application.
 #
 # =require jquery
-# =require jquery_ujs
 # =require jquery-ui
+# =require rails
 
 # Checks the availability of localStorage. Returns true if localStorage
 # is available, esle false.
@@ -264,7 +264,7 @@ do($ = jQuery) ->
       values = (model[attribute] for model in data)
 
       @each ->
-        $(@).autocomplete {
+        $(@).autocomplete
           minLength: settings.minLength
           appendTo: $(@).parent()
           source: (req, res) ->
@@ -277,7 +277,6 @@ do($ = jQuery) ->
             terms.push('')
             @value = terms.join(', ')
             false
-        }
 
   # Handles the current list. Use $.fn.siloCurrentList() to specify a
   # representation in the view.
@@ -383,32 +382,3 @@ do($ = jQuery) ->
 
       select.find('form.search').bind 'ajax:success', (e, data) ->
         table.html($(data).find(".#{settings.selectClass} table").html())
-
-  # We use our own confirm dialog.
-  $.rails.confirm = -> true
-
-  # Override rails handleMethod, so that we can pass multiple hidden fields
-  # through the links data.
-  $.rails.handleMethod = (link) ->
-    meta = $.extend {
-      method: 'GET'
-    }, link.data()
-
-    if meta.method isnt 'GET'
-      meta['_method'] = meta.method
-      meta.method = 'POST'
-      csrf_param = $('meta[name=csrf-param]').attr('content')
-      meta[csrf_param] = $('meta[name=csrf-token]').attr('content')
-
-    form = $('<form>',
-      action: link.attr('href')
-      method: meta.method
-      'data-ujs-generated': true)
-
-    delete(meta.method)
-
-    for name, value of meta
-      if name? && value?
-        form.append $('<input>', type: 'hidden', name: name, value: value)
-
-    form.hide().appendTo('body').submit()
