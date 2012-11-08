@@ -44,7 +44,7 @@
         <div class="row lang">
           <div class="languages">
             <%= f.label :languages %>
-            <%= f.text_field :languages, value: @expert.languages.join(', ') %>
+            <%= f.multi_select_field :languages %>
           </div>
         </div>
         <div class="row business">
@@ -82,10 +82,3 @@
   </div>
   <div class="clear"></div>
 </div>
-
-<script>
-  $('div.languages input')
-  .siloMultiSelect('languages', '<%= ajax_languages_path %>', {
-    selected: <%= @expert.languages.collect { |l| l.id }.to_json.html_safe %>
-  });
-</script>

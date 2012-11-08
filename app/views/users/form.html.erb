@@ -37,7 +37,7 @@
             <%= f.label :name %>
             <%= f.text_field :name %>
           </li>
-          <li class="privileges">
+          <li class="privileges" data-master-box="admin">
             <%= f.label :privileges %>
             <%= f.privilege_fields :privilege, current_user?(@user) %>
           </li>
@@ -52,7 +52,3 @@
   </div>
   <div class="clear"></div>
 </div>
-
-<script>
-  $('li.privileges input:checkbox').siloMasterBox({masterClass: 'admin'});
-</script>

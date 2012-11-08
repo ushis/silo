@@ -1,10 +1,8 @@
-#
 # rails.coffee
 #
 # Mixes some custom behavior into $.rails
 #
 # =require jquery_ujs
-#
 do ($ = jQuery) ->
 
   # Everything we dont like about $.rails

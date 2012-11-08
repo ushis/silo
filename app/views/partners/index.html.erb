@@ -7,21 +7,21 @@
         <%= form_tag partners_path, method: :get do %>
           <div class="row name">
             <div class="company">
-              <%= text_field_tag(:company, params[:company],
-                                 placeholder: Partner.human_attribute_name(:company)) %>
+              <%= text_field_tag :company, params[:company],
+                    placeholder: Partner.human_attribute_name(:company) %>
             </div>
             <div class="business">
-              <%= text_field_tag(:business, params[:business],
-                                 placeholder: Partner.human_attribute_name(:business)) %>
+              <%= multi_select_field_tag :business, nil, arrayified_param(:businesses),
+                    placeholder: Partner.human_attribute_name(:business) %>
             </div>
             <div class="country">
-              <%= text_field_tag(:country, params[:country],
-                                 placeholder: Partner.human_attribute_name(:country)) %>
+              <%= multi_select_field_tag :country, nil, arrayified_param(:countries),
+                    grouped: true, placeholder: Partner.human_attribute_name(:country) %>
             </div>
           </div>
           <div class="row q">
-            <%= text_field_tag(:q, params[:q], class: 'fulltext',
-                               placeholder: Partner.human_attribute_names(:description, :comment)) %>
+            <%= text_field_tag :q, params[:q], class: 'fulltext', 'data-help' => 'fulltext',
+                  placeholder: Partner.human_attribute_names(:description, :comment) %>
             <%= submit_tag t('actions.search') %>
           </div>
         <% end %>
@@ -79,18 +79,3 @@
     </div>
   </div>
 </div>
-
-<script>
-  $('#filter div.business input')
-  .siloMultiSelect('businesses', '<%= ajax_tag_path(:businesses) %>', {
-    selected: <%= arrayified_param(:businesses).to_json.html_safe %>
-  });
-
-  $('#filter div.country input')
-  .siloMultiSelect('countries', '<%= ajax_areas_path %>', {
-    selected: <%= arrayified_param(:countries).to_json.html_safe %>,
-    grouped: true
-  });
-
-  $('#filter input.fulltext').siloHelp('<%= ajax_help_path id: :fulltext %>');
-</script>

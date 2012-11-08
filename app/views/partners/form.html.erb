@@ -19,13 +19,13 @@
         <div class="row">
           <div class="businesses">
             <%= f.label :businesses %>
-            <%= f.text_field :businesses, value: @partner.businesses.join(', ') %>
+            <%= f.autocomplete_field :businesses %>
           </div>
         </div>
         <div class="row">
           <div class="advisers">
             <%= f.label :advisers %>
-            <%= f.text_field :advisers, value: @partner.advisers.join(', ') %>
+            <%= f.autocomplete_field :advisers %>
           </div>
         </div>
         <div class="row">
@@ -90,11 +90,3 @@
   </div>
   <div class="clear"></div>
 </div>
-
-<script>
-  $('div.businesses input')
-  .siloAutocomplete('<%= ajax_tag_path id: :businesses, format: :json %>', 'business');
-
-  $('div.advisers input')
-  .siloAutocomplete('<%= ajax_tag_path id: :advisers, format: :json %>', 'adviser');
-</script>

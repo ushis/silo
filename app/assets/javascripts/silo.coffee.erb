@@ -1,0 +1,93 @@
+# silo.coffee.erb
+#
+# Defines helper functions in the $.silo namespace.
+do ($ = jQuery) ->
+
+  # The silo namespace
+  $.silo =
+
+    # Holds paths to several locations. The rails asset pipeline does not
+    # include the UrlHelpers, so we have to hack around:
+    #
+    #   <% paths = Rails.application.routes.url_helpers %>
+    #
+    # Now we can use paths.some_location_path inside erb tags.
+    _locations:
+      advisers:
+        index:      '<%= paths.ajax_tag_path(id: :advisers) %>'
+      businesses:
+        index:      '<%= paths.ajax_tag_path(id: :businesses) %>'
+      countries:
+        index:      '<%= paths.ajax_areas_path %>'
+      help:
+        fulltext:   '<%= paths.ajax_help_path(id: :fulltext) %>'
+      helpers:
+        confirm:    '<%= paths.ajax_helper_path(id: :confirm) %>'
+      languages:
+        index:      '<%= paths.ajax_languages_path %>'
+      lists:
+        current:    '<%= paths.ajax_list_path(id: :current) %>'
+
+    # Returns the path to the specified location. The location must be
+    # specified as dot separated key. With the second argument a format
+    # can be set.
+    #
+    #   $.silo.location('areas')
+    #   #=> '/ajax/areas'
+    #
+    #   $.silo.location('lists.current', 'json')
+    #   #=> '/ajax/lists/current.json'
+    #
+    # Raises an exception for invalid keys.
+    location: (keys, format) ->
+      if keys not instanceof Array
+        keys = keys.trim().split('.')
+
+      path = @_locations
+
+      try
+        path = path[k] for k in keys
+      catch error
+
+      while typeof(path) isnt 'string'
+        unless path? and path.hasOwnProperty('index')
+          throw "Invalid key: #{keys.join('.')}"
+
+        path = path.index
+
+      if format? then [path, format].join('.') else path
+
+    # Detects the availability of localStorage. Returns true if localStorage
+    # is available, else false.
+    hasStorage: ->
+      @_hasStorage if @_hasStorage?
+
+      try
+        localStorage.setItem('_silo', '_silo')
+        localStorage.removeItem('_silo')
+        @_hasStoage = true
+      catch error
+        @_hasStorage = false
+
+    # Redirects the evil browser.
+    redirectIE: -> window.location.replace('/ie.html') if $.browser.msie
+
+    # A simple layer.
+    _layer:
+      layer: $('<div>').addClass('layer')
+      child: null
+
+      fadeIn: (child) ->
+        @child.detach() if @child
+        @layer.appendTo('body').fadeIn(200)
+        @child = child.appendTo('body').fadeIn(200)
+
+      fadeOut: ->
+        @layer.fadeOut(200, -> $(@).detach())
+        @child.fadeOut(200, -> $(@).detach()) if @child
+
+    # Opens the overlay.
+    overlay: (child) -> @_layer.fadeIn(child)
+
+    # Closes the overlay.
+    closeOverlay: -> @_layer.fadeOut()

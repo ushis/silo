@@ -1,6 +1,18 @@
 # Defines our custom form builder and some form specific helpers.
 module FormHelper
 
+  # Renders a multi select text field.
+  def multi_select_field_tag(name, value, selected = [], options = {})
+    options = {
+      'data-multi-select' => name.to_s.pluralize,
+      'data-selected' => selected.join(' '),
+      grouped: false
+    }.merge(options)
+
+    options['data-grouped'] = options.delete(:grouped)
+    text_field_tag name, value, options
+  end
+
   # Returns a contact field select box with localized options.
   def contact_field_select_tag(name, options = {})
     select_tag(name,
@@ -37,6 +49,30 @@ module FormHelper
     def language_select(method, options = {}, html_options = {})
       collection_select(method, all_languages, :id, :human,
                         options, html_options)
+    end
+
+    # Renders an autocomplete text field.
+    def autocomplete_field(method, options = {})
+      options = {
+        'data-complete' => method,
+        'data-attribute' => method.to_s.singularize,
+        value: @object.send(method).join(', ')
+      }
+
+      text_field(method, options)
+    end
+
+    # Renders a multi select text field.
+    def multi_select_field(method, options = {})
+      options = {
+        'data-multi-select' => method.to_s.pluralize,
+        'data-selected' => @object.send(method).map(&:id).join(' '),
+        value: @object.send(method).join(', '),
+        grouped: false
+      }.merge(options)
+
+      options['data-grouped'] = options.delete(:grouped)
+      text_field(method, options)
     end
 
     # Returns fields for privileges. Its a bunch of check boxes and labels.

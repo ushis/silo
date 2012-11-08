@@ -62,23 +62,8 @@ module ApplicationHelper
   #   #=> '<ul><li><span>1</span></li><li><a>2</a></li></ul>'
   def paginate(collection)
     if collection && collection.respond_to?(:total_pages)
-      will_paginate(collection, { outer_window: 0, inner_window: 2,
-                                  renderer: SiloPageLinks::Renderer } )
-    end
-  end
-
-  # Returns a conditional comment tag.
-  #
-  #   condition_comment_tag(:IE) { content_tag :p, 'Hello IE' }
-  #   #=> '<!--[if IE]><p>Hello IE</p><![endif]-->'
-  def conditional_comment_tag(condition)
-    "<!--[if #{condition}]>#{yield}<![endif]-->".html_safe
-  end
-
-  # Returns a conditional comment tag including a JavaScript redirect.
-  def redirect_ie
-    conditional_comment_tag :IE do
-      content_tag :script, "window.location.replace('/ie.html');".html_safe
+      will_paginate collection, outer_window: 0, inner_window: 2,
+                                renderer: SiloPageLinks::Renderer
     end
   end
 end
