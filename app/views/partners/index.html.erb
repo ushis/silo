@@ -7,7 +7,7 @@
         <%= form_tag partners_path, method: :get do %>
           <div class="row name">
             <div class="company">
-              <%= text_field_tag :company, params[:company],
+              <%= text_field_tag :company, params[:company], autofocus: true,
                     placeholder: Partner.human_attribute_name(:company) %>
             </div>
             <div class="business">

@@ -7,7 +7,7 @@
         <%= form_tag experts_path, method: :get do %>
           <div class="row name">
             <div class="name">
-              <%= text_field_tag :name, params[:name],
+              <%= text_field_tag :name, params[:name], autofocus: true,
                     placeholder: Expert.human_attribute_name(:name) %>
             </div>
             <div class="language">

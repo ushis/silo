@@ -6,7 +6,7 @@
       <div id="filter">
         <%= form_tag lists_path, method: :get do %>
           <div>
-            <%= text_field_tag :title, params[:title],
+            <%= text_field_tag :title, params[:title], autofocus: true,
                                placeholder: List.human_attribute_name(:title) %>
           </div>
           <label>
