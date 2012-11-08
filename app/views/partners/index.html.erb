@@ -20,7 +20,7 @@
             </div>
           </div>
           <div class="row q">
-            <%= text_field_tag :q, params[:q], class: 'fulltext', 'data-help' => 'fulltext',
+            <%= text_field_tag :q, params[:q], 'data-help' => 'fulltext',
                   placeholder: Partner.human_attribute_names(:description, :comment) %>
             <%= submit_tag t('actions.search') %>
           </div>
