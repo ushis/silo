@@ -57,7 +57,7 @@ module FormHelper
         'data-complete' => method,
         'data-attribute' => method.to_s.singularize,
         value: @object.send(method).join(', ')
-      }
+      }.merge(options)
 
       text_field(method, options)
     end
