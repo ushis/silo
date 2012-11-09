@@ -4,6 +4,8 @@ module ContactHelper
   # Returns the contact value. If field is :emails or :websites, the value
   # is wrapped with <a> tag.
   def contact_value(val, field, html_options = {})
+    return nil if val.blank?
+
     case field
     when :emails
       mail_to val

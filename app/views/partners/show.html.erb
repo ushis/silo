@@ -42,15 +42,15 @@
       </div>
       <div class="row">
         <h4><%= Partner.human_attribute_name :website %></h4>
-        <p><%= @partner.website %></p>
+        <p><%= contact_value @partner.website, :websites %></p>
       </div>
       <div class="row">
         <h4><%= Partner.human_attribute_name :email %></h4>
-        <p><%= @partner.email %></p>
+        <p><%= contact_value @partner.email, :emails %></p>
       </div>
       <div class="row last">
         <h4><%= Partner.human_attribute_name :phone %></h4>
-        <p><%= @partner.phone %></p>
+        <p><%= contact_value @partner.phone, :phones %></p>
       </div>
     </div>
   </div><!-- right -->
