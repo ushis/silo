@@ -5,7 +5,7 @@ class Ajax::LanguagesController < AjaxController
 
   # Serves a multi select box.
   def index
-    @languages = Language.ordered
+    @languages = Language.priority_ordered
     respond_with(@languages)
   end
 end
