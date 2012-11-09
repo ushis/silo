@@ -8,7 +8,7 @@ do ($ = jQuery) ->
   CurrentList =
 
     # Initializes the current list object and performs the initial sync.
-    init: (@el, url) ->
+    init: (@el) ->
       @title = @el.find('.title a')
       @open = @el.find('.open a').css(opacity: 0).click -> false
       url = $.silo.location('lists.current', 'json')

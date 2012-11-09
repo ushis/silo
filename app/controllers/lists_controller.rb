@@ -29,7 +29,7 @@ class ListsController < ApplicationController
       flash[:notice] = t('messages.list.success.create', title: list.title)
       redirect_to list_experts_url(list)
     else
-      flash[:alert] = t('messages.list.erros.create')
+      flash[:alert] = t('messages.list.errors.create')
       redirect_to lists_url
     end
   end
