@@ -6,10 +6,8 @@ module FormHelper
     options = {
       'data-multi-select' => name.to_s.pluralize,
       'data-selected' => selected.join(' '),
-      grouped: false
     }.merge(options)
 
-    options['data-grouped'] = options.delete(:grouped)
     text_field_tag name, value, options
   end
 
@@ -68,10 +66,8 @@ module FormHelper
         'data-multi-select' => method.to_s.pluralize,
         'data-selected' => @object.send(method).map(&:id).join(' '),
         value: @object.send(method).join(', '),
-        grouped: false
       }.merge(options)
 
-      options['data-grouped'] = options.delete(:grouped)
       text_field(method, options)
     end
 

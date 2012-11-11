@@ -27,15 +27,62 @@ do ($ = jQuery) ->
 
         input.trigger('count').change -> $(@).trigger('count')
 
+  # Handles the multi select box filter.
+  $.fn.siloMultiSelectFilter = (options) ->
+    settings = $.extend {
+      minLength: 0
+      filterSelector: 'input[type=text]'
+      itemSelector: 'input[type=checkbox]'
+    }, options
+
+    @each ->
+      el = $(@)
+      filter = el.find(settings.filterSelector)
+      items = el.find(settings.itemSelector).change -> el.trigger('update')
+      values = items.map(-> $(@).data('name')).get()
+
+      # Collects all checked items and resets the filter value.
+      el.bind 'update', ->
+        names = ($(item).data('name') for item in items when item.checked)
+        names.push('')
+        filter.val(names.join(', '))
+
+      # Collects all names from the filter and updates all items.
+      filter.bind 'update', (_, newValue) ->
+        names = @value.trim().split(/\s*,\s*/)
+        names.push(newValue)
+        items.prop 'checked', -> names.indexOf($(@).data('name')) > -1
+        el.trigger('update')
+
+      # Trigger the update event for the filter on submit.
+      filter.closest('form').submit ->
+        filter.trigger('update').autocomplete('close')
+        return false
+
+      # Inits the autocompletion.
+      filter.autocomplete
+        minLength: settings.minLength
+        appendTo: filter.parent()
+        focus: -> false
+        source: (req, res) ->
+          res($.ui.autocomplete.filter(values, req.term.split(/,\s*/).pop()))
+        select: (_, ui) ->
+          filter.trigger('update', [ui.item.value])
+          return false
+
+      el.trigger('update')
+
   # Handles a multi select overlay.
   $.fn.siloMultiSelectOverlay = (input, options) ->
     settings = $.extend {
+      groupClass: 'group'
       submitClass: 'submit'
       selectClass: 'select'
     }, options
 
     @each ->
       el = $(@).siloOverlay()
+      select = el.find(".#{settings.selectClass}")
 
       el.find(".#{settings.submitClass}").click ->
         el.trigger('submit').trigger('close')
@@ -43,12 +90,15 @@ do ($ = jQuery) ->
       for id in $.trim(input.data('selected')).split(/\s+/)
         el.find("input[name=#{id}]").prop('checked', true)
 
-      if input.data('grouped')
-        el.find(".#{settings.selectClass}").siloMultiSelectGroup(settings)
+      if select.data('grouped')
+        select.siloMultiSelectGroup(settings)
+      else if select.data('filtered')
+        select.siloMultiSelectFilter(settings)
 
       hidden = $('<input>', name: input.data('multi-select'), type: 'hidden')
       input.after(hidden)
 
+      # Collect all checked checkboxes and populate the input fields.
       el.bind 'submit', ->
         [ids, val] = [[], []]
 
@@ -65,6 +115,7 @@ do ($ = jQuery) ->
   $.fn.siloMultiSelect = (options) ->
     settings = $.extend {
       storagePrefix: 'multi-select-'
+      filterSelector: 'input[type=text]'
     }, options
 
     @each ->
@@ -85,4 +136,4 @@ do ($ = jQuery) ->
 
         el.prop('disabled', false).focus ->
           $(@).blur()
-          select.trigger('show')
+          select.trigger('show').find(settings.filterSelector).focus()

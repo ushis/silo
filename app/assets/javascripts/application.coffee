@@ -8,7 +8,7 @@
 # =require silo
 #
 # =require_tree ./plugins
-do($ = jQuery) ->
+do ($ = jQuery) ->
 
   # Ban the evil browser.
   $.silo.redirectIE()
@@ -33,7 +33,7 @@ do($ = jQuery) ->
 
     # Lists
     $('a.listable').siloListable()
-    $('a.openList').siloOpenList()
+    $('a.open-list').siloOpenList()
     $('#current-list').siloCurrentList()
 
     # Autocomplete

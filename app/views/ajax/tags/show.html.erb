@@ -10,7 +10,10 @@
       <%= t 'actions.abort' %>
     </div>
   </div>
-  <div class="select">
+  <div class="select" data-filtered="true">
+    <form class="filter">
+      <input type="text"/>
+    </form>
     <% unless @tags.empty? %>
       <ul>
         <% @tags.each_slice(@tags.length.fdiv(4).ceil) do |slice| %>
