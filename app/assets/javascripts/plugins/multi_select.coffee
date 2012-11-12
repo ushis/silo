@@ -39,7 +39,7 @@ do ($ = jQuery) ->
       el = $(@)
       filter = el.find(settings.filterSelector)
       items = el.find(settings.itemSelector).change -> el.trigger('update')
-      values = items.map(-> $(@).data('name')).get()
+      values = ($(item).data('name') for item in items)
 
       # Collects all checked items and resets the filter value.
       el.bind 'update', ->
@@ -47,7 +47,7 @@ do ($ = jQuery) ->
         names.push('')
         filter.val(names.join(', '))
 
-      # Collects all names from the filter and updates all items.
+      # Collects all names from the filter and updates the items.
       filter.bind 'update', (_, newValue) ->
         names = @value.trim().split(/\s*,\s*/)
         names.push(newValue)

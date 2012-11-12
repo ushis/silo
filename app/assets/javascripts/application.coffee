@@ -44,4 +44,3 @@ do ($ = jQuery) ->
 
     # Help
     $('[data-help]').siloHelp()
-

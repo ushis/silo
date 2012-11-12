@@ -44,6 +44,7 @@ de:
       partner:
         address: 'Adresse'
         advisers: 'Ansprechpartner (Intern)'
+        business: 'Geschäftsfeld'
         businesses: 'Geschäftsfelder'
         comment: 'Kommentar'
         company: 'Firma'
@@ -51,7 +52,7 @@ de:
         contacts: 'Kontakte'
         country: 'Land'
         description: 'Beschreibung'
-        region: 'Region'
+        region: 'Region / Bezirk'
         street: 'Straße'
         updated_at: 'Zuletzt bearbeitet am'
         zip: 'Postleitzahl'

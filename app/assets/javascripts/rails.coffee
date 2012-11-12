@@ -28,8 +28,7 @@ do ($ = jQuery) ->
       if meta.method isnt 'GET'
         meta['_method'] = meta.method
         meta.method = 'POST'
-        csrf_param = $('meta[name=csrf-param]').attr('content')
-        meta[csrf_param] = $('meta[name=csrf-token]').attr('content')
+        meta[$.silo.csrfParam()] = $.silo.csrfToken()
 
       form = $('<form>',
         action: link.attr('href')
@@ -38,9 +37,8 @@ do ($ = jQuery) ->
 
       delete(meta.method)
 
-      for name, value of meta
-        if name? && value?
-          form.append $('<input>', type: 'hidden', name: name, value: value)
+      for name, value of meta when name? && value?
+        form.append $('<input>', type: 'hidden', name: name, value: value)
 
       form.hide().appendTo('body').submit()
 

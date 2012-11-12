@@ -44,6 +44,7 @@ en:
       partner:
         address: 'Adress'
         advisers: 'Advisers (Internal)'
+        business: 'Business Field'
         businesses: 'Business Fields'
         comment: 'Comment'
         company: 'Company'

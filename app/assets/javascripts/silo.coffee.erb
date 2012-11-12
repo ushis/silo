@@ -72,6 +72,10 @@ do ($ = jQuery) ->
     # Redirects the evil browser.
     redirectIE: -> window.location.replace('/ie.html') if $.browser.msie
 
+    # Returns the csrf values.
+    csrfParam: -> @_csrfParam ||= $('meta[name=csrf-param]').attr('content')
+    csrfToken: -> @_csrfToken ||= $('meta[name=csrf-token]').attr('content')
+
     # A simple layer.
     _layer:
       layer: $('<div>').addClass('layer')
