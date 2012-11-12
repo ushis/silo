@@ -340,6 +340,7 @@ body.new #sidebar li.new a{
 
 /* Main */
 #main {
+  position: relative;
   margin: 0 10px 0 100px;
   padding: 18px 20px;
   background-color: #f9f9f9;
@@ -613,6 +614,59 @@ body.edit #main h2[class*=" icon-"]:before{
 
 #main div.header ul.tools li a.listable.active:before {
   content: '\f213';
+}
+
+/* Additional Header Menus */
+
+#main div.submenu {
+  font-size: .8em;
+  position: absolute;
+  top: 68px;
+  right: 5px;
+  padding: 5px 15px 7px 15px;
+  background: #F9F9F9;
+  border-radius: 4px 0 0 0;
+}
+
+#main div.submenu a,
+#main div.submenu button {
+  display: block;
+  float: left;
+  height: 24px;
+  margin: 0;
+  padding: 0;
+  line-height: 24px;
+  color: #888;
+  text-shadow: 0 1px 0 #FFF;
+  font-size: .9em;
+  font-weight: normal;
+  background-color: transparent;
+  background-position: left center;
+  background-repeat: no-repeat;
+  box-shadow: 0 0 0 transparent;
+}
+
+#main div.submenu a:hover,
+#main div.submenu button:hover {
+  color: #666;
+}
+
+#main div.submenu a:nth-last-child(n+2),
+#main div.submenu button:nth-last-child(n+2) {
+  margin-right: 20px;
+}
+
+#main div.submenu a:before,
+#main div.submenu button:before {
+  margin-right: 7px;
+  font-size: 1.25em;
+  vertical-align: bottom;
+}
+
+#main div.submenu a.icon-plus:before,
+#main div.submenu button.icon-plus:before {
+  font-size: 1em;
+  margin-right: 5px;
 }
 
 /* Tables */
@@ -948,32 +1002,6 @@ body.index #main table a.listable.active div.marker:after {
 #main div.info p:empty:after,
 #main div.info div.markdown:empty:after {
   content: '-';
-}
-
-#main div.info div.tools {
-  float: right;
-  width: auto;
-  text-align: right;
-  margin: -4px 3px -7px 0;
-}
-
-#main div.info div.tools a {
-  font-size: .75em;
-  color: #777;
-  text-shadow: 0 1px 0 #EFEFEF;
-  font-weight: normal;
-  background-color: transparent;
-  background-position: left center;
-  background-repeat: no-repeat;
-  box-shadow: 0 0 0 transparent;
-}
-
-#main div.info div.tools a:hover {
-  color: #333;
-}
-
-#main div.info div.tools a:before {
-  margin: 0 6px 0 15px;
 }
 
 /* Documents */

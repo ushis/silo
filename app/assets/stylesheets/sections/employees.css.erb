@@ -1,0 +1,125 @@
+div.overlay.employee-form div.row {
+    width: 100%;
+}
+div.overlay.employee-form div.row:last-child {
+    padding-bottom: 0;
+}
+
+div.employees div.employee {
+	position: relative;
+	float: left;
+	width: 49%;
+	padding: 7px 8px 0 8px;
+	margin: 0 0 20px 1%;
+	background-color: #EFEFEF;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+	-moz-box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+	-webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+	border-radius: 4px;
+	background-color: #F7F7F7;
+	border-left: none;
+	box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+
+div.employees div.employee:nth-child(2n+1) {
+	clear: left;
+	margin: 0 1% 20px 0;
+}
+
+div.employees div.employee h4,
+div.employees div.employee h5 {
+	color: #555;
+	font-weight: bold;
+	font-size: .75em;
+	float: left;
+	width: 50%;
+}
+
+div.employees div.employee h5 {
+	font-weight: normal;
+	margin-bottom: 5px;
+}
+
+div.employees div.employee div.head {
+	position: relative;
+	float: left;
+	width: 100%;
+}
+
+div.employees div.employee div.tools {
+	position: absolute;
+	top: -3px;
+	right: 3px;
+	box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+
+div.employees div.employee div.tools a,
+div.employees div.employee div.tools button {
+	color: #666;
+	font-size: .9em;
+	padding-left: 12px;
+}
+
+div.employees div.employee div.tools a:hover,
+div.employees div.employee div.tools button:hover {
+	color: #444;
+}
+
+div.employees div.employee table {
+	float: left;
+	border-spacing: 0;
+	padding-bottom: 5px;
+}
+
+div.employees div.employee table tr.empty {
+	display: none;
+}
+
+div.employees div.employee table td {
+	box-shadow: none;
+	background: transparent;
+	padding: 5px 0 3px 0;
+	border-top: 1px solid rgba(255, 255, 255, 1);
+	border-bottom: 1px solid #E5E5E5;
+	box-shadow: 0 1px 0 rgba(255, 255, 255, 1), 0 -1px 0 #E5E5E5;
+	width: 48%;
+	border-radius: 0;
+}
+
+div.employees div.employee table tr:last-child td {
+	border-bottom: 0 none transparent;
+	box-shadow: 0 -1px 0 #E5E5E5;
+}
+
+div.employees div.employee table td:last-child {
+	width: 20px;
+}
+
+div.employees div.employee div.head a,
+div.employees div.employee div.contacts > a {
+	float: left;
+	font-size: .75em;
+	color: #999;
+	text-shadow: 0 1px 0 #FFF;
+	font-weight: normal;
+	background-color: transparent;
+	background-position: left center;
+	background-repeat: no-repeat;
+	box-shadow: 0 0 0 transparent;
+	margin: 3px 0 4px 0;
+}
+div.employees div.employee div.head a:before,
+div.employees div.employee div.contacts a:before {
+	margin-right: 6px;
+}
+
+div.employees div.employee div.head a:hover,
+div.employees div.employee div.contacts > a:hover {
+	color: #555;
+}
