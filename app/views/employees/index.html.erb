@@ -5,7 +5,7 @@
 
   <div class="employees">
     <% if current_user.access?(:partners) %>
-      <div>
+      <div class="submenu">
          <%= link_to t('labels.employee.new'),
                      new_ajax_partner_employee_path(@partner),
                      class: 'hidden-form icon-plus' %>
