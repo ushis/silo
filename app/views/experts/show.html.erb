@@ -2,6 +2,16 @@
 
 <div id="main">
   <%= render 'details_header', expert: @expert %>
+  <% if current_user.access?(:experts) %>
+    <div class="submenu">
+      <%= link_to t('labels.address.new'),
+                  new_ajax_expert_address_path(@expert),
+                  class: 'hidden-form icon-plus' %>
+      <%= link_to t('labels.contact.new'),
+                  new_ajax_expert_contact_path(@expert),
+                  class: 'hidden-form icon-plus' %>
+    </div>
+  <% end %>
 
   <div class="left">
     <div class="info">
@@ -53,13 +63,6 @@
   <div class="right">
     <div class="info addresses">
       <div>
-        <% if current_user.access?(:experts) %>
-          <div class="tools">
-            <%= link_to t('labels.address.new'),
-                        new_ajax_expert_address_path(@expert),
-                        class: 'hidden-form icon-plus' %>
-          </div>
-        <% end %>
         <h4><%= Expert.human_attribute_name :addresses %></h4>
         <%= render 'shared/addresses_table', parent: @expert %>
       </div>
@@ -67,13 +70,6 @@
 
     <div class="info contacts">
       <div>
-        <% if current_user.access?(:experts) %>
-          <div class="tools">
-            <%= link_to t('labels.contact.new'),
-                        new_ajax_expert_contact_path(@expert),
-                        class: 'hidden-form icon-plus' %>
-          </div>
-        <% end %>
         <h4><%= Expert.human_attribute_name :contacts %></h4>
         <%= render 'shared/contacts_table', parent: @expert %>
       </div>

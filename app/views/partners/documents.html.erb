@@ -3,14 +3,15 @@
 <div id="main">
   <%= render 'details_header', partner: @partner %>
 
+  <% if current_user.access?(:partners) %>
+    <div class="submenu">
+      <%= link_to t('labels.attachment.new'),
+                  new_ajax_partner_attachment_path(@partner),
+                  class: 'hidden-form icon-plus' %>
+    </div>
+  <% end %>
+
   <div class="attachments info">
-    <% if current_user.access?(:partners) %>
-      <div class="tools">
-        <%= link_to t('labels.attachment.new'),
-                    new_ajax_partner_attachment_path(@partner),
-                    class: 'hidden-form icon-plus' %>
-      </div>
-    <% end %>
     <h4>
       <%= Partner.human_attribute_name :attachments %>
     </h4>
