@@ -3,15 +3,19 @@
 <div id="main">
   <%= render 'details_header', expert: @expert %>
 
-  <div class="documents">
-    <div class="cvs info">
-      <% if current_user.access?(:experts) %>
-        <div class="tools">
-          <%= link_to t('labels.cv.new'),
+  <% if current_user.access?(:experts) %>
+    <div class="submenu">
+      <%= link_to t('labels.cv.new'),
                       new_ajax_expert_cv_path(@expert),
                       class: 'hidden-form icon-plus' %>
-        </div>
-      <% end %>
+      <%= link_to t('labels.attachment.new'),
+                  new_ajax_expert_attachment_path(@expert),
+                  class: 'hidden-form icon-plus' %>
+    </div>
+  <% end %>
+
+  <div class="documents">
+    <div class="cvs info">
       <h4>
         <%= Expert.human_attribute_name :cvs %>
       </h4>
@@ -19,13 +23,7 @@
     </div><!-- cvs -->
 
     <div class="attachments info">
-      <% if current_user.access?(:experts) %>
-        <div class="tools">
-          <%= link_to t('labels.attachment.new'),
-                      new_ajax_expert_attachment_path(@expert),
-                      class: 'hidden-form icon-plus' %>
-        </div>
-      <% end %>
+      
       <h4>
         <%= Expert.human_attribute_name :attachments %>
       </h4>
