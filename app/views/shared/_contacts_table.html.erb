@@ -1,7 +1,7 @@
 <table>
   <tbody>
     <% if parent.contact.empty? %>
-      <tr>
+      <tr class="empty">
         <td>
           <%= t "messages.#{parent.class.name.downcase}.errors.no_contacts" %>
         </td>

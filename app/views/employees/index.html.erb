@@ -24,9 +24,41 @@
               <h4>
                 <%= employee.full_name %>
               </h4>
+              <div class="tools">
+                <% if current_user.access?(:partners) %>
+                  <%= link_to t('labels.contact.new'),
+                              new_ajax_employee_contact_path(employee),
+                              class: 'hidden-form icon-plus' %>
+                  <%= link_to t('actions.edit'),
+                              edit_ajax_partner_employee_path(@partner, employee),
+                              class: 'hidden-form icon-pencil' %>
+                  <%= delete_button_for employee,
+                              url: partner_employee_path(@partner, employee),
+                              password: false %>
+                <% end %>
+              </div>
+            </div>
+            <h5>
+              <%= employee.job %>
+            </h5>
+            <div class="contacts">
+              <%= render 'shared/contacts_table', parent: employee %>
+              <% if current_user.access?(:partners) %>
+                
+              <% end %>
+            </div>
+
+
+            <!---
+            <div class="head">
+              <h4>
+                <%= employee.full_name %>
+              </h4>
               <h5>
                 <%= employee.job %>
               </h5>
+            </div>
+            <div class="tools">
               <% if current_user.access?(:partners) %>
                 <%= link_to t('actions.edit'),
                             edit_ajax_partner_employee_path(@partner, employee),
@@ -35,14 +67,15 @@
                 <%= delete_button_for employee,
                                       url: partner_employee_path(@partner, employee),
                                       password: false %>
-
-                <%= link_to t('labels.contact.new'),
-                            new_ajax_employee_contact_path(employee),
-                            class: 'hidden-form icon-plus' %>
               <% end %>
             </div>
-
             <%= render 'shared/contacts_table', parent: employee %>
+            <% if current_user.access?(:partners) %>
+              <%= link_to t('labels.contact.new'),
+                          new_ajax_employee_contact_path(employee),
+                          class: 'hidden-form icon-plus' %>
+            <% end %>
+            -->
           </div>
         <% end %>
       <% end %>
