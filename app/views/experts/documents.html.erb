@@ -4,33 +4,34 @@
   <%= render 'details_header', expert: @expert %>
 
   <div class="documents">
-    <div class="cvs">
+    <div class="cvs info">
       <% if current_user.access?(:experts) %>
         <div class="tools">
           <%= link_to t('labels.cv.new'),
                       new_ajax_expert_cv_path(@expert),
-                      class: 'hidden-form icon-plus tool' %>
+                      class: 'hidden-form icon-plus' %>
         </div>
       <% end %>
       <h4>
-        <%= t 'labels.cv.index' %>
+        <%= Expert.human_attribute_name :cvs %>
       </h4>
       <%= render 'shared/cvs_table', parent: @expert %>
     </div><!-- cvs -->
 
-    <div class="attachments">
+    <div class="attachments info">
       <% if current_user.access?(:experts) %>
         <div class="tools">
           <%= link_to t('labels.attachment.new'),
                       new_ajax_expert_attachment_path(@expert),
-                      class: 'hidden-form icon-plus tool' %>
+                      class: 'hidden-form icon-plus' %>
         </div>
       <% end %>
       <h4>
-        <%= t 'labels.attachment.index' %>
+        <%= Expert.human_attribute_name :attachments %>
       </h4>
       <%= render 'shared/attachments_table', parent: @expert %>
     </div><!-- attachments -->
+
     <div class="clear"></div>
   </div>
 </div>

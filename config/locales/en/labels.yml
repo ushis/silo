@@ -7,7 +7,6 @@ en:
     adviser:
       index: 'Advisers (Internal)'
     attachment:
-      index: 'Attachments'
       new: 'New Attachment'
     business:
       index: 'Business Fields'
@@ -17,7 +16,6 @@ en:
       index: 'Contacts'
       new: 'New Contact'
     cv:
-      index: 'CVs'
       new: 'New CV'
     generic:
       all: 'All'

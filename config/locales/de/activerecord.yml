@@ -26,6 +26,7 @@ de:
       expert:
         addresses: 'Adressen'
         age: 'Alter'
+        attachments: 'Anhänge'
         birthday: 'Geburtsdatum'
         comment: 'Kommentar'
         contacts: 'Kontakte'
@@ -44,6 +45,7 @@ de:
       partner:
         address: 'Adresse'
         advisers: 'Ansprechpartner (Intern)'
+        attachments: 'Anhänge'
         business: 'Geschäftsfeld'
         businesses: 'Geschäftsfelder'
         comment: 'Kommentar'

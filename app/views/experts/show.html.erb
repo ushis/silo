@@ -52,12 +52,12 @@
 
   <div class="right">
     <div class="info addresses">
-      <div class="row last">
+      <div>
         <% if current_user.access?(:experts) %>
           <div class="tools">
             <%= link_to t('labels.address.new'),
                         new_ajax_expert_address_path(@expert),
-                        class: 'hidden-form icon-plus tool' %>
+                        class: 'hidden-form icon-plus' %>
           </div>
         <% end %>
         <h4><%= Expert.human_attribute_name :addresses %></h4>
@@ -66,12 +66,12 @@
     </div><!-- addresses -->
 
     <div class="info contacts">
-      <div class="row last">
+      <div>
         <% if current_user.access?(:experts) %>
           <div class="tools">
             <%= link_to t('labels.contact.new'),
                         new_ajax_expert_contact_path(@expert),
-                        class: 'hidden-form icon-plus tool' %>
+                        class: 'hidden-form icon-plus' %>
           </div>
         <% end %>
         <h4><%= Expert.human_attribute_name :contacts %></h4>
@@ -79,5 +79,6 @@
       </div>
     </div><!-- contacts -->
   </div><!-- right -->
+
   <div class="clear"></div>
 </div>
