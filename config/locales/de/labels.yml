@@ -7,7 +7,6 @@ de:
     adviser:
       index: 'Ansprechpartner (Intern)'
     attachment:
-      index: 'Anhänge'
       new: 'Neuer Anhang'
     business:
       index: 'Geschäftsfelder'
@@ -17,7 +16,6 @@ de:
       index: 'Kontakte'
       new: 'Neuer Kontakt'
     cv:
-      index: 'CVs'
       new: 'Neuer CV'
     generic:
       all: 'Alle'

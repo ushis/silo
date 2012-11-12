@@ -3,16 +3,20 @@
 <div id="main">
   <%= render 'details_header', partner: @partner %>
 
-  <div class="attachments">
-    <%= render 'shared/attachments_table', parent: @partner %>
-
+  <div class="attachments info">
     <% if current_user.access?(:partners) %>
-      <div>
+      <div class="tools">
         <%= link_to t('labels.attachment.new'),
                     new_ajax_partner_attachment_path(@partner),
                     class: 'hidden-form icon-plus' %>
       </div>
     <% end %>
-  </div>
+    <h4>
+      <%= Partner.human_attribute_name :attachments %>
+    </h4>
+
+    <%= render 'shared/attachments_table', parent: @partner %>
+  </div><!-- attachments -->
+
   <div class="clear"></div>
 </div>

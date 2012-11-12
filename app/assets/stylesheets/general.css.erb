@@ -908,18 +908,18 @@ body.index #main table a.listable.active div.marker:after {
   border-left: 2px solid #b67c84;
 }
 
-/* Show Tables */
-body.show #main div.left {
+/* Details & Stuff */
+#main div.left {
   float: left;
   width: 60%
 }
 
-body.show #main div.right {
+#main div.right {
   float: right;
   width: 37%
 }
 
-body.show #main div.info {
+#main div.info {
   float: left;
   position: relative;
   width: 100%;
@@ -930,14 +930,14 @@ body.show #main div.info {
   -moz-box-sizing: border-box;
 }
 
-body.show #main div.info.contacts,
-body.show #main div.info.addresses {
+#main div.info.contacts,
+#main div.info.addresses {
   background: none;
   box-shadow: none;
   padding: 0;
 }
 
-body.show #main div.info div.row {
+#main div.info div.row {
   float: left;
   width: 100%;
   padding: 10px 0;
@@ -947,54 +947,54 @@ body.show #main div.info div.row {
   -moz-box-sizing: border-box;
 }
 
-body.show #main div.info div.row:first-child {
+#main div.info div.row:first-child {
   padding-top: 0;
 }
 
-body.show #main div.info div.row.last {
+#main div.info div.row.last {
   border-bottom: none;
   box-shadow: none;
   padding-bottom: 0;
 }
 
-body.show #main div.info div.row div {
+#main div.info div.row div {
   float: left;
   width: 100%;
 }
 
-body.show #main div.info div.row h4 {
+#main div.info h4 {
   color: #7a7a7a;
   font-size: .7em;
   text-shadow: 0 1px 0 rgba(255, 255, 255, .9);
 }
 
-body.show #main div.info p {
+#main div.info p {
   color: #444;
   font-size: .75em;
 }
 
-body.show #main div.info table p {
+#main div.info table p {
   color: #444;
   font-size: 1em;
 }
 
-body.show #main div.info div.row div.comments p {
+#main div.info div.comments p {
   font-size: .9em;
 }
 
-body.show #main div.info div.row p:empty:after,
-body.show #main div.info div.row div.markdown:empty:after {
+#main div.info p:empty:after,
+#main div.info div.markdown:empty:after {
   content: '-';
 }
 
-body.show #main div.info div.row div.tools {
+#main div.info div.tools {
   float: right;
   width: auto;
   text-align: right;
   margin: -4px 3px -7px 0;
 }
 
-body.show #main div.info div.row div.tools a.tool {
+#main div.info div.tools a {
   font-size: .75em;
   color: #777;
   text-shadow: 0 1px 0 #EFEFEF;
@@ -1005,106 +1005,15 @@ body.show #main div.info div.row div.tools a.tool {
   box-shadow: 0 0 0 transparent;
 }
 
-body.show #main div.info div.row div.tools a.tool:before {
+#main div.info div.tools a:hover {
+  color: #333;
+}
+
+#main div.info div.tools a:before {
   margin: 0 6px 0 15px;
 }
 
-body.show #main div.right div.tab div.form-wrapper {
-  float: left;
-  position: relative;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  background: #DBDBDB;
-  border-radius: 4px;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, .2);
-}
-
-body.show #main div.right div.tab div.form-wrapper div textarea,
-body.show #main div.right div.tab div.form-wrapper div input[type=text] {
-  margin-bottom: 10px;
-}
-
-body.show #main div.right div.tab div.form-wrapper div select {
-  margin: 0;
-  width: 150px;
-}
-
-body.show #main div.right div.forms {
-  margin-top: 35px;
-  position: relative;
-}
-
-body.show #main div.right div.forms div.tab {
-  float: left;
-  width: 100%;
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
-}
-
-body.show #main div.right div.forms ul.tabs {
-  width: 100%;
-  position: relative;
-  top: 0;
-  left: 0;
-  display: block;
-  margin-top: -29px;
-  z-index: 99;
-}
-
-body.show #main div.right div.forms ul.tabs li {
-  float: left;
-  cursor: pointer;
-  background: transparent;
-  margin-right: 3px;
-  border-radius: 4px 4px 0 0;
-  padding: 2px;
-}
-
-body.show #main div.right div.forms ul.tabs li a {
-  font-size: .75em;
-  color: #777777;
-  text-shadow: 0 1px 0 rgba(255,255,255,.5);
-  padding: 10px;
-}
-
-body.show #main div.right div.forms ul.tabs li.ui-state-active {
-  background: #DBDBDB;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, .2);
-  color: #525252;
-  border-bottom: 5px solid #DBDBDB;
-  margin-bottom: -10px;
-  z-index: 99;
-}
-
-body.show #main div.info table.within {
-  margin-bottom: -5px;
-}
-
-body.show #main div.info table.within td {
-  background: none;
-  border-spacing: 0;
-  box-shadow: none;
-  padding: 0 0 4px 0;
-  color: #444;
-  border-radius: 0;
-  border-bottom: 1px solid #E5E5E5;
-  box-shadow: 0 1px 1px rgba(255, 255, 255, 1);
-}
-
-body.show #main div.info table.within td a {
-  border-left: 1px solid #E5E5E5;
-  padding: 4px 0 4px 10px;
-}
-
-body.show #main div.info table.within tr:last-child td {
-  border-bottom: none;
-  box-shadow: none;
-  padding: 0;
-}
-
 /* Documents */
-
 body.documents div.attachments table td a.icon-attachment,
 body.documents div.cvs table td a.icon-file {
   position: relative;
@@ -1308,7 +1217,3 @@ form div.row > div {
 #main #filter div.row div:last-child {
   margin-right: 0;
 }
-
-/* Lists */
-
-
