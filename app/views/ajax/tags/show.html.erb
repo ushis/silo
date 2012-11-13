@@ -14,21 +14,19 @@
     <form class="filter">
       <input type="text"/>
     </form>
-    <% unless @tags.empty? %>
-      <ul>
-        <% @tags.each_slice(@tags.length.fdiv(4).ceil) do |slice| %>
-          <li class="col">
-            <ul>
-              <% slice.each do |tag| %>
-                <li class="item">
-                  <%= check_box_tag tag.id, 1, false, 'data-name' => tag.to_s %>
-                  <%= label_tag tag.id, tag.to_s %>
-                </li>
-              <% end %>
-            </ul>
-          </li>
-        <% end %>
-      </ul>
-    <% end %>
+    <ul>
+      <% @tags.in_groups(4, false) do |group| %>
+        <li class="col">
+          <ul>
+            <% group.each do |tag| %>
+              <li class="item">
+                <%= check_box_tag tag.id, 1, false, 'data-name' => tag.to_s %>
+                <%= label_tag tag.id, tag.to_s %>
+              </li>
+            <% end %>
+          </ul>
+        </li>
+      <% end %>
+    </ul>
   </div>
 </div>
