@@ -19,10 +19,11 @@ de:
         language: 'Sprache'
       employee:
         contacts: 'Kontakte'
-        form_of_address: 'Anrede'
         job: 'Tätigkeit'
+        gender: 'Geschlecht'
         name: 'Name'
         prename: 'Vorname'
+        title: 'Titel'
       expert:
         addresses: 'Adressen'
         age: 'Alter'

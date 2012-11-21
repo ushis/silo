@@ -3,18 +3,21 @@
 #
 # Database schema:
 #
-# - *id:*               integer
-# - *partner_id:*       integer
-# - *name:*             string
-# - *prename:*          string
-# - *form_of_address:*  string
-# - *job:*              string
-# - *created_at:*       datetime
-# - *updated_at:*       datetime
+# - *id:*          integer
+# - *partner_id:*  integer
+# - *name:*        string
+# - *prename:*     string
+# - *title:*       string
+# - *gender:*      string
+# - *job:*         string
+# - *created_at:*  datetime
+# - *updated_at:*  datetime
 #
 # Every employee has one Contact.
 class Employee < ActiveRecord::Base
-  attr_accessible :name, :prename, :form_of_address, :job
+  attr_accessible :name, :prename, :title, :gender, :job
+
+  symbolize :gender, in: [:female, :male]
 
   validates :name, presence: true
 
@@ -30,5 +33,11 @@ class Employee < ActiveRecord::Base
   # Returns a string containing first name and last name.
   def full_name
     "#{prename} #{name}"
+  end
+
+  # Returns a string containing first name, last name and title. Returns
+  # Employee#full_name() if the title attribute is blank.
+  def full_name_with_title
+    title.blank? ? full_name : "#{title} #{full_name}"
   end
 end

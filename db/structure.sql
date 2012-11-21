@@ -110,12 +110,14 @@ CREATE TABLE `employees` (
   `partner_id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `prename` varchar(255) DEFAULT NULL,
-  `form_of_address` varchar(255) DEFAULT NULL,
+  `gender` varchar(255) DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
   `job` varchar(255) DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `index_employees_on_partner_id` (`partner_id`)
+  KEY `index_employees_on_partner_id` (`partner_id`),
+  KEY `index_employees_on_name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `experts` (

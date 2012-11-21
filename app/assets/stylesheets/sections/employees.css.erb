@@ -1,3 +1,4 @@
+/* Overlay */
 div.overlay.employee-form div.row {
     width: 100%;
 }
@@ -5,10 +6,20 @@ div.overlay.employee-form div.row:last-child {
     padding-bottom: 0;
 }
 
+/* Index */
+div.employees div.group {
+  float: left;
+  width: 49%;
+}
+
+div.employees div.group:nth-child(2n) {
+  float: right;
+}
+
 div.employees div.employee {
 	position: relative;
 	float: left;
-	width: 49%;
+	width: 100%;
 	padding: 7px 8px 0 8px;
 	margin: 0 0 20px 1%;
 	background-color: #EFEFEF;
@@ -24,18 +35,11 @@ div.employees div.employee {
 	-webkit-box-sizing: border-box;
 }
 
-div.employees div.employee:nth-child(2n+1) {
-	clear: left;
-	margin: 0 1% 20px 0;
-}
-
 div.employees div.employee h4,
 div.employees div.employee h5 {
 	color: #555;
 	font-weight: bold;
 	font-size: .75em;
-	float: left;
-	width: 50%;
 }
 
 div.employees div.employee h5 {
