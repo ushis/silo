@@ -23,10 +23,14 @@
     */
 @font-face {
   font-family: "FontAwesome";
-  src: url('<%= asset_path 'fontawesome.otf' %>');
+  src:  url('<%= asset_path 'fontawesome.otf' %>'),
+        url('<%= asset_path 'fontawesome.eot' %>')  format('eot'),
+        url('<%= asset_path 'fontawesome.woff' %>') format('woff'), 
+        url('<%= asset_path 'fontawesome.ttf' %>')  format('truetype'), 
+        url('<%= asset_path 'fontawesome.svg' %>')  format('svg');
+  font-variant: normal;
   font-weight: normal;
   font-style: normal;
-  font-variant: normal;
 }
 
 /*  Font Awesome styles
@@ -319,4 +323,6 @@ li[class^="icon-"].icon-large:before, li[class*=" icon-"].icon-large:before {
 .icon-addtolist:before            { content: "\f212"; }
 .icon-removefromlist:before       { content: "\f213"; }
 .icon-partner:before              { content: "\f214"; }
-.icon-list-add:before             { content: "\f215"; }
+.icon-partner-add:before          { content: "\f215"; }
+.icon-list:before                 { content: "\f216"; }
+.icon-list-add:before             { content: "\f217"; }
