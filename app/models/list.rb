@@ -78,7 +78,7 @@ class List < ActiveRecord::Base
   def copy
     copy = dup
 
-    ITEM_TYPES.keys.each do |assoc|
+    ITEM_TYPES.each_key do |assoc|
       copy.association(assoc).ids_writer(association(assoc).ids_reader)
     end
 
@@ -99,16 +99,7 @@ class List < ActiveRecord::Base
   # Returns a collection of the added items.
   def add(item_type, item_ids)
     association, item_class = item_type_info(item_type)
-
-    connection.transaction do
-      item_class.where(id: item_ids).each do |item|
-        begin
-          association << item
-        rescue ActiveRecord::RecordNotUnique
-          next
-        end
-      end
-    end
+    add_collection(association, item_class.where(id: item_ids))
   end
 
   # Removes one or more items from the list.
@@ -131,12 +122,55 @@ class List < ActiveRecord::Base
     association.delete(item_class.where(id: item_ids))
   end
 
+  # Concatenates the list with another.
+  #
+  #   list.experts
+  #   #=> [#<Expert id: 12>]
+  #
+  #   another_list.experts
+  #   #=> [#<Expert id: 44>, #<Expert id: 23>]
+  #
+  #   list.concat(another_list)
+  #   #=> #<List id: 12>
+  #
+  #   list.experts
+  #   #=> [#<Expert id: 12>, #<Expert id: 44>, #<Expert id: 23>]
+  #
+  # Returns the list.
+  def concat(other)
+    connection.transaction do
+      ITEM_TYPES.each_key do |assoc|
+        add_collection(send(assoc), other.send(assoc))
+      end
+    end
+
+    self
+  end
+
   # Adds the list items to the JSON reprensentation.
   def as_json(options = {})
     super(options.merge(include: ITEM_TYPES.keys))
   end
 
   private
+
+  # Adds a collection of potetial list items to the list.
+  #
+  #   list.add_collection(list.experts, Expert.where(id: [12, 13, 44])
+  #   #=> [#<Expert id: 12>, #<Expert id: 13>, #<Expert id: 44>]
+  #
+  # Returns the collection.
+  def add_collection(association, collection)
+    connection.transaction do
+      collection.each do |item|
+        begin
+          association << item
+        rescue ActiveRecord::RecordNotUnique
+          next
+        end
+      end
+    end
+  end
 
   # Returns the association and the model class for the specified item type.
   def item_type_info(item_type)
