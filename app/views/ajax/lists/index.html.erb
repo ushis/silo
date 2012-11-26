@@ -1,34 +1,20 @@
-<div class="overlay open-list">
+<div class="overlay choose-list">
   <div class="header">
     <h2>
-      <%= t 'labels.sections.lists' %>
+      <%= @title %>
     </h2>
     <div class="abort button">
       <%= t 'actions.abort' %>
     </div>
   </div>
   <div class="select form-wrapper">
-    <div>
-      <%= form_tag ajax_lists_path, method: :get, remote: true, class: 'search' do %>
-        <div>
-          <%= text_field_tag :title, nil, placeholder: t('labels.list.search') %>
-          <%= submit_tag t('actions.search') %>
-        </div>
-      <% end %>
-    </div>
-    <div class="last">
-      <%= form_for List.new, url: ajax_lists_path, method: :post, remote: true,
-                             html: {'data-type' => :json, class: 'new'} do |f| %>
-        <div>
-          <%= f.submit t('actions.save') %>
-          <%= f.text_field :title, placeholder: t('labels.list.create') %>
-        </div>
-      <% end %>
-    </div>
+    <form>
+      <input type="text" placeholder="<%= t 'labels.list.search' %>"/>
+    </form>
     <table>
       <tbody>
         <% @lists.each do |list| %>
-          <tr>
+          <tr data-index="<%= list.title %>">
             <td>
               <%= icon(list.private? ? :lock : :globe) %>
             </td>
@@ -36,7 +22,11 @@
               <%= list.title %>
             </td>
             <td>
-              <%= open_list_button_for list %>
+              <% if params[:action] == 'import' %>
+                <%= import_list_button_for @list, list %>
+              <% else %>
+                <%= open_list_button_for list %>
+              <% end %>
             </td>
           </tr>
         <% end %>

@@ -24,6 +24,17 @@ module ListHelper
     link_to(t('actions.open'), open_ajax_list_path(list), options)
   end
 
+  # Creates a "import this list into that list" button.
+  def import_list_button_for(list, other)
+    options = {
+      method: :put,
+      'data-other' => other.id,
+      class: 'icon-addtolist'
+    }
+
+    link_to(t('actions.import'), concat_list_path(list), options)
+  end
+
   # Returns the lilstable url for the specified item type.
   def listable_url(item_type)
     send(:"ajax_list_#{item_type}_path", list_id: :current)

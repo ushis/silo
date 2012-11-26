@@ -94,6 +94,7 @@ en:
         open: 'Could not open list.'
         save: 'Could not save list.'
       success:
+        concat: 'Imported list.'
         copy: 'Copied list.'
         create: 'Created list: %{title}'
         delete: 'Deleted list: %{title}'

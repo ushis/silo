@@ -95,3 +95,12 @@ do ($ = jQuery) ->
 
     # Closes the overlay.
     closeOverlay: -> @_layer.fadeOut()
+
+    # Debounces a function.
+    debounce: (callback, delay = 100) ->
+      timeout = null
+
+      ->
+        args = arguments
+        clearTimeout(timeout)
+        setTimeout((=> callback.apply(@, args)), delay)

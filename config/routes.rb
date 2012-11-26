@@ -47,6 +47,7 @@ Silo::Application.routes.draw do
   resources :lists, only: [:create, :update, :destroy] do
     get :current, on: :collection
     put :copy,    on: :member
+    put :concat,  on: :member
 
     [:experts, :partners].each do |resource|
       resources resource, only: [], controller: :lists do
@@ -83,8 +84,11 @@ Silo::Application.routes.draw do
     end
 
     resources :lists, except: [:update, :destroy] do
-      put :open, on: :member
-      get :copy, on: :member
+      member do
+        put :open
+        get :copy
+        get :import
+      end
 
       [:experts, :partners].each do |resource|
         resources resource, only: [], controller: :lists do
