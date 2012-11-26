@@ -10,19 +10,30 @@ do ($ = jQuery) ->
     # Initializes the current list object and performs the initial sync.
     init: (@el) ->
       @title = @el.find('.title a')
-      @open = @el.find('.open a').css(opacity: 0).click -> false
+      @sync()
+
+      @el.find('.open a').siloChooser success: (@select) =>
+        @select.on 'ajax:success', 'a', (e, data) =>
+          @set(data)
+          @select.trigger('close')
+
+    # Retrieves the current list from the server and updates the view.
+    sync: ->
       url = $.silo.location('lists.current', 'json')
-
       $.ajax url, success: ((data) => @set(data)), error: (=> @set(null))
-
-      $.ajax @open.attr('href'), dataType: 'html', success: (select) =>
-        @select = $(select).siloSelectListOverlay()
-        @open.animate(opacity: 1, 500).click => @select.trigger('show')
 
     # Binds ajax events to the syncro links.
     bindSynchronizer: (el) ->
       el.bind 'ajax:success', (e, data) => @set(data)
       el.bind 'ajax:error', => @set(null)
+
+    # Updates the view.
+    set: (list) ->
+      list ||= {}
+      @el.toggleClass('active', !! list.title)
+      @title.text(list.title)
+      @updateItems(list)
+      @updateOpeners(list)
 
     # Connects some list openers with the current list.
     connectWithListOpeners: (collection) ->
@@ -44,14 +55,6 @@ do ($ = jQuery) ->
         unless @el.hasClass('active')
           @select?.trigger('show')
           return false
-
-    # Updates the view.
-    set: (list) ->
-      list ||= {}
-      @el.toggleClass('active', !! list.title)
-      @title.text(list.title)
-      @updateItems(list)
-      @updateOpeners(list)
 
     # Updates all list openers.
     updateOpeners: (list) ->
@@ -81,30 +84,3 @@ do ($ = jQuery) ->
 
   # Turns a link into a "open this list" link.
   $.fn.siloOpenList = -> CurrentList.connectWithListOpeners(@)
-
-  # Handles the select list overlay.
-  $.fn.siloSelectListOverlay = (options) ->
-    settings = $.extend {
-      abortClass: 'abort'
-      selectClass: 'select'
-    }, options
-
-    @each ->
-      el = $(@).siloOverlay()
-      select = el.find(".#{settings.selectClass}")
-      table = select.find('table')
-
-      select.delegate '*', 'ajax:beforeSend', -> $(@).addClass('loading')
-      select.delegate '*', 'ajax:complete', -> $(@).removeClass('loading')
-
-      select.delegate 'a', 'ajax:success', (e, data) ->
-        CurrentList.set(data)
-        el.trigger('close')
-
-      select.find('form.new').bind 'ajax:success', (e, data) ->
-        CurrentList.set(data)
-        el.trigger('close')
-        $(@).get(0).reset()
-
-      select.find('form.search').bind 'ajax:success', (e, data) ->
-        table.html($(data).find(".#{settings.selectClass} table").html())

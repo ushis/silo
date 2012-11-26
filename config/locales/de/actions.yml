@@ -7,6 +7,7 @@ de:
     copy: 'Kopieren'
     delete: 'Löschen'
     edit: 'Bearbeiten'
+    import: 'Importieren'
     login: 'Anmelden'
     logout: 'Abmelden'
     open: 'Öffnen'

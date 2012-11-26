@@ -7,8 +7,23 @@ class Ajax::ListsController < AjaxController
 
   # Serves a list of all lists.
   def index
-    @lists = List.search(params).accessible_for(current_user).limit(10)
+    @lists = List.search(params).accessible_for(current_user)
+    @title = t('labels.list.open')
     respond_with(@list)
+  end
+
+  # Shows a list.
+  def show
+    respond_with(find_list(params[:id]))
+  end
+
+  # Serves a list of lists for import purposes.
+  def import
+    @list = find_list(params[:id])
+    _params = params.merge(exclude: @list)
+    @lists = List.search(_params).accessible_for(current_user)
+    @title = t('labels.list.import')
+    render :index
   end
 
   # Serves an empty list form.
@@ -30,11 +45,6 @@ class Ajax::ListsController < AjaxController
     @list = find_list(params[:id])
     @url = copy_list_path(@list)
     render :form
-  end
-
-  # Shows a list.
-  def show
-    respond_with(find_list(params[:id]))
   end
 
   # Creates a new list.

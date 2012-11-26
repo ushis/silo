@@ -16,6 +16,10 @@
       <%= link_to t('actions.copy'), copy_ajax_list_path(list),
                   class: 'hidden-form icon-copy' %>
     </li>
+    <li class="concat">
+      <%= link_to t('actions.import'), import_ajax_list_path(list),
+                  class: 'chooser icon-addtolist' %>
+    </li>
     <li class="edit">
       <%= link_to t('actions.edit'), edit_ajax_list_path(list),
                   class: 'hidden-form icon-pencil' %>

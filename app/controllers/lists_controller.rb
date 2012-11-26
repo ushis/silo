@@ -49,6 +49,18 @@ class ListsController < ApplicationController
     redirect_to list_experts_path(list)
   end
 
+  # Concats a list with another.
+  def concat
+    list = find_list(params[:id])
+    list.concat(find_list(params[:other]))
+    flash[:notice] = t('messages.list.success.concat')
+    redirect_to list_experts_path(list)
+  rescue ActiveRecord::RecordNotFound, UnauthorizedError
+    raise unless list
+    flash[:alert] = t('messages.list.errors.find')
+    redirect_to list_experts_path(list)
+  end
+
   # Copies a list.
   def copy
     original = find_list(params[:id])

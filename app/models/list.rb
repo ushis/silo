@@ -50,19 +50,24 @@ class List < ActiveRecord::Base
 
   # Searches for lists. Taks a hash of conditions:
   #
-  # - *:title*    A (partial) title
+  # - *:title*    A (partial) title.
   # - *:private*  Wether the list should be private or not.
+  # - *:exclude*  A list or a collection of lists to exclude.
   #
   # Returns a ActiveRecord::Relation.
   def self.search(params)
     rel = self
 
     unless params[:title].blank?
-      rel = rel.where('title LIKE ?', "%#{params[:title]}%")
+      rel = rel.where('lists.title LIKE ?', "%#{params[:title]}%")
     end
 
     unless params[:private].blank?
       rel = rel.where(private: params[:private])
+    end
+
+    unless params[:exclude].blank?
+      rel = rel.where('lists.id NOT IN (?)', Array(params[:exclude]))
     end
 
     rel
