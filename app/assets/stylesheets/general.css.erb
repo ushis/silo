@@ -1214,11 +1214,21 @@ form div.row > div {
 
 /* NOT IMPLEMENTED */
 
-p.not-implemented {
-  padding: 80px 0;
+body.references p.icon-under-construction {
+  position: relative;
+  width: 300px;
+  margin: 0 auto;
+  padding: 165px 0 30px 0;
   text-align: center;
   text-transform: uppercase;
   text-shadow: 0 1px 0 #FEFEFE;
   color: #AAA;
   font-size: 1.2em;
+}
+
+body.references p.icon-under-construction:before {
+  position: absolute;
+  top: 0;
+  left: 85px;
+  font-size: 7em;
 }
