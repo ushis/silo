@@ -114,7 +114,7 @@ class ListsController < ApplicationController
   # Shows the list items of a type.
   def show(item_type)
     @list = find_list(params[:list_id])
-    @items = @list.list_items.by_type(item_type)
+    @items = @list.list_items.by_type(item_type).includes(:item)
     @title = @list.title
     body_class << (body_class.delete(item_type.to_s) + '-list')
     render :show
