@@ -13,9 +13,9 @@ class ListItemsController < ApplicationController
     item = list.list_items.find(params[:id])
 
     if item.destroy
-      flash[:alert] = t('messages.list_item.success.destroy')
+      flash[:alert] = t('messages.list_item.success.delete', name: item.name)
     else
-      flash[:notice] = t('messages.list_item.errors.destroy')
+      flash[:notice] = t('messages.list_item.errors.delete')
     end
 
     redirect_to list_experts_url(list)

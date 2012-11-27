@@ -99,6 +99,12 @@ de:
         create: 'Liste hinzugefügt: %{title}'
         delete: 'Liste gelöscht: %{title}'
         save: 'Liste gespeichert.'
+    list_item:
+      errors:
+        find: 'Listeneintrag nicht gefunden.'
+        delete: 'Listeneintrag konnte nicht gelöscht werden.'
+      success:
+        delete: 'Listeneintrag gelöscht: %{name}'
     partner:
       confirm:
         delete: 'Möchtest du wirklich diesen Partner mit all seinen
