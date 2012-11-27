@@ -53,18 +53,14 @@ class ListItem < ActiveRecord::Base
   # Raises ArgumentError for invalid item types.
   def self.collection(item_type, item_ids)
     class_for_item_type(item_type).where(id: item_ids).map do |item|
-      list_item = new
-      list_item.item = item
-      list_item
+      new.tap { |list_item| list_item.item = item }
     end
   end
 
   # Returns a copy of the list item. By default the note of the copy is
   # erased. Pass _false_ to prevent this behavior.
   def copy(unset_note = true)
-    copy = dup
-    copy.note = nil if unset_note
-    copy
+    dup.tap { |copy| copy.note = nil if unset_note }
   end
 
   # Returns the name of the list item.

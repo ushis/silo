@@ -78,9 +78,9 @@ class List < ActiveRecord::Base
 
   # Returns a copy of the list with all its list items.
   def copy
-    copy = dup
-    copy.list_items = list_items.map { |item| item.copy(false) }
-    copy
+    dup.tap do |copy|
+      copy.list_items = list_items.map { |item| item.copy(false) }
+    end
   end
 
   # Adds one or more items to the list.
