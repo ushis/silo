@@ -94,8 +94,8 @@ de:
         open: 'Liste konnte nicht geöffnet werden.'
         save: 'Liste konnte nicht gespeichert werden.'
       success:
-        concat: 'Liste importiert.'
-        copy: 'Liste kopiert.'
+        concat: 'Liste importiert: %{title}'
+        copy: 'Liste kopiert: %{title}'
         create: 'Liste hinzugefügt: %{title}'
         delete: 'Liste gelöscht: %{title}'
         save: 'Liste gespeichert.'

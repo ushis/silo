@@ -4,12 +4,7 @@ class ListItemsController < ApplicationController
 
   # Destroys a list item.
   def destroy
-    list = List.find(params[:list_id])
-
-    unless list.accessible_for?(current_user)
-      unauthorized(lists_url)
-    end
-
+    list = List.find_for_user(params[:list_id], current_user)
     item = list.list_items.find(params[:id])
 
     if item.destroy
@@ -22,6 +17,11 @@ class ListItemsController < ApplicationController
   end
 
   private
+
+  # Sets a flash and redirects to the lists index.
+  def unauthorized
+    super(lists_url)
+  end
 
   # Sets a flash and redirects to the list.
   def not_found

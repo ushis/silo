@@ -36,7 +36,7 @@ class ListsController < ApplicationController
 
   # Updates a list.
   def update
-    list = find_list(params[:id])
+    list = List.find_for_user(params[:id], current_user)
     list.attributes = params[:list]
     list.private = params[:private] if params[:private] && list.private?
 
@@ -51,9 +51,10 @@ class ListsController < ApplicationController
 
   # Concats a list with another.
   def concat
-    list = find_list(params[:id])
-    list.concat(find_list(params[:other]))
-    flash[:notice] = t('messages.list.success.concat')
+    list = List.find_for_user(params[:id], current_user)
+    other = List.find_for_user(params[:other], current_user)
+    list.concat(other)
+    flash[:notice] = t('messages.list.success.concat', title: other.title)
     redirect_to list_experts_url(list)
   rescue ActiveRecord::RecordNotFound, UnauthorizedError
     raise unless list
@@ -63,14 +64,14 @@ class ListsController < ApplicationController
 
   # Copies a list.
   def copy
-    original = find_list(params[:id])
+    original = List.find_for_user(params[:id], current_user)
     copy = original.copy
     copy.attributes = params[:list]
     copy.user = current_user
     copy.private = true
 
     if copy.save
-      flash[:notice] = t('messages.list.success.copy')
+      flash[:notice] = t('messages.list.success.copy', title: original.title)
       redirect_to list_experts_url(copy)
     else
       flash[:alert] = t('messages.list.errors.copy')
@@ -80,7 +81,7 @@ class ListsController < ApplicationController
 
   # Destroys a list.
   def destroy
-    list = find_list(params[:id])
+    list = List.find_for_user(params[:id], current_user)
 
     unless current_user.authenticate(params[:password])
       flash[:alert] = t('messages.user.errors.password')
@@ -103,17 +104,9 @@ class ListsController < ApplicationController
 
   private
 
-  # Finds a list and raises UnauthorizedError if the current user is not
-  # authorized to access it.
-  def find_list(id)
-    list = List.find(id)
-    raise UnauthorizedError unless list.accessible_for?(current_user)
-    list
-  end
-
   # Shows the list items of a type.
   def show(item_type)
-    @list = find_list(params[:list_id])
+    @list = List.find_for_user(params[:list_id], current_user)
     @items = @list.list_items.by_type(item_type).includes(:item)
     @title = @list.title
     body_class << (body_class.delete(item_type.to_s) + '-list')

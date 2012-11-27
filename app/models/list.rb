@@ -28,6 +28,21 @@ class List < ActiveRecord::Base
 
   default_scope order('lists.private DESC, lists.title ASC')
 
+  # Finds a list and checks if it is accessible for the given user.
+  #
+  #   user.id
+  #   #=> 45
+  #
+  #   List.find_for_user(12, user)
+  #   #=> #<List id: 12, user_id: 45, private: true>
+  #
+  # Raises ActiveRecord::RecordNotFound and UnauthorizedError.
+  def self.find_for_user(id, user)
+    find(id).tap do |list|
+      raise UnauthorizedError unless list.accessible_for?(user)
+    end
+  end
+
   # Selects lists, that are accessible for a user, which means that they
   # are associated with the user or that they are not private.
   #
