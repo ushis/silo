@@ -46,7 +46,7 @@ class ListsController < ApplicationController
       flash[:alert] = t('messages.list.errors.save')
     end
 
-    redirect_to list_experts_path(list)
+    redirect_to list_experts_url(list)
   end
 
   # Concats a list with another.
@@ -54,11 +54,11 @@ class ListsController < ApplicationController
     list = find_list(params[:id])
     list.concat(find_list(params[:other]))
     flash[:notice] = t('messages.list.success.concat')
-    redirect_to list_experts_path(list)
+    redirect_to list_experts_url(list)
   rescue ActiveRecord::RecordNotFound, UnauthorizedError
     raise unless list
     flash[:alert] = t('messages.list.errors.find')
-    redirect_to list_experts_path(list)
+    redirect_to list_experts_url(list)
   end
 
   # Copies a list.
@@ -96,38 +96,28 @@ class ListsController < ApplicationController
     end
   end
 
-  # Defines the actions need for the subclasses.
-  List::ITEM_TYPES.keys.each do |resource|
-    define_method(resource) { show(resource) }
-    define_method(:"remove_#{resource}") { remove(resource) }
+  # Defines the actions needed to show the list items.
+  ListItem::TYPES.each_key do |item_type|
+    define_method(item_type) { show(item_type) }
   end
 
   private
 
-  # Finds a list and raises UnauthorizedError if the current is not
+  # Finds a list and raises UnauthorizedError if the current user is not
   # authorized to access it.
   def find_list(id)
     list = List.find(id)
-
-    unless list.accessible_for?(current_user)
-      raise UnauthorizedError
-    end
-
+    raise UnauthorizedError unless list.accessible_for?(current_user)
     list
   end
 
-  # Shows a subresource.
-  def show(resource)
+  # Shows the list items of a type.
+  def show(item_type)
     @list = find_list(params[:list_id])
+    @items = @list.list_items.by_type(item_type)
     @title = @list.title
-    body_class << (body_class.delete(resource.to_s) + '-list')
-  end
-
-  # Removes a subresource from the list and redirects back to the list.
-  def remove(item_type)
-    list = find_list(params[:list_id])
-    list.remove(item_type, params[:id])
-    redirect_to action: item_type, list_id: list
+    body_class << (body_class.delete(item_type.to_s) + '-list')
+    render :show
   end
 
   # Sets a flash and redirects to the lists index.

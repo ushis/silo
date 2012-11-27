@@ -26,10 +26,10 @@ class Partner < ActiveRecord::Base
 
   validates :company, presence: true
 
-  has_and_belongs_to_many :lists,      uniq: true
-
   has_many :employees,   autosave: true, dependent: :destroy
   has_many :attachments, autosave: true, dependent: :destroy, as: :attachable
+  has_many :list_items,  autosave: true, dependent: :destroy, as: :item
+  has_many :lists,       through:  :list_items
 
   has_one :description, autosave: true, dependent: :destroy
   has_one :comment,     autosave: true, dependent: :destroy, as: :commentable
@@ -115,5 +115,10 @@ class Partner < ActiveRecord::Base
   # Returns the partners comment. A new one is initialized if necessary.
   def comment
     super || self.comment = Comment.new
+  end
+
+  # Returns the company name.
+  def to_s
+    company
   end
 end

@@ -72,31 +72,26 @@ class Ajax::ListsController < AjaxController
   end
 
   # Defines needed actions the add/remove subresources to/from the list.
-  List::ITEM_TYPES.keys.each do |resource|
+  ListItem::TYPES.each_key do |item_type|
     [:add, :remove].each do |op|
-      define_method(:"#{op}_#{resource}") { move(op, resource) }
+      define_method(:"#{op}_#{item_type}") { move(op, item_type) }
     end
   end
 
   private
 
   # Adds/Removes a subresource to/from a list.
-  def move(op, resource)
+  def move(op, item_type)
     list = find_list(params[:list_id])
-    list.send(op, resource, arrayified_param(:ids))
+    list.send(op, item_type, arrayified_param(:ids))
     render json: list
   end
 
   # Finds a list. Raises ActiveRecord::RecordNotFound and UnauthorizedError.
   def find_list(id)
-    unless (list = (id == 'current') ? current_list : List.find_by_id(id))
-      raise ActiveRecord::RecordNotFound
-    end
-
-    unless list.accessible_for?(current_user)
-      raise UnauthorizedError
-    end
-
+    list = (id == 'current') ? current_list : List.find(id)
+    raise ActiveRecord::RecordNotFound unless list
+    raise UnauthorizedError unless list.accessible_for?(current_user)
     list
   end
 

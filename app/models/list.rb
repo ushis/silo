@@ -15,19 +15,16 @@ class List < ActiveRecord::Base
 
   validates :title, presence: true
 
-  has_and_belongs_to_many :experts,  uniq: true, include: :country
-  has_and_belongs_to_many :partners, uniq: true, include: :country
-
+  has_many :list_items, autosave: true, dependent: :destroy
   has_many :current_users, class_name: :User, foreign_key: :current_list_id
+
+  ListItem::TYPES.each do |assoc, klass|
+    has_many assoc, through: :list_items, source: :item, source_type: klass.to_s
+  end
 
   belongs_to :user
 
-  # Hash of all possible list item types.
-  ITEM_TYPES = Hash[
-    reflect_on_all_associations(:has_and_belongs_to_many).map { |r| [r.name, r] }
-  ]
-
-  scope :with_items, includes(ITEM_TYPES.keys)
+  scope :with_items, includes(ListItem::TYPES.keys)
 
   default_scope order('lists.private DESC, lists.title ASC')
 
@@ -82,29 +79,27 @@ class List < ActiveRecord::Base
   # Returns a copy of the list with all its list items.
   def copy
     copy = dup
-
-    ITEM_TYPES.each_key do |assoc|
-      copy.association(assoc).ids_writer(association(assoc).ids_reader)
-    end
-
+    copy.list_items = list_items.map { |item| item.copy(false) }
     copy
   end
 
   # Adds one or more items to the list.
   #
   #   list.add(:experts, 12)
-  #   #=> [#<Expert id: 12>]
+  #   #=> [#<ListItem id: 44, item_id: 12, item_type: 'Expert'>]
   #
   #   list.add(:experts, [13, 44])
-  #   #=> [#<Expert id: 13>, #<Expert id: 44>]
+  #   #=> [
+  #         #<ListItem id: 15, item_id: 12, item_type: 'Expert'>,
+  #         #<ListItem id: 16, item_id: 44, item_type: 'Expert'>,
+  #       ]
   #
   #   list.experts
   #   #=> [#<Expert id: 12>, #<Expert id: 13>, #<Expert id: 44>]
   #
   # Returns a collection of the added items.
   def add(item_type, item_ids)
-    association, item_class = item_type_info(item_type)
-    add_collection(association, item_class.where(id: item_ids))
+    add_collection(ListItem.collection(item_type, item_ids))
   end
 
   # Removes one or more items from the list.
@@ -113,18 +108,22 @@ class List < ActiveRecord::Base
   #   #=> [#<Partner id: 42>, #<Partner id: 11>, #<Partner id: 43>]
   #
   #   list.remove(:partners, 42)
-  #   #=> [#<Partner id: 42>]
+  #   #=> [#<ListItem id: 9, item_id: 42, item_type: 'Partner'>]
   #
   #   list.remove(:partners, [11, 43])
-  #   #=> [#<Partner id: 11>, #<Partner id: 43>]
+  #   #=> [
+  #         #<ListItem id: 91, item_id: 11, item_type: 'Partner'>,
+  #         #<ListItem id: 17, item_id: 43, item_type: 'Partner'>
+  #       ]
   #
   #   list.partners
   #   #=> []
   #
   # Returns a collection of the removed items.
   def remove(item_type, item_ids)
-    association, item_class = item_type_info(item_type)
-    association.delete(item_class.where(id: item_ids))
+    connection.transaction do
+      ListItem.where(list_id: id, item_id: item_ids).by_type(item_type).destroy_all
+    end
   end
 
   # Concatenates the list with another.
@@ -143,18 +142,13 @@ class List < ActiveRecord::Base
   #
   # Returns the list.
   def concat(other)
-    connection.transaction do
-      ITEM_TYPES.each_key do |assoc|
-        add_collection(send(assoc), other.send(assoc))
-      end
-    end
-
+    add_collection(other.list_items.map { |item| item.copy })
     self
   end
 
   # Adds the list items to the JSON reprensentation.
   def as_json(options = {})
-    super(options.merge(include: ITEM_TYPES.keys))
+    super(options.merge(include: ListItem::TYPES.keys))
   end
 
   private
@@ -165,23 +159,15 @@ class List < ActiveRecord::Base
   #   #=> [#<Expert id: 12>, #<Expert id: 13>, #<Expert id: 44>]
   #
   # Returns the collection.
-  def add_collection(association, collection)
+  def add_collection(collection)
     connection.transaction do
-      collection.each do |item|
+      collection.each do |list_item|
         begin
-          association << item
+          list_items << list_item
         rescue ActiveRecord::RecordNotUnique
           next
         end
       end
     end
-  end
-
-  # Returns the association and the model class for the specified item type.
-  def item_type_info(item_type)
-    type = ITEM_TYPES.fetch(item_type)
-    [send(type.name), type.class_name.constantize]
-  rescue KeyError
-    raise ArgumentError, "Ivalid item type: #{item_type}"
   end
 end
