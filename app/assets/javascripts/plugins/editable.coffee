@@ -34,8 +34,8 @@ do ($ = jQuery) ->
         @html ->
           input = $(settings.types[el.data('editable-type')])
           input.attr(name: el.data('prefix') + "[#{el.data('editable')}]")
+          input.prop('autofocus', true)
           input.val(el.text())
-          input
 
       # Set the value and close the dialog on success.
       editor.on 'ajax:success', (_, data) ->
