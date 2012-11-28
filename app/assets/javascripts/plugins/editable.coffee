@@ -42,8 +42,8 @@ do ($ = jQuery) ->
 
       # Tell the user whats going on.
       editor.on 'ajax:error', (_, xhr) ->
-        editor.find('.error').remove()
-        editor.prepend($('<div>', class: 'error', text: xhr.responseText))
+        editor.addClass('error').find('.message').remove()
+        editor.prepend($('<div>', class: 'message', text: xhr.responseText))
 
       # Prepare the editor and display the dialog.
       collection.click ->
