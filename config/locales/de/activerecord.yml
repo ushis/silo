@@ -43,6 +43,11 @@ de:
         name: 'Name'
         prename: 'Vorname'
         updated_at: 'Zuletzt bearbeitet am'
+      list:
+        experts: 'Experten'
+        partners: 'Partner'
+      list_item:
+        note: 'Notiz'
       partner:
         address: 'Adresse'
         advisers: 'Ansprechpartner (Intern)'

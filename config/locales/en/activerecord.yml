@@ -43,6 +43,11 @@ en:
         name: 'Name'
         prename: 'First Name'
         updated_at: 'Updated At'
+      list:
+        experts: 'Experts'
+        partners: 'Partners'
+      list_item:
+        note: 'Note'
       partner:
         address: 'Adress'
         advisers: 'Advisers (Internal)'
