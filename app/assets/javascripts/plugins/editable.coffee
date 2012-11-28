@@ -28,10 +28,7 @@ do ($ = jQuery) ->
 
       # Builds the input field.
       editor.prepare = (el) ->
-        @data('el', el)
-        @attr('action', el.attr('href'))
-
-        @html ->
+        @data('el', el).attr('action', el.attr('href')).html ->
           input = $(settings.types[el.data('editable-type')])
           input.attr(name: el.data('prefix') + "[#{el.data('editable')}]")
           input.prop('autofocus', true)
@@ -45,8 +42,8 @@ do ($ = jQuery) ->
 
       # Tell the user whats going on.
       editor.on 'ajax:error', (_, xhr) ->
-        editor.find('p.error').remove()
-        editor.prepend($('<p>', class: 'error', text: xhr.responseText))
+        editor.find('.error').remove()
+        editor.prepend($('<div>', class: 'error', text: xhr.responseText))
 
       # Prepare the editor and display the dialog.
       collection.click ->
