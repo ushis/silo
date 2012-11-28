@@ -147,17 +147,23 @@ CREATE TABLE `experts_languages` (
   KEY `index_experts_languages_on_expert_id_and_language_id` (`expert_id`,`language_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `experts_lists` (
-  `expert_id` int(11) NOT NULL,
-  `list_id` int(11) NOT NULL,
-  UNIQUE KEY `index_experts_lists_on_expert_id_and_list_id` (`expert_id`,`list_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 CREATE TABLE `languages` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `language` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_languages_on_language` (`language`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `list_items` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `list_id` int(11) NOT NULL,
+  `item_id` int(11) NOT NULL,
+  `item_type` varchar(255) NOT NULL,
+  `note` varchar(255) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_list_items_on_list_id_and_item_id_and_item_type` (`list_id`,`item_id`,`item_type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `lists` (
@@ -170,12 +176,6 @@ CREATE TABLE `lists` (
   PRIMARY KEY (`id`),
   KEY `index_lists_on_user_id` (`user_id`),
   KEY `index_lists_on_title` (`title`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TABLE `lists_partners` (
-  `list_id` int(11) NOT NULL,
-  `partner_id` int(11) NOT NULL,
-  UNIQUE KEY `index_lists_partners_on_list_id_and_partner_id` (`list_id`,`partner_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `partners` (

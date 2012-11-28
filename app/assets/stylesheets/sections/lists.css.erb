@@ -26,8 +26,7 @@ body.lists #main table.lists td:first-child {
   width: 8px;
 }
 
-body.lists #main table.lists td:nth-child(2),
-body.lists #main table.experts td:nth-child(2) {
+body.lists #main table.lists td:nth-child(2) {
   background-color: #f7f7f7;
 }
 
@@ -54,6 +53,10 @@ body.lists #main div.header ul.tools li.open a.active  {
   cursor: default;
 }
 
+body.lists #main table td.note {
+  min-width: 200px;
+}
+
 body.lists #main table td.removefromlist {
   width: 18px;
 }
@@ -67,16 +70,6 @@ body.lists #main table td.removefromlist a {
 
 body.lists #main table td.removefromlist a:before {
   margin-right: 99999px;
-}
-
-/* Expert-Lists */
-body.experts-list #main table td:first-child {
-  width: 6px;
-  padding: 0;
-}
-
-body.experts-list #main table td:nth-child(3) {
-  background: #f7f7f7;
 }
 
 /* List form overlay */

@@ -24,11 +24,13 @@ class Expert < ActiveRecord::Base
 
   validates :name, presence: true
 
-  has_and_belongs_to_many :lists,     uniq: true
   has_and_belongs_to_many :languages, uniq: true
+
 
   has_many :attachments, autosave: true, dependent: :destroy, as: :attachable
   has_many :addresses,   autosave: true, dependent: :destroy, as: :addressable
+  has_many :list_items,  autosave: true, dependent: :destroy, as: :item
+  has_many :lists,       through:  :list_items
 
   has_many :cvs, autosave: true, dependent: :destroy,
            select: [:id, :expert_id, :language_id], order: :language_id
@@ -156,6 +158,8 @@ class Expert < ActiveRecord::Base
   def full_name
     "#{prename} #{name}"
   end
+
+  alias :to_s :full_name
 
   # Returns a string containing degree, prename and name.
   #

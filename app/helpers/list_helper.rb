@@ -2,13 +2,13 @@
 module ListHelper
 
   # Renders a "Remove item from this list" link.
-  def remove_from_list_button_for(list, record, options = {})
+  def remove_from_list_button_for(list, list_item, options = {})
     options = {
       method: :delete,
       class: 'icon-removefromlist'
     }.merge(options)
 
-    link_to(t('actions.remove'), [list, record], options)
+    link_to(t('actions.remove'), [list, list_item], options)
   end
 
   # Creates an "open this list" link.
@@ -40,11 +40,6 @@ module ListHelper
     send(:"ajax_list_#{item_type}_path", list_id: :current)
   end
 
-  # Returns the item type for the specified record.
-  def listable_type_for(record)
-    record.class.name.downcase.pluralize
-  end
-
   # Renders a listable button for a single record or a collection of records.
   #
   #   listable_button_for(expert)
@@ -55,19 +50,16 @@ module ListHelper
   #
   # If a block is given, it is captured and used as the buttons content.
   def listable_button_for(record_or_collection, &block)
-    options = { remote: true, 'data-type' => :json, class: 'listable' }
+    collection = Array(record_or_collection)
+    return nil if collection.empty?
 
-    case record_or_collection
-    when Array, ActiveRecord::Relation
-      return nil if record_or_collection.empty?
-      options['data-ids'] = record_or_collection.map(&:id).join(' ')
-      options['data-item-type'] = listable_type_for(record_or_collection.first)
-    when ActiveRecord::Base
-      options['data-ids'] = record_or_collection.id
-      options['data-item-type'] = listable_type_for(record_or_collection)
-    else
-      raise TypeError, "First argument is wether a record nor a collection."
-    end
+    options = {
+      remote: true,
+      'data-type' => :json,
+      'data-ids' => collection.map(&:id).join(' '),
+      'data-item-type' => ListItem::TYPES.key(collection.first.class),
+      class: 'listable'
+    }
 
     txt = block.nil? ? '' : capture(&block)
     link_to(txt, listable_url(options['data-item-type']), options)

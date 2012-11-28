@@ -26,8 +26,12 @@ do ($ = jQuery) ->
     $('div.flash').siloFlash()
     $('a.hidden-form').siloHiddenForm()
     $('a.chooser').siloChooser()
-    $('a[data-confirm]').siloConfirm()
+    $('[data-help]').siloHelp()
     $('[data-master-box]').siloMasterBox()
+    $('a[data-confirm]').siloConfirm()
+    $('a[data-editable]').siloEditable()
+    $('input[data-complete]').siloAutocomplete()
+    $('input[data-multi-select]').siloMultiSelect()
 
     # Login
     $('#login-form').siloLogin()
@@ -36,12 +40,3 @@ do ($ = jQuery) ->
     $('a.listable').siloListable()
     $('a.open-list').siloOpenList()
     $('#current-list').siloCurrentList()
-
-    # Autocomplete
-    $('input[data-complete]').siloAutocomplete()
-
-    # Multi select
-    $('input[data-multi-select]').siloMultiSelect()
-
-    # Help
-    $('[data-help]').siloHelp()

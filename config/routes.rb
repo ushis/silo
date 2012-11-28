@@ -45,14 +45,15 @@ Silo::Application.routes.draw do
   get 'lists(/page/:page)' => 'lists#index', as: :lists
 
   resources :lists, only: [:create, :update, :destroy] do
+    resources :list_items, only: [:destroy]
+
     get :current, on: :collection
     put :copy,    on: :member
     put :concat,  on: :member
 
-    [:experts, :partners].each do |resource|
-      resources resource, only: [], controller: :lists do
-        get    :index,   action: resource,              on: :collection
-        delete :destroy, action: :"remove_#{resource}", on: :member
+    [:experts, :partners].each do |item_type|
+      resources item_type, only: [], controller: :lists do
+        get :index, action: item_type, on: :collection
       end
     end
   end
@@ -84,6 +85,8 @@ Silo::Application.routes.draw do
     end
 
     resources :lists, except: [:update, :destroy] do
+      resources :list_item, only: [:update]
+
       member do
         put :open
         get :copy
