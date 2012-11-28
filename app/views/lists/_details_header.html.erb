@@ -1,7 +1,10 @@
 <div class="header details">
-  <h2>
+  <h2 class="<%= list.private ? 'icon-lock' : 'icon-globe' %>">
     <%= list.title %>
   </h2>
+  <div class="markdown">
+    <%= markdown list.comment.comment %>
+  </div>
   <ul class="tools">
     <li class="open">
       <%= open_list_button_for list %>
