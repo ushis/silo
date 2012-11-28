@@ -2,9 +2,7 @@
   <h2 class="<%= list.private ? 'icon-lock' : 'icon-globe' %>">
     <%= list.title %>
   </h2>
-  <div class="markdown">
-    <%= markdown list.comment.comment %>
-  </div>
+  <%= markdown list.comment.comment %>
   <ul class="tools">
     <li class="open">
       <%= open_list_button_for list %>
