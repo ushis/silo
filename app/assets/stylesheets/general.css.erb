@@ -539,6 +539,10 @@ body.partners-list #main div.header ul.tabs li.partners-list a {
   line-height: 1em;
   text-shadow: 0 1px 0px #efefef;
   margin-bottom: 6px;
+  max-width: 600px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 #main div.form-wrapper h2 {
@@ -1153,7 +1157,7 @@ form input[type=file],
 #main div.header input[type=text] {
   float: left;
   padding: 6px 8px 5px 8px;
-  background: #e8e8e8;
+  background: whiteSmoke;
   color: #000;
   font-size: 12px;
   line-height: 15px;
@@ -1173,7 +1177,6 @@ form textarea:focus,
 form input[type=text]:focus,
 form input[type=password]:focus,
 #main div.header input[type=text]:focus {
-  background: #f5f5f5;
   color: #444;
 }
 
