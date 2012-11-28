@@ -43,6 +43,22 @@ module ApplicationHelper
     link_to(t('actions.delete'), options.delete(:url), options)
   end
 
+  # Creates an editable button for a records attribute.
+  def editable_button_for(record, method, options = {})
+    klass = record.class
+
+    options = {
+      url: [:ajax, record],
+      'data-editable' => method,
+      'data-prefix' => klass.name.underscore,
+      'data-name' => klass.human_attribute_name(method),
+      'data-editable-type' => klass.columns_hash[method.to_s].type,
+      class: 'editable'
+    }.merge(options)
+
+    link_to(record.send(method) || '', options.delete(:url), options)
+  end
+
   # Checks if the current user has access to the section and adds a
   # 'disabled' class to the link if not.
   #

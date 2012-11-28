@@ -9,7 +9,6 @@ do ($ = jQuery) ->
 
     settings = $.extend {
       submitClass: 'submit'
-      abortClass: 'abort'
       confirmClass: 'confirmation'
       passwordClass: 'password'
     }, options

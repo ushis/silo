@@ -85,6 +85,8 @@ Silo::Application.routes.draw do
     end
 
     resources :lists, except: [:update, :destroy] do
+      resources :list_item, only: [:update]
+
       member do
         put :open
         get :copy

@@ -263,6 +263,19 @@ div.confirm input[type=password] {
   -moz-box-sizing: border-box;
 }
 
+/* Editable */
+a.editable:empty:before {
+  content: '-';
+}
+
+div.overlay.editable p.error {
+  margin: 0 0 6px 0;
+  padding: 0;
+  font-size: .7em;
+  font-weight: bold;
+  color: #f66;
+}
+
 /* Help */
 div.help {
   position: absolute;

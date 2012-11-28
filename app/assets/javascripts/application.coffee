@@ -27,6 +27,7 @@ do ($ = jQuery) ->
     $('a.hidden-form').siloHiddenForm()
     $('a.chooser').siloChooser()
     $('a[data-confirm]').siloConfirm()
+    $('[data-editable]').siloEditable()
     $('[data-master-box]').siloMasterBox()
 
     # Login
