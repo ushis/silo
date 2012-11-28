@@ -16,6 +16,12 @@
         <%= f.label :title %>
         <%= f.text_field :title %>
       </div>
+      <%= f.fields_for :comment do |fields| %>
+        <div>
+          <%= fields.label :comment %>
+          <%= fields.text_area :comment %>
+        </div>
+      <% end %>
     <% end %>
   </div>
 </div>

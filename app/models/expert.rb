@@ -26,7 +26,6 @@ class Expert < ActiveRecord::Base
 
   has_and_belongs_to_many :languages, uniq: true
 
-
   has_many :attachments, autosave: true, dependent: :destroy, as: :attachable
   has_many :addresses,   autosave: true, dependent: :destroy, as: :addressable
   has_many :list_items,  autosave: true, dependent: :destroy, as: :item
