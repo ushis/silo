@@ -45,10 +45,10 @@ class ListItem < ActiveRecord::Base
   #
   #   ListItem.collection(:experts, [1, 2, 3])
   #   #=> [
-  #         #<ListItem id: nil, item_id: 1, item_type: "Expert">,
-  #         #<ListItem id: nil, item_id: 2, item_type: "Expert">,
-  #         #<ListItem id: nil, item_id: 3, item_type: "Expert">
-  #       ]
+  #   #     #<ListItem id: nil, item_id: 1, item_type: "Expert">,
+  #   #     #<ListItem id: nil, item_id: 2, item_type: "Expert">,
+  #   #     #<ListItem id: nil, item_id: 3, item_type: "Expert">
+  #   #   ]
   #
   # Raises ArgumentError for invalid item types.
   def self.collection(item_type, item_ids)

@@ -105,9 +105,9 @@ class List < ActiveRecord::Base
   #
   #   list.add(:experts, [13, 44])
   #   #=> [
-  #         #<ListItem id: 15, item_id: 12, item_type: 'Expert'>,
-  #         #<ListItem id: 16, item_id: 44, item_type: 'Expert'>,
-  #       ]
+  #   #     #<ListItem id: 15, item_id: 12, item_type: 'Expert'>,
+  #   #     #<ListItem id: 16, item_id: 44, item_type: 'Expert'>,
+  #   #   ]
   #
   #   list.experts
   #   #=> [#<Expert id: 12>, #<Expert id: 13>, #<Expert id: 44>]
@@ -127,9 +127,9 @@ class List < ActiveRecord::Base
   #
   #   list.remove(:partners, [11, 43])
   #   #=> [
-  #         #<ListItem id: 91, item_id: 11, item_type: 'Partner'>,
-  #         #<ListItem id: 17, item_id: 43, item_type: 'Partner'>
-  #       ]
+  #   #     #<ListItem id: 91, item_id: 11, item_type: 'Partner'>,
+  #   #     #<ListItem id: 17, item_id: 43, item_type: 'Partner'>
+  #   #   ]
   #
   #   list.partners
   #   #=> []
