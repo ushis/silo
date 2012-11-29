@@ -109,6 +109,7 @@ class ListsController < ApplicationController
     @list = List.find_for_user(params[:list_id], current_user)
     @items = @list.list_items.by_type(item_type).includes(:item)
     @title = @list.title
+    body_class << :show
     body_class << (body_class.delete(item_type.to_s) + '-list')
     render :show
   end

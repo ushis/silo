@@ -221,12 +221,15 @@ div.clear {
 }
 
 #nav ul #current-list div.title a {
-  display: inline;
-  max-width: 200px;
+  display: inline-block;
+  max-width: 170px;
   margin-left: 3px;
   text-transform: none;
   font-size: 1em;
   background: none;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 body.lists #nav ul #current-list div.title a {
@@ -289,15 +292,20 @@ body.lists #nav #current-list {
 }
 
 #content {
+  float: left;
   clear: both;
+  width: 100%;
   padding: 10px 0;
   background-color: #dbdbdb;
   border-radius: 4px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
 }
 
 /* Sidebar */
 #sidebar {
   position: absolute;
+  z-index: 2;
   width: 80px;
   padding: 4px 10px 0 10px;
   font-size: .7em;
@@ -350,6 +358,7 @@ body.new #sidebar li.new a{
 /* Main */
 #main {
   position: relative;
+  z-index: 1;
   margin: 0 10px 0 100px;
   padding: 18px 20px;
   background-color: #f9f9f9;
@@ -1244,9 +1253,7 @@ form div.row > div {
   margin-right: 0;
 }
 
-
 /* NOT IMPLEMENTED */
-
 body.references p.icon-under-construction {
   position: relative;
   width: 300px;
