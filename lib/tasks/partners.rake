@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 require 'carmen'
 require 'colorize'
 require 'psych'
@@ -53,8 +55,36 @@ namespace :partners do
 
         p.comment.comment = data['Notizen'].strip unless data['Notizen'].blank?
 
-        {websites: 'Homepage', phones_b: 'Telefon'}.each do |attr, key|
+        [[:website, 'Homepage'], [:phone, 'TelefonD']].each do |attr, key|
+          p[attr] = data[key].try(:strip)
+        end
 
+        unless (email = data['E_Mail']).blank?
+          email.split('#').pop.gsub('mailto:', '').gsub('http://', '').strip.tap do |email|
+            p.email = email.downcase if email.index('@')
+          end
+        end
+
+        unless (name = data['LTRName']).blank?
+          p.employees << Employee.new(name: name.strip).tap do |emp|
+            emp.job = data['LTRBez'].try(:strip)
+            emp.gender = (data['LTRGeschl'].try(:downcase) == 'w') ? :female : :male
+          end
+        end
+
+        unless (name = data['AnsprPartner']).blank?
+          p.employees << Employee.new(name: name.strip).tap do |emp|
+            emp.contact.m_phones << data['Handy'].strip unless data['Handy'].blank?
+            emp.contact.p_phones << data['TelefonP'].strip unless data['TelefonP'].blank?
+          end
+        end
+
+        unless (advisers = data['IAKPartner']).blank?
+          evil = ['dr.', 'd.k.', 'f', 'd', 'm', 'geschäftsführg.']
+
+          p.advisers = advisers.underscore.split(/[,_\s\/\+]+/).reject do |adviser|
+            evil.include?(adviser)
+          end.map(&:capitalize).join(',')
         end
 
         unless p.save

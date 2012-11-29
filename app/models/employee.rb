@@ -17,7 +17,7 @@
 class Employee < ActiveRecord::Base
   attr_accessible :name, :prename, :title, :gender, :job
 
-  symbolize :gender, in: [:female, :male]
+  symbolize :gender, in: [:female, :male], allow_nil: true
 
   validates :name, presence: true
 
