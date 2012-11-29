@@ -22,7 +22,7 @@ en:
   time:
     formats:
       save: '%Y-%m-%d'
-      short: '%B %e, %Y'
+      short: '%Y/%m/%d'
       long: '%Y/%m/%d %H:%M'
   values:
     boolean:

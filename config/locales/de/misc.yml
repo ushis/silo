@@ -22,8 +22,8 @@ de:
   time:
     formats:
       save: '%Y-%m-%d'
-      short: '%e. %B %Y'
-      long: '%d. %m. %Y %H:%M'
+      short: '%d.%m.%Y'
+      long: '%d.%m.%Y %H:%M'
   values:
     boolean:
       'false': 'Nein'
