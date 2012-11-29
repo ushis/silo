@@ -66,6 +66,7 @@ class ListsController < ApplicationController
   def copy
     original = List.find_for_user(params[:id], current_user)
     copy = original.copy
+    copy.comment = Comment.new(params[:list].try(:delete, :comment_attributes))
     copy.attributes = params[:list]
     copy.user = current_user
     copy.private = true
