@@ -44,7 +44,7 @@
           <li id="current-list" class="<%= 'active' if current_list %>">
             <div class="title">
               <%= t 'labels.list.current' %>:
-              <%= link_to current_list.try(:title), current_lists_path %>
+              <%= link_to current_list.try(:title), list_experts_path(list_id: current_list) %>
             </div>
             <div class="open">
               <%= link_to t('actions.open'), ajax_lists_path, class: 'icon-folder-open' %>

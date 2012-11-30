@@ -12,7 +12,7 @@ do ($ = jQuery) ->
 
     @each ->
       el = $(@)
-      url = $.silo.location(el.data('complete'), 'json')
+      url = $.silo.location(el.data('complete'), format: 'json')
       attribute = el.data('attribute')
 
       $.ajax url: url, dataType: 'json', success: (data) =>

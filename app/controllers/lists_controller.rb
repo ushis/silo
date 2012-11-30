@@ -11,14 +11,6 @@ class ListsController < ApplicationController
     @title = t('labels.list.all')
   end
 
-  # Redirects to the current list. If the user has no current_list,
-  # ListsController#not_found is triggered.
-  def current
-    redirect_to list_experts_url(current_list)
-  rescue ActionController::RoutingError
-    not_found
-  end
-
   # Creates a new list and sets the users current list.
   def create
     list = List.new(params[:list])

@@ -47,7 +47,6 @@ Silo::Application.routes.draw do
   resources :lists, only: [:create, :update, :destroy] do
     resources :list_items, only: [:destroy]
 
-    get :current, on: :collection
     put :copy,    on: :member
     put :concat,  on: :member
 

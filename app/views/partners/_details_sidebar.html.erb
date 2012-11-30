@@ -1,5 +1,4 @@
 <div class="sidebar details">
-
   <h2 class="icon-partner">
     <%= partner.company %>
   </h2>
@@ -31,20 +30,14 @@
   </ul>
 
   <h3 class="updated_at">
-    <%= Partner.human_attribute_name(:updated_at) %>:
+    <%= Partner.human_attribute_name :updated_at %>:
     <%= l partner.updated_at, format: :short %>
     <%= t 'labels.generic.by', name: partner.user.try(:full_name) %>
   </h3>
 
   <h4>
-    <%= t('labels.lists') %>
+    <%= Partner.human_attribute_name :lists %>
   </h4>
-  <ul class="lists">
-    <% @partner.lists.each do |list| %>
-      <li>
-        <%= link_to list.title, list_partners_path(list), class: 'icon-list' %>
-      </li>
-    <% end %>
-  </ul>
 
+  <%= render 'shared/list_tracker', parent: @partner %>
 </div>

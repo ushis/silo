@@ -39,4 +39,5 @@ do ($ = jQuery) ->
     # Lists
     $('a.listable').siloListable()
     $('a.open-list').siloOpenList()
+    $('[data-list-tracker]').siloListTracker()
     $('#current-list').siloCurrentList()

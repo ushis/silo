@@ -28,19 +28,24 @@ do ($ = jQuery) ->
         index:      '<%= paths.ajax_languages_path %>'
       lists:
         current:    '<%= paths.ajax_list_path(id: :current) %>'
+        experts:    '<%= paths.list_experts_path(list_id: ':id') %>'
+        partners:   '<%= paths.list_partners_path(list_id: ':id') %>'
 
     # Returns the path to the specified location. The location must be
-    # specified as dot separated key. With the second argument a format
-    # can be set.
+    # specified as dot separated key. With the second argument parameters
+    # and a format can be set.
     #
     #   $.silo.location('areas')
     #   #=> '/ajax/areas'
     #
-    #   $.silo.location('lists.current', 'json')
+    #   $.silo.location('lists.experts', id: 12)
+    #   #=> '/lists/12/experts'
+    #
+    #   $.silo.location('lists.current', format: 'json')
     #   #=> '/ajax/lists/current.json'
     #
     # Raises an exception for invalid keys.
-    location: (keys, format) ->
+    location: (keys, params = {}) ->
       if keys not instanceof Array
         keys = keys.trim().split('.')
 
@@ -56,7 +61,14 @@ do ($ = jQuery) ->
 
         path = path.index
 
-      if format? then [path, format].join('.') else path
+      if params.format?
+        path += ".#{params.format}"
+        delete(params.format)
+
+      for param, value of params
+        path = path.replace(new RegExp(":#{param}(?=/|$)", 'gi'), value)
+
+      path
 
     # Detects the availability of localStorage. Returns true if localStorage
     # is available, else false.

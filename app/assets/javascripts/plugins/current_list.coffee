@@ -19,7 +19,7 @@ do ($ = jQuery) ->
 
     # Retrieves the current list from the server and updates the view.
     sync: ->
-      url = $.silo.location('lists.current', 'json')
+      url = $.silo.location('lists.current', format: 'json')
       $.ajax url, success: ((data) => @set(data)), error: (=> @set(null))
 
     # Binds ajax events to the syncro links.
@@ -31,9 +31,16 @@ do ($ = jQuery) ->
     set: (list) ->
       list ||= {}
       @el.toggleClass('active', !! list.title)
+      @title.attr('href', $.silo.location('lists.experts', id: list.id))
       @title.text(list.title)
       @updateItems(list)
       @updateOpeners(list)
+      @updateTrackers(list)
+
+    # Connects trackers with the current list.
+    connectWithListTrackers: (collection) ->
+      @listTrackers ||= $()
+      @listTrackers = @listTrackers.add(collection)
 
     # Connects some list openers with the current list.
     connectWithListOpeners: (collection) ->
@@ -55,6 +62,29 @@ do ($ = jQuery) ->
         unless @el.hasClass('active')
           @select?.trigger('show')
           return false
+
+    # Updates the list trackers.
+    updateTrackers: (list) ->
+      ids = {}
+      title = @title
+
+      @listTrackers?.each ->
+        el = $(@).addClass('ready')
+        type = el.data('item-type')
+        current = el.find("[data-list-id=#{list.id}]")
+        ids[type] ||= (obj.id for obj in list[type] || [])
+
+        unless ids[type].indexOf(el.data('id')) > -1
+          return current.hide()
+
+        if current.length > 0
+          return current.show()
+
+        el.append ->
+          href = $.silo.location(['lists', type], id: list.id)
+
+          $("<#{el.data('list-tracker')}>", 'data-list-id': list.id).append ->
+            $('<a>', href: href, text: title.text(), class: 'icon-list')
 
     # Updates all list openers.
     updateOpeners: (list) ->
@@ -84,3 +114,6 @@ do ($ = jQuery) ->
 
   # Turns a link into a "open this list" link.
   $.fn.siloOpenList = -> CurrentList.connectWithListOpeners(@)
+
+  # Connects a list tracker with the current list.
+  $.fn.siloListTracker = -> CurrentList.connectWithListTrackers(@)
