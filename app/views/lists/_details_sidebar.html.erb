@@ -2,6 +2,7 @@
   <h2 class="icon-list">
     <%= list.title %>
   </h2>
+
   <ul class="tools">
     <li class="open">
       <%= open_list_button_for list %>
@@ -26,6 +27,10 @@
       <%= delete_button_for list %>
     </li>
   </ul>
-  <h4><%= ListItem.human_attribute_name(:note) %></h4>
+
+  <h4>
+    <%= List.human_attribute_name(:comment) %>
+  </h4>
+
   <%= markdown list.comment.comment %>
 </div>

@@ -3,7 +3,7 @@
     <% if parent.cvs.empty? %>
       <tr class="empty">
         <td>
-          <%= t "messages.#{parent.class.name.downcase}.errors.no_cvs" %>
+          <%= t "messages.#{parent.class.to_s.downcase}.errors.no_cvs" %>
         </td>
       </tr>
     <% else %>
@@ -18,7 +18,7 @@
           <td>
             <%= l cv.created_at, format: :long %>
           </td>
-          <% if current_user.access?(parent.class.name.downcase.pluralize) %>
+          <% if current_user.access?(parent.class.to_s.tableize) %>
             <td class="del">
               <%= delete_button_for cv, url: [parent, cv], password: false %>
             </td>

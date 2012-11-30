@@ -3,7 +3,7 @@
     <% if parent.addresses.empty? %>
       <tr>
         <td class="empty">
-          <%= t "messages.#{parent.class.name.downcase}.errors.no_addresses" %>
+          <%= t "messages.#{parent.class.to_s.downcase}.errors.no_addresses" %>
         </td>
       </tr>
     <% else %>
@@ -13,7 +13,7 @@
             <%= simple_format address.address %>
             <%= address.country.try(:human) %>
           </td>
-          <% if current_user.access?(parent.class.name.downcase.pluralize) %>
+          <% if current_user.access?(parent.class.to_s.tableize) %>
             <td class="del">
               <%= delete_button_for address, url: [parent, address], password: false %>
             </td>

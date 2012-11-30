@@ -3,7 +3,7 @@
     <% if parent.attachments.empty? %>
       <tr class="empty">
         <td>
-          <%= t "messages.#{parent.class.name.downcase}.errors.no_attachments" %>
+          <%= t "messages.#{parent.class.to_s.downcase}.errors.no_attachments" %>
         </td>
       </tr>
     <% else %>
@@ -18,7 +18,7 @@
           <td>
             <%= l attachment.created_at, format: :long %>
           </td>
-          <% if current_user.access?(parent.class.name.downcase.pluralize) %>
+          <% if current_user.access?(parent.class.to_s.tableize) %>
             <td class="del">
               <%= delete_button_for attachment, password: false, url: [parent, attachment] %>
             </td>
