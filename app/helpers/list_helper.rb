@@ -1,6 +1,15 @@
 # Defines several list related helpers.
 module ListHelper
 
+  # Renders a link to the current list.
+  def link_to_current_list
+    if current_list
+      link_to current_list.try(:title), list_experts_path(list_id: current_list)
+    else
+      link_to nil, lists_path
+    end
+  end
+
   # Renders a "Remove item from this list" link.
   def remove_from_list_button_for(list, list_item, options = {})
     options = {

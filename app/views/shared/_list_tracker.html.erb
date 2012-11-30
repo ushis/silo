@@ -1,5 +1,5 @@
 <ul class="lists" data-id="<%= parent.id %>" data-item-type="<%= parent.class.to_s.tableize %>" data-list-tracker="li">
-  <% parent.lists.each do |list| %>
+  <% parent.lists.accessible_for(current_user).each do |list| %>
     <li data-list-id="<%= list.id %>">
       <%= link_to list.title, list_experts_path(list), class: 'icon-list' %>
     </li>
