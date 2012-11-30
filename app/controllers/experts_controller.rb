@@ -21,7 +21,10 @@ class ExpertsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.pdf { report(@expert) }
+
+      format.pdf do
+        send_report ExpertReport.new(@expert, current_user), @expert.full_name
+      end
     end
   end
 
@@ -98,19 +101,11 @@ class ExpertsController < ApplicationController
     end
   end
 
+  private
+
   # Sets a not found flash and redirects to the experts index page.
   def not_found
     flash[:alert] = t('messages.expert.errors.find')
     redirect_to experts_url
-  end
-
-  private
-
-  # Sends a generated pdf including the experts deatils.
-  def report(expert)
-    send_data ExpertReport.new(expert, current_user).render,
-              filename: "report-#{expert.full_name.parameterize}.pdf",
-              type: 'application/pdf',
-              disposition: 'inline'
   end
 end

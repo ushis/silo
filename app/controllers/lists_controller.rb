@@ -111,18 +111,11 @@ class ListsController < ApplicationController
         render :show
       end
 
-      format.pdf { report(@list, item_type) }
+      format.pdf do
+        options = { only: arrayified_param(:attributes) }
+        send_report ListReport.new(@list, item_type, current_user, options), @title
+      end
     end
-  end
-
-  #
-  def report(list, item_type)
-    options = { only: arrayified_param(:attributes) }
-
-    send_data ListReport.new(list, item_type, current_user, options).render,
-              filename: "report-#{list.title.parameterize}.pdf",
-              type: 'application/pdf',
-              disposition: 'inline'
   end
 
   # Sets a flash and redirects to the lists index.

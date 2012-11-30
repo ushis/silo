@@ -23,7 +23,10 @@ class PartnersController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.pdf { report(@partner) }
+
+      format.pdf do
+        send_report PartnerReport.new(@partner, current_user), @partner.company
+      end
     end
   end
 
@@ -99,13 +102,6 @@ class PartnersController < ApplicationController
   end
 
   private
-
-  def report(partner)
-    send_data PartnerReport.new(partner, current_user).render,
-              filename: "report-#{partner.company.parameterize}.pdf",
-              type: 'application/pdf',
-              disposition: 'inline'
-  end
 
   # Sets an error message and redirects the user.
   def not_found

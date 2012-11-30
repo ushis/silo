@@ -75,6 +75,14 @@ class ApplicationController < ActionController::Base
     I18n.locale.to_s << request.path
   end
 
+  # Sends a report to the browser.
+  def send_report(report, title)
+    send_data report.render,
+              filename: "report-#{title.parameterize}.pdf",
+              type: 'application/pdf',
+              disposition: 'inline'
+  end
+
   # Returns a hash of arrayified params.
   #
   #   params[:some_ids]             #=> '123 423 65 34'
