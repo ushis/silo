@@ -1,18 +1,15 @@
-<div class="header details">
-  <h2 class="<%= list.private ? 'icon-lock' : 'icon-globe' %>">
+<div class="sidebar details">
+  <h2 class="icon-list">
     <%= list.title %>
   </h2>
-  <%= markdown list.comment.comment %>
   <ul class="tools">
     <li class="open">
       <%= open_list_button_for list %>
     </li>
-    <% if list.private? %>
-      <li>
-        <%= link_to t('actions.share'), list_path(list), method: :put,
-                    'data-private' => 0, class: 'icon-globe' %>
-      </li>
-    <% end %>
+    <li>
+      <%= link_to t('actions.share'), list_path(list), method: :put,
+                  'data-private' => 0, class: "icon-globe #{'disabled' unless list.private?}" %>
+    </li>
     <li class="copy">
       <%= link_to t('actions.copy'), copy_ajax_list_path(list),
                   class: 'hidden-form icon-copy' %>
@@ -29,12 +26,6 @@
       <%= delete_button_for list %>
     </li>
   </ul>
-  <ul class="tabs">
-    <li class="experts-list">
-      <%= link_to List.human_attribute_name(:experts), list_experts_path(list) %>
-    </li>
-    <li class="partners-list">
-      <%= link_to List.human_attribute_name(:partners), list_partners_path(list) %>
-    </li>
-  </ul>
+  <h4><%= ListItem.human_attribute_name(:note) %></h4>
+  <%= markdown list.comment.comment %>
 </div>

@@ -21,6 +21,9 @@ do ($ = jQuery) ->
     # A click on this link will trigger a POST request to "/controller/action"
     # with a "name=Hello" in the data string.
     handleMethod: (link) ->
+      if link.hasClass('disabled')
+        return false
+
       meta = $.extend {
         method: 'GET'
       }, link.data()

@@ -1,29 +1,35 @@
 <%= render 'sidebar' %>
 
 <div id="main">
-  <%= render 'details_header', list: @list %>
+  <%= render 'details_sidebar', list: @list %>
 
-  <table class="list-items">
-    <thead>
-      <tr>
-        <th><%= ListItem.human_attribute_name(:name) %></th>
-        <th><%= ListItem.human_attribute_name(:note) %></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @items.each do |list_item| %>
-        <tr>
-          <td>
-            <%= link_to list_item.name, list_item.item %>
-          </td>
-          <td class="note">
-            <%= editable_button_for list_item, :note, url: [:ajax, @list, list_item] %>
-          </td>
-          <td class="removefromlist">
-            <%= remove_from_list_button_for @list, list_item %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+  <div class="tabbed-content">
+    <%= render 'tabs', list: @list %>
+    <div class="content">
+      <table class="list-items">
+        <thead>
+          <tr>
+            <th><%= ListItem.human_attribute_name(:name) %></th>
+            <th><%= ListItem.human_attribute_name(:note) %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @items.each do |list_item| %>
+            <tr>
+              <td>
+                <%= link_to list_item.name, list_item.item %>
+              </td>
+              <td class="note">
+                <%= editable_button_for list_item, :note, url: [:ajax, @list, list_item] %>
+              </td>
+              <td class="removefromlist">
+                <%= remove_from_list_button_for @list, list_item %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="clear"></div>
 </div>

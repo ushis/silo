@@ -9,13 +9,28 @@ body.partners.edit #main {
   width: 740px;
 }
 
-/* Table */
+body.partners.show #main,
+body.partners.documents #main {
+  padding-right: 10px;
+  background-color: #EEE;
+  box-shadow: 0 1px 2px rgba(0,0,0,.33);
+}
 
-body.partners.index table.partners td:first-child a {
-  max-width: 400px;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
+body.partners.show #main div.tabbed-content div.content ul.info li {
+  width: 100%;
+}
+
+body.partners #main div.sidebar.details h3.updated_at {
+  margin-top: -15px;
+  margin-bottom: 20px;
+}
+
+body.partners.show #main div.tabbed-content ul.tabs li.show, 
+body.employees #main div.tabbed-content ul.tabs li.employees,
+body.partners.documents #main div.tabbed-content ul.tabs li.documents {
+  background: white;
+  color: #555;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .33);
 }
 
 /* Form */
@@ -58,6 +73,10 @@ body.partners #main div.form-wrapper input[type=submit] {
 
 /* Documents */
 body.partners.documents #main div.attachments {
-  width: 50%;
+  width: 100%;
+}
+
+body.partners.documents #main div.attachments h4  {
+  margin: 5px 0 -5px 8px;
 }
 

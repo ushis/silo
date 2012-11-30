@@ -1,23 +1,41 @@
 <%= render 'sidebar' %>
 
 <div id="main">
-  <%= render 'details_header', partner: @partner %>
+  <%= render 'details_sidebar', partner: @partner %>
 
-  <% if current_user.access?(:partners) %>
-    <div class="submenu">
-      <%= link_to t('labels.attachment.new'),
-                  new_ajax_partner_attachment_path(@partner),
-                  class: 'hidden-form icon-plus' %>
+  <div class="tabbed-content">
+
+    <ul class="tabs">
+      <li class="show">
+        <%= link_to t('labels.partner.details'), partner_path(@partner) %>
+      </li>
+      <li class="employees">
+        <%= link_to t('labels.partner.employees'), partner_employees_path(@partner) %>
+      </li>
+      <li class="documents">
+        <%= link_to t('labels.partner.documents'), documents_partner_path(@partner) %>
+      </li>
+    </ul>
+  
+    <div class="content">
+      <% if current_user.access?(:partners) %>
+        <div class="tools">
+          <%= link_to t('labels.attachment.new'),
+                      new_ajax_partner_attachment_path(@partner),
+                      class: 'hidden-form icon-plus' %>
+        </div>
+      <% end %>
+      <div class="attachments info">
+        <h4>
+          <%= Partner.human_attribute_name :attachments %>
+        </h4>
+        <div class="info docs">
+          <%= render 'shared/attachments_table', parent: @partner %>
+        </div>
+      </div><!-- attachments -->
     </div>
-  <% end %>
 
-  <div class="attachments info">
-    <h4>
-      <%= Partner.human_attribute_name :attachments %>
-    </h4>
-
-    <%= render 'shared/attachments_table', parent: @partner %>
-  </div><!-- attachments -->
+  </div>
 
   <div class="clear"></div>
 </div>

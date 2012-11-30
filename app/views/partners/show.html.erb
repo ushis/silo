@@ -1,59 +1,71 @@
 <%= render 'sidebar' %>
 
 <div id="main">
-  <%= render 'details_header', partner: @partner %>
+  <%= render 'details_sidebar', partner: @partner %>
 
-  <div class="left">
-    <div class="info">
-      <div class="row">
-        <div class="businesses">
-          <h4><%= Partner.human_attribute_name :businesses %></h4>
-          <p><%= @partner.businesses.join(', ') %></p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="advisers">
-          <h4><%= Partner.human_attribute_name :advisers %></h4>
-          <p><%= @partner.advisers.join(', ') %></p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="comments">
-          <h4><%= Partner.human_attribute_name :description %></h4>
-          <%= markdown @partner.description %>
-        </div>
-      </div>
-      <div class="row last">
-        <div class="comments">
-          <h4><%= Partner.human_attribute_name :comment %></h4>
-          <%= markdown @partner.comment %>
-        </div>
-      </div>
-    </div>
-  </div><!-- left -->
+  <div class="tabbed-content">
 
-  <div class="right">
-    <div class="info address">
-      <div class="row">
-        <h4><%= Partner.human_attribute_name :address %></h4>
-        <p><%= @partner.street %></p>
-        <p><%= @partner.zip %> <%= @partner.city %> <%= @partner.region %></p>
-        <p><%= @partner.country %></p>
-      </div>
-      <div class="row">
-        <h4><%= Partner.human_attribute_name :website %></h4>
-        <p><%= contact_value @partner.website, :websites %></p>
-      </div>
-      <div class="row">
-        <h4><%= Partner.human_attribute_name :email %></h4>
-        <p><%= contact_value @partner.email, :emails %></p>
-      </div>
-      <div class="row last">
-        <h4><%= Partner.human_attribute_name :phone %></h4>
-        <p><%= contact_value @partner.phone, :phones %></p>
-      </div>
+    <ul class="tabs">
+      <li class="show">
+        <%= link_to t('labels.partner.details'), partner_path(@partner) %>
+      </li>
+      <li class="employees">
+        <%= link_to t('labels.partner.employees'), partner_employees_path(@partner) %>
+      </li>
+      <li class="documents">
+        <%= link_to t('labels.partner.documents'), documents_partner_path(@partner) %>
+      </li>
+    </ul>
+    
+    <div class="content">
+    
+      <div class="left">
+        <ul class="info">
+          <li class="businesses">
+            <h4><%= Partner.human_attribute_name :businesses %></h4>
+            <p><%= @partner.businesses.join(', ') %></p>
+          </li>
+          <li class="advisers">
+            <h4><%= Partner.human_attribute_name :advisers %></h4>
+            <p><%= @partner.advisers.join(', ') %></p>
+          </li>
+          <li class="comments">
+            <h4><%= Partner.human_attribute_name :description %></h4>
+            <%= markdown @partner.description %>
+          </li>
+          <li class="comments">
+            <h4><%= Partner.human_attribute_name :comment %></h4>
+            <%= markdown @partner.comment %>
+          </li>
+        </ul>
+      </div><!-- left -->
+
+      <div class="right">
+        <ul class="info addresses">
+          <li>
+            <h4><%= Partner.human_attribute_name :address %></h4>
+            <p><%= @partner.street %></p>
+            <p><%= @partner.zip %> <%= @partner.city %> <%= @partner.region %></p>
+            <p><%= @partner.country %></p>
+          </li>
+          <li>
+            <h4><%= Partner.human_attribute_name :website %></h4>
+            <p><%= contact_value @partner.website, :websites %></p>
+          </li>
+          <li>
+            <h4><%= Partner.human_attribute_name :email %></h4>
+            <p><%= contact_value @partner.email, :emails %></p>
+          </li>
+          <li>
+            <h4><%= Partner.human_attribute_name :phone %></h4>
+            <p><%= contact_value @partner.phone, :phones %></p>
+          </li>
+        </ul>
+      </div><!-- right -->
+
     </div>
-  </div><!-- right -->
+
+  </div>
 
   <div class="clear"></div>
 </div>
