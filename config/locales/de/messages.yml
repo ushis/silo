@@ -53,16 +53,16 @@ de:
         store: 'Neuer CV hinzugefügt.'
     employee:
       confirm:
-        delete: 'Möchtest du wirklich diesen Mitarbeiter löschen?'
+        delete: 'Möchtest du wirklich diesen Geschäftspartner löschen?'
       errors:
-        create: 'Mitarbeiter konnte nicht hinzugefügt werden.'
-        delete: 'Mitarbeiter konnte nicht gelöscht werden.'
-        find: 'Mitarbeiter konnte nicht gefunden werden.'
-        save: 'Mitarbeiter konnte nicht gespeichert werden.'
+        create: 'Geschäftspartner konnte nicht hinzugefügt werden.'
+        delete: 'Geschäftspartner konnte nicht gelöscht werden.'
+        find: 'Geschäftspartner konnte nicht gefunden werden.'
+        save: 'Geschäftspartner konnte nicht gespeichert werden.'
       success:
-        create: 'Mitarbeiter hinzugefügt: %{name}'
-        delete: 'Mitarbeiter gelöscht: %{name}'
-        save: 'Mitarbeiter gespeichert.'
+        create: 'Geschäftspartner hinzugefügt: %{name}'
+        delete: 'Geschäftspartner gelöscht: %{name}'
+        save: 'Geschäftspartner gespeichert.'
     expert:
       confirm:
         delete: 'Möchtest du wirklich diesen Experten mit all seinen
@@ -116,7 +116,7 @@ de:
         no_addresses: 'Dieser Partner hat keine Adressen.'
         no_attachments: 'Dieser Partner hat keine Anhänge.'
         no_contacts: 'Dieser Partner hat keine Kontakte.'
-        no_employees: 'Dieser Partner hat keine Mitarbeiter.'
+        no_employees: 'Dieser Partner hat keine Geschäftspartner.'
         save: 'Partner konnte nicht gespeichert werden.'
       success:
         create: 'Partner hinzugefügt: %{name}'

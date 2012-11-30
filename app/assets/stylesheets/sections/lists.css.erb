@@ -11,6 +11,22 @@ body.lists #content {
   border-radius: 4px 0 4px 4px;
 }
 
+body.lists.show.experts-list #main div.tabbed-content ul.tabs li.experts-list,
+body.lists.show.partners-list #main div.tabbed-content ul.tabs li.partners-list {
+  background: #FFF;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .33);
+}
+
+body.lists.show.experts-list #main div.tabbed-content ul.tabs li.experts-list a,
+body.lists.show.partners-list #main div.tabbed-content ul.tabs li.partners-list a {
+  color: #555;
+}
+
+body.lists.show #main div.tabbed-content table {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
 /* Filter */
 body.lists #filter form label {
   float: left;
@@ -21,9 +37,12 @@ body.lists #filter input[type=submit] {
   float: left;
 }
 
-/* Tables/Header */
+/* Tables */
 body.lists #main table.lists td:first-child {
-  width: 8px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 9px;
 }
 
 body.lists #main table.lists td:nth-child(2) {
@@ -55,23 +74,26 @@ body.lists #main div.header ul.tools li.open a.active  {
 
 body.lists #main table td.note {
   min-width: 200px;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), inset 3px 0 0 #F7F7D6;
-  border-left: 1px solid rgba(112, 86, 46, 0.14);
+  max-width: 450px;
 }
 
 body.lists #main table td.note a.editable {
   position: relative;
-  color: #8B8B8B;
+  color: #8d8d8d;
   text-shadow: 0 1px 0 #FFF;
-  line-height: 13px;
-  font-style: italic;
-  padding-right: 30px;
+  line-height: 15px;
+  padding: 9px 24px 9px 10px;
+  margin: -6px -10px -5px -10px;
+}
+
+body.lists #main table td.note a.editable:hover {
+  color: #666;
 }
 
 body.lists #main table td.note a.editable:hover:after {
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 9px;
+  right: 10px;
   font-family: FontAwesome;
   content: '\f040';
   font-size: 1.2em;
@@ -97,12 +119,16 @@ body.lists #main table td.removefromlist a:before {
 /* List form overlay */
 div.overlay.list-form {
   top: 50%;
-  width: 360px;
-  margin: -100px 0 0 -180px;
+  width: 400px;
+  margin: -220px 0 0 -180px;
 }
 
 div.overlay.list-form div.form-wrapper {
   margin: 0;
+}
+
+div.overlay.list-form form textarea {
+  height: 100px;
 }
 
 div.overlay.list-form form div.message {

@@ -1,0 +1,31 @@
+<div class="sidebar details">
+  <h2 class="icon-list">
+    <%= list.title %>
+  </h2>
+  <ul class="tools">
+    <li class="open">
+      <%= open_list_button_for list %>
+    </li>
+    <li>
+      <%= link_to t('actions.share'), list_path(list), method: :put,
+                  'data-private' => 0, class: "icon-globe #{'disabled' unless list.private?}" %>
+    </li>
+    <li class="copy">
+      <%= link_to t('actions.copy'), copy_ajax_list_path(list),
+                  class: 'hidden-form icon-copy' %>
+    </li>
+    <li class="concat">
+      <%= link_to t('actions.import'), import_ajax_list_path(list),
+                  class: 'chooser icon-addtolist' %>
+    </li>
+    <li class="edit">
+      <%= link_to t('actions.edit'), edit_ajax_list_path(list),
+                  class: 'hidden-form icon-pencil' %>
+    </li>
+    <li>
+      <%= delete_button_for list %>
+    </li>
+  </ul>
+  <h4><%= ListItem.human_attribute_name(:note) %></h4>
+  <%= markdown list.comment.comment %>
+</div>

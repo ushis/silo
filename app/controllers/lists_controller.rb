@@ -113,6 +113,7 @@ class ListsController < ApplicationController
       format.html do
         @title = @list.title
         @items = @list.list_items.by_type(item_type).includes(:item)
+        body_class << :show
         body_class << (body_class.delete(item_type.to_s) + '-list')
         render :show
       end
