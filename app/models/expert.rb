@@ -21,7 +21,7 @@ class Expert < ActiveRecord::Base
                   :former_collaboration, :country_id, :comment_attributes
 
   attr_accessible :degree, :prename, :name, :gender, :birthday, :fee, :job,
-                  :former_collaboration, as: :exposable
+                  :former_collaboration, :country, as: :exposable
 
   symbolize :gender, in: [:female, :male]
 
