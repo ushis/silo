@@ -166,7 +166,7 @@ class List < ActiveRecord::Base
   #
   # Returns the list.
   def concat(other)
-    add_collection(other.list_items.map { |item| item.copy })
+    add_collection(other.list_items.map(&:copy))
     self
   end
 
