@@ -20,6 +20,11 @@ class PartnersController < ApplicationController
   def show
     @partner = Partner.find(params[:id])
     @title = @partner.company
+
+    respond_to do |format|
+      format.html
+      format.pdf { report(@partner) }
+    end
   end
 
   # Serves the experts documents page.
@@ -94,6 +99,13 @@ class PartnersController < ApplicationController
   end
 
   private
+
+  def report(partner)
+    send_data PartnerReport.new(partner, current_user).render,
+              filename: "report-#{partner.company.parameterize}.pdf",
+              type: 'application/pdf',
+              disposition: 'inline'
+  end
 
   # Sets an error message and redirects the user.
   def not_found

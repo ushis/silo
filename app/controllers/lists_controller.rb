@@ -108,10 +108,27 @@ class ListsController < ApplicationController
   # Shows the list items of a type.
   def show(item_type)
     @list = List.find_for_user(params[:list_id], current_user)
-    @items = @list.list_items.by_type(item_type).includes(:item)
-    @title = @list.title
-    body_class << (body_class.delete(item_type.to_s) + '-list')
-    render :show
+
+    respond_to do |format|
+      format.html do
+        @title = @list.title
+        @items = @list.list_items.by_type(item_type).includes(:item)
+        body_class << (body_class.delete(item_type.to_s) + '-list')
+        render :show
+      end
+
+      format.pdf { report(@list, item_type) }
+    end
+  end
+
+  #
+  def report(list, item_type)
+    options = { only: arrayified_param(:attributes) }
+
+    send_data ListReport.new(list, item_type, current_user, options).render,
+              filename: "report-#{list.title.parameterize}.pdf",
+              type: 'application/pdf',
+              disposition: 'inline'
   end
 
   # Sets a flash and redirects to the lists index.

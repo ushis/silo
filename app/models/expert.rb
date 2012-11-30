@@ -3,22 +3,25 @@
 #
 # Database scheme:
 #
-# - *id* integer
-# - *user_id* integer
-# - *country_id* integer
-# - *name* string
-# - *prename* string
-# - *gender* string
-# - *birthday* date
-# - *degree* string
-# - *former_collaboration* boolean
-# - *fee* string
-# - *job* string
-# - *created_at* datetime
-# - *updated_at* datetime
+# - *id:*                    integer
+# - *user_id:*               integer
+# - *country_id:*            integer
+# - *name:*                  string
+# - *prename:*               string
+# - *gender:*                string
+# - *birthday:*              date
+# - *degree:*                string
+# - *former_collaboration:*  boolean
+# - *fee:*                   string
+# - *job:*                   string
+# - *created_at:*            datetime
+# - *updated_at:*            datetime
 class Expert < ActiveRecord::Base
   attr_accessible :name, :prename, :gender, :birthday, :fee, :job, :degree,
                   :former_collaboration, :country_id, :comment_attributes
+
+  attr_accessible :degree, :prename, :name, :gender, :birthday, :fee, :job,
+                  :former_collaboration, as: :exposable
 
   symbolize :gender, in: [:female, :male]
 

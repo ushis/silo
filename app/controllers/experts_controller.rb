@@ -12,11 +12,6 @@ class ExpertsController < ApplicationController
     _params = params.merge(arrayified_params(:countries, :languages))
     @experts = Expert.with_meta.search(_params).limit(50).page(params[:page])
     @title = t('labels.expert.all')
-
-    respond_to do |format|
-      format.html { render :index }
-      format.pdf  { search_report(@experts, _params) }
-    end
   end
 
   # Serves the experts details page.
@@ -113,16 +108,8 @@ class ExpertsController < ApplicationController
 
   # Sends a generated pdf including the experts deatils.
   def report(expert)
-    send_data ExpertsReport.for(expert, current_user).render,
+    send_data ExpertReport.new(expert, current_user).render,
               filename: "report-#{expert.full_name.parameterize}.pdf",
-              type: 'application/pdf',
-              disposition: 'inline'
-  end
-
-  # Sends a pdf report of the search.
-  def search_report(results, search_params)
-    send_data ExpertsReport.for(results, current_user, search_params).render,
-              filename: "report-#{l(Time.now, format: :save)}.pdf",
               type: 'application/pdf',
               disposition: 'inline'
   end

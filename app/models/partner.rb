@@ -22,6 +22,9 @@ class Partner < ActiveRecord::Base
                   :website, :email, :phone,
                   :comment_attributes, :description_attributes
 
+  attr_accessible :company, :street, :zip, :city, :region, :country, :website,
+                  :email, :phone, as: :exposable
+
   is_taggable_with :businesses, :advisers
 
   validates :company, presence: true
