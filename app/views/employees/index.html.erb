@@ -1,58 +1,70 @@
 <%= render 'partners/sidebar' %>
 
 <div id="main">
-  <%= render 'partners/details_header', partner: @partner %>
+  <%= render 'partners/details_sidebar', partner: @partner %>
 
-  <div class="employees">
-    <% if current_user.access?(:partners) %>
-      <div class="submenu">
-         <%= link_to t('labels.employee.new'),
-                     new_ajax_partner_employee_path(@partner),
-                     class: 'hidden-form icon-plus' %>
-      </div>
-    <%end %>
+  <div class="tabbed-content">
 
-    <div class="employees">
+    <ul class="tabs">
+      <li class="show">
+        <%= link_to t('labels.partner.details'), partner_path(@partner) %>
+      </li>
+      <li class="employees">
+        <%= link_to t('labels.partner.employees'), partner_employees_path(@partner) %>
+      </li>
+      <li class="documents">
+        <%= link_to t('labels.partner.documents'), documents_partner_path(@partner) %>
+      </li>
+    </ul>
+
+    <div class="content">
+
+      <% if current_user.access?(:partners) %>
+        <div class="tools">
+           <%= link_to t('labels.employee.new'),
+                       new_ajax_partner_employee_path(@partner),
+                       class: 'hidden-form icon-plus' %>
+        </div>
+      <%end %>
+
       <% if @partner.employees.empty? %>
-        <div class="empty">
-          <%= t 'messages.partner.errors.no_employees' %>
+        <div class="info empty">
+          <p><%= t 'messages.partner.errors.no_employees' %></p>
         </div>
       <% else %>
-        <% @partner.employees.in_groups(2, false) do |group| %>
-          <div class="group">
-            <% group.each do |employee| %>
-              <div class="employee <%= employee.gender %>">
-                <div class="head">
-                  <h4>
-                    <%= employee.full_name_with_title %>
-                  </h4>
-                  <% if current_user.access?(:partners) %>
-                    <div class="tools">
-                      <%= link_to t('labels.contact.new'),
-                                  new_ajax_employee_contact_path(employee),
-                                  class: 'hidden-form icon-plus' %>
+        <ul class="info employees">
+          <% @partner.employees.each do |employee| %>
+            <li class="employee">
+              <h4 class="icon-user">
+                <%= employee.full_name_with_title %>
+              </h4>
+              <h5>
+                <%= employee.job %>
+              </h5>
+              <% if current_user.access?(:partners) %>
+                <div class="tools employees">
+                  <%= link_to t('actions.edit'),
+                              edit_ajax_partner_employee_path(@partner, employee),
+                              class: 'hidden-form icon-pencil' %>
 
-                      <%= link_to t('actions.edit'),
-                                  edit_ajax_partner_employee_path(@partner, employee),
-                                  class: 'hidden-form icon-pencil' %>
-
-                      <%= delete_button_for employee,
-                                            url: partner_employee_path(@partner, employee),
-                                            password: false %>
-                    </div>
-                  <% end %>
-                  <h5>
-                    <%= employee.job %>
-                  </h5>
-                </div><!-- head -->
-
-                <div class="contacts">
-                  <%= render 'shared/contacts_table', parent: employee %>
+                  <%= delete_button_for employee,
+                                        url: partner_employee_path(@partner, employee),
+                                        password: false %>
                 </div>
-              </div><!-- employee -->
-            <% end %>
-          </div><!-- group -->
-        <% end %>
+              <% end %>
+              <% if current_user.access?(:partners) %>
+                <div class="tools contacts">
+                  <%= link_to t('labels.contact.new'),
+                              new_ajax_employee_contact_path(employee),
+                              class: 'hidden-form icon-plus' %>
+                </div>
+              <% end %>
+              <div class="info contacts">
+                <%= render 'shared/contacts_table', parent: employee %>
+              </div>
+            </li>
+          <% end %>
+        </ul>
       <% end %>
     </div>
   </div><!-- employees -->

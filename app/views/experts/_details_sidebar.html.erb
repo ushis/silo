@@ -1,19 +1,16 @@
-<div class="header details">
-  <h2>
+<div class="sidebar details">
+  
+  <h2 class="icon-expert">
     <%= expert.full_name_with_degree %>
   </h2>
-  <h3>
-    <%= Expert.human_attribute_name(:updated_at) %>
-    <%= l expert.updated_at, format: :short %>
-    <%= t 'labels.generic.by', name: expert.user.try(:full_name) %>
-  </h3>
+
   <ul class="tools">
     <li>
       <%= listable_button_for expert do %>
-        <span class="inactive">
+        <span class="inactive icon-addtolist">
           <%= t 'labels.list.add' %>
         </span>
-        <span class="active">
+        <span class="active icon-removefromlist">
           <%= t 'labels.list.remove' %>
         </span>
       <% end %>
@@ -32,12 +29,22 @@
       </li>
     <% end %>
   </ul>
-  <ul class="tabs">
-    <li class="show">
-      <%= link_to t('labels.expert.details'), expert_path(expert) %>
-    </li>
-    <li class="documents">
-      <%= link_to t('labels.expert.documents'), documents_expert_path(expert) %>
-    </li>
+
+  <h3 class="updated_at">
+    <%= Expert.human_attribute_name(:updated_at) %>
+    <%= l @expert.updated_at, format: :short %>
+    <%= t 'labels.generic.by', name: @expert.user.try(:full_name) %>
+  </h3>
+
+  <h4>
+    <%= t('labels.lists') %>
+  </h4>
+  <ul class="lists">
+    <% @expert.lists.each do |list| %>
+      <li>
+        <%= link_to list.title, list_experts_path(list), class: 'icon-list' %>
+      </li>
+    <% end %>
   </ul>
+
 </div>

@@ -27,12 +27,6 @@
         <% end %>
       </div>
       <%= paginate @experts %>
-      <ul class="tools">
-        <li>
-          <%= link_to(t('actions.print'), url_for(params.merge(format: :pdf)),
-                      class: 'icon-print') %>
-        </li>
-      </ul>
     </div><!-- header -->
     <table class="experts">
       <thead>

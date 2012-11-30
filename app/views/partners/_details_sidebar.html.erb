@@ -1,0 +1,50 @@
+<div class="sidebar details">
+
+  <h2 class="icon-partner">
+    <%= partner.company %>
+  </h2>
+
+  <ul class="tools">
+    <li>
+      <%= listable_button_for(partner) do %>
+        <span class="inactive icon-addtolist">
+          <%= t 'labels.list.add' %>
+        </span>
+        <span class="active icon-removefromlist">
+          <%= t 'labels.list.remove' %>
+        </span>
+      <% end %>
+    </li>
+    <li>
+      <%= link_to(t('actions.print'), partner_path(partner, format: :pdf),
+                  class: 'icon-print') %>
+    </li>
+    <% if current_user.access?(:partners) %>
+      <li>
+        <%= link_to(t('actions.edit'), edit_partner_path(partner),
+                    class: 'icon-pencil') %>
+      </li>
+      <li>
+        <%= delete_button_for(partner) %>
+      </li>
+    <% end %>
+  </ul>
+
+  <h3 class="updated_at">
+    <%= Partner.human_attribute_name(:updated_at) %>
+    <%= l partner.updated_at, format: :short %>
+    <%= t 'labels.generic.by', name: partner.user.try(:full_name) %>
+  </h3>
+
+  <h4>
+    <%= t('labels.lists') %>
+  </h4>
+  <ul class="lists">
+    <% @partner.lists.each do |list| %>
+      <li>
+        <%= link_to list.title, list_partners_path(list), class: 'icon-list' %>
+      </li>
+    <% end %>
+  </ul>
+
+</div>
