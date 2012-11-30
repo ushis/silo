@@ -28,7 +28,7 @@
       <%end %>
 
       <% if @partner.employees.empty? %>
-        <div class="info">
+        <div class="info empty">
           <p><%= t 'messages.partner.errors.no_employees' %></p>
         </div>
       <% else %>

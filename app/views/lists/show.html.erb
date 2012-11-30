@@ -4,7 +4,16 @@
   <%= render 'details_sidebar', list: @list %>
 
   <div class="tabbed-content">
-    <%= render 'tabs', list: @list %>
+
+    <ul class="tabs">
+      <li class="experts-list">
+        <%= link_to List.human_attribute_name(:experts), list_experts_path(@list) %>
+      </li>
+      <li class="partners-list">
+        <%= link_to List.human_attribute_name(:partners), list_partners_path(@list) %>
+      </li>
+    </ul>
+
     <div class="content">
       <table class="list-items">
         <thead>
@@ -30,6 +39,7 @@
         </tbody>
       </table>
     </div>
+
   </div>
   <div class="clear"></div>
 </div>
