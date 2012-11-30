@@ -1,0 +1,31 @@
+<div class="overlay print-list multi-select">
+  <div class="header">
+    <h2>
+      <%= t 'actions.print' %>
+    </h2>
+    <div class="submit button">
+      <%= t 'actions.print' %>
+    </div>
+    <div class="abort button">
+      <%= t 'actions.abort' %>
+    </div>
+  </div>
+  <div class="select">
+    <%= form_tag url_for(controller: '/lists', action: @item_type,
+                         list_id: params[:id], format: :pdf), method: :get do |f| %>
+
+      <% @model.exposable_attributes.in_groups(3, false) do |group| %>
+        <ul class="col">
+          <% group.each do |attr| %>
+            <li>
+              <label>
+                <input type="checkbox" name="attributes[]" value="<%= attr %>" checked/>
+                <%= @model.human_attribute_name(attr) %>
+              </label>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+    <% end %>
+  </div>
+</div>

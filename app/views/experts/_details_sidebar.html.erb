@@ -1,5 +1,5 @@
 <div class="sidebar details">
-  
+
   <h2 class="icon-expert">
     <%= expert.full_name_with_degree %>
   </h2>
@@ -31,7 +31,7 @@
   </ul>
 
   <h3 class="updated_at">
-    <%= Expert.human_attribute_name(:updated_at) %>
+    <%= Expert.human_attribute_name(:updated_at) %>:
     <%= l @expert.updated_at, format: :short %>
     <%= t 'labels.generic.by', name: @expert.user.try(:full_name) %>
   </h3>

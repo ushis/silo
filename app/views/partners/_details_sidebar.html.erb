@@ -31,7 +31,7 @@
   </ul>
 
   <h3 class="updated_at">
-    <%= Partner.human_attribute_name(:updated_at) %>
+    <%= Partner.human_attribute_name(:updated_at) %>:
     <%= l partner.updated_at, format: :short %>
     <%= t 'labels.generic.by', name: partner.user.try(:full_name) %>
   </h3>

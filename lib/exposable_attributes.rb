@@ -45,7 +45,7 @@ module ExposableAttributes
     #   end
     #
     # If a model has no exposable attributes, a SecurityError is raised.
-    def exposable_attributes(options)
+    def exposable_attributes(options = {})
       unless attr_accessible.key?(:exposable)
         raise SecurityError, 'This model has no exposable attributes.'
       end
@@ -59,7 +59,7 @@ module ExposableAttributes
       end
 
       unless options[:human]
-        return attributes
+        return attributes.to_a
       end
 
       attributes.map do |attr|

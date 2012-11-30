@@ -4,7 +4,6 @@
   <%= render 'details_sidebar', list: @list %>
 
   <div class="tabbed-content">
-
     <ul class="tabs">
       <li class="experts-list">
         <%= link_to List.human_attribute_name(:experts), list_experts_path(@list) %>
@@ -15,11 +14,20 @@
     </ul>
 
     <div class="content">
+      <div class="tools">
+        <%= link_to t('actions.print'), print_ajax_list_path(id: @list, item_type: @item_type),
+                    class: 'icon-print hidden-form' %>
+      </div>
+
       <table class="list-items">
         <thead>
           <tr>
-            <th><%= ListItem.human_attribute_name(:name) %></th>
-            <th><%= ListItem.human_attribute_name(:note) %></th>
+            <th>
+              <%= ListItem.human_attribute_name(:name) %>
+            </th>
+            <th>
+              <%= ListItem.human_attribute_name(:note) %>
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -39,7 +47,7 @@
         </tbody>
       </table>
     </div>
-
   </div>
+
   <div class="clear"></div>
 </div>

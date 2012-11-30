@@ -108,13 +108,14 @@ class ListsController < ApplicationController
   # Shows the list items of a type.
   def show(item_type)
     @list = List.find_for_user(params[:list_id], current_user)
+    @title = @list.title
+    @item_type = item_type
+    body_class << :show
+    body_class << (body_class.delete(item_type.to_s) + '-list')
 
     respond_to do |format|
       format.html do
-        @title = @list.title
         @items = @list.list_items.by_type(item_type).includes(:item)
-        body_class << :show
-        body_class << (body_class.delete(item_type.to_s) + '-list')
         render :show
       end
 

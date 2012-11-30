@@ -91,6 +91,7 @@ Silo::Application.routes.draw do
         put :open
         get :copy
         get :import
+        get :'print/:item_type', action: :print, as: :print
       end
 
       [:experts, :partners].each do |resource|

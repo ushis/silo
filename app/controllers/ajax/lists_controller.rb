@@ -1,9 +1,9 @@
 # The Ajax::ListsController handles all list specific ajax requests.
 class Ajax::ListsController < AjaxController
-  respond_to :html, only:   [:index, :new, :edit, :copy]
-  respond_to :json, except: [:index, :new, :edit, :copy]
+  respond_to :html, only:   [:index, :new, :edit, :copy, :print]
+  respond_to :json, except: [:index, :new, :edit, :copy, :print]
 
-  caches_action :new, :edit, :copy
+  caches_action :new, :edit, :copy, :print
 
   # Serves a list of all lists.
   def index
@@ -69,6 +69,14 @@ class Ajax::ListsController < AjaxController
     else
       error(t('messages.list.errors.open'))
     end
+  end
+
+  # Serves a print dialog.
+  def print
+    @item_type = params[:item_type].to_sym
+    @model = ListItem.class_for_item_type(@item_type)
+  rescue ArgumentError, NoMethodError
+    raise ActionController::RoutingError, 'Unknown item type.'
   end
 
   # Defines needed actions the add/remove subresources to/from the list.
