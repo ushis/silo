@@ -1054,38 +1054,61 @@ body.index #main table a.listable.active div.marker:after {
 }
 
 /* Documents */
-body.documents div.attachments table td a.icon-attachment,
-body.documents div.cvs table td a.icon-file {
+body.documents div.docs.info table td a.icon-attachment,
+body.documents div.docs.info table td a.icon-file {
   position: relative;
   padding-left: 20px;
   display: block;
 }
 
-body.documents div.attachments table td a.icon-attachment:before,
-body.documents div.attachments table td a.icon-attachment:after,
-body.documents div.cvs table td a.icon-file:before,
-body.documents div.cvs table td a.icon-file:after {
+body.documents div.docs.info table td a.icon-attachment:before,
+body.documents div.docs.info table td a.icon-attachment:after,
+body.documents div.docs.info table td a.icon-file:before,
+body.documents div.docs.info table td a.icon-file:after {
   position: absolute;
   left: 0;
   font-size: 1.45em;
   line-height: 1em;
 }
 
-body.documents div.attachments table td a.icon-attachment:before,
-body.documents div.cvs table td a.icon-file:before {
+body.documents div.docs.info table td a.icon-attachment:before,
+body.documents div.docs.info table td a.icon-file:before {
   top: 0;
   color: #fff;
   text-shadow: 0 1px 1px rgba(0, 0, 0, .4);
 }
 
-body.documents div.attachments table td a.icon-attachment:after,
-body.documents div.cvs table td a.icon-file:after {
+body.documents div.docs.info table td a.icon-attachment:after,
+body.documents div.docs.info table td a.icon-file:after {
   top: 1px;
   color: #5c5c5c;
 }
 
-body.documents div.cvs table td a.icon-file:after {
+body.documents div.docs.info table td a.icon-file:after {
   top: -1px;
+}
+
+body.documents #main div.docs.info  {
+  width: 100%;
+}
+
+body.documents #main div.docs.info h4  {
+  margin: 15px 0 -10px 10px;
+}
+
+body.documents #main div.docs.info table td:nth-child(2) {
+  width: 10%;
+}
+
+body.documents #main div.docs.info table td:nth-child(3) {
+  width: 25%;
+}
+
+body.documents #main div.docs.info table tr.empty td {
+  background: transparent;
+  border: 0 none transparent;
+  box-shadow: 0 0 0 0 transparent;
+  padding: 0 0 0 5px;
 }
 
 /* Forms */

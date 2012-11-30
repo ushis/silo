@@ -4,7 +4,6 @@
   <%= render 'details_sidebar', partner: @partner %>
 
   <div class="tabbed-content">
-
     <ul class="tabs">
       <li class="show">
         <%= link_to t('labels.partner.details'), partner_path(@partner) %>
@@ -16,7 +15,7 @@
         <%= link_to t('labels.partner.documents'), documents_partner_path(@partner) %>
       </li>
     </ul>
-  
+
     <div class="content">
       <% if current_user.access?(:partners) %>
         <div class="tools">
@@ -25,16 +24,17 @@
                       class: 'hidden-form icon-plus' %>
         </div>
       <% end %>
-      <div class="attachments info">
-        <h4>
-          <%= Partner.human_attribute_name :attachments %>
-        </h4>
-        <div class="info docs">
+
+      <div class="docs info">
+        <div class="attachments">
+          <h4>
+            <%= Partner.human_attribute_name :attachments %>
+          </h4>
+
           <%= render 'shared/attachments_table', parent: @partner %>
         </div>
-      </div><!-- attachments -->
+      </div>
     </div>
-
   </div>
 
   <div class="clear"></div>
