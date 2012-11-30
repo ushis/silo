@@ -4,7 +4,6 @@
   <%= render 'details_sidebar', partner: @partner %>
 
   <div class="tabbed-content">
-
     <ul class="tabs">
       <li class="show">
         <%= link_to t('labels.partner.details'), partner_path(@partner) %>
@@ -16,9 +15,8 @@
         <%= link_to t('labels.partner.documents'), documents_partner_path(@partner) %>
       </li>
     </ul>
-    
+
     <div class="content">
-    
       <div class="left">
         <ul class="info">
           <li class="businesses">
@@ -45,7 +43,8 @@
           <li>
             <h4><%= Partner.human_attribute_name :address %></h4>
             <p><%= @partner.street %></p>
-            <p><%= @partner.zip %> <%= @partner.city %> <%= @partner.region %></p>
+            <p><%= @partner.zip %> <%= @partner.city %></p>
+            <p><%= @partner.region %></p>
             <p><%= @partner.country %></p>
           </li>
           <li>
@@ -62,10 +61,8 @@
           </li>
         </ul>
       </div><!-- right -->
-
-    </div>
-
-  </div>
+    </div><!-- content -->
+  </div><!-- tabbed -->
 
   <div class="clear"></div>
 </div>
