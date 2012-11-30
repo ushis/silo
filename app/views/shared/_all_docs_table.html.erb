@@ -1,0 +1,70 @@
+<table class="all-docs">
+  <tbody>
+    <tr class="headline">
+      <td>
+        <h4>
+          <%= Expert.human_attribute_name :cvs %>
+        </h4>
+      </td>
+    </tr>
+    <% if parent.cvs.empty? %>
+      <tr class="no-docs">
+        <td>
+          <%= t "messages.#{parent.class.name.downcase}.errors.no_cvs" %>
+        </td>
+      </tr>
+    <% else %>
+      <% parent.cvs.each do |cv| %>
+        <tr class="cvs">
+          <td>
+            <%= link_to cv.language.human, [parent, cv], class: 'icon-file' %>
+          </td>
+          <td>
+            <%= cv.ext %>
+          </td>
+          <td>
+            <%= l cv.created_at, format: :long %>
+          </td>
+          <% if current_user.access?(parent.class.name.downcase.pluralize) %>
+            <td class="del">
+              <%= delete_button_for cv, url: [parent, cv], password: false %>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+    <% end %>
+    <tr class="headline">
+      <td>
+        <h4>
+          <%= Expert.human_attribute_name :attachments %>
+        </h4>
+      </td>
+    </tr>
+    <% if parent.attachments.empty? %>
+      <tr class="no-docs">
+        <td>
+          <%= t "messages.#{parent.class.name.downcase}.errors.no_attachments" %>
+        </td>
+      </tr>
+    <% else %>
+      <% parent.attachments.each do |attachment| %>
+        <tr class="attachments">
+          <td>
+            <%= link_to attachment.title, [parent, attachment], class: 'icon-attachment' %>
+          </td>
+          <td>
+            <%= attachment.ext %>
+          </td>
+          <td>
+            <%= l attachment.created_at, format: :long %>
+          </td>
+          <% if current_user.access?(parent.class.name.downcase.pluralize) %>
+            <td class="del">
+              <%= delete_button_for attachment, password: false, url: [parent, attachment] %>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

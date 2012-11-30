@@ -1,35 +1,35 @@
 <%= render 'sidebar' %>
 
 <div id="main">
-  <%= render 'details_header', expert: @expert %>
+  <%= render 'details_sidebar', expert: @expert %>
 
-  <% if current_user.access?(:experts) %>
-    <div class="submenu">
-      <%= link_to t('labels.cv.new'),
-                      new_ajax_expert_cv_path(@expert),
-                      class: 'hidden-form icon-plus' %>
-      <%= link_to t('labels.attachment.new'),
-                  new_ajax_expert_attachment_path(@expert),
-                  class: 'hidden-form icon-plus' %>
+  <div class="tabbed-content">
+    <ul class="tabs">
+      <li class="details">
+        <%= link_to t('labels.expert.details'), expert_path(@expert) %>
+      </li>
+      <li class="documents">
+        <%= link_to t('labels.expert.documents'), documents_expert_path(@expert) %>
+      </li>
+    </ul>
+    
+    <div class="content">
+      <% if current_user.access?(:experts) %>
+          <div class="tools">
+            <%= link_to t('labels.cv.new'),
+                            new_ajax_expert_cv_path(@expert),
+                            class: 'hidden-form icon-plus' %>
+            <%= link_to t('labels.attachment.new'),
+                        new_ajax_expert_attachment_path(@expert),
+                        class: 'hidden-form icon-plus' %>
+          </div>
+        <% end %>
+
+        <div class="info docs">
+          <%= render 'shared/all_docs_table', parent: @expert %>
+        </div>
+
     </div>
-  <% end %>
-
-  <div class="documents">
-    <div class="cvs info">
-      <h4>
-        <%= Expert.human_attribute_name :cvs %>
-      </h4>
-      <%= render 'shared/cvs_table', parent: @expert %>
-    </div><!-- cvs -->
-
-    <div class="attachments info">
-      
-      <h4>
-        <%= Expert.human_attribute_name :attachments %>
-      </h4>
-      <%= render 'shared/attachments_table', parent: @expert %>
-    </div><!-- attachments -->
-
-    <div class="clear"></div>
   </div>
+  <div class="clear"></div>
 </div>

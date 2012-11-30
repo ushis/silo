@@ -1,3 +1,131 @@
+/* Main */
+
+body.employees #main {
+	padding-right: 10px;
+	background-color: #EEE;
+	box-shadow: 0 1px 2px rgba(0,0,0,.33);
+}
+
+body.employees #main div.sidebar.details h3.updated_at {
+	margin-top: -15px;
+	margin-bottom: 20px;
+}
+
+body.employees #main div.tabbed-content ul.info.employees,
+body.employees #main div.tabbed-content ul.info.employees li.employee {
+	width: 100%;
+	border-bottom: 0 none transparent;
+}
+
+body.employees #main div.tabbed-content ul.info.employees li.employee {
+	width: 50%;
+}
+
+body.employees #main div.tabbed-content ul.info.employees li.employee:nth-child(2n+1) {
+	float: left;
+	clear: left;
+	padding-right: 20px;
+}
+
+body.employees #main div.tabbed-content ul.info.employees li.employee:nth-child(2n+2) {
+	float: right;
+	padding-left: 20px;
+}
+
+body.employees #main div.tabbed-content ul.info.employees li.employee h4,
+body.employees #main div.tabbed-content ul.info.employees li.employee h5 {
+	color: #555;
+}
+
+body.employees #main div.tabbed-content ul.info.employees li.employee h4 {
+	font-size: 13px;
+	margin-left: 3px;
+	margin-bottom: 8px;
+	border-bottom: 1px solid #EEE;
+	width: 100%;
+	text-align: left;
+	padding-bottom: 8px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	padding-right: 55px;
+}
+
+body.employees #main div.tabbed-content ul.info.employees li.employee h4:before {
+	margin-right: 7px;
+}
+
+body.employees #main div.tabbed-content ul.info.employees li.employee h5 {
+	font-size: 12px;
+	margin-left: 5px;
+	float: left;
+	display: inline;
+}
+
+body.employees #main div.tabbed-content div.info.contacts table {
+	padding-left: 0;
+}
+
+body.employees #main div.tabbed-content div.info.contacts table {
+	padding-left: 0;
+}
+
+body.employees #main div.tabbed-content div.info.contacts table td.del a,
+body.employees #main div.tabbed-content div.info.contacts table td.del button {
+	visibility: hidden;
+}
+
+body.employees #main div.tabbed-content div.info.contacts table tr:hover td.del a,
+body.employees #main div.tabbed-content div.info.contacts table tr:hover td.del button {
+	visibility: visible;
+}
+
+body.employees #main div.tabbed-content div.tools.employees {
+	top: 13px;
+	right: 8px;
+}
+
+body.employees #main ul.info.employees li.employee:nth-child(2n+1) div.tools.employees {
+	right: 23px;
+}
+
+body.employees #main div.tabbed-content div.tools.employees a,
+body.employees #main div.tabbed-content div.tools.employees button,
+body.employees #main div.tabbed-content div.tools.contacts a,
+body.employees #main div.tabbed-content div.tools.contacts button {
+	color: #666;
+	background: transparent;
+	border: none;
+	box-shadow: 0 0 0 0 transparent;
+	width: 20px;
+	white-space: nowrap;
+	overflow: hidden;
+	margin: 0;
+}
+
+body.employees #main div.tabbed-content div.tools.employees a:hover,
+body.employees #main div.tabbed-content div.tools.employees button:hover {
+	color: #333;
+}
+
+body.employees #main div.tabbed-content div.tools.contacts {
+	top: auto;
+	right: auto;
+	position: relative;
+	float: right;
+}
+
+body.employees #main div.tabbed-content div.tools.contacts a {
+	width: auto;
+	white-space: normal;
+	float: right;
+	padding-right: 25px;
+}
+
+body.employees #main div.tabbed-content div.tools.contacts a:before {
+	position: absolute;
+	right: 4px;
+}
+
 /* Overlay */
 
 div.overlay.employee-form div.title,
@@ -43,12 +171,12 @@ div.overlay.employee-form div.row:last-child {
 
 /* Index */
 div.employees div.group {
-  float: left;
-  width: 49%;
+ 	float: left;
+ 	width: 49%;
 }
 
 div.employees div.group:nth-child(2n) {
-  float: right;
+ 	float: right;
 }
 
 div.employees div.employee {

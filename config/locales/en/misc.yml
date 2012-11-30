@@ -41,3 +41,6 @@ en:
       skypes: 'Skypes'
       website: 'Website'
       websites: 'Websites'
+    private:
+      'false': 'Shared'
+      'true': 'Private'

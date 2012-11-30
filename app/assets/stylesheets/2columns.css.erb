@@ -1,11 +1,10 @@
 /* Left */
 #main div.sidebar.details {
-  position: absolute;
+  position: relative;
+  float: left;
   z-index: 2;
-  top: 18px;
-  left: 20px;
-  width: 300px;
-  padding: 0 20px 0 0;
+  width: 280px;
+  padding: 0;
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
 }
@@ -19,6 +18,14 @@
   font-size: 1em;
   line-height: 1.1em;
   text-shadow: 0 1px 0 #FFF;
+}
+
+#main div.sidebar.details h3 {
+  float: left;
+  color: #aaa;
+  text-shadow: 0 1px 0 white;
+  line-height: 15px;
+  font-size: 11px;
 }
 
 #main div.sidebar.details h2:before {
@@ -37,16 +44,17 @@
   text-shadow: 0 1px 0 #FFF;
 }
 
-#main div.sidebar.details p {
+#main div.sidebar.details p,
+#main div.sidebar.details a {
   position: relative;
   float: left;
   width: 100%;
-  color: #8D8D8D;
+  color: #777;
   text-shadow: 0 1px 0 white;
   line-height: 15px;
-  font-size: .75em;
+  font-size: 12px;
   padding-right: 15px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 #main div.sidebar.details div.markdown {
@@ -55,13 +63,22 @@
   width: 100%;
 }
 
-#main div.sidebar.details div.markdown p {
+#main div.sidebar.details div.markdown p,
+#main div.sidebar.details div.markdown ul {
   position: relative;
   float: left;
-  color: #8D8D8D;
+  color: #777;
   text-shadow: 0 1px 0 white;
   line-height: 15px;
-  font-size: .9em;
+  font-size: 12px;
+  padding-right: 15px;
+}
+
+#main div.sidebar.details div.markdown ul li {
+  color: #777;
+  text-shadow: 0 1px 0 white;
+  line-height: 15px;
+  font-size: 12px;
   padding-right: 15px;
 }
 
@@ -101,6 +118,7 @@
   text-shadow: 0 1px 0 #FFF;
   font-size: 11px;
   font-weight: normal;
+  text-align: center;
   background-color: transparent;
   background-position: left center;
   background-repeat: no-repeat;
@@ -113,6 +131,10 @@
   -webkit-box-sizing: border-box;
 }
 
+#main div.sidebar.details ul.tools li a span:before {
+  margin-right: 5px;
+}
+
 #main div.sidebar.details ul.tools li a:hover {
   color: #5b5b5b;
   background: #f5f5f5;
@@ -122,13 +144,20 @@
   margin-right: 7px;
 }
 
-#main div.sidebar.details ul.tools li a.disabled,
-#main div.sidebar.details ul.tools li a.active {
+#main div.sidebar.details ul.tools li a.disabled {
   opacity: .66;
 }
 
-#main div.sidebar.details ul.tools li a.disabled:hover,
-#main div.sidebar.details ul.tools li a.active:hover {
+#main div.sidebar.details ul.tools li a span.inactive,
+#main div.sidebar.details ul.tools li a span.active {
+  display: block;
+}
+
+#main div.sidebar.details ul.tools li a.active span.inactive {
+  display: none;
+}
+
+#main div.sidebar.details ul.tools li a.disabled:hover {
   color: #6b6b6b;
   background: #EFEFEF;
 }
@@ -136,9 +165,8 @@
 /* Right */
 #main div.tabbed-content {
   position: relative;
-  float: left;
-  width: 100%;
-  padding: 0 0 0 310px;
+  display: block;
+  padding-left: 300px;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
 }
@@ -147,7 +175,7 @@
   position: relative;
   float: left;
   width: 100%;
-  padding: 10px 15px;
+  padding: 10px;
   background: #fff;
   box-shadow: 0 1px 2px rgba(0, 0, 0, .33);
   border-radius: 0 4px 4px 4px;
@@ -156,31 +184,268 @@
   z-index: 2;
 }
 
+#main div.tabbed-content div.content a {
+  color: #555;
+}
+
+#main div.tabbed-content div.tools {
+  position: absolute;
+  top: -30px;
+  right: 0;
+}
+
+#main div.tabbed-content div.tools a,
+#main div.tabbed-content div.tools button {
+  display: block;
+  float: left;
+  height: 22px;
+  margin-left: 5px;
+  padding: 0 5px;
+  line-height: 22px;
+  color: #6B6B6B;
+  text-shadow: 0 1px 0 white;
+  font-size: 11px;
+  font-weight: normal;
+  text-align: center;
+  background: #EFEFEF;
+  border-radius: 3px;
+  border: 1px solid #D2D2D2;
+  box-shadow: 0 1px 0 #FBFBFB, inset 0 1px 0 white;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
+#main div.tabbed-content div.tools a:hover,
+#main div.tabbed-content div.tools button:hover {
+  color: #5B5B5B;
+  background: whiteSmoke;
+}
+
+#main div.tabbed-content div.tools a:nth-last-child(n+2),
+#main div.tabbed-content div.tools button:nth-last-child(n+2) {
+  margin-right: 5px;
+}
+
+#main div.tabbed-content div.tools a:before,
+#main div.tabbed-content div.tools button:before {
+  margin-right: 7px;
+  font-size: 1.25em;
+  vertical-align: bottom;
+}
+
+#main div.tabbed-content div.tools a.icon-plus:before,
+#main div.tabbed-content div.tools button.icon-plus:before {
+  font-size: 1em;
+  margin-right: 5px;
+}
+
+#main div.sidebar.details ul.lists {
+  margin-bottom: 20px;
+}
+
+#main div.sidebar.details ul.lists,
+#main div.sidebar.details ul.lists li {
+  float: left;
+  width: 100%;
+  text-align: left;
+}
+
+#main div.sidebar.details ul.lists {
+  margin-top: 5px;
+}
+
+#main div.sidebar.details ul.lists li a {
+  width: auto;
+  text-align: left;
+}
+
+#main div.sidebar.details ul.lists li a:before {
+  margin: 0 7px 0 0;
+  padding: 0;
+  font-size: 14px;
+}
+
 #main div.tabbed-content ul.tabs {
-  position: relative;;
+  position: relative;
+  float: left;
   z-index: 1;
+  height: 30px;
 }
 
 #main div.tabbed-content ul.tabs li {
   position: relative;
   z-index: 1;
+  padding: 0;
   cursor: pointer;
   text-align: center;
   float: left;
-  line-height: 2.2em;
-  font-size: .8em;
-  padding: 0;
+  line-height: 1em;
+  font-size: 12px;
   margin-right: 5px;
-  background: #e2e2e2;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, .33), inset 0 -2px 0 rgba(0,0,0,.025);
+  background: #ECECEC;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .33), inset 0 -2px 0 rgba(0, 0, 0, .025), inset 0 1px 0 rgba(0, 0, 0, .03);
   border-radius: 4px 4px 0 0;
 }
 
 #main div.tabbed-content ul.tabs li a {
   display: block;
-  padding: 0px 15px;
+  padding: 9px 15px;
   color: #888;
   text-shadow: 0 1px 0px rgba(255, 255, 255, .8);
+}
+
+#main div.tabbed-content div.info h4 {
+  color: #AFAFAF;
+  font-size: 11px;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
+  margin: -5px 0 -10px 5px;
+}
+
+#main div.tabbed-content div.info.addresses {
+  margin-bottom: 30px;
+}
+
+#main div.tabbed-content div.info table td {
+  background: transparent;
+  box-shadow: 0 0 0 0 transparent;
+  border-bottom: 1px solid #eaeaea;
+  padding: 0 5px 5px 5px;
+  border-radius: 0;
+}
+
+#main div.tabbed-content div.info table td p {
+  color: #555;
+  font-size: 12px;
+}
+
+#main div.tabbed-content div.info.docs table {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#main div.tabbed-content div.info.docs table td {
+  padding: 7px 10px 5px 10px;
+  background-color: whiteSmoke;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, .2), 0 0 0 1px rgba(0, 0, 0, .03);
+  border: 0 none transparent;
+}
+
+#main div.tabbed-content div.info.docs table td:first-child {
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  background-color: #F9F9F9;
+}
+
+#main div.tabbed-content div.info.docs table td:last-child {
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+#main div.tabbed-content div.info.docs table td a.icon-file,
+#main div.tabbed-content div.info.docs table td a.icon-attachment {
+  position: relative;
+  padding-left: 20px;
+  display: block;
+}
+
+#main div.tabbed-content div.info.docs table td a.icon-file:before,
+#main div.tabbed-content div.info.docs table td a.icon-attachment:before,
+#main div.tabbed-content div.info.docs table td a.icon-file:after,
+#main div.tabbed-content div.info.docs table td a.icon-attachment:after {
+  position: absolute;
+  left: 0;
+  font-size: 1.45em;
+  line-height: 1em;
+}
+
+#main div.tabbed-content div.info.docs table td a.icon-file:after {
+  top: -1px;
+}
+
+#main div.tabbed-content div.info.docs table td a.icon-file:before,
+#main div.tabbed-content div.info.docs table td a.icon-attachment:before {
+  top: 0;
+  color: white;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, .4);
+}
+
+#main div.tabbed-content div.info.docs table tr.headline td,
+#main div.tabbed-content div.info.docs table tr.no-docs td {
+  padding-left: 0;
+  border: 0 none transparent;
+  background: transparent;
+  box-shadow: 0 0 0 0 transparent;
+}
+
+#main div.tabbed-content div.info.docs table tr.no-docs td {
+  padding-left: 5px;
+}
+
+#main div.tabbed-content div.info.docs table tr.headline:nth-child(n+2) td {
+  padding-top: 20px;
+}
+
+#main div.tabbed-content div.info.docs table tr.headline h4 {
+  font-size: 11px;
+}
+
+#main div.tabbed-content div.content div.left,
+#main div.tabbed-content div.content div.right {
+  width: 50%;
+  padding: 15px 10px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  background: #FFF;
+}
+
+#main div.tabbed-content div.content div.left {
+  float: left;
+  padding-right: 20px;
+  border-right: 1px solid #EEE;
+}
+
+#main div.tabbed-content div.content div.right {
+  float: left;
+  margin-left: -1px;
+  padding-left: 20px;
+  border-left: 1px solid #EEE;
+}
+
+#main div.tabbed-content div.content ul.info {
+  position: relative;
+  float: left;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+#main div.tabbed-content div.content ul.info li {
+  position: relative;
+  float: left;
+  width: 50%;
+  padding: 10px 5px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  border-bottom: 1px solid #eaeaea;
+}
+
+#main div.tabbed-content div.content ul.info li:last-child {
+  border-bottom: 0 none transparent;
+  padding-bottom: 0;
+}
+
+#main div.tabbed-content div.content ul.info li h4 {
+  color: #AFAFAF;
+  font-size: .7em;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
+  padding: 0;
+}
+
+#main div.tabbed-content div.content ul.info li p {
+  color: #555;
+  font-size: 12px;
+  padding: 5px;
+  min-height: 19px;
+  padding: 0;
 }
 
 #main div.tabbed-content table {
