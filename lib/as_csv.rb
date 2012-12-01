@@ -96,23 +96,23 @@ module AsCsv
     # Add some sort of namespace to the column names to avoid name clashes.
     def as_csv(options = {}, csv_options = {})
       attributes = exposable_attributes
-      includes = {}
+      associations = {}
 
       Array.wrap(options[:include]).each do |assoc|
         next unless reflections.key?(assoc)
 
         ref = reflections[assoc]
         class_name = (ref.options[:class_name] || ref.name).to_s.classify
-        includes[assoc] = class_name.constantize.exposable_attributes
+        associations[assoc] = class_name.constantize.exposable_attributes
       end
 
       CSV::generate(csv_options) do |csv|
-        csv << attributes + includes.values.flatten
+        csv << attributes + associations.values.flatten
 
-        includes(includes.keys).all.each do |record|
+        includes(associations.keys).all.each do |record|
           record_data = attributes.map { |attr| record.send(attr).to_s }
 
-          associated_data = includes.map do |method, attrs|
+          associated_data = associations.map do |method, attrs|
             associated_records = Array.wrap(record.send(method))
 
             if associated_records.empty?
