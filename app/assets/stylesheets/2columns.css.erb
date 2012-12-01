@@ -216,16 +216,19 @@ body.employees #main {
   color: #555;
 }
 
-#main div.tabbed-content div.tools {
+#main div.tabbed-content .tools {
   position: absolute;
   top: -30px;
   right: 7px;
 }
 
-#main div.tabbed-content div.tools a,
-#main div.tabbed-content div.tools button {
-  display: block;
+#main div.tabbed-content ul.tools li,
+#main div.tabbed-content div.tools a {
   float: left;
+}
+
+#main div.tabbed-content .tools a {
+  display: block;
   height: 22px;
   margin-left: 5px;
   padding: 0 5px;
@@ -243,31 +246,27 @@ body.employees #main {
   -moz-box-sizing: border-box;
 }
 
-#main div.tabbed-content div.tools a:hover,
-#main div.tabbed-content div.tools button:hover {
+#main div.tabbed-content .tools a:hover {
   color: #5B5B5B;
   background: whiteSmoke;
 }
 
-#main div.tabbed-content div.tools a:nth-last-child(n+2),
-#main div.tabbed-content div.tools button:nth-last-child(n+2) {
+#main div.tabbed-content .tools a:nth-last-child(n+2) {
   margin-right: 5px;
 }
 
-#main div.tabbed-content div.tools a:before,
-#main div.tabbed-content div.tools button:before {
+#main div.tabbed-content .tools a:before {
   margin-right: 7px;
   font-size: 1.25em;
   vertical-align: bottom;
 }
 
-#main div.tabbed-content div.tools a.icon-plus:before,
-#main div.tabbed-content div.tools button.icon-plus:before {
+#main div.tabbed-content .tools a.icon-plus:before {
   font-size: 1em;
   margin-right: 5px;
 }
 
-#main div.sidebar.details ul.lists {
+#main div.sidebar.details .lists {
   margin-bottom: 20px;
 }
 

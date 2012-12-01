@@ -14,10 +14,21 @@
     </ul>
 
     <div class="content">
-      <div class="tools">
-        <%= link_to t('actions.print'), print_ajax_list_path(id: @list, item_type: @item_type),
-                    class: 'icon-print hidden-form' %>
-      </div>
+      <ul class="tools">
+        <li class="export employees">
+          <%= link_to t('labels.employee.export'),
+                      list_partners_path(list_id: @list, format: :csv, include: :employees),
+                      class: 'icon-download' %>
+        </li>
+        <li class="export">
+          <%= link_to t('actions.export'), url_for(params.merge(format: :csv)),
+                      class: 'icon-download' %>
+        </li>
+        <li class="print">
+          <%= link_to t('actions.print'), print_ajax_list_path(id: @list, item_type: @item_type),
+                      class: 'icon-print hidden-form' %>
+        </li>
+      </ul>
 
       <table class="list-items">
         <thead>

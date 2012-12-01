@@ -15,15 +15,18 @@
 
     <div class="content">
       <% if current_user.access?(:experts) %>
-        <div class="tools">
-          <%= link_to t('labels.cv.new'),
-                      new_ajax_expert_cv_path(@expert),
-                      class: 'hidden-form icon-plus' %>
-
-          <%= link_to t('labels.attachment.new'),
-                      new_ajax_expert_attachment_path(@expert),
-                      class: 'hidden-form icon-plus' %>
-        </div>
+        <ul class="tools">
+          <li class="new-cv">
+            <%= link_to t('labels.cv.new'),
+                        new_ajax_expert_cv_path(@expert),
+                        class: 'hidden-form icon-plus' %>
+          </li>
+          <li class="new-attachment">
+            <%= link_to t('labels.attachment.new'),
+                        new_ajax_expert_attachment_path(@expert),
+                        class: 'hidden-form icon-plus' %>
+          </li>
+        </ul>
       <% end %>
 
       <div class="docs info">

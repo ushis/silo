@@ -13,7 +13,7 @@ class ListItemsController < ApplicationController
       flash[:notice] = t('messages.list_item.errors.delete')
     end
 
-    redirect_to list_experts_url(list)
+    redirect_to :back
   end
 
   private

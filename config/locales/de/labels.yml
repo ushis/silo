@@ -29,6 +29,7 @@ de:
     employee:
       all: 'Geschäftspartner'
       edit: 'Geschäftspartner bearbeiten'
+      export: 'Geschäftspartner exportieren'
       new: 'Neuer Geschäftspartner'
     expert:
       all: 'Alle Experten'

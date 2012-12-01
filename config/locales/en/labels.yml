@@ -29,6 +29,7 @@ en:
     employee:
       all: 'Employees'
       edit: 'Edit Employee'
+      export: 'Export Employee'
       new: 'New Employee'
     expert:
       all: 'All Experts'

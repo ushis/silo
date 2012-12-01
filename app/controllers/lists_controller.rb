@@ -115,7 +115,21 @@ class ListsController < ApplicationController
         options = { only: arrayified_param(:attributes) }
         send_report ListReport.new(@list, item_type, current_user, options), @title
       end
+
+      format.csv { csv(@list, item_type) }
     end
+  end
+
+  # Sends list items as csv.
+  def csv(list, item_type, options = {})
+    if item_type == :partners && params[:include] == 'employees'
+      options[:include] = :employees
+      title = 'employees'
+    else
+      title = item_type
+    end
+
+    send_csv list.send(item_type).as_csv(options), "#{list.title} #{title}"
   end
 
   # Sets a flash and redirects to the lists index.

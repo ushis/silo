@@ -4,7 +4,6 @@
   <%= render 'partners/details_sidebar', partner: @partner %>
 
   <div class="tabbed-content">
-
     <ul class="tabs">
       <li class="show">
         <%= link_to t('labels.partner.details'), partner_path(@partner) %>
@@ -18,13 +17,14 @@
     </ul>
 
     <div class="content">
-
       <% if current_user.access?(:partners) %>
-        <div class="tools">
-           <%= link_to t('labels.employee.new'),
-                       new_ajax_partner_employee_path(@partner),
-                       class: 'hidden-form icon-plus' %>
-        </div>
+        <ul class="tools">
+          <li class="new-employee">
+            <%= link_to t('labels.employee.new'),
+                        new_ajax_partner_employee_path(@partner),
+                        class: 'hidden-form icon-plus' %>
+          </li>
+        </ul>
       <%end %>
 
       <% if @partner.employees.empty? %>

@@ -12,17 +12,21 @@
         <%= link_to t('labels.expert.documents'), documents_expert_path(@expert) %>
       </li>
     </ul>
-    
+
     <div class="content">
       <% if current_user.access?(:experts) %>
-        <div class="tools">
-          <%= link_to t('labels.address.new'),
-                      new_ajax_expert_address_path(@expert),
-                      class: 'hidden-form icon-plus' %>
-          <%= link_to t('labels.contact.new'),
-                      new_ajax_expert_contact_path(@expert),
-                      class: 'hidden-form icon-plus' %>
-        </div>
+        <ul class="tools">
+          <li class="new-address">
+            <%= link_to t('labels.address.new'),
+                        new_ajax_expert_address_path(@expert),
+                        class: 'hidden-form icon-plus' %>
+          </li>
+          <li class="new-contact">
+            <%= link_to t('labels.contact.new'),
+                        new_ajax_expert_contact_path(@expert),
+                        class: 'hidden-form icon-plus' %>
+          </li>
+        </ul>
       <% end %>
 
       <div class="left">

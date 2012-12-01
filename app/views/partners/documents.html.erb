@@ -18,11 +18,13 @@
 
     <div class="content">
       <% if current_user.access?(:partners) %>
-        <div class="tools">
-          <%= link_to t('labels.attachment.new'),
-                      new_ajax_partner_attachment_path(@partner),
-                      class: 'hidden-form icon-plus' %>
-        </div>
+        <ul class="tools">
+          <li class="new-attachment">
+            <%= link_to t('labels.attachment.new'),
+                        new_ajax_partner_attachment_path(@partner),
+                        class: 'hidden-form icon-plus' %>
+          </li>
+        </ul>
       <% end %>
 
       <div class="docs info">
