@@ -58,6 +58,7 @@ en:
         create: 'Could not create employee.'
         delete: 'Could not delete employee.'
         find: 'Employee not found.'
+        no_contacts: 'This employee has no contacts.'
         save: 'Could not save employee.'
       success:
         create: 'Created employee: %{name}'
@@ -91,6 +92,8 @@ en:
         create: 'Could not create list.'
         delete: 'Could not delete list.'
         find: 'Could not find list.'
+        no_experts: 'This list has no experts.'
+        no_partners: 'This list has no partners.'
         open: 'Could not open list.'
         save: 'Could not save list.'
       success:

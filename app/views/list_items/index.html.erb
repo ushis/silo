@@ -42,23 +42,31 @@
           </tr>
         </thead>
         <tbody>
-          <% @items.each do |list_item| %>
-            <tr>
+          <% if @items.empty? %>
+            <tr class="empty">
               <td>
-                <%= link_to list_item.name, list_item.item %>
-              </td>
-              <td class="note">
-                <%= editable_button_for list_item, :note, url: [:ajax, @list, list_item] %>
-              </td>
-              <td class="removefromlist">
-                <%= remove_from_list_button_for @list, list_item %>
+                <%= t "messages.list.errors.no_#{@item_type}" %>
               </td>
             </tr>
+          <% else %>
+            <% @items.each do |list_item| %>
+              <tr>
+                <td>
+                  <%= link_to list_item.name, list_item.item %>
+                </td>
+                <td class="note">
+                  <%= editable_button_for list_item, :note, url: [:ajax, @list, list_item] %>
+                </td>
+                <td class="removefromlist">
+                  <%= remove_from_list_button_for @list, list_item %>
+                </td>
+              </tr>
+            <% end %>
           <% end %>
         </tbody>
       </table>
-    </div>
-  </div>
+    </div><!-- content -->
+  </div><!-- tabbed-content -->
 
   <div class="clear"></div>
 </div>

@@ -58,6 +58,7 @@ de:
         create: 'Geschäftspartner konnte nicht hinzugefügt werden.'
         delete: 'Geschäftspartner konnte nicht gelöscht werden.'
         find: 'Geschäftspartner konnte nicht gefunden werden.'
+        no_contacts: 'Dieser Geschäftspartner hat keine Kontakte.'
         save: 'Geschäftspartner konnte nicht gespeichert werden.'
       success:
         create: 'Geschäftspartner hinzugefügt: %{name}'
@@ -91,6 +92,8 @@ de:
         create: 'Liste konnte nicht hinzugefügt werden.'
         delete: 'Liste konnte nicht gelöscht werden.'
         find: 'Liste nicht gefunden.'
+        no_experts: 'Diese Liste hat keine Experten.'
+        no_partners: 'Diese Liste hat keine Partner.'
         open: 'Liste konnte nicht geöffnet werden.'
         save: 'Liste konnte nicht gespeichert werden.'
       success:
