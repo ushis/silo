@@ -111,17 +111,15 @@ module AsCsv
 
         includes(includes.keys).all.each do |record|
           record_data = attributes.map { |attr| record.send(attr).to_s }
-          associated_data = []
 
-          includes.each do |method, attrs|
+          associated_data = includes.map do |method, attrs|
             associated_records = Array.wrap(record.send(method))
 
             if associated_records.empty?
-              associated_data << [Array.new(attrs.length)]
-              next
+              next [Array.new(attrs.length)]
             end
 
-            associated_data << associated_records.map do |rec|
+            associated_records.map do |rec|
               attrs.map { |attr| rec.send(attr).to_s }
             end
           end
