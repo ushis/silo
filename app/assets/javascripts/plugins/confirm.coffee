@@ -30,3 +30,4 @@ do ($ = jQuery) ->
         password.toggle( !! submit.data('password')).val(null)
         confirmation.text(submit.data('confirm'))
         dialog.trigger('show')
+        password.focus()

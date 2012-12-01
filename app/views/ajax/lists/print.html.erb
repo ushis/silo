@@ -11,7 +11,7 @@
     </div>
   </div>
   <div class="select">
-    <%= form_tag url_for(controller: '/lists', action: @item_type,
+    <%= form_tag url_for(controller: '/list_items', action: @item_type,
                          list_id: params[:id], format: :pdf), method: :get do |f| %>
 
       <% @model.exposable_attributes.in_groups(3, false) do |group| %>
