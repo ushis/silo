@@ -50,8 +50,8 @@ Silo::Application.routes.draw do
     put :copy,    on: :member
     put :concat,  on: :member
 
-    [:experts, :partners].each do |item_type|
-      resources item_type, only: [], controller: :lists do
+    [:experts, :partners, :employees].each do |item_type|
+      resources item_type, only: [], controller: :list_items do
         get :index, action: item_type, on: :collection
       end
     end

@@ -1,7 +1,7 @@
-<%= render 'sidebar' %>
+<%= render 'lists/sidebar' %>
 
 <div id="main">
-  <%= render 'details_sidebar', list: @list %>
+  <%= render 'lists/details_sidebar', list: @list %>
 
   <div class="tabbed-content">
     <ul class="tabs">
@@ -17,7 +17,7 @@
       <ul class="tools">
         <li class="export employees">
           <%= link_to t('labels.employee.export'),
-                      list_partners_path(list_id: @list, format: :csv, include: :employees),
+                      list_employees_path(list_id: @list, format: :csv),
                       class: 'icon-download' %>
         </li>
         <li class="export">

@@ -90,47 +90,7 @@ class ListsController < ApplicationController
     end
   end
 
-  # Defines the actions needed to show the list items.
-  ListItem::TYPES.each_key do |item_type|
-    define_method(item_type) { show(item_type) }
-  end
-
   private
-
-  # Shows the list items of a type.
-  def show(item_type)
-    @list = List.find_for_user(params[:list_id], current_user)
-    @title = @list.title
-    @item_type = item_type
-    body_class << :show
-    body_class << (body_class.delete(item_type.to_s) + '-list')
-
-    respond_to do |format|
-      format.html do
-        @items = @list.list_items.by_type(item_type).includes(:item)
-        render :show
-      end
-
-      format.pdf do
-        options = { only: arrayified_param(:attributes) }
-        send_report ListReport.new(@list, item_type, current_user, options), @title
-      end
-
-      format.csv { csv(@list, item_type) }
-    end
-  end
-
-  # Sends list items as csv.
-  def csv(list, item_type, options = {})
-    if item_type == :partners && params[:include] == 'employees'
-      options[:include] = :employees
-      title = 'employees'
-    else
-      title = item_type
-    end
-
-    send_csv list.send(item_type).as_csv(options), "#{list.title} #{title}"
-  end
 
   # Sets a flash and redirects to the lists index.
   def not_found

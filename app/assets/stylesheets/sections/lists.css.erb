@@ -3,26 +3,28 @@
  *
  * Defines some list styles.
  */
-body.lists #content-wrapper {
+body.lists #content-wrapper,
+body.list_items #content-wrapper {
   padding: 0;
 }
 
-body.lists #content {
+body.lists #content,
+body.lists_items #content {
   border-radius: 4px 0 4px 4px;
 }
 
-body.lists.show.experts-list #main div.tabbed-content ul.tabs li.experts-list,
-body.lists.show.partners-list #main div.tabbed-content ul.tabs li.partners-list {
+body.list_items.experts-list #main div.tabbed-content ul.tabs li.experts-list,
+body.list_items.partners-list #main div.tabbed-content ul.tabs li.partners-list {
   background: #FFF;
   box-shadow: 0 1px 2px rgba(0, 0, 0, .33);
 }
 
-body.lists.show.experts-list #main div.tabbed-content ul.tabs li.experts-list a,
-body.lists.show.partners-list #main div.tabbed-content ul.tabs li.partners-list a {
+body.list_items.experts-list #main div.tabbed-content ul.tabs li.experts-list a,
+body.list_items.partners-list #main div.tabbed-content ul.tabs li.partners-list a {
   color: #555;
 }
 
-body.lists.show #main div.tabbed-content table {
+body.lists_items #main div.tabbed-content table {
   padding-left: 5px;
   padding-right: 5px;
 }
@@ -66,18 +68,17 @@ body.lists #main table td.remove a {
   overflow: hidden;
 }
 
-body.lists #main table.lists td.open a.active,
-body.lists #main div.header ul.tools li.open a.active  {
+body.lists #main table.lists td.open a.active {
   color: #999;
   cursor: default;
 }
 
-body.lists #main table td.note {
+body.list_items #main table td.note {
   min-width: 200px;
   max-width: 450px;
 }
 
-body.lists #main table td.note a.editable {
+body.list_items #main table td.note a.editable {
   position: relative;
   color: #8d8d8d;
   text-shadow: 0 1px 0 #FFF;
@@ -86,11 +87,11 @@ body.lists #main table td.note a.editable {
   margin: -6px -10px -5px -10px;
 }
 
-body.lists #main table td.note a.editable:hover {
+body.list_items #main table td.note a.editable:hover {
   color: #666;
 }
 
-body.lists #main table td.note a.editable:hover:after {
+body.list_items #main table td.note a.editable:hover:after {
   position: absolute;
   top: 9px;
   right: 10px;
@@ -101,18 +102,18 @@ body.lists #main table td.note a.editable:hover:after {
   color: #555;
 }
 
-body.lists #main table td.removefromlist {
+body.list_items #main table td.removefromlist {
   width: 18px;
 }
 
-body.lists #main table td.removefromlist a {
+body.list_items #main table td.removefromlist a {
   display: block;
   white-space: nowrap;
   overflow: hidden;
   width: 18px;
 }
 
-body.lists #main table td.removefromlist a:before {
+body.list_items #main table td.removefromlist a:before {
   margin-right: 99999px;
 }
 
