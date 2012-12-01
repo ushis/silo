@@ -55,8 +55,12 @@ namespace :partners do
 
         p.comment.comment = data['Notizen'].strip unless data['Notizen'].blank?
 
-        [[:website, 'Homepage'], [:phone, 'TelefonD']].each do |attr, key|
-          p[attr] = data[key].try(:strip)
+        unless (phone = data['TelefonD']).blank?
+          p.phone = phone.strip
+        end
+
+        unless (website = data['Homepage']).blank?
+          p.website = website.split('#').pop.strip
         end
 
         unless (email = data['E_Mail']).blank?
