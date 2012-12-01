@@ -1,13 +1,13 @@
 require 'csv'
 
-# Mixes AsCsv::ClassMethods#to_csv into ActiveRecord.
+# Mixes AsCsv::ClassMethods#as_csv into ActiveRecord.
 module AsCsv
   extend ActiveSupport::Concern
 
   # Implements the ClassMethods#as_csv method.
   module ClassMethods
 
-    # Generates a CSV from a relation. It uses
+    # Generates a CSV from a ActiveRecord::Relation. It uses
     # ExposableAttributes::ClassMethods#exposable_attributes to choose the
     # attributes to be exported.
     #
@@ -24,7 +24,7 @@ module AsCsv
     #   # Some Title,Just An Experiment
     #
     # Exporting associated records should be no problem too. Checkout the
-    # following set up.
+    # following setup.
     #
     #   class Article < ActiveRecord::Base
     #     attr_accessible :title, :sub_title, as: :exposable
