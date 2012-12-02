@@ -232,7 +232,8 @@ div.clear {
   overflow: hidden;
 }
 
-body.lists #nav ul #current-list div.title a {
+body.lists #nav ul #current-list div.title a,
+body.list_items #nav ul #current-list div.title a {
   color: #444;
   text-shadow: 0 1px 0 rgba(255,255,255,.5);
 }
@@ -258,7 +259,8 @@ body.lists #nav ul #current-list div.title a {
   margin: 1px 99999px 0 5px;
 }
 
-body.lists #nav #current-list div.open a {
+body.lists #nav #current-list div.open a,
+body.list_items #nav #current-list div.open a {
   background: #DFDFDF;
   color: #777;
   text-shadow: 0 1px 0 rgba(255, 255, 255, .5);
@@ -267,7 +269,8 @@ body.lists #nav #current-list div.open a {
   border-bottom: 1px solid #E7E7E7;
 }
 
-body.lists #nav #current-list div.open a:hover {
+body.lists #nav #current-list div.open a:hover,
+body.list_items #nav #current-list div.open a:hover {
   background: #cdcdcd;
   color: #444;
 }
@@ -277,7 +280,9 @@ body.partners #nav li.partners a,
 body.employees #nav li.partners a,
 body.references #nav li.references a,
 body.lists #nav li.lists a,
-body.lists #nav #current-list {
+body.list_items #nav li.lists a,
+body.lists #nav #current-list,
+body.list_items #nav #current-list {
   color: #444;
   background: #D5D5D5;
   text-shadow: 0 1px 0px #efefef;
