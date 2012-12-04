@@ -10,7 +10,7 @@ class CvsController < ApplicationController
   # Sends the stored Cv document.
   def show
     cv = Cv.includes(:expert).find(params[:id])
-    send_file cv.absolute_path, filename: cv.public_filename
+    send_file cv.absolute_path.to_s, filename: cv.public_filename
   end
 
   # Creates a new Cv by storing an uploaded file and loading its content
@@ -44,9 +44,16 @@ class CvsController < ApplicationController
     redirect_to documents_expert_url(id: params[:expert_id])
   end
 
+  private
+
   # Sets an alert flash and redirect to the experts detail page.
   def not_found
     flash[:alert] = t('messages.cv.errors.find')
     redirect_to documents_expert_url(params[:expert_id])
+  end
+
+  # Sets a proper redirect url.
+  def file_not_found
+    super(documents_expert_path(params[:expert_id]))
   end
 end

@@ -11,12 +11,14 @@ require 'yomu'
 # - *language_id* integer
 # - *cv* text
 class Cv < ActiveRecord::Base
-
   validates :cv, presence: true
 
-  has_one    :attachment, autosave: true, dependent: :destroy, as: :attachable
+  has_one :attachment, autosave: true, dependent: :destroy, as: :attachable
+
   belongs_to :expert
   belongs_to :language
+
+  delegate :absolute_path, :created_at, :ext, to: :attachment, allow_nil: true
 
   default_scope includes(:language)
 
@@ -55,22 +57,7 @@ class Cv < ActiveRecord::Base
   #   cv.public_filname
   #   #=> 'cv-arthur-hoffmann-en.doc'
   def public_filename
-    "cv #{expert.full_name} #{language.language}".parameterize + ext
-  end
-
-  # Returns the documents file extension.
-  def ext
-    attachment.try(:ext)
-  end
-
-  # Returns the absolute path to the stored cv document.
-  def absolute_path
-    attachment.try(:absolute_path)
-  end
-
-  # Returns the created_at attribute of the cvs attachment.
-  def created_at
-    attachment.try(:created_at)
+    "cv #{expert.full_name} #{language.language}".parameterize + ext.to_s
   end
 
   # Loads the documents text and stores it in the cv attribute.

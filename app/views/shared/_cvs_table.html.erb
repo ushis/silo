@@ -16,7 +16,7 @@
             <%= cv.ext %>
           </td>
           <td>
-            <%= l cv.created_at, format: :long %>
+            <%= l(cv.created_at, format: :long) if cv.created_at %>
           </td>
           <% if current_user.access?(parent.class.to_s.tableize) %>
             <td class="del">
