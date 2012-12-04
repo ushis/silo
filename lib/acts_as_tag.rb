@@ -89,12 +89,12 @@ module ActsAsTag
         results.empty? ? [] : multi_find_or_initialize(results.to_a)
       end
 
-      search_sql = "#{attribute_name} COLLATE utf8_general_ci IN (?)"
+      search_sql = "LOWER(#{attribute_name}) IN (?)"
 
       # Defines the Model.multi_find_or_initialize method to find existing
       # and initialize new tags.
       define_singleton_method(:multi_find_or_initialize) do |tags|
-        results = where(search_sql, tags).each do |tag|
+        results = where(search_sql, tags.map(&:downcase)).each do |tag|
           tags.delete_if { |t| t.casecmp(tag.to_s) == 0 }
         end
 
