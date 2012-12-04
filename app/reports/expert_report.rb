@@ -48,7 +48,7 @@ class ExpertReport < ApplicationReport
 
     table data do |table|
       table.row_colors = ['ffffff']
-      table.columns(0..3).width = table.width / 4
+      table.columns(0..3).width = table.width / data.first.length
       table.cells.padding_bottom = 30
     end
 
