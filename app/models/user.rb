@@ -48,58 +48,11 @@ class User < ActiveRecord::Base
 
   belongs_to :current_list, class_name: :List
 
+  delegate :access?, :admin?, :privileges, :privileges=, to: :privilege
+
   # Auto initializes the users privileges on access.
   def privilege
     super || self.privilege = Privilege.new
-  end
-
-  # Checks for admin privileges.
-  #
-  #   if user.admin?
-  #     secure_operation(sensitive_data)
-  #   end
-  #
-  # Returns true if user has admin privileges, else false.
-  def admin?
-    privilege.admin
-  end
-
-  # Checks for access privileges for a specified section.
-  #
-  #   if user.access?(:experts)
-  #     write_some_experts_data(data)
-  #   end
-  #
-  # Returns true if access is granted, else false.
-  def access?(section)
-    admin? || (privilege.respond_to?(section) && privilege.send(section))
-  end
-
-  # Alias for Privilege#privileges.
-  #
-  #   user.privileges
-  #   #=> { experts: true, partners: false, references: true }
-  #
-  # If the user is admin, the hash contains the single key _admin_ with
-  # the value _true_.
-  def privileges
-    privilege.privileges
-  end
-
-  # Sets the users privileges. It takes a hash of sections and their
-  # corresponding access values.
-  #
-  #   user.privileges = { experts: true, references: false }
-  #   user.privileges
-  #   #=> { experts: true, partners: false, references: false }
-  #
-  # If the _admin_ is set to true, all sections will be set to true.
-  def privileges=(privileges)
-    self.privilege.admin = privileges[:admin]
-
-    Privilege::SECTIONS.each do |section|
-      self.privilege.send("#{section}=", admin? || privileges[section])
-    end
   end
 
   # Sets a fresh login hash and returns it.

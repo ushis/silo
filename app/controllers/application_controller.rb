@@ -115,8 +115,9 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  # Returns the body class Array. It is prepopulated with the current controller, action and
-  # the :admin class if the current user is an admin. New classes can be added with ease:
+  # Returns the body class Array. It is prepopulated with the current
+  # controller, action and the :admin class if the current user is an
+  # admin. New classes can be added with ease:
   #
   #   body_class << :special
   #   #=> [:users, :edit, :admin, :special]
