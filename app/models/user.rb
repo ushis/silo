@@ -48,7 +48,7 @@ class User < ActiveRecord::Base
 
   belongs_to :current_list, class_name: :List
 
-  delegate :access?, :admin?, :privileges, :privileges=, to: :privilege
+  delegate :access?, :admin?, :privileges=, to: :privilege
 
   # Auto initializes the users privileges on access.
   def privilege
