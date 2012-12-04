@@ -5,12 +5,18 @@ module UserHelper
   # The CSS _checked_ class is applied, if the user has access to the
   # corresponding section.
   #
-  #   list_privileges(user)
+  #   list_privileges(user, 'checked')
   #   #=> '<span>experts</span><span class="checked">partners</span>'
   def list_privileges(user, klass)
-    user.privileges.inject('') do |html, item|
-      html << content_tag(:span, class: (item[1] ? klass : nil)) do
-        Privilege.human_attribute_name(item[0])
+    if user.admin?
+      return content_tag(:span, class: klass) do
+        Privilege.human_attribute_name(:admin)
+      end
+    end
+
+    Privilege::SECTIONS.inject('') do |html, section|
+      html << content_tag(:span, class: user.access?(section) ? klass : nil) do
+        Privilege.human_attribute_name(section)
       end
     end.html_safe
   end

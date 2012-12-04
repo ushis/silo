@@ -26,27 +26,14 @@ class Privilege < ActiveRecord::Base
     admin? || (respond_to?(section) && send(section))
   end
 
-  # Returns the privileges hash.
-  #
-  #   privilege.privileges
-  #   #=> { experts: true, partners: false, references: true }
-  #
-  # If the admin attribute is _true_, the hash contains the single key
-  # _admin_ with the value _true_.
-  def privileges
-    if admin?
-      { admin: true }
-    else
-      Hash[SECTIONS.map { |s| [s, send(s)] }]
-    end
-  end
-
   # Sets the privileges. It takes a hash of sections and their corresponding
   # access values.
   #
   #   privilege.privileges = { experts: true, references: false }
-  #   privilege.privileges
-  #   #=> { experts: true, partners: false, references: false }
+  #
+  #   privilege.experts?     #=> true
+  #   privilege.partners?    #=> false
+  #   privilege.references?  #=> false
   #
   # If the :admin is set to true, all sections will be set to true.
   def privileges=(privileges)
