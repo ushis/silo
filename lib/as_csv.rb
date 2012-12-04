@@ -99,9 +99,8 @@ module AsCsv
       associations = {}
 
       Array.wrap(options[:include]).each do |assoc|
-        next unless reflections.key?(assoc)
+        next unless (ref = reflect_on_association(assoc))
 
-        ref = reflections[assoc]
         class_name = (ref.options[:class_name] || ref.name).to_s.classify
         associations[assoc] = class_name.constantize.exposable_attributes
       end

@@ -119,9 +119,8 @@ module ActsAsTag
         end
 
         attr_accessible(assoc)
-        has_and_belongs_to_many(assoc, uniq: true)
 
-        reflection = reflect_on_association(assoc)
+        reflection = has_and_belongs_to_many(assoc, uniq: true)
 
         search_sql = <<-SQL
           SELECT #{reflection.foreign_key}, COUNT(*) AS num
