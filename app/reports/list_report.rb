@@ -18,7 +18,11 @@ class ListReport < ApplicationReport
   def items
     h2 @item_type
 
-    model = List.reflections.fetch(@item_type).options[:source_type].constantize
+    unless (reflection = List.reflect_on_association(@item_type))
+      raise ArgumentError, "Invalid item type: #{@item_type}"
+    end
+
+    model = reflection.options[:source_type].to_s.constantize
     cols = model.exposable_attributes(@options.merge(human: true))
     items = @record.send(@item_type)
 
