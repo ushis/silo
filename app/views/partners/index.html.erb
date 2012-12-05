@@ -20,8 +20,9 @@
             </div>
           </div>
           <div class="row q">
-            <%= text_field_tag :q, params[:q], 'data-help' => 'fulltext',
-                  placeholder: Partner.human_attribute_names(:description, :comment) %>
+            <%= text_field_tag :q, params[:q],
+                               placeholder: t('labels.generic.fuzzy_search') %>
+
             <%= submit_tag t('actions.search') %>
           </div>
         <% end %>

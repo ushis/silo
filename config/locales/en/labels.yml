@@ -20,6 +20,7 @@ en:
     generic:
       all: 'All'
       by: 'by %{name}'
+      fuzzy_search: 'Free Search'
       fulltext: 'Fulltext'
       page: 'Page'
       results: 'Results'

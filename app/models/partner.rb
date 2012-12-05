@@ -73,41 +73,44 @@ class Partner < ActiveRecord::Base
       s = s.where(id: ids)
     end
 
-    if params[:q].blank?
-      return s.order(:company)
+    unless params[:q].blank?
+      return none if (ids = search_fuzzy(params[:q])).empty?
+      s = s.where(id: ids)
     end
 
-    if (ids = search_fulltext(params[:q])).empty?
-      return none
-    end
-
-    s.where(id: ids).order('FIELD(partners.id, %s)' % ids.join(', '))
+    s.order(:company)
   end
 
-  # Searches the fulltext associations, such as Comment and Description.
+  # Searches weaker attributes (such as street, city, ...) and associations.
   #
-  #   Partner.search_fulltext('Banana Split')
-  #   #=> [4, 34, 1, 23]
+  #   Partner.search_fuzzy('Banana')
+  #   #=> [23, 445, 12, 134]
   #
-  # Returns an array of partner ids ordered by relevance.
-  def self.search_fulltext(query)
+  # Returns an Array of unordered partner ids.
+  def self.search_fuzzy(query)
     sql = <<-SQL
       (
-        SELECT comments.commentable_id AS partner_id,
-          MATCH (comments.comment) AGAINST (:q IN BOOLEAN MODE) AS score
+        SELECT partners.id
+        FROM partners
+        WHERE partners.street LIKE :like
+          OR partners.zip LIKE :like
+          OR partners.city LIKE :like
+          OR partners.region LIKE :like
+      ) UNION (
+        SELECT comments.commentable_id
         FROM comments
         WHERE comments.commentable_type = 'Partner'
-          AND MATCH (comments.comment) AGAINST (:q IN BOOLEAN MODE)
+          AND MATCH (comments.comment) AGAINST (:q)
       ) UNION (
-        SELECT descriptions.partner_id,
-          MATCH (descriptions.description) AGAINST (:q IN BOOLEAN MODE) AS score
+        SELECT descriptions.partner_id
         FROM descriptions
-        WHERE MATCH (descriptions.description) AGAINST (:q IN BOOLEAN MODE)
+        WHERE MATCH (descriptions.description) AGAINST (:q)
       )
-      ORDER BY score DESC
     SQL
 
-    connection.select_rows(sanitize_sql([sql, q: query])).map(&:first)
+    connection.select_rows(sanitize_sql(
+      [sql, q: query, like: "%#{query}%"]
+    )).map(&:first)
   end
 
   # Returns the partners description. A new one is initialized if necessary.
