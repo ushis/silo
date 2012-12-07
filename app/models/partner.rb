@@ -97,6 +97,17 @@ class Partner < ActiveRecord::Base
           OR partners.city LIKE :like
           OR partners.region LIKE :like
       ) UNION (
+        SELECT employees.partner_id
+        FROM employees
+        WHERE employees.prename LIKE :like
+          OR employees.name LIKE :like
+      ) UNION (
+        SELECT advisers_partners.partner_id
+        FROM advisers_partners
+        JOIN advisers
+        ON advisers.id = advisers_partners.adviser_id
+        WHERE advisers.adviser LIKE :like
+      ) UNION (
         SELECT comments.commentable_id
         FROM comments
         WHERE comments.commentable_type = 'Partner'

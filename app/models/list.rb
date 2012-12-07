@@ -18,9 +18,8 @@ class List < ActiveRecord::Base
   has_many :list_items, autosave: true, dependent: :destroy
   has_many :current_users, class_name: :User, foreign_key: :current_list_id
 
-  ListItem::TYPES.each do |assoc, klass|
-    has_many assoc, through: :list_items, source: :item, source_type: klass.to_s
-  end
+  has_many :experts,  through: :list_items, source: :item, source_type: :Expert,  include: :country
+  has_many :partners, through: :list_items, source: :item, source_type: :Partner, include: :country
 
   has_one :comment, autosave: true, dependent: :destroy, as: :commentable
 
