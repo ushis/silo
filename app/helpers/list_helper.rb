@@ -59,7 +59,8 @@ module ListHelper
   #
   # If a block is given, it is captured and used as the buttons content.
   def listable_button_for(record_or_collection, &block)
-    collection = Array(record_or_collection)
+    collection = Array.wrap(record_or_collection)
+
     return nil if collection.empty?
 
     options = {
@@ -70,7 +71,13 @@ module ListHelper
       class: 'listable'
     }
 
-    txt = block.nil? ? '' : capture(&block)
-    link_to(txt, listable_url(options['data-item-type']), options)
+    options['data-params'] = "ids=#{options['data-ids']}"
+    url = listable_url(options['data-item-type'])
+
+    if block_given?
+      link_to(url, options, &block)
+    else
+      link_to(content_tag(:div, nil, class: 'marker'), url, options)
+    end
   end
 end

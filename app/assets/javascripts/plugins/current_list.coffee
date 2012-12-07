@@ -54,10 +54,6 @@ do ($ = jQuery) ->
       @listItems = @listItems.add(collection)
       @bindSynchronizer(collection)
 
-      collection.each ->
-        el = $(@).append($('<div>', class: 'marker'))
-        el.data('params', "ids=#{el.data('ids')}")
-
       collection.click =>
         unless @el.hasClass('active')
           @select?.trigger('show')
