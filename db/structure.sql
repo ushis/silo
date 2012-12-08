@@ -117,7 +117,8 @@ CREATE TABLE `employees` (
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_employees_on_partner_id` (`partner_id`),
-  KEY `index_employees_on_name` (`name`)
+  KEY `index_employees_on_name` (`name`),
+  KEY `index_employees_on_prename` (`prename`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `experts` (

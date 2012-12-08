@@ -67,6 +67,7 @@ class AddPartners < ActiveRecord::Migration
 
     add_index :employees, :partner_id
     add_index :employees, :name
+    add_index :employees, :prename
   end
 
   def down
