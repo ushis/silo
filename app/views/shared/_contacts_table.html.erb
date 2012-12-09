@@ -11,10 +11,10 @@
         <% parent.contact.send(field).each do |val| %>
           <tr>
             <td>
-              <%= contact_value val, field %>
+              <%= t field.to_s.singularize, scope: [:values, :contacts] %>
             </td>
             <td>
-              <%= t field.to_s.singularize, scope: [:values, :contacts] %>
+              <%= contact_value val, field %>
             </td>
             <% if current_user.access?(parent.class.to_s.tableize) %>
               <td class="del">
