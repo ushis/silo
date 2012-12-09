@@ -1,4 +1,8 @@
 /* Main */
+body.employees #main #content {
+	padding-bottom: 30px;
+}
+
 body.employees #main div.sidebar.details h3.updated_at {
 	margin-top: -15px;
 	margin-bottom: 20px;
@@ -8,7 +12,36 @@ body.employees #main div.tabbed-content ul.info.employees,
 body.employees #main div.tabbed-content ul.info.employees li.employee {
 	float: left;
 	width: 100%;
-	border-bottom: 0 none transparent;
+	padding: 0 10px;
+}
+
+body.employees #main div.tabbed-content ul.info.employees {
+	padding-bottom: 15px;
+}
+
+body.employees #main div.tabbed-content ul.info.employees:after {
+	content: "";
+	position: absolute;
+	width:1px;
+	height: 100%;
+	background: #eee;
+	top: 0;
+	left: 50%;
+}
+
+body.employees #main div.tabbed-content ul.info.employees li.employee {
+	width: 50%;
+	padding: 10px 0 10px 0;
+	border: 0 none transparent;
+}
+
+body.employees #main div.tabbed-content ul.info.employees li.employee:nth-child(2n+1) {
+	padding-right: 20px;
+	clear: left;
+}
+
+body.employees #main div.tabbed-content ul.info.employees li.employee:nth-child(2n+2) {
+	padding-left: 20px;
 }
 
 body.employees #main div.tabbed-content ul.info.employees li.employee h4,
@@ -18,55 +51,67 @@ body.employees #main div.tabbed-content ul.info.employees li.employee h5 {
 
 body.employees #main div.tabbed-content ul.info.employees li.employee h4 {
 	font-size: 13px;
-	margin-left: 3px;
-	margin-bottom: 8px;
-	border-bottom: 1px solid #EEE;
-	width: 100%;
+	padding-left: 5px;
+	padding-right: 50px;
 	text-align: left;
-	padding-bottom: 8px;
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
-	padding-right: 55px;
-}
-
-body.employees #main div.tabbed-content ul.info.employees li.employee h4:before {
-	margin-right: 7px;
 }
 
 body.employees #main div.tabbed-content ul.info.employees li.employee h5 {
-	font-size: 12px;
 	margin-left: 5px;
-	float: left;
+	margin-bottom: 12px;
+	color: #AFAFAF;
+	font-size: 11px;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
+}
+
+body.employees #main div.tabbed-content div.info.contacts {
+	margin-bottom: 0;
+}
+
+body.employees #main div.tabbed-content div.info.contacts table {
+	padding: 0;
+	font-size: 12px;
+}
+
+body.employees #main div.tabbed-content li.employee:nth-child(n+3) {
+	margin-top: 20px;
+}
+
+body.employees #main div.tabbed-content div.info.contacts table td:nth-child(2) a {
 	display: inline;
 }
 
-body.employees #main div.tabbed-content div.info.contacts table {
-	padding-left: 0;
+body.employees #main div.tabbed-content div.info.contacts table tr td:first-child {
+	width: 110px;
+	color: #AFAFAF;
+	font-size: 11px;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
 }
 
-body.employees #main div.tabbed-content div.info.contacts table {
-	padding-left: 0;
-}
-
-body.employees #main div.tabbed-content div.info.contacts table td.del a,
-body.employees #main div.tabbed-content div.info.contacts table td.del button {
+body.employees #main div.tabbed-content div.tools.contacts,
+body.employees #main div.tabbed-content td.del a {
 	visibility: hidden;
 }
 
-body.employees #main div.tabbed-content div.info.contacts table tr:hover td.del a,
-body.employees #main div.tabbed-content div.info.contacts table tr:hover td.del button {
+body.employees #main div.tabbed-content li.employee:hover div.tools.employees,
+body.employees #main div.tabbed-content li.employee:hover div.tools.contacts,
+body.employees #main div.tabbed-content li.employee:hover td.del a {
 	visibility: visible;
 }
 
 body.employees #main div.tabbed-content div.tools.employees {
 	top: 13px;
-	right: 8px;
+	right: 29px;
 }
 
-body.employees #main div.tabbed-content div.tools.employees a,
-body.employees #main div.tabbed-content div.tools.employees button,
-body.employees #main div.tabbed-content div.tools.contacts a,
-body.employees #main div.tabbed-content div.tools.contacts button {
+body.employees #main div.tabbed-content li.employee:nth-child(2n+2) div.tools.employees {
+	right: 0;
+}
+
+body.employees #main div.tabbed-content div.tools.employees a.icon-pencil,
+body.employees #main div.tabbed-content div.tools.employees a.icon-trash {
 	color: #666;
 	background: transparent;
 	border: none;
@@ -77,22 +122,37 @@ body.employees #main div.tabbed-content div.tools.contacts button {
 	margin: 0;
 }
 
+body.employees #main div.tabbed-content div.tools.employees a.icon-plus {
+	color: #666;
+	background: transparent;
+	border: none;
+	box-shadow: 0 0 0 0 transparent;
+}
+
 body.employees #main div.tabbed-content div.tools.employees a:hover,
 body.employees #main div.tabbed-content div.tools.employees button:hover {
 	color: #333;
 }
 
 body.employees #main div.tabbed-content div.tools.contacts {
+	position: absolute;
 	top: auto;
-	right: auto;
-	position: relative;
-	float: right;
+	bottom: -7px;
+	right: 22px;
+}
+
+body.employees #main div.tabbed-content li.employee:nth-child(2n+2) div.tools.contacts {
+	right: -2px;
 }
 
 body.employees #main div.tabbed-content div.tools.contacts a {
+	position: relative;
+	z-index: 2;
 	width: auto;
-	white-space: normal;
-	float: right;
+	color: #666;
+	background: transparent;
+	border: none;
+	box-shadow: 0 0 0 0 transparent;
 	padding-right: 25px;
 }
 
