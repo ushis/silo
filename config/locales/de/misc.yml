@@ -41,3 +41,6 @@ de:
       skypes: 'Skypes'
       website: 'Webseite'
       websites: 'Webseiten'
+    private:
+      'false': 'Öffentlich'
+      'true': 'Privat'
