@@ -11,11 +11,11 @@
           </div>
           <label>
             <%= radio_button_tag :private, '1', params[:private] == '1' %>
-            Private
+            <%= t 'values.private.true' %>
           </label>
           <label>
             <%= radio_button_tag :private, '0', params[:private] == '0' %>
-            Shared
+            <%= t 'values.private.false' %>
           </label>
           <div>
             <%= submit_tag t('actions.search') %>
