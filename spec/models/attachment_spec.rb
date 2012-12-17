@@ -50,7 +50,7 @@ describe Attachment do
       attachment.should be_a(Attachment)
       attachment.absolute_path.should be_a(Pathname)
       attachment.absolute_path.should be_file
-      Digest::MD5.file(fixture_file_path(filename)).should == Digest::MD5.file(attachment.absolute_path)
+      FileUtils.identical?(fixture_file_path(filename), attachment.absolute_path).should be_true
     end
 
     it 'should be valid' do

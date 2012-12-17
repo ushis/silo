@@ -1,5 +1,3 @@
-require 'digest/md5'
-
 module AttachmentSpecHelper
   def self.included(base)
     base.before(:all) do
