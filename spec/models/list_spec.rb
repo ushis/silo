@@ -147,9 +147,9 @@ describe List do
       list.should_not be_changed
       copy.should be_new_record
 
-      copy.list_items.length.should == 4
-      copy.list_items.all?(&:new_record?).should be_true
-      copy.list_items.all? { |item| ! item.note.nil? }.should be_true
+      copy.list_items.should have(4).items
+      copy.list_items.should be_all(&:new_record?)
+      copy.list_items.should be_all { |item| ! item.note.nil? }
     end
   end
 
@@ -163,14 +163,14 @@ describe List do
       nums.values.reduce(:+).should > 0
 
       a.concat(b)
-      a.list_items.length.should == nums[:b]
+      a.list_items.should have(nums[:b]).items
 
-      b.list_items.length.should == nums[:b]
-      b.list_items.any?(&:changed?).should be_false
+      b.list_items.should have(nums[:b]).items
+      b.list_items.should_not be_any(&:changed?)
 
       a.concat(c)
-      a.list_items.length.should == nums[:b] + nums[:c]
-      a.list_items.all? { |item| item.note.nil? }.should be_true
+      a.list_items.should have(nums[:b] + nums[:c]).items
+      a.list_items.should be_all { |item| item.note.nil? }
     end
   end
 end
