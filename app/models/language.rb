@@ -15,6 +15,8 @@ class Language < ActiveRecord::Base
 
   has_and_belongs_to_many :experts, uniq: true
 
+  has_many :cvs
+
   # A set of prioritized language codes.
   PRIORITIES = [:de, :en, :es, :fr].to_set
 

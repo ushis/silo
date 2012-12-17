@@ -34,4 +34,7 @@ Silo::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
+
+  # Path to the attachment store relativ to the rails root.
+  config.attachment_store = 'attachments_test'
 end

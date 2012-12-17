@@ -34,4 +34,7 @@ Silo::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+
+  # Path to the attachment store relativ to the rails root.
+  config.attachment_store = 'attachments'
 end

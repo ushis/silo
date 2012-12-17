@@ -41,11 +41,6 @@ class Contact < ActiveRecord::Base
     define_method(method) { self.contacts[method.to_s] ||= [] }
   end
 
-  # Initializes the contacts hash.
-  def init_contacts
-    self.contacts ||= {}
-  end
-
   # Returns the specified field. Raises an ArgumentError, if the specified
   # field is not a valid one.
   def field(field)
@@ -58,13 +53,20 @@ class Contact < ActiveRecord::Base
     send(f)
   end
 
-  # Removes all blank values from the contact hash.
-  def remove_blanks
-    FIELDS.each { |f| send(f).delete_if { |val| val.blank? } }
-  end
-
   # Returns true, if all contact fields are empty, else false.
   def empty?
     FIELDS.all? { |f| send(f).empty? }
+  end
+
+  private
+
+  # Initializes the contacts hash.
+  def init_contacts
+    self.contacts ||= {}
+  end
+
+  # Removes all blank values from the contact hash.
+  def remove_blanks
+    FIELDS.each { |f| send(f).delete_if { |val| val.blank? } }
   end
 end

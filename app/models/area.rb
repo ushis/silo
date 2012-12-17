@@ -25,4 +25,6 @@ class Area < ActiveRecord::Base
   def human
     I18n.t(area, scope: :areas)
   end
+
+  alias :to_s :human
 end

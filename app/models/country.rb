@@ -11,6 +11,10 @@ class Country < ActiveRecord::Base
 
   validates :country, presence: true, uniqueness: true
 
+  has_many :addresses
+  has_many :experts
+  has_many :partners
+
   belongs_to :area
 
   # Polymorphic method to find a country.

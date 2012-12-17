@@ -25,7 +25,7 @@ class Attachment < ActiveRecord::Base
   belongs_to :attachable, polymorphic: true
 
   # Directory name of the attachment store.
-  DIRNAME = Pathname.new('attachments')
+  DIRNAME = Rails.application.config.attachment_store
 
   # Absolute path to the attachment store.
   STORE = Rails.root.join(DIRNAME)
@@ -65,11 +65,11 @@ class Attachment < ActiveRecord::Base
 
   # Returns a nice filename generated from the title.
   def public_filename
-    if (ext = File.extname(title)).blank?
-      ext = File.extname(filename.to_s)
+    if (extension = File.extname(title)).blank?
+      extension = ext
     end
 
-    File.basename(title, ext).parameterize + ext
+    File.basename(title, extension).parameterize + extension
   end
 
   # Returns the absolute path to the stored file.

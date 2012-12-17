@@ -14,7 +14,10 @@ group :assets do
 end
 
 # Development
-group :development do
+group :test, :development do
+  gem 'rspec-rails', '~> 2.0'
+  gem 'shoulda-matchers', '~> 1.4.2'
+  gem 'factory_girl_rails', '~> 4.1.0'
   gem 'carmen-rails', '~> 1.0.0.beta2'
   gem 'colorize'
 end
