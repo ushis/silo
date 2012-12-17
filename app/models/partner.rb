@@ -13,6 +13,7 @@
 # - *website:*     string
 # - *email:*       string
 # - *phone:*       string
+# - *fax:*         string
 # - *created_at:*  datetime
 # - *updated_at:*  datetime
 #

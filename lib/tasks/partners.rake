@@ -59,6 +59,10 @@ namespace :partners do
           p.phone = phone.strip
         end
 
+        unless (fax = data['Fax']).blank?
+          p.fax = fax.strip
+        end
+
         unless (website = data['Homepage']).blank?
           p.website = website.split('#').pop.strip
         end
