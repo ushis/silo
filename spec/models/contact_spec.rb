@@ -21,7 +21,7 @@ describe Contact do
 
   describe 'FIELDS' do
     it 'should be an array of fields' do
-      Contact::FIELDS =~ [:emails, :p_phones, :b_phones, :m_phones, :skypes, :websites]
+      Contact::FIELDS.should =~ [:emails, :p_phones, :b_phones, :m_phones, :skypes, :websites, :fax]
     end
 
     it 'should define a method for each field' do

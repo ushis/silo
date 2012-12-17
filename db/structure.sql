@@ -193,6 +193,7 @@ CREATE TABLE `partners` (
   `phone` varchar(255) DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
+  `fax` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `index_partners_on_company` (`company`),
   KEY `index_partners_on_user_id` (`user_id`),
@@ -252,3 +253,5 @@ INSERT INTO schema_migrations (version) VALUES ('6');
 INSERT INTO schema_migrations (version) VALUES ('7');
 
 INSERT INTO schema_migrations (version) VALUES ('8');
+
+INSERT INTO schema_migrations (version) VALUES ('9');

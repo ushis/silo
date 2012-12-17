@@ -7,7 +7,7 @@ describe Privilege do
 
   describe 'SECTIONS' do
     it 'should be an array of sections' do
-      Privilege::SECTIONS =~ [:partners, :experts, :references]
+      Privilege::SECTIONS.should =~ [:partners, :experts, :references]
     end
   end
 

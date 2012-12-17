@@ -19,11 +19,11 @@
 # The company attribute is required.
 class Partner < ActiveRecord::Base
   attr_accessible :country_id, :company, :street, :city, :zip, :region,
-                  :website, :email, :phone,
+                  :website, :email, :phone, :fax,
                   :comment_attributes, :description_attributes
 
   attr_accessible :company, :street, :zip, :city, :region, :country, :website,
-                  :email, :phone, as: :exposable
+                  :email, :phone, :fax, as: :exposable
 
   is_taggable_with :businesses, :advisers
 

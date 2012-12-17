@@ -33,6 +33,7 @@ en:
       b_phones: 'Phones (Business)'
       email: 'Email'
       emails: 'Emails'
+      fax: 'Fax'
       m_phone: 'Phone (Mobile)'
       m_phones: 'Phones (Mobile)'
       p_phone: 'Phone (Private)'
