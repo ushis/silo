@@ -63,7 +63,7 @@ module ExposableAttributes
       end
 
       attributes.map do |attr|
-        [attr, method_defined?(:"human_#{attr}") ? :"human_#{attr}" : attr]
+        [attr, method_defined?("human_#{attr}") ? "human_#{attr}" : attr]
       end
     end
   end

@@ -1,5 +1,3 @@
-require 'set'
-
 # Tha ActsAsTag module defines methods making arbitrary models acting as
 # tags or taggable, using the tag like models as associations.
 #
@@ -77,16 +75,19 @@ module ActsAsTag
     # description.
     def acts_as_tag(attribute_name)
       attr_accessible(attribute_name)
-      validates(attribute_name, presence: true, uniqueness: true)
       default_scope(order(attribute_name))
+      validates(attribute_name, presence: true, uniqueness: true)
 
       # Defines the Model.from_s method to extract tags from a string.
       define_singleton_method(:from_s) do |s, delimiter = /\s*,\s*/|
-        results = s.split(delimiter).inject(Set.new) do |set, tag|
-          tag.blank? ? set : set << tag.strip
-        end
+        results = s.split(delimiter).inject({}) do |hsh, tag|
+          next hsh if tag.blank?
+          tag.strip!
+          hsh[tag.downcase] ||= tag
+          hsh
+        end.values
 
-        results.empty? ? [] : multi_find_or_initialize(results.to_a)
+        results.empty? ? [] : multi_find_or_initialize(results)
       end
 
       search_sql = "LOWER(#{attribute_name}) IN (?)"
