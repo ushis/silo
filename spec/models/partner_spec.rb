@@ -10,6 +10,9 @@ describe Partner do
   end
 
   context 'associations' do
+    it { should have_and_belong_to_many(:advisers) }
+    it { should have_and_belong_to_many(:businesses) }
+
     it { should have_many(:employees).dependent(:destroy) }
     it { should have_many(:attachments).dependent(:destroy) }
     it { should have_many(:list_items).dependent(:destroy) }
