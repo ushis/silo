@@ -142,7 +142,7 @@ class ApplicationController < ActionController::Base
   # Returns an Array.
   def body_class
     @body_class ||= begin
-      body_class = [params[:controller], params[:action]]
+      body_class = params.values_at(:controller, :action)
       body_class << :admin if current_user.try(:admin?)
       body_class
     end
