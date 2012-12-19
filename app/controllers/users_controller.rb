@@ -2,6 +2,8 @@
 # accessibles as admin only. Exceptions are the methods
 # UsersController#profile and UsersController#update_profile.
 class UsersController < ApplicationController
+  before_filter :check_password, only: [:destroy]
+
   skip_before_filter :authorize, only: [:profile, :update_profile]
 
   # Serves the users profile. Admins are redirected to their edit page.
@@ -117,11 +119,6 @@ class UsersController < ApplicationController
   # *Note:* A user can not destroy him/herself.
   def destroy
     user = User.find(params[:id])
-
-    unless current_user.authenticate(params[:password])
-      flash[:alert] = t('messages.user.errors.password')
-      redirect_to users_url and return
-    end
 
     if user == current_user
       flash[:alert] = t('messages.user.errors.delete_current_user')

@@ -1,5 +1,7 @@
 # The ExpertsController provides basic CRUD actions for the experts data.
 class ExpertsController < ApplicationController
+  before_filter :check_password, only: [:destroy]
+
   skip_before_filter :authorize, only: [:index, :show, :documents]
 
   # Checks if the user has access to the experts section.
@@ -86,11 +88,6 @@ class ExpertsController < ApplicationController
   # Deletes the expert and redirects to the experts index page.
   def destroy
     expert = Expert.find(params[:id])
-
-    unless current_user.authenticate(params[:password])
-      flash[:alert] = t('messages.user.errors.password')
-      redirect_to expert_url(expert) and return
-    end
 
     if expert.destroy
       flash[:notice] = t('messages.expert.success.delete', name: expert.name)

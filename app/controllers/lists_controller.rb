@@ -1,6 +1,8 @@
 # The ListsController provides the actions to handle some list specific
 # requests. See Ajax::LitsController to find more.
 class ListsController < ApplicationController
+  before_filter :check_password, only: [:destroy]
+
   skip_before_filter :authorize
 
   cache_sweeper :list_sweeper, only: :update
@@ -75,11 +77,6 @@ class ListsController < ApplicationController
   # Destroys a list.
   def destroy
     list = List.find_for_user(params[:id], current_user)
-
-    unless current_user.authenticate(params[:password])
-      flash[:alert] = t('messages.user.errors.password')
-      redirect_to list_experts_url(list) and return
-    end
 
     if list.destroy
       flash[:notice] = t('messages.list.success.delete', title: list.title)

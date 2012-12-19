@@ -50,6 +50,19 @@ class ApplicationController < ActionController::Base
     redirect_to root_url
   end
 
+  # Checks the users password and redirects her back, if it fails. It is
+  # itended to be used as confirmation tool:
+  #
+  # "Are your sure? Please confirm with your password."
+  #
+  # Use it as a before filter.
+  def check_password
+    unless current_user.authenticate(params[:password])
+      flash[:alert] = t('messages.user.errors.password')
+      redirect_to :back
+    end
+  end
+
   # Sets the users preferred locale.
   def set_locale
     I18n.locale = current_user.try(:locale) || locale_from_header
@@ -128,12 +141,11 @@ class ApplicationController < ActionController::Base
   #
   # Returns an Array.
   def body_class
-    unless @body_class
-      @body_class = [params[:controller], params[:action]]
-      @body_class << :admin if current_user.try(:admin?)
+    @body_class ||= begin
+      body_class = [params[:controller], params[:action]]
+      body_class << :admin if current_user.try(:admin?)
+      body_class
     end
-
-    @body_class
   end
 
   # Returns the current list of the current user.

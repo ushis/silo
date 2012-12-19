@@ -1,5 +1,7 @@
 # Handles all partner related requests.
 class PartnersController < ApplicationController
+  before_filter :check_password, only: [:destroy]
+
   skip_before_filter :authorize, only: [:index, :show, :documents]
 
   cache_sweeper :tag_sweeper, only: [:create, :update]
@@ -86,11 +88,6 @@ class PartnersController < ApplicationController
   # Deletes the partner.
   def destroy
     partner = Partner.find(params[:id])
-
-    unless current_user.authenticate(params[:password])
-      flash[:alert] = t('messages.user.errors.password')
-      redirect_to partner_url(partner) and return
-    end
 
     if partner.destroy
       flash[:notice] = t('messages.partner.success.delete', name: partner.company)
