@@ -1,15 +1,16 @@
 require 'spec_helper'
 
 describe Expert do
-  context 'validations' do
+  include AttachmentSpecHelper
+
+  describe :validations do
     it 'must have a name' do
-      e = Expert.new
-      e.should_not be_valid
-      e.errors[:name].should_not be_empty
+      expect(subject).to_not be_valid
+      expect(subject.errors[:name]).to_not be_empty
     end
   end
 
-  context 'associations' do
+  describe :associations do
     it { should have_and_belong_to_many(:languages) }
 
     it { should have_many(:attachments).dependent(:destroy) }
@@ -23,6 +24,71 @@ describe Expert do
 
     it { should belong_to(:user) }
     it { should belong_to(:country) }
+  end
+
+  describe :add_cv_from_upload do
+    before(:all) do
+      @expert = create(:expert)
+      @lang = create(:language)
+    end
+
+    after(:all) do
+      @expert.user.destroy
+      @expert.destroy
+      @lang.destroy
+    end
+
+    context 'when data valid' do
+      def params
+        { file: fixture_file_upload('lorem-ipsum.txt'), language_id: @lang }
+      end
+
+      it 'should be truthy' do
+        expect(@expert.add_cv_from_upload(params)).to be_true
+      end
+
+      it 'should store the cv' do
+        expect {
+          @expert.add_cv_from_upload(params)
+        }.to change { count_files(Attachment::STORE) }.by(1)
+      end
+
+      it 'should add a cv' do
+        expect {
+          @expert.add_cv_from_upload(params)
+        }.to change { @expert.cvs(true).count }.by(1)
+      end
+    end
+
+    [
+      { file: 'empty' },
+      { file: 'kittens.jpg' },
+      { language_id: nil },
+      { language_id: 'invalid' }
+    ].each do |params|
+      context "when #{params.keys.first} is #{params.values.first.inspect}" do
+        before do
+          @params = { file: fixture_file_upload(params[:file] || 'lorem-ipsum.txt') }
+          @params[:language_id] = params.key?(:language_id) ? params[:language_id] : @lang
+        end
+
+        it 'should be false' do
+          expect(@expert.add_cv_from_upload(@params)).to be_false
+        end
+
+        it 'should not store the cv' do
+          expect {
+            @expert.add_cv_from_upload(@params)
+          }.to_not change { count_files(Attachment::STORE) }
+        end
+
+        it 'should not add the cv' do
+          expect {
+            @expert.add_cv_from_upload(@params)
+          }.to_not change { @expert.cvs(true).count }
+        end
+      end
+    end
   end
 
   describe 'full_name' do

@@ -156,6 +156,27 @@ class Expert < ActiveRecord::Base
     super(Language.where(id: ids)) if [Fixnum, Array].include?(ids.class)
   end
 
+  # Adds an uploaded Cv to the expert.
+  #
+  #   expert.add_cv_from_upload(params[:cv])
+  #   #=> [#<Cv id: 1323, expert_id: 12>, #<Cv id: 1684, expert_id: 12>]
+  #
+  # Returns the experts Cvs or false on error.
+  def add_cv_from_upload(data)
+    begin
+      cv = Cv.from_file(data[:file], data[:language_id])
+    rescue
+      return false
+    end
+
+    unless (self.cvs << cv)
+      cv.destroy
+      return false
+    end
+
+    cvs
+  end
+
   # Returns a string containing name and prename.
   def full_name
     "#{prename} #{name}"

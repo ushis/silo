@@ -51,6 +51,16 @@ class Language < ActiveRecord::Base
     end
   end
 
+  # Does the same as Language.find_language, but raises
+  # ActiveRecord::RecordNotFound when no language could be found.
+  def self.find_language!(language)
+    if (result = find_language(language))
+      return result
+    end
+
+    raise ActiveRecord::RecordNotFound, "Couldn't find Language #{language.inspect}"
+  end
+
   # Returns a collection of all kanguages ordered by localized name.
   def self.ordered
     all.sort { |x, y| x.human <=> y.human }

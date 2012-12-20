@@ -29,27 +29,14 @@ class Cv < ActiveRecord::Base
   #
   # Returns a new Cv object and raises several exceptions on error.
   def self.from_file(file, language)
-    cv = Cv.new
+    cv = new
     cv.attachment = Attachment.from_file(file)
+    cv.language = Language.find_language!(language)
     cv.load_document
-    cv.language = Language.find_language(language)
     cv
   rescue
     cv.destroy
     raise
-  end
-
-  # Takes a Hash containing a :file and a :language_id key and passes it to
-  # Cv.from_file.
-  def self.from_upload(data)
-    from_file(data[:file], data[:language_id])
-  end
-
-  # Adds a fulltext search condition to the database query.
-  #
-  # Returns ActiveRecord:Relation.
-  def self.search(query)
-    where('MATCH (cvs.cv) AGAINST (?)', query)
   end
 
   # Returns the public filename of the cv document.

@@ -1,54 +1,136 @@
 require 'spec_helper'
 
 describe Language do
-  context 'validations' do
+  describe :validations do
     it 'must have a language' do
-      l = Language.new
-      l.should_not be_valid
-      l.errors[:language].should_not be_empty
+      expect(subject).to_not be_valid
+      expect(subject.errors[:language]).to_not be_empty
     end
 
     it 'must have a unique language' do
       create(:language, language: 'de')
 
-      l = Language.new(language: :de)
-      l.should_not be_valid
-      l.errors[:language].should_not be_nil
+      subject.language = :de
+      expect(subject).to_not be_valid
+      expect(subject.errors).to_not be_nil
     end
   end
 
-  context 'associations' do
+  describe :associations do
     it { should have_and_belong_to_many(:experts) }
     it { should have_many(:cvs) }
   end
 
-  describe 'PRIORITIES' do
+  describe :PRIORITIES do
     it 'should be a set of symbols' do
-      Language::PRIORITIES.should == [:de, :en, :fr, :es].to_set
+      expect(Language::PRIORITIES).to eq([:de, :en, :fr, :es].to_set)
+    end
+  end
+
+  describe :find_language do
+   before(:all) do
+     @de = create(:language, language: :de)
+      @en = create(:language, language: :en)
+    end
+
+    after(:all) do
+      @de.destroy
+      @en.destroy
+    end
+
+    context 'when the language exists' do
+      it 'should be found by symbol' do
+        lang = Language.find_language(:de)
+        expect(lang).to eq(@de)
+      end
+
+      it 'should be found by string' do
+        lang = Language.find_language('de')
+        expect(lang).to eq(@de)
+      end
+
+      it 'should be found by language' do
+        lang = Language.find_language(@en)
+        expect(lang).to eq(@en)
+      end
+
+      it 'should be found by id' do
+        lang = Language.find_language(@de.id)
+        expect(lang).to eq(@de)
+      end
+
+      it 'should be found by stringified id' do
+        lang = Language.find_language(@en.id.to_s)
+        expect(lang).to eq(@en)
+      end
+    end
+
+    context 'when the language does not exist' do
+      it 'should be nil' do
+        lang = Language.find_language('fr')
+        expect(lang).to be_nil
+      end
+    end
+  end
+
+  describe :find_language! do
+    before(:all) do
+      @de = create(:language, language: :de)
+    end
+
+    after(:all) do
+      @de.destroy
+    end
+
+    context 'when the language exists' do
+      it 'should be the language' do
+        lang = Language.find_language!(:de)
+        expect(lang).to eq(@de)
+      end
+    end
+
+    context 'when the language does not exist' do
+      it 'should raise ActiveRecord::RecordNotFound' do
+        expect {
+          Language.find_language!(:en)
+        }.to raise_error(ActiveRecord::RecordNotFound)
+      end
     end
   end
 
   describe 'ordered' do
-    it 'should be a collection ordered by human name' do
-      hi = create(:language, language: :hi)  # Hindi
-      en = create(:language, language: :en)  # English
-      de = create(:language, language: :de)  # German
-      fr = create(:language, language: :fr)  # French
+    before(:all) do
+      @hi = create(:language, language: :hi)  # Hindi
+      @en = create(:language, language: :en)  # English
+      @de = create(:language, language: :de)  # German
+      @fr = create(:language, language: :fr)  # French
+    end
 
-      Language.all.should =~ [hi, en, de, fr]
-      Language.ordered.should == [en, fr, de, hi]
+    after(:all) do
+      [@hi, @en, @de, @fr].each { |l| l.destroy }
+    end
+
+    it 'should be a collection ordered by human name' do
+      expect(Language.all).to match_array([@hi, @en, @de, @fr])
+      expect(Language.ordered).to eq([@en, @fr, @de, @hi])
     end
   end
 
   describe 'priority_ordered' do
-    it 'should be a collection ordered by human name and priority' do
-      hi = create(:language, language: :hi)  # Hindi
-      en = create(:language, language: :en)  # English (prioritized)
-      de = create(:language, language: :de)  # German  (prioritized)
-      cs = create(:language, language: :cs)  # Czech
+    before(:all) do
+      @hi = create(:language, language: :hi)  # Hindi
+      @en = create(:language, language: :en)  # English (prioritized)
+      @de = create(:language, language: :de)  # German  (prioritized)
+      @cs = create(:language, language: :cs)  # Czech
+    end
 
-      Language.all.should =~ [hi, en, de, cs]
-      Language.priority_ordered.should == [en, de, cs, hi]
+    after(:all) do
+      [@hi, @en, @de, @cs].each { |l| l.destroy }
+    end
+
+    it 'should be a collection ordered by human name and priority' do
+      expect(Language.all).to match_array([@hi, @en, @de, @cs])
+      expect(Language.priority_ordered).to eq([@en, @de, @cs, @hi])
     end
   end
 

@@ -26,6 +26,17 @@ describe Attachment do
     it { should belong_to(:attachable) }
   end
 
+  describe :after_destroy do
+    it 'should remove the attachment' do
+      a = Attachment.from_file(fixture_file_upload('kittens.jpg'))
+      a.save
+
+      expect(a.absolute_path).to be_file
+      expect { a.destroy }.to change { count_files(Attachment::STORE) }.by(-1)
+      expect(a.absolute_path).to_not be_exist
+    end
+  end
+
   describe 'DIRNAME' do
     it 'should be the dirname for the attachment store defined in the config' do
       Attachment::DIRNAME.should == @store.basename.to_s
