@@ -22,7 +22,7 @@ describe List do
           list = create(:list, :public)
           list.private = true
           expect(list).to_not be_valid
-          expect(list.errors).to_not be_empty
+          expect(list.errors[:private]).to_not be_empty
         end
       end
     end

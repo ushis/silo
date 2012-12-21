@@ -95,6 +95,7 @@ de:
         no_experts: 'Diese Liste hat keine Experten.'
         no_partners: 'Diese Liste hat keine Partner.'
         open: 'Liste konnte nicht geöffnet werden.'
+        public_to_private: 'Öffentliche Liste kann nicht privatisiert werden.'
         save: 'Liste konnte nicht gespeichert werden.'
       success:
         concat: 'Liste importiert: %{title}'

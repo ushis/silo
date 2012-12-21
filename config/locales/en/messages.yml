@@ -95,6 +95,7 @@ en:
         no_experts: 'This list has no experts.'
         no_partners: 'This list has no partners.'
         open: 'Could not open list.'
+        public_to_private: 'Public list can not be made private.'
         save: 'Could not save list.'
       success:
         concat: 'Imported list: %{title}'
