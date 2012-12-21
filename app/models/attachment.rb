@@ -33,8 +33,18 @@ class Attachment < ActiveRecord::Base
   # Inits a new Attachment from a file. The file is stored in the
   # attachment store and new Attachment is returned.
   #
-  # Raises several exceptions on error.
+  # Returns nil on error.
   def self.from_file(file, title = nil)
+    from_file!(file, title)
+  rescue
+    nil
+  end
+
+  # Does the same as Attachment.from_file, but raises several exceptions
+  # on error.
+  #
+  # Raises several exceptions on error.
+  def self.from_file!(file, title = nil)
     attachment = Attachment.new
     attachment.store(file)
 
@@ -56,6 +66,20 @@ class Attachment < ActiveRecord::Base
   # The hash should include a _file_ and a _title_ key.
   def self.from_upload(params)
     from_file(params[:file], params[:title])
+  end
+
+  # Adds it self to another record.
+  #
+  #   attachment.add_to(expert)
+  #   #=> #<Attachment id: 12, attachable_id: 34, attachable_type: 'Expert'>
+  #
+  #   expert.attachments.include?(attachment)
+  #   #=> true
+  #
+  # Returns it self or false on error.
+  def add_to(record)
+    self.attachable = record
+    save && self
   end
 
   # Returns the file extension of the stored file.

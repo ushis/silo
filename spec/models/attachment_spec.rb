@@ -50,39 +50,80 @@ describe Attachment do
   end
 
   describe 'from_file' do
-    it 'should store the file' do
-      filename = 'kittens.jpg'
-      attachment = nil
+    context 'when valid file input' do
+      it 'should store the file' do
+        filename = 'kittens.jpg'
+        attachment = nil
 
-      expect {
-        attachment = Attachment.from_file(fixture_file_upload(filename))
-      }.to change { count_files(Attachment::STORE) }.by(1)
+        expect {
+          attachment = Attachment.from_file(fixture_file_upload(filename))
+        }.to change { count_files(Attachment::STORE) }.by(1)
 
-      attachment.should be_a(Attachment)
-      attachment.absolute_path.should be_a(Pathname)
-      attachment.absolute_path.should be_file
-      FileUtils.identical?(fixture_file_path(filename), attachment.absolute_path).should be_true
+        attachment.should be_a(Attachment)
+        attachment.absolute_path.should be_a(Pathname)
+        attachment.absolute_path.should be_file
+        FileUtils.identical?(fixture_file_path(filename), attachment.absolute_path).should be_true
+      end
+
+      it 'should be valid' do
+        attachment = Attachment.from_file(fixture_file_upload('kittens.jpg'))
+        attachment.should be_valid
+      end
+
+      it 'should set the title from the original filename if not given' do
+        attachment = Attachment.from_file(fixture_file_upload('kittens.jpg'))
+        attachment.title.should == 'kittens.jpg'
+      end
+
+      it 'should set the title if given' do
+        title = 'Example'
+        attachment = Attachment.from_file(fixture_file_upload('kittens.jpg'), title)
+        attachment.title.should == title
+      end
+
+      it 'should detect the file extension' do
+        attachment = Attachment.from_file(fixture_file_upload('kittens.jpg'))
+        attachment.ext.should == '.jpg'
+      end
     end
 
-    it 'should be valid' do
-      attachment = Attachment.from_file(fixture_file_upload('kittens.jpg'))
-      attachment.should be_valid
+    context 'when invalid input file' do
+      it 'should be nil' do
+        expect(Attachment.from_file('kitten.jpg', 'Kittens')).to be_nil
+      end
+    end
+  end
+
+  describe :from_file! do
+    context 'when invalid input file' do
+      it 'should raise a TypeError' do
+        expect(Attachment.from_file('kittens.jpg', 'asd')).to raise_error
+      end
+    end
+  end
+
+  describe :add_to do
+    before(:all) do
+      @expert = create(:expert)
     end
 
-    it 'should set the title from the original filename if not given' do
-      attachment = Attachment.from_file(fixture_file_upload('kittens.jpg'))
-      attachment.title.should == 'kittens.jpg'
+    after(:all) do
+      @expert.user.destroy
+      @expert.destroy
     end
 
-    it 'should set the title if given' do
-      title = 'Example'
-      attachment = Attachment.from_file(fixture_file_upload('kittens.jpg'), title)
-      attachment.title.should == title
+    context 'invalid attachment' do
+      it 'should be false' do
+        expect(subject.add_to(@expert)).to be_false
+      end
     end
 
-    it 'should detect the file extension' do
-      attachment = Attachment.from_file(fixture_file_upload('kittens.jpg'))
-      attachment.ext.should == '.jpg'
+    context 'valid attachment' do
+      it 'should itself' do
+        a = create(:attachment)
+        expect(a.add_to(@expert)).to eq(a)
+        expect(@expert.attachments).to include(a)
+      end
     end
   end
 

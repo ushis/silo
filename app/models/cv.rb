@@ -30,7 +30,7 @@ class Cv < ActiveRecord::Base
   # Returns a new Cv object and raises several exceptions on error.
   def self.from_file(file, language)
     cv = new
-    cv.attachment = Attachment.from_file(file)
+    cv.attachment = Attachment.from_file!(file)
     cv.language = Language.find_language!(language)
     cv.load_document
     cv

@@ -35,7 +35,7 @@ module PolymorphicParent
 
       # Returns a hash with basic information about the parent.
       define_method(:parent) do
-        @parent ||= begin
+        @_parent ||= begin
           controller, key = parents.find { |_, key| params.include?(key) }
 
           {
@@ -44,6 +44,16 @@ module PolymorphicParent
             controller: controller,
             foreign_key: key
           }
+        end
+      end
+
+      # Finds the parent record and redirects on error.
+      define_method(:find_parent) do |url = :back|
+        begin
+          @parent ||= parent[:model].find(parent[:id])
+        rescue ActiveRecord::RecordNotFound
+          flash[:alert] = t(:"messages.#{parent[:model].to_s.downcase}.errors.find")
+          redirect_to(url)
         end
       end
     end
