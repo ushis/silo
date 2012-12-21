@@ -1,12 +1,9 @@
 # The ContactsController provides all actions needed to add/remove contacts
 # to/from a associated model.
 class ContactsController < ApplicationController
-  polymorphic_parent :experts, :employees
+  before_filter :find_parent, only: [:create, :destroy]
 
-  # Checks the users privileges.
-  def authorize
-    super(parent[:controller], :back)
-  end
+  polymorphic_parent :experts, :employees
 
   # Adds a contact to a model, that has a _has_one_ association to the Contact
   # model. It uses the _params_ hash to determine the contact field and the
@@ -18,59 +15,40 @@ class ContactsController < ApplicationController
   #    params[:contact][:contact]  # Value, such as 'hello@aol.com'
   #
   # The user is redirected to the parents show page.
+  #
+  # POST /parents/:parent_id/contacts
   def create
-    model = parent[:model].find(parent[:id])
     field, contact = params[:contact].try(:values_at, :field, :contact)
-    contact.try(:strip!)
 
-    if contact.blank? || model.contact.field(field).include?(contact)
-      error(:save) and return
+    if @parent.contact.add!(field, contact)
+      flash[:notice] = t('messages.contact.success.save')
+    else
+      flash[:alert] = t('messages.contact.errors.save')
     end
 
-    model.contact.field(field) << contact
-
-    unless model.contact.save
-      error(:save) and return
-    end
-
-    success(:save)
-  rescue ArgumentError
-    error(:save)
-  ensure
-    redirect_to(:back)
+    redirect_to :back
   end
 
   # Removes a contact from a field. It behaves like
   # ContactsController#add_to(), but vice versa.
+  #
+  # DELETE /parents/:parent_id/contacts/:id
   def destroy
-    model = parent[:model].find(parent[:id])
     field, contact = params.values_at(:field, :contact)
 
-    unless model.contact.field(field).delete(contact) && model.contact.save
-      error(:delete) and return
+    if @parent.contact.remove!(field, contact)
+      flash[:notice] = t('messages.contact.success.delete')
+    else
+      flash[:alert] = t('messages.contact.errors.delete')
     end
 
-    success(:delete)
-  rescue ArgumentError
-    error(:delete)
-  ensure
     redirect_to(:back)
   end
 
   private
 
-  # Sets a success flash message.
-  def success(action)
-    flash[:notice] = t(action, scope: [:messages, :contact, :success])
-  end
-
-  # Sets an error flash message.
-  def error(action)
-    flash[:alert] = t(action, scope: [:messages, :contact, :errors])
-  end
-
-  # Sets a proper flash message.
-  def not_found
-    flash[:alert] = t(:"messages.#{parent[:model].to_s.downcase}.errors.find")
+  # Checks the users privileges.
+  def authorize
+    super(parent[:controller], :back)
   end
 end

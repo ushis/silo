@@ -34,23 +34,57 @@ class Contact < ActiveRecord::Base
   after_initialize :init_contacts
 
   # List of contact fields. See model description above for more info.
-  FIELDS = [:emails, :p_phones, :b_phones, :m_phones, :fax, :skypes, :websites]
+  FIELDS = ['emails', 'p_phones', 'b_phones', 'm_phones', 'fax', 'skypes', 'websites'].to_set
 
   # Defines an access method for each field in the FIELDS array.
   FIELDS.each do |method|
-    define_method(method) { self.contacts[method.to_s] ||= [] }
+    define_method(method) { self.contacts[method] ||= [] }
   end
 
-  # Returns the specified field. Raises an ArgumentError, if the specified
-  # field is not a valid one.
-  def field(field)
-    f = field.to_sym
+  # Adds a contact to a field. Checks for valid fields, values and duplicates.
+  #
+  #   contact.add(:emails, 'jane@doe.com')
+  #   #=> ['jane@doe.com', 'jane@aol.com']
+  #
+  # Returns the field or false on error.
+  def add(field, value)
+    field, value = normalize_input(field, value)
 
-    unless FIELDS.include?(f)
-      raise ArgumentError, "Argument is not a valid field: #{field}"
+    if value.blank? || ! FIELDS.include?(field) || send(field).include?(value)
+      return false
     end
 
-    send(f)
+    send(field) << value
+  end
+
+  # Does the same as Contact#add, but saves the record.
+  #
+  # Returns true on success, else false.
+  def add!(field, value)
+    add(field, value) && save
+  end
+
+  # Removes a contact from a field. Checks the validity of field.
+  #
+  #   contact.remove(:emails, 'jane@doe.com')
+  #   #=> 'jane@doe.com'
+  #
+  # Returns the removed contact, or something falsy on error.
+  def remove(field, value)
+    field, value = normalize_input(field, value)
+
+    if FIELDS.include?(field)
+      send(field).delete(value)
+    else
+      false
+    end
+  end
+
+  # Does the same as Contact#remove, but saves the record.
+  #
+  # Returns true on success, else false.
+  def remove!(field, value)
+    remove(field, value) && save
   end
 
   # Returns true, if all contact fields are empty, else false.
@@ -68,5 +102,10 @@ class Contact < ActiveRecord::Base
   # Removes all blank values from the contact hash.
   def remove_blanks
     FIELDS.each { |f| send(f).delete_if { |val| val.blank? } }
+  end
+
+  # Normalizes untrusted input values.
+  def normalize_input(field, value)
+    [ field.to_s.downcase.strip, value.to_s.strip ]
   end
 end

@@ -22,8 +22,8 @@ module FormHelper
 
   # Returns a select box friendly list of all contact fields
   def contact_field_list
-    @contact_field_list ||= Contact::FIELDS.collect do |f|
-      [I18n.t(f.to_s.singularize, scope: [:values, :contacts]), f]
+    @contact_field_list ||= Contact::FIELDS.map do |f|
+      [I18n.t(f.singularize, scope: [:values, :contacts]), f]
     end
   end
 
