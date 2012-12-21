@@ -1,15 +1,34 @@
 require 'spec_helper'
 
 describe List do
-  context 'validations' do
+  describe :validations do
     it 'must have a title' do
-      l = List.new
-      l.should_not be_valid
-      l.errors[:title].should_not be_empty
+      expect(subject).to_not be_valid
+      expect(subject.errors[:title]).to_not be_empty
+    end
+
+    describe 'public lists cant be set to private' do
+      context 'when list is private and updated to be public' do
+        it 'should be valid' do
+          list = build(:list)
+          expect(list).to be_private
+          list.private = false
+          expect(list).to be_valid
+        end
+      end
+
+      context 'when list is public and updated to be private' do
+        it 'should not be valid' do
+          list = create(:list, :public)
+          list.private = true
+          expect(list).to_not be_valid
+          expect(list.errors).to_not be_empty
+        end
+      end
     end
   end
 
-  context 'associations' do
+  describe :associations do
     it { should have_many(:list_items).dependent(:destroy) }
     it { should have_many(:current_users) }
     it { should have_many(:experts).through(:list_items) }
@@ -20,7 +39,33 @@ describe List do
     it { should belong_to(:user) }
   end
 
-  describe 'find_for_user' do
+  describe :new_for_user do
+    before(:all) { @user = create(:user) }
+    after(:all) { @user.destroy }
+
+    def params
+      { title: 'Hello' }
+    end
+
+    it 'should be a new list' do
+      list = List.new_for_user(params, @user)
+      expect(list).to be_a(List)
+      expect(list).to be_new_record
+    end
+
+    it 'should set the owner to @user' do
+      list = List.new_for_user(params, @user)
+      expect(list.user).to eq(@user)
+    end
+
+    it 'should set the current list of the user after save' do
+      list = List.new_for_user(params, @user)
+      list.save
+      expect(@user.reload.current_list).to eq(list)
+    end
+  end
+
+  describe :find_for_user do
     it 'should a find the users list' do
       user = create(:user)
       list = create(:list, user: user)

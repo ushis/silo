@@ -20,6 +20,18 @@ module ListHelper
     link_to(t('actions.remove'), [list, list_item], options)
   end
 
+  # Renders a "share this list" button.
+  def share_list_button_for(list)
+    options = {
+      method: :put,
+      data: { '[list][private]' => 0 },
+      class: 'icon-globe'
+    }
+
+    options[:class] << ' disabled' unless list.private?
+    link_to(t('actions.share'), list_path(list, options.delete(:data)), options)
+  end
+
   # Creates an "open this list" link.
   def open_list_button_for(list)
     options = {

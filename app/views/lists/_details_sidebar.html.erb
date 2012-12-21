@@ -8,8 +8,7 @@
       <%= open_list_button_for list %>
     </li>
     <li>
-      <%= link_to t('actions.share'), list_path(list), method: :put,
-                  'data-private' => 0, class: "icon-globe #{'disabled' unless list.private?}" %>
+      <%= share_list_button_for(list) %>
     </li>
     <li class="copy">
       <%= link_to t('actions.copy'), copy_ajax_list_path(list),

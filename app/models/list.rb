@@ -11,9 +11,10 @@
 #
 # A title must be present.
 class List < ActiveRecord::Base
-  attr_accessible :title, :comment_attributes
+  attr_accessible :title, :private, :comment_attributes
 
   validates :title, presence: true
+  validate  :public_list_can_not_be_set_to_private, on: :update
 
   has_many :list_items, autosave: true, dependent: :destroy
   has_many :current_users, class_name: :User, foreign_key: :current_list_id
@@ -30,6 +31,23 @@ class List < ActiveRecord::Base
   scope :with_items, includes(ListItem::TYPES.keys)
 
   default_scope order('lists.private DESC, lists.title ASC')
+
+  # Inits a list for a user and sets it to the users current_list.
+  #
+  #   list = List.new_for_user(params[:list], current_user)
+  #   #=> #<List id: nil, title: 'Example'>
+  #
+  #   list.save                          #=> true
+  #   list.user == current_user          #=> true
+  #   current_user.current_list == list  #=> true
+  #
+  # Returns the new list object.
+  def self.new_for_user(params, user)
+    new(params).tap do |list|
+      list.user = user
+      list.current_users << user
+    end
+  end
 
   # Finds a list and checks if it is accessible for the given user.
   #
@@ -91,6 +109,14 @@ class List < ActiveRecord::Base
   # Initializes the comment on access.
   def comment
     super || self.comment = Comment.new
+  end
+
+  # Validates the value of private. It is not allowed to set public lists
+  # private. Use List#copy instead.
+  def public_list_can_not_be_set_to_private
+    if private? && ! private_was
+      errors.add(:private, I18n.t('messages.list.errors.public_to_private'))
+    end
   end
 
   # Checks if a list is accessible for a user. Returns true if the user

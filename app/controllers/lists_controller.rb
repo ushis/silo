@@ -15,9 +15,7 @@ class ListsController < ApplicationController
 
   # Creates a new list and sets the users current list.
   def create
-    list = List.new(params[:list])
-    list.user = current_user
-    list.current_users << current_user
+    list = List.new_for_user(params[:list], current_user)
 
     if list.save
       flash[:notice] = t('messages.list.success.create', title: list.title)
@@ -31,10 +29,8 @@ class ListsController < ApplicationController
   # Updates a list.
   def update
     list = List.find_for_user(params[:id], current_user)
-    list.attributes = params[:list]
-    list.private = params[:private] if params[:private] && list.private?
 
-    if list.save
+    if list.update_attributes(params[:list])
       flash[:notice] = t('messages.list.success.save')
     else
       flash[:alert] = t('messages.list.errors.save')
