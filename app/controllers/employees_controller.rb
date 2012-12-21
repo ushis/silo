@@ -1,41 +1,32 @@
 # Handles Employee specific requests.
 class EmployeesController < ApplicationController
+  before_filter :find_partner, only: [:index, :create]
+
   skip_before_filter :authorize, only: [:index]
 
   cache_sweeper :employee_sweeper, only: [:update, :destroy]
-
-  # Checks the users permissions.
-  def authorize
-    super(:partners, partners_url)
-  end
 
   # Serves a list of the partners employees.
   #
   # GET /partners/:partner_id/employees
   def index
-    @partner = Partner.find(params[:partner_id])
     @title = t('labels.employee.all')
     body_class.delete('index')
-  rescue ActiveRecord::RecordNotFound
-    partner_not_found
   end
 
   # Adds an employee to the partner.
   #
   # POST /partners/:partner_id/employees
   def create
-    partner = Partner.find(params[:partner_id])
     employee = Employee.new(params[:employee])
 
-    if (partner.employees << employee)
+    if (@partner.employees << employee)
       flash[:notice] = t('messages.employee.success.create', name: employee.name)
     else
       flash[:alter] = t('messages.employee.errors.create')
     end
 
-    redirect_to partner_employees_url(partner)
-  rescue ActiveRecord::RecordNotFound
-    partner_not_found
+    redirect_to partner_employees_url(@partner)
   end
 
   # Updates the employees attributes.
@@ -70,15 +61,22 @@ class EmployeesController < ApplicationController
 
   private
 
+  # Checks the users permissions.
+  def authorize
+    super(:partners, partners_url)
+  end
+
+  # Finds the employees partner.
+  def find_partner
+    @partner = Partner.find(params[:partner_id])
+  rescue ActiveRecord::RecordNotFound
+    flash[:alert] = t('messages.partner.errors.find')
+    redirect_to partners_url
+  end
+
   # Sets an error message and redirects the user to the partners employees page.
   def not_found
     flash[:alert] = t('messages.employee.errors.find')
     redirect_to partner_employees_url(params[:partner_id])
-  end
-
-  # Sets an error message an redirects the user to the partners index page.
-  def partner_not_found
-    flash[:alert] = t('messages.partner.errors.find')
-    redirect_to partners_url
   end
 end
