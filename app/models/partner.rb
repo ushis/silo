@@ -20,13 +20,15 @@
 # The company attribute is required.
 class Partner < ActiveRecord::Base
   attr_accessible :country_id, :company, :street, :city, :zip, :region,
-                  :website, :email, :phone, :fax,
-                  :comment_attributes, :description_attributes
+                  :website, :email, :phone, :fax
 
   attr_accessible :company, :street, :zip, :city, :region, :country, :website,
                   :email, :phone, :fax, as: :exposable
 
   is_taggable_with :businesses, :advisers
+
+  is_commentable_with :description, autosave: true, dependent: :destroy
+  is_commentable_with :comment,     autosave: true, dependent: :destroy, as: :commentable
 
   validates :company, presence: true
 
@@ -35,14 +37,8 @@ class Partner < ActiveRecord::Base
   has_many :list_items,  autosave: true, dependent: :destroy, as: :item
   has_many :lists,       through:  :list_items
 
-  has_one :description, autosave: true, dependent: :destroy
-  has_one :comment,     autosave: true, dependent: :destroy, as: :commentable
-
   belongs_to :user
   belongs_to :country
-
-  accepts_nested_attributes_for :description
-  accepts_nested_attributes_for :comment
 
   scope :with_meta, includes(:country, :attachments)
 
@@ -123,16 +119,6 @@ class Partner < ActiveRecord::Base
     connection.select_rows(sanitize_sql(
       [sql, q: query, like: "%#{query}%"]
     )).map(&:first)
-  end
-
-  # Returns the partners description. A new one is initialized if necessary.
-  def description
-    super || self.description = Description.new
-  end
-
-  # Returns the partners comment. A new one is initialized if necessary.
-  def comment
-    super || self.comment = Comment.new
   end
 
   # Returns the company name.

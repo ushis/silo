@@ -49,7 +49,6 @@ class ListsController < ApplicationController
   # Copies a list.
   def copy
     copy = @list.copy
-    copy.comment = Comment.new(params[:list].try(:delete, :comment_attributes))
     copy.attributes = params[:list]
     copy.user = current_user
     copy.private = true

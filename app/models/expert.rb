@@ -18,12 +18,14 @@
 # - *updated_at:*            datetime
 class Expert < ActiveRecord::Base
   attr_accessible :name, :prename, :gender, :birthday, :fee, :job, :degree,
-                  :former_collaboration, :country_id, :comment_attributes
+                  :former_collaboration, :country_id
 
   attr_accessible :degree, :prename, :name, :gender, :birthday, :fee, :job,
                   :former_collaboration, :country, as: :exposable
 
   symbolize :gender, in: [:female, :male]
+
+  is_commentable_with :comment, autosave: true, dependent: :destroy, as: :commentable
 
   validates :name, presence: true
 
@@ -38,12 +40,9 @@ class Expert < ActiveRecord::Base
            select: [:id, :expert_id, :language_id], order: :language_id
 
   has_one :contact, autosave: true, dependent: :destroy, as: :contactable
-  has_one :comment, autosave: true, dependent: :destroy, as: :commentable
 
   belongs_to :user, select: [:id, :name, :prename]
   belongs_to :country
-
-  accepts_nested_attributes_for :comment
 
   scope :with_meta, includes(:country, :attachments, :cvs)
 
@@ -136,11 +135,6 @@ class Expert < ActiveRecord::Base
   # Initializes the contact on access, if not already initalized.
   def contact
     super || self.contact = Contact.new
-  end
-
-  # Initializes the comment on access, if not already initialized.
-  def comment
-    super || self.comment = Comment.new
   end
 
   # Sets the experts country.

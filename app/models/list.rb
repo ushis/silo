@@ -11,7 +11,9 @@
 #
 # A title must be present.
 class List < ActiveRecord::Base
-  attr_accessible :title, :private, :comment_attributes
+  attr_accessible :title, :private
+
+  is_commentable_with :comment, autosave: true, dependent: :destroy, as: :commentable
 
   validates :title, presence: true
   validate  :public_list_can_not_be_set_to_private, on: :update
@@ -22,11 +24,7 @@ class List < ActiveRecord::Base
   has_many :experts,  through: :list_items, source: :item, source_type: :Expert,  include: :country
   has_many :partners, through: :list_items, source: :item, source_type: :Partner, include: :country
 
-  has_one :comment, autosave: true, dependent: :destroy, as: :commentable
-
   belongs_to :user
-
-  accepts_nested_attributes_for :comment
 
   scope :with_items, includes(ListItem::TYPES.keys)
 
@@ -104,11 +102,6 @@ class List < ActiveRecord::Base
     end
 
     rel
-  end
-
-  # Initializes the comment on access.
-  def comment
-    super || self.comment = Comment.new
   end
 
   # Validates the value of private. It is not allowed to set public lists

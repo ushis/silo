@@ -57,7 +57,7 @@
 #
 # ==== SECURITY NOTE:
 #
-# Every association used with is_taggable_on is white listed for
+# Every association used with is_taggable_with is white listed for
 # mass assignment using attr_accessible. This is very useful, if
 # you want to do something like this:
 #

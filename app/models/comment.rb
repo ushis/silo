@@ -5,6 +5,12 @@
 #     has_many :comments, as: commentable
 #   end
 #
+# Or for has_one associations:
+#
+#   class Product < ActiveRecord::Base
+#     is_commentable_with :comment, as: :commentable
+#   end
+#
 # The comment is saved in the _comment_ attribute.
 #
 # Database scheme:
@@ -15,20 +21,8 @@
 # - *comment* text
 # - *created_at* datetime
 # - *updated_at* datetime
+#
+# See the ActsAsComment module for more info.
 class Comment < ActiveRecord::Base
-  attr_accessible :comment
-
-  after_initialize :init_comment
-
-  belongs_to :commentable, polymorphic: true
-
-  # Initializes the comment with an empty string.
-  def init_comment
-    self.comment ||= ''
-  end
-
-  # Returns the comment.
-  def to_s
-    comment
-  end
+  acts_as_comment :comment, for: :commentable, polymorphic: true
 end
