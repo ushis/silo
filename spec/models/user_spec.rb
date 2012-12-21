@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe User do
-  context 'validations' do
+  describe :validations do
     [:password, :username, :name, :prename, :email].each do |attr|
       it "must have a #{attr}" do
         user = User.new
@@ -33,7 +33,7 @@ describe User do
     end
   end
 
-  context 'associations' do
+  describe :associations do
     it { should have_many(:experts) }
     it { should have_many(:lists) }
 
@@ -41,13 +41,43 @@ describe User do
     it { should belong_to(:current_list).class_name(:List) }
   end
 
-  context 'delegations' do
+  describe :delegations do
     [:access?, :admin?, :privileges=].each do |method|
       it { should delegate_method(method).to(:privilege) }
     end
   end
 
-  describe 'refresh_login_hash' do
+  describe :check_old_password_before_save do
+    it 'should set the check_old_password_before_save flag to true' do
+      subject.check_old_password_before_save
+      expect(subject.check_old_password_before_save?).to be_true
+    end
+  end
+
+  describe :check_old_password_validation do
+    before(:each) do
+      @user = create(:user, password: 'secret')
+      @user.check_old_password_before_save
+    end
+
+    context 'when password changed without old password' do
+      it 'should not be valid' do
+        @user.password = 'password123'
+        expect(@user).to_not be_valid
+        expect(@user.errors[:password_old]).to_not be_empty
+      end
+    end
+
+    context 'when password changed and old password is correct' do
+      it 'should be valid' do
+        @user.password = 'super secure'
+        @user.password_old = 'secret'
+        expect(@user).to be_valid
+      end
+    end
+  end
+
+  describe :refresh_login_hash do
     it 'should set a brand new login_hash' do
       user = build(:user_with_login_hash)
       user.login_hash.should_not be_blank

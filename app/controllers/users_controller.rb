@@ -20,30 +20,18 @@ class UsersController < ApplicationController
   # Updates a users profile. If a user wants to change his(her password, the
   # old password is required.
   def update_profile
-    @title = t('labels.user.profile')
-    body_class << :edit
-
-    password = params[:user].try(:delete, :password)
-    password_old = params[:user].try(:delete, :password_old)
-
     @user = current_user
-    @user.attributes = params[:user]
+    @user.check_old_password_before_save
 
-    if ! password.blank? && ! @user.authenticate(password_old)
-      @user.errors.add(:password_old, t('messages.user.errors.password'))
-      flash.now[:alert] = t('messages.generics.errors.save')
-      render :profile and return
-    end
-
-    @user.password = password
-
-    if @user.save
+    if @user.update_attributes(params[:user])
       I18n.locale = @user.locale
       flash.now[:notice] = t('messages.generics.success.save')
     else
       flash.now[:alert] = t('messages.generics.errors.save')
     end
 
+    @title = t('labels.user.profile')
+    body_class << :edit
     render :profile
   end
 
@@ -62,12 +50,7 @@ class UsersController < ApplicationController
 
   # Creates a new user and redirects to the new users edit page.
   def create
-    username = params[:user].try(:delete, :username)
-    privileges = params[:user].try(:delete, :privilege)
-
-    @user = User.new(params[:user])
-    @user.username = username
-    @user.privileges = privileges
+    @user = User.new(params[:user], as: :admin)
 
     if @user.save
       flash[:notice] = t('messages.user.success.create', name: @user.username)
@@ -91,18 +74,14 @@ class UsersController < ApplicationController
   #
   # *Note:* A user can not change his/her own privileges.
   def update
-    username = params[:user].try(:delete, :username)
-    privileges = params[:user].try(:delete, :privilege)
-
     @user = User.find(params[:id])
-    @user.attributes = params[:user]
-    @user.username = username
+    @user.username = params[:user].try(:delete, :username)
 
     unless current_user?(@user)
-      @user.privileges = privileges
+      @user.privileges = params[:user].try(:delete, :privilege)
     end
 
-    if @user.save
+    if @user.update_attributes(params[:user])
       I18n.locale = @user.locale if current_user?(@user)
       flash[:notice] = t('messages.user.success.save')
       redirect_to users_url and return
@@ -120,7 +99,7 @@ class UsersController < ApplicationController
   def destroy
     user = User.find(params[:id])
 
-    if user == current_user
+    if current_user?(user)
       flash[:alert] = t('messages.user.errors.delete_current_user')
       redirect_to users_url and return
     end

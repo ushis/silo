@@ -26,8 +26,13 @@ require 'securerandom'
 #
 # If the two passwords are not equal, the _save_ call will fail.
 class User < ActiveRecord::Base
-  attr_accessible :email, :password, :password_confirmation, :name, :prename,
-                  :locale
+  attr_accessor :password_old
+
+  attr_accessible :email, :password, :password_confirmation, :password_old,
+                  :name, :prename, :locale
+
+  attr_accessible :email, :password, :password_confirmation, :password_old,
+                  :name, :prename, :locale, :username, :privilege, as: :admin
 
   has_secure_password
 
@@ -41,6 +46,8 @@ class User < ActiveRecord::Base
   validates :name,       presence: true
   validates :prename,    presence: true
 
+  validates_with OldPasswordValidator, if: :check_old_password_before_save?
+
   has_many :experts
   has_many :lists
 
@@ -53,6 +60,16 @@ class User < ActiveRecord::Base
   # Auto initializes the users privileges on access.
   def privilege
     super || self.privilege = Privilege.new
+  end
+
+  # Check the old password before saving the record.
+  def check_old_password_before_save
+    @check_old_password_before_save = true
+  end
+
+  # Ist it necessary to check the old password before saving thwe record?
+  def check_old_password_before_save?
+    !! @check_old_password_before_save
   end
 
   # Sets a fresh login hash and returns it.
