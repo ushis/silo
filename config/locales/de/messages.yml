@@ -20,7 +20,7 @@ de:
         find: 'Adresse nicht gefunden.'
         save: 'Adresse konnte nich gespeichert werden.'
       success:
-        delete: 'Adrese gelöscht.'
+        delete: 'Adresse gelöscht.'
         save: 'Adresse gespeichert.'
     attachment:
       confirm:

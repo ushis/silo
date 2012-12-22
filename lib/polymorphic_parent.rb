@@ -36,9 +36,9 @@ module PolymorphicParent
     #
     # Thats it.
     def polymorphic_parent(*parents)
-      class << self; attr_accessor :parents; end
+      class_attribute :polymorphic_parents
 
-      self.parents = parents.map do |parent|
+      self.polymorphic_parents = parents.map do |parent|
         [parent, parent.to_s.singularize.foreign_key]
       end
 
@@ -54,7 +54,7 @@ module PolymorphicParent
     # See PolymorphicParent::ClassMethods for more info.
     def parent
       @_parent_info ||= begin
-        controller, key = self.class.parents.find { |_, key| params.include?(key) }
+        controller, key = polymorphic_parents.find { |_, key| params.include?(key) }
 
         {
           id: params[key],
