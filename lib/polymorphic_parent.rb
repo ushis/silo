@@ -29,33 +29,51 @@ module PolymorphicParent
     #   #     foreign_key: :user_id
     #   #   }
     #
+    # To get the parent record:
+    #
+    #   user = find_parent
+    #   #=> #<User id: 12>
+    #
     # Thats it.
     def polymorphic_parent(*parents)
-      parents = parents.map { |p| [p, p.to_s.singularize.foreign_key] }
+      class << self; attr_accessor :parents; end
 
-      # Returns a hash with basic information about the parent.
-      define_method(:parent) do
-        @_parent ||= begin
-          controller, key = parents.find { |_, key| params.include?(key) }
-
-          {
-            id: params[key],
-            model: controller.to_s.classify.constantize,
-            controller: controller,
-            foreign_key: key
-          }
-        end
+      self.parents = parents.map do |parent|
+        [parent, parent.to_s.singularize.foreign_key]
       end
 
-      # Finds the parent record and redirects on error.
-      define_method(:find_parent) do |url = :back|
-        begin
-          @parent ||= parent[:model].find(parent[:id])
-        rescue ActiveRecord::RecordNotFound
-          flash[:alert] = t(:"messages.#{parent[:model].to_s.downcase}.errors.find")
-          redirect_to(url)
-        end
+      include InstanceMethodsOnActivation
+    end
+  end
+
+  # Defines the needed instance methods. Will be included on activation.
+  module InstanceMethodsOnActivation
+
+    # Returns a hash with info about the parent, extracted from the params.
+    #
+    # See PolymorphicParent::ClassMethods for more info.
+    def parent
+      @_parent_info ||= begin
+        controller, key = self.class.parents.find { |_, key| params.include?(key) }
+
+        {
+          id: params[key],
+          model: controller.to_s.classify.constantize,
+          controller: controller,
+          foreign_key: key
+        }
       end
+    end
+
+    # Returns the parent record and triggers a redirect when not found. This
+    # is nice as a before_filters.
+    #
+    # See PolymorphicParent::ClassMethods for more info.
+    def find_parent(url = :back)
+      @parent ||= parent[:model].find(parent[:id])
+    rescue ActiveRecord::RecordNotFound
+      flash[:alert] = t(:"messages.#{parent[:model].to_s.downcase}.errors.find")
+      redirect_to(url)
     end
   end
 end
