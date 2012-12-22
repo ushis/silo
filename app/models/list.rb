@@ -193,6 +193,11 @@ class List < ActiveRecord::Base
     super(options.merge(include: ListItem::TYPES.keys))
   end
 
+  # Returns the title
+  def to_s
+    title.to_s
+  end
+
   private
 
   # Adds a collection of potetial list items to the list.

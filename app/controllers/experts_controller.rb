@@ -23,10 +23,7 @@ class ExpertsController < ApplicationController
 
     respond_to do |format|
       format.html
-
-      format.pdf do
-        send_report ExpertReport.new(@expert, current_user), @expert.full_name
-      end
+      format.pdf { send_report ExpertReport.new(@expert, current_user) }
     end
   end
 

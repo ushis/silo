@@ -89,9 +89,9 @@ class ApplicationController < ActionController::Base
   end
 
   # Sends a report to the browser.
-  def send_report(report, title)
+  def send_report(report)
     send_data report.render,
-              filename: "report-#{title.parameterize}.pdf",
+              filename: "report-#{report.title.parameterize}.pdf",
               type: 'application/pdf',
               disposition: 'inline'
   end

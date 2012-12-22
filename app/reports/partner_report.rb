@@ -3,8 +3,7 @@ class PartnerReport < ApplicationReport
 
   # Builds the report.
   def initialize(partner, user)
-    super(partner, user, partner.company)
-
+    super(partner, user)
     info_table
     comment
     employees

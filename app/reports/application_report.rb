@@ -5,8 +5,10 @@ require 'prawn'
 class ApplicationReport < Prawn::Document
   include AbstractController::Translation
 
+  attr_reader :title
+
   # Initializes the Document and sets the title.
-  def initialize(record, user, title, options = {})
+  def initialize(record, user, options = {})
     options[:page_size] = [595.28, 841.86]
 
     if options.delete(:layout) == :landscape
@@ -18,9 +20,10 @@ class ApplicationReport < Prawn::Document
     @height = options[:page_size].last
     @record = record
     @model = record.class
+    @title = record.to_s
 
     head(user.full_name)
-    h1 title
+    h1 @title
   end
 
   # Builds the page head.

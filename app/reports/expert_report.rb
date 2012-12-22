@@ -3,8 +3,7 @@ class ExpertReport < ApplicationReport
 
   # Builds the report.
   def initialize(expert, user)
-    super(expert, user, expert.full_name)
-
+    super(expert, user)
     info_table
     languages
     contacts

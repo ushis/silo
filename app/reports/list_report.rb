@@ -3,10 +3,9 @@ class ListReport < ApplicationReport
 
   # Builds a list report.
   def initialize(list, item_type, user, options = {})
-    super(list, user, list.title, layout: :landscape)
+    super(list, user, layout: :landscape)
     @item_type = item_type
     @options = options
-
     text list.comment.to_s
     gap
     items

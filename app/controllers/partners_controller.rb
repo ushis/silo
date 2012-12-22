@@ -25,10 +25,7 @@ class PartnersController < ApplicationController
 
     respond_to do |format|
       format.html
-
-      format.pdf do
-        send_report PartnerReport.new(@partner, current_user), @partner.company
-      end
+      format.pdf { send_report PartnerReport.new(@partner, current_user) }
     end
   end
 

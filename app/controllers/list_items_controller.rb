@@ -53,7 +53,7 @@ class ListItemsController < ApplicationController
   # Serves the lists items as pdf.
   def pdf_index(list, item_type)
     opt = { only: arrayified_param(:attributes) }
-    send_report ListReport.new(list, item_type, current_user, opt), list.title
+    send_report ListReport.new(list, item_type, current_user, opt)
   end
 
   # Serves the lists items as csv.
