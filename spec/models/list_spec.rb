@@ -218,4 +218,12 @@ describe List do
       a.list_items.should be_all { |item| item.note.nil? }
     end
   end
+
+  describe :to_s do
+    it 'should be the title' do
+      expect(subject.to_s).to eq('')
+      subject.title = 'Example'
+      expect(subject.to_s).to eq('Example')
+    end
+  end
 end

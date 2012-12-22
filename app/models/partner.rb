@@ -25,6 +25,8 @@ class Partner < ActiveRecord::Base
   attr_accessible :company, :street, :zip, :city, :region, :country, :website,
                   :email, :phone, :fax, as: :exposable
 
+  self.per_page = 50
+
   is_taggable_with :businesses, :advisers
 
   is_commentable_with :description, autosave: true, dependent: :destroy

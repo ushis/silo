@@ -13,6 +13,8 @@
 class List < ActiveRecord::Base
   attr_accessible :title, :private
 
+  self.per_page = 50
+
   is_commentable_with :comment, autosave: true, dependent: :destroy, as: :commentable
 
   validates :title, presence: true

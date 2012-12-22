@@ -23,6 +23,8 @@ class Expert < ActiveRecord::Base
   attr_accessible :degree, :prename, :name, :gender, :birthday, :fee, :job,
                   :former_collaboration, :country, as: :exposable
 
+  self.per_page = 50
+
   symbolize :gender, in: [:female, :male]
 
   is_commentable_with :comment, autosave: true, dependent: :destroy, as: :commentable

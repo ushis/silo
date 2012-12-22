@@ -10,7 +10,7 @@ class ListsController < ApplicationController
 
   # Serves all lists.
   def index
-    @lists = List.search(params).accessible_for(current_user).limit(50).page(params[:page])
+    @lists = List.search(params).accessible_for(current_user).page(params[:page])
     @title = t('labels.list.all')
   end
 

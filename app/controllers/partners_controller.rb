@@ -14,7 +14,7 @@ class PartnersController < ApplicationController
   # Searches for partners.
   def index
     _params = params.merge(arrayified_params(:businesses, :countries))
-    @partners = Partner.with_meta.search(_params).limit(50).page(params[:page])
+    @partners = Partner.with_meta.search(_params).page(params[:page])
     @title = t('labels.partner.all')
   end
 
