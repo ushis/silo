@@ -86,6 +86,14 @@ describe ExpertSearcher do
       end
     end
 
+    context 'when searching for languages ["fr", "hi", "en"]' do
+      let(:conditions) { { languages: @languages.values_at(:fr, :hi, :en) } }
+
+      it 'should be empty' do
+        expect(subject).to be_empty
+      end
+    end
+
     context 'when searching for country "DE", languages ["en"] and q "super"' do
       let(:conditions) do
         {

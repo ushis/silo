@@ -108,6 +108,7 @@ class ApplicationSearcher
       SELECT join_table.#{reflection.foreign_key}, COUNT(*) AS num
       FROM #{reflection.options[:join_table]} AS join_table
       WHERE join_table.#{reflection.association_foreign_key} IN (:ids)
+      GROUP BY join_table.#{reflection.foreign_key}
       HAVING num >= :num
     SQL
 
