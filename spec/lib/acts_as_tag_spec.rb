@@ -101,34 +101,4 @@ describe ActsAsTag do
       expect(item.categories).to have(4).items
     end
   end
-
-  describe :search_tags do
-    before(:all) do
-      @categories = [:JavaScript, :Ruby, :CSS].inject({}) do |hsh, cat|
-        hsh[cat] = Category.create!(name: cat)
-        hsh
-      end
-
-      @hello = Item.create!(name: 'hello')
-      @hello.categories = @categories.values_at(:JavaScript, :Ruby, :CSS)
-
-      @world = Item.create!(name: 'world')
-      @world.categories = @categories.values_at(:Ruby, :CSS)
-    end
-
-    after(:all) do
-      Item.destroy_all
-      Category.destroy_all
-    end
-
-    it 'should find both items' do
-      ids = Item.search_categories(@categories.values_at(:CSS, :Ruby))
-      expect(ids).to match_array([@hello.id, @world.id])
-    end
-
-    it 'should find the hello item' do
-      ids = Item.search_categories(@categories.values_at(:JavaScript, :CSS))
-      expect(ids).to match_array([@hello.id])
-    end
-  end
 end

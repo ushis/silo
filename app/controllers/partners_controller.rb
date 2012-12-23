@@ -13,7 +13,7 @@ class PartnersController < ApplicationController
 
   # Searches for partners.
   def index
-    _params = params.merge(arrayified_params(:businesses, :countries))
+    _params = params.merge(arrayified_params(:businesses, :country))
     @partners = Partner.with_meta.search(_params).page(params[:page])
     @title = t('labels.partner.all')
   end
@@ -69,9 +69,8 @@ class PartnersController < ApplicationController
   def update
     @partner = Partner.find(params[:id])
     @partner.user = current_user
-    @partner.attributes = params[:partner]
 
-    if @partner.save
+    if @partner.update_attributes(params[:partner])
       flash[:notice] = t('messages.partner.success.save')
       redirect_to partner_url(@partner) and return
     end

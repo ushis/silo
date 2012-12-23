@@ -11,11 +11,11 @@
                     placeholder: Expert.human_attribute_name(:name) %>
             </div>
             <div class="language">
-              <%= multi_select_field_tag :language, nil, arrayified_param(:languages),
+              <%= multi_select_field_tag :languages, nil, arrayified_param(:languages),
                     placeholder: Expert.human_attribute_name(:language) %>
             </div>
             <div class="citizenship">
-              <%= multi_select_field_tag :country, nil, arrayified_param(:countries),
+              <%= multi_select_field_tag :country, nil, arrayified_param(:country),
                     placeholder: Expert.human_attribute_name(:country) %>
             </div>
           </div>

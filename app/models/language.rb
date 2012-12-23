@@ -37,31 +37,36 @@ class Language < ActiveRecord::Base
   #
   # Returns nil, if no language could be found.
   def self.find_language(language)
-    case language
-    when Language
-      language
-    when Fixnum, Array
-      find_by_id(language)
-    when Symbol
-      find_by_language(language)
-    when String
-      (id = language.to_i) > 0 ? find_by_id(id) : find_by_language(language)
-    else
-      nil
-    end
+    language.is_a?(self) ? language : find_languages(language).first
   end
 
   # Does the same as Language.find_language, but raises
   # ActiveRecord::RecordNotFound when no language could be found.
   def self.find_language!(language)
     if (result = find_language(language))
-      return result
+      result
+    else
+      raise ActiveRecord::RecordNotFound, "Couldn't find Language #{language}"
     end
-
-    raise ActiveRecord::RecordNotFound, "Couldn't find Language #{language.inspect}"
   end
 
-  # Returns a collection of all kanguages ordered by localized name.
+  # Finds languages by id or language code. Strings are splitted to find
+  # multiple languages.
+  #
+  #   Language.find_languages([10, '12']).all
+  #   #=> [#<Language id: 2, language: 'de'>, #<Language id: 4, language: 'en'>]
+  #
+  #   Language.find_languages('de en').all
+  #   #=> [#<Language id: 2, language: 'de'>, #<Language id: 4, language: 'en'>]
+  #
+  # Returns a ActiveRecord::Relation.
+  def self.find_languages(query)
+    query = query.split if query.is_a?(String)
+
+    where('languages.id IN (:q) OR languages.language IN (:q)', q: query)
+  end
+
+  # Returns a collection of all languages ordered by localized name.
   def self.ordered
     all.sort { |x, y| x.human <=> y.human }
   end

@@ -22,20 +22,16 @@ class Country < ActiveRecord::Base
   #   Country.find_country("GB")
   #   #=> #<Country id: 77, country: "GB", area: "E2">
   #
-  # Returns nil, if no country is found.
+  # Returns nil, when  no country is found.
   def self.find_country(country)
-    case country
-    when Country
-      country
-    when Fixnum, Array
-      find_by_id(country)
-    when Symbol
-      find_by_country(country)
-    when String
-      (id = country.to_i) > 0 ? find_by_id(id) : find_by_country(country)
-    else
-      nil
-    end
+    country.is_a?(self) ? country : find_countries(country).first
+  end
+
+  # Finds countries by id or country code.
+  #
+  # Returns a ActiveRecord::Relation.
+  def self.find_countries(query)
+    where('countries.id IN (:q) OR countries.country IN (:q)', q: query)
   end
 
   # Returns the localized country name.

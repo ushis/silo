@@ -89,21 +89,7 @@ class List < ActiveRecord::Base
   #
   # Returns a ActiveRecord::Relation.
   def self.search(params)
-    rel = self
-
-    unless params[:title].blank?
-      rel = rel.where('lists.title LIKE ?', "%#{params[:title]}%")
-    end
-
-    unless params[:private].blank?
-      rel = rel.where(private: params[:private])
-    end
-
-    unless params[:exclude].blank?
-      rel = rel.where('lists.id NOT IN (?)', Array(params[:exclude]))
-    end
-
-    rel
+    ListSearcher.new(params.slice(:title, :private, :exclude)).search
   end
 
   # Validates the value of private. It is not allowed to set public lists

@@ -98,6 +98,33 @@ describe Language do
     end
   end
 
+  describe :find_languages do
+    before(:all) do
+      @de = create(:language, language: :de)
+      @en = create(:language, language: :en)
+      @hi = create(:language, language: :hi)
+      @fr = create(:language, language: :fr)
+    end
+
+    after(:all) do
+      [@de, @en, @hi, @fr].each { |l| l.destroy }
+    end
+
+    context 'when searched by a mixed array' do
+      it 'should find the languages' do
+        languages = Language.find_languages(['de', @en.id, @hi])
+        expect(languages).to match_array([@de, @en, @hi])
+      end
+    end
+
+    context 'when searched by string' do
+      it 'should find the languages in the string' do
+        languages = Language.find_languages('en hi cz')
+        expect(languages).to match_array([@en, @hi])
+      end
+    end
+  end
+
   describe 'ordered' do
     before(:all) do
       @hi = create(:language, language: :hi)  # Hindi

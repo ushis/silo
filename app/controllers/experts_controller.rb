@@ -11,7 +11,7 @@ class ExpertsController < ApplicationController
 
   # Serves a paginated table of all experts.
   def index
-    _params = params.merge(arrayified_params(:countries, :languages))
+    _params = params.merge(arrayified_params(:country, :languages))
     @experts = Expert.with_meta.search(_params).page(params[:page])
     @title = t('labels.expert.all')
   end
@@ -44,7 +44,6 @@ class ExpertsController < ApplicationController
   def create
     @expert = Expert.new(params[:expert])
     @expert.user = current_user
-    @expert.languages = arrayified_param(:languages)
 
     if @expert.save
       flash[:notice] = t('messages.expert.success.create', name: @expert.name)
@@ -68,10 +67,8 @@ class ExpertsController < ApplicationController
   def update
     @expert = Expert.find(params[:id])
     @expert.user = current_user
-    @expert.attributes = params[:expert]
-    @expert.languages = arrayified_param(:languages)
 
-    if @expert.save
+    if @expert.update_attributes(params[:expert])
       flash[:notice] = t('messages.expert.success.save')
       redirect_to expert_url(@expert) and return
     end

@@ -18,7 +18,7 @@
 # - *updated_at:*            datetime
 class Expert < ActiveRecord::Base
   attr_accessible :name, :prename, :gender, :birthday, :fee, :job, :degree,
-                  :former_collaboration, :country_id
+                  :former_collaboration, :country_id, :languages
 
   attr_accessible :degree, :prename, :name, :gender, :birthday, :fee, :job,
                   :former_collaboration, :country, as: :exposable
@@ -48,90 +48,19 @@ class Expert < ActiveRecord::Base
 
   scope :with_meta, includes(:country, :attachments, :cvs)
 
-  # A little workaround, while waiting for ActiveRecord::NullRelation.
-  scope :none, where('1 < 0')
-
   # Searches for experts. Takes a hash with condtions:
   #
   # - *:name* A (partial) name used to search _name_ and _prename_
-  # - *:countries* An array of country ids
+  # - *:country* One or more country ids
   # - *:languages* An array of language ids
   # - *:q* A arbitrary string used for a fulltext search in the _comment_ and
   #   the _cv_
   #
-  # The results are ordered by name. If _:q_ is present, the results are
-  # ordered by relevance.
+  # The results are ordered by name and prename.
   def self.search(params)
-    s = self
-
-    unless params[:name].blank?
-      s = s.where('name LIKE :n OR prename LIKE :n', n: "%#{params[:name]}%")
-    end
-
-    if (countries = params[:countries]).is_a?(Array) && ! countries.empty?
-      s = s.where(country_id: countries)
-    end
-
-    if (languages = params[:languages]).is_a?(Array) && ! languages.empty?
-      return none if (ids = search_languages(languages)).empty?
-      s = s.where(id: ids)
-    end
-
-    if params[:q].blank?
-      return s.order(:name)
-    end
-
-    if (ids = search_fulltext(params[:q])).empty?
-      return none
-    end
-
-    s.where(id: ids).order('FIELD(experts.id, %s)' % ids.join(', '))
-  end
-
-  # Searches for experts speaking all of the specified languages.
-  #
-  #   Expert.search_languages([3, 45, 7, 22])
-  #   #=> [4, 6]
-  #
-  # Returns an unordered array of expert ids.
-  def self.search_languages(language_ids)
-    sql = <<-SQL
-      SELECT experts_languages.expert_id, COUNT(*) AS num
-      FROM experts_languages
-      WHERE experts_languages.language_id IN (:ids)
-      GROUP BY experts_languages.expert_id
-      HAVING num >= :num
-    SQL
-
-    connection.select_rows(sanitize_sql(
-      [sql, ids: language_ids, num: language_ids.size]
-    )).map(&:first)
-  end
-
-  # Searches the fulltext associations, such as Comment and CV.
-  #
-  #  Expert.search_fulltext('hello')
-  #  #=> [5, 23, 34, 1, 4]
-  #
-  # Returns an array of expert ids ordered by relevance.
-  def self.search_fulltext(query)
-    sql = <<-SQL
-      (
-        SELECT comments.commentable_id AS expert_id,
-          MATCH (comments.comment) AGAINST (:q IN BOOLEAN MODE) AS score
-        FROM comments
-        WHERE comments.commentable_type = 'Expert'
-          AND MATCH (comments.comment) AGAINST (:q IN BOOLEAN MODE)
-      ) UNION (
-        SELECT cvs.expert_id,
-          MATCH (cvs.cv) AGAINST (:q IN BOOLEAN MODE) AS score
-        FROM cvs
-        WHERE MATCH (cvs.cv) AGAINST (:q IN BOOLEAN MODE)
-      )
-      ORDER BY score DESC
-    SQL
-
-    connection.select_rows(sanitize_sql([sql, q: query])).map(&:first)
+    ExpertSearcher.new(
+      params.slice(:name, :country, :languages, :q)
+    ).search.order('name, prename')
   end
 
   # Initializes the contact on access, if not already initalized.
@@ -144,12 +73,11 @@ class Expert < ActiveRecord::Base
     super(Country.find_country(country))
   end
 
-  # Sets the experts languages. So we can do things like:
+  # Sets the experts languages.
   #
-  #   en = Language.find_by_language('en')
-  #   expert.languages = [1, 2, "34", en]
+  # See Language.find_languages for more info.
   def languages=(ids)
-    super(Language.where(id: ids)) if [Fixnum, Array].include?(ids.class)
+    super(Language.find_languages(ids))
   end
 
   # Adds an uploaded Cv to the expert.

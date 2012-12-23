@@ -95,8 +95,8 @@ do ($ = jQuery) ->
       else if select.data('filtered')
         select.siloMultiSelectFilter(settings)
 
-      hidden = $('<input>', name: input.data('multi-select'), type: 'hidden')
-      input.after(hidden)
+      hidden = $('<input>', name: input.attr('name'), type: 'hidden')
+      input.removeAttr('name').after(hidden)
 
       # Collect all checked checkboxes and populate the input fields.
       el.bind 'submit', ->
@@ -122,8 +122,6 @@ do ($ = jQuery) ->
       el = $(@).prop('disabled', true)
       url = $.silo.location($(@).data('multi-select'))
       storageKey = settings.storagePrefix + el.attr('name')
-
-      el.removeAttr('name')
 
       if el.attr('data-selected') && ! el.val().trim() && $.silo.hasStorage()
         el.val(localStorage[storageKey])

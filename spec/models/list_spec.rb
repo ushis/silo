@@ -99,36 +99,6 @@ describe List do
     end
   end
 
-  describe 'search' do
-    it 'should find lists by partial title' do
-      a = create(:list, title: 'Project A')
-      b = create(:list, title: 'Project B')
-      c = create(:list, title: 'Hello World')
-
-      List.all.should =~ [a, b, c]
-      List.search(title: 'oject').should =~ [a, b]
-    end
-
-    it 'should find public lists only' do
-      a = create(:list, :public)
-      b = create(:list, :public)
-      c = create(:list)
-      d = create(:list)
-
-      List.all.should =~ [a, b, c, d]
-      List.search(private: '1').should =~ [c, d]
-    end
-
-    it 'should not find excluded lists' do
-      a = create(:list)
-      b = create(:list)
-      c = create(:list)
-
-      List.all.should =~ [a, b, c]
-      List.search(exclude: [a, c]).should =~ [b]
-    end
-  end
-
   describe 'accessible_for?' do
     it 'should be false for strangers' do
       user = build(:user)

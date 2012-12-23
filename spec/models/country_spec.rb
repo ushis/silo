@@ -1,6 +1,18 @@
 require 'spec_helper'
 
 describe Country do
+  before(:all) do
+    @eu = create(:area, area: :EU)
+    @de = create(:country, country: :DE, area: @eu)
+    @en = create(:country, country: :EN, area: @eu)
+    @cz = create(:country, country: :CZ, area: @eu)
+    @pt = create(:country, country: :PT, area: @eu)
+  end
+
+  after(:all) do
+    [@eu, @de, @en, @cz, @pt].each { |c| c.destroy }
+  end
+
   context 'validations' do
     it 'must have a country' do
       c = Country.new
@@ -9,8 +21,6 @@ describe Country do
     end
 
     it 'must have a unique country' do
-      create(:country, country: :DE)
-
       c = build(:country, country: :DE)
       c.should_not be_valid
       c.errors[:country].should_not be_empty
@@ -26,13 +36,6 @@ describe Country do
   end
 
   describe 'find_country' do
-    before do
-      eu = create(:area, area: :EU)
-      @de = create(:country, country: :DE, area: eu)
-      @en = create(:country, country: :EN, area: eu)
-      @cz = create(:country, country: :CZ, area: eu)
-    end
-
     it 'should be nil for unknown countries' do
       Country.find_country('XY').should be_nil
     end
@@ -52,14 +55,23 @@ describe Country do
     end
   end
 
-  describe 'human' do
+  describe :find_countries do
+    context 'when searched by a mixed array' do
+      it 'should find the specified countries' do
+        countries = Country.find_countries([@de, @en.id, 'CZ'])
+        expect(countries).to match_array([@de, @en, @cz])
+      end
+    end
+  end
+
+  describe :human do
     it 'should be the localized country name' do
       c = build(:country, country: :DE)
       c.human.should == I18n.t('countries.DE')
     end
   end
 
-  describe 'to_s' do
+  describe :to_s do
     it 'should be the human country name' do
       c = build(:country)
       c.to_s.should == c.human
