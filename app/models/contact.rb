@@ -1,3 +1,5 @@
+require 'set'
+
 # The Contact model provides an interface to store and retrieve contact
 # data. It uses the polymorphic association _contactable_ and stores the
 # data serialized as JSON.
@@ -34,7 +36,7 @@ class Contact < ActiveRecord::Base
   after_initialize :init_contacts
 
   # List of contact fields. See model description above for more info.
-  FIELDS = ['emails', 'p_phones', 'b_phones', 'm_phones', 'fax', 'skypes', 'websites'].to_set
+  FIELDS = %w(emails p_phones b_phones m_phones fax skypes websites).to_set
 
   # Defines an access method for each field in the FIELDS array.
   FIELDS.each do |method|
@@ -73,11 +75,7 @@ class Contact < ActiveRecord::Base
   def remove(field, value)
     field, value = normalize_input(field, value)
 
-    if FIELDS.include?(field)
-      send(field).delete(value)
-    else
-      false
-    end
+    FIELDS.include?(field) && send(field).delete(value)
   end
 
   # Does the same as Contact#remove, but saves the record.
