@@ -103,7 +103,7 @@ class List < ActiveRecord::Base
   # Checks if a list is accessible for a user. Returns true if the user
   # has access to the list else false.
   def accessible_for?(user)
-    ! private? || user_id == user.try(:id)
+    public? || user_id == user.try(:id)
   end
 
   # Returns a copy of the list with all its list items.
@@ -179,6 +179,11 @@ class List < ActiveRecord::Base
   # Adds the list items to the JSON reprensentation.
   def as_json(options = {})
     super(options.merge(include: ListItem::TYPES.keys))
+  end
+
+  # Returns true if the list is public, else false.
+  def public?
+    ! private?
   end
 
   # Returns the title

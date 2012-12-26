@@ -189,6 +189,20 @@ describe List do
     end
   end
 
+  describe :public? do
+    context 'when list is private' do
+      it 'should be false' do
+        expect(build(:list).public?).to be_false
+      end
+    end
+
+    context 'when list is public' do
+      it 'should be true' do
+        expect(build(:list, :public).public?).to be_true
+      end
+    end
+  end
+
   describe :to_s do
     it 'should be the title' do
       expect(subject.to_s).to eq('')
