@@ -100,10 +100,10 @@ describe ActsAsTag do
     context 'when associated model does not acts as tag' do
       class NoTag < ActiveRecord::Base; end
 
-      it 'should raise an ArgumentError' do
+      it 'should raise a NotATag error' do
         expect {
           subject.is_taggable_with(:no_tags)
-        }.to raise_error(ArgumentError)
+        }.to raise_error(ActsAsTag::NotATag)
       end
     end
   end

@@ -27,7 +27,8 @@ class Partner < ActiveRecord::Base
 
   self.per_page = 50
 
-  is_taggable_with :businesses, :advisers
+  is_taggable_with :advisers
+  is_taggable_with :businesses
 
   is_commentable_with :description, autosave: true, dependent: :destroy
   is_commentable_with :comment,     autosave: true, dependent: :destroy, as: :commentable

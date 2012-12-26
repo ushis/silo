@@ -117,10 +117,10 @@ describe ActsAsComment do
       end
 
       context 'when it is not commentable' do
-        it 'should raise ArgumentError' do
+        it 'should raise a NotAComment error' do
           expect {
             InvalidDummy.is_commentable_with :dummy
-          }.to raise_error(ArgumentError)
+          }.to raise_error(ActsAsComment::NotAComment)
         end
       end
     end

@@ -57,69 +57,8 @@
 #
 # But can be a problem in some cases.
 module ActsAsTag
-  extend ActiveSupport::Concern
-
-  # Defines the magic methods ClassMethods#acts_as_tag and
-  # ClassMethods#is_taggable_with.
-  module ClassMethods
-
-    # Makes a model acting like a tag. See the ActsAsTag module for further
-    # description.
-    def acts_as_tag(attribute_name)
-      attr_accessible(attribute_name)
-      default_scope(order(attribute_name))
-      validates(attribute_name, presence: true, uniqueness: true)
-
-      # Defines the Model.from_s method to extract tags from a string.
-      define_singleton_method(:from_s) do |s, delimiter = /\s*,\s*/|
-        results = s.split(delimiter).inject({}) do |hsh, tag|
-          next hsh if tag.blank?
-          tag.strip!
-          hsh[tag.downcase] ||= tag
-          hsh
-        end.values
-
-        results.empty? ? [] : multi_find_or_initialize(results)
-      end
-
-      search_sql = "LOWER(#{attribute_name}) IN (?)"
-
-      # Defines the Model.multi_find_or_initialize method to find existing
-      # and initialize new tags.
-      define_singleton_method(:multi_find_or_initialize) do |tags|
-        results = where(search_sql, tags.map(&:downcase)).each do |tag|
-          tags.delete_if { |t| t.casecmp(tag.to_s) == 0 }
-        end
-
-        results + tags.map { |tag| new(attribute_name => tag) }
-      end
-
-      # Defines Model.acts_as_tag?
-      define_singleton_method(:acts_as_tag?) { true }
-
-      # Defines Model#to_s
-      define_method(:to_s) { send(attribute_name).to_s }
-    end
-
-    # Makes a model taggable by adding tag like models to the list of
-    # associations. See the ActsAsTag module for further description.
-    def is_taggable_with(*associations)
-      associations.each do |assoc|
-        attr_accessible(assoc)
-
-        klass = has_and_belongs_to_many(assoc, uniq: true).klass
-
-        unless klass.respond_to?(:acts_as_tag?) && klass.acts_as_tag?
-          raise ArgumentError, "Association is not taggable: #{klass}"
-        end
-
-        # Defines the tags writer method to handle strings containing tags.
-        define_method(:"#{assoc}=") do |tags|
-          super(tags.is_a?(String) ? klass.from_s(tags) : tags)
-        end
-      end
-    end
-  end
 end
 
-ActiveRecord::Base.send :include, ActsAsTag
+require 'acts_as_tag/not_a_tag'
+require 'acts_as_tag/acts_as_tag'
+require 'acts_as_tag/is_taggable_with'

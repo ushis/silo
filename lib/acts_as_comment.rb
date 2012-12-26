@@ -58,61 +58,8 @@
 #
 # But can be a problem in some situations.
 module ActsAsComment
-  extend ActiveSupport::Concern
-
-  # Defines ClassMethods#acts_as_comment and ClassMethods#is_commentable_with.
-  #
-  # See ActsAsComment for more info.
-  module ClassMethods
-
-    # Makes a model acting like a comment.
-    def acts_as_comment(attribute_name, options = {})
-      attr_accessible(attribute_name)
-
-      define_singleton_method(:acts_as_comment?) { true }
-
-      define_method(:to_s) { send(attribute_name).to_s }
-
-      define_method(:write_comment_attribute) do |value|
-        write_attribute(attribute_name, value.to_s)
-      end
-
-      after_initialize do
-        read_attribute(attribute_name) || write_attribute(attribute_name, '')
-      end
-
-      if options.key?(:for)
-        belongs_to(options.delete(:for), options)
-      end
-    end
-
-    # Makes a model commentable.
-    def is_commentable_with(*associations)
-      options = associations.extract_options!
-
-      associations.each do |assoc|
-        attr_accessible(assoc)
-
-        klass = has_one(assoc, options).klass
-
-        unless klass.respond_to?(:acts_as_comment?) && klass.acts_as_comment?
-          raise ArgumentError, "Model is not commentable: #{klass}"
-        end
-
-        define_method(assoc) do |reload = false|
-          super(reload) || send(:"#{assoc}=", klass.new)
-        end
-
-        define_method(:"#{assoc}=") do |value|
-          if value.is_a?(klass)
-            super(value)
-          else
-            send(assoc).write_comment_attribute(value)
-          end
-        end
-      end
-    end
-  end
 end
 
-ActiveRecord::Base.send :include, ActsAsComment
+require 'acts_as_comment/not_a_comment'
+require 'acts_as_comment/acts_as_comment'
+require 'acts_as_comment/is_commentable_with'
