@@ -105,18 +105,17 @@ module ActsAsTag
     # associations. See the ActsAsTag module for further description.
     def is_taggable_with(*associations)
       associations.each do |assoc|
-        assoc_class = assoc.to_s.classify.constantize
-
-        unless assoc_class.respond_to?(:acts_as_tag?) && assoc_class.acts_as_tag?
-          raise ArgumentError, "Association is not taggable: #{assoc}"
-        end
-
         attr_accessible(assoc)
-        has_and_belongs_to_many(assoc, uniq: true)
+
+        klass = has_and_belongs_to_many(assoc, uniq: true).klass
+
+        unless klass.respond_to?(:acts_as_tag?) && klass.acts_as_tag?
+          raise ArgumentError, "Association is not taggable: #{klass}"
+        end
 
         # Defines the tags writer method to handle strings containing tags.
         define_method(:"#{assoc}=") do |tags|
-          super(tags.is_a?(String) ? assoc_class.from_s(tags) : tags)
+          super(tags.is_a?(String) ? klass.from_s(tags) : tags)
         end
       end
     end

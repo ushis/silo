@@ -99,10 +99,9 @@ module AsCsv
       associations = {}
 
       Array.wrap(options[:include]).each do |assoc|
-        next unless (ref = reflect_on_association(assoc))
-
-        class_name = (ref.options[:class_name] || ref.name).to_s.classify
-        associations[assoc] = class_name.constantize.exposable_attributes
+        if (ref = reflect_on_association(assoc))
+          associations[assoc] = ref.klass.exposable_attributes
+        end
       end
 
       CSV::generate(csv_options) do |csv|

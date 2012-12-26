@@ -81,10 +81,30 @@ describe ActsAsTag do
   end
 
   describe :is_taggable_with do
-    it 'should set up a has_and_belongs_to_many association' do
-      reflection = Item.reflect_on_association(:categories)
-      expect(reflection).to_not be_nil
-      expect(reflection.macro).to eq(:has_and_belongs_to_many)
+    subject { Item }
+
+    context 'when association name is valid' do
+      it 'should set up a has_and_belongs_to_many association' do
+        expect(subject.new).to have_and_belong_to_many(:categories)
+      end
+    end
+
+    context 'when associated model does not exist' do
+      it 'should raise a NameError' do
+        expect {
+          subject.is_taggable_with(:invalid)
+        }.to raise_error(NameError)
+      end
+    end
+
+    context 'when associated model does not acts as tag' do
+      class NoTag < ActiveRecord::Base; end
+
+      it 'should raise an ArgumentError' do
+        expect {
+          subject.is_taggable_with(:no_tags)
+        }.to raise_error(ArgumentError)
+      end
     end
   end
 

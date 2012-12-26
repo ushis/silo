@@ -91,14 +91,13 @@ module ActsAsComment
       options = associations.extract_options!
 
       associations.each do |assoc|
-        klass = (options[:class_name] || assoc).to_s.classify.constantize
+        attr_accessible(assoc)
+
+        klass = has_one(assoc, options).klass
 
         unless klass.respond_to?(:acts_as_comment?) && klass.acts_as_comment?
           raise ArgumentError, "Model is not commentable: #{klass}"
         end
-
-        attr_accessible(assoc)
-        has_one(assoc, options)
 
         define_method(assoc) do |reload = false|
           super(reload) || send(:"#{assoc}=", klass.new)

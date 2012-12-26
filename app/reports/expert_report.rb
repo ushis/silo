@@ -30,13 +30,12 @@ class ExpertReport < ApplicationReport
   # Builds the addresses table.
   def addresses
     h2 :addresses
+    @record.addresses.empty? ? p('-') : addresses_table
+    gap
+  end
 
-    if @record.addresses.empty?
-      p '-'
-      gap
-      return
-    end
-
+  # Renders the addresses table
+  def addresses_table
     data = []
 
     @record.addresses.each_slice(4) do |slice|
@@ -50,7 +49,5 @@ class ExpertReport < ApplicationReport
       table.columns(0..3).width = table.width / data.first.length
       table.cells.padding_bottom = 30
     end
-
-    gap
   end
 end

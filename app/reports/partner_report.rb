@@ -14,13 +14,11 @@ class PartnerReport < ApplicationReport
   # Lists the employees.
   def employees
     h2 :employees
+    @record.employees.empty? ? p('-') : employee_tables
+  end
 
-    if @record.employees.empty?
-      p '-'
-      gap
-      return
-    end
-
+  # Renders the employee tables.
+  def employee_tables
     @record.employees.each do |employee|
       h3 employee.full_name
       info_table(employee)

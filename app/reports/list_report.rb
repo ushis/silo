@@ -15,25 +15,25 @@ class ListReport < ApplicationReport
 
   # Adds the list items.
   def items
-    h2 @item_type
-
-    unless (reflection = List.reflect_on_association(@item_type))
-      raise ArgumentError, "Invalid item type: #{@item_type}"
-    end
-
-    model = reflection.options[:source_type].to_s.constantize
-    cols = model.exposable_attributes(@options.merge(human: true))
+    klass = List.reflect_on_association(@item_type).klass
+    cols = klass.exposable_attributes(@options.merge(human: true))
     items = @record.send(@item_type)
+
+    h2 @item_type
 
     if cols.empty? || items.empty?
       p '-'
-      return
+    else
+      items_table(klass, cols, items)
     end
+  end
 
+  # Renders the items table.
+  def items_table(klass, cols, items)
     data = []
 
     data << cols.map do |col|
-      model.human_attribute_name(col[0])
+      klass.human_attribute_name(col[0])
     end
 
     data += items.map do |item|
