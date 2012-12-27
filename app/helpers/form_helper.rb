@@ -2,10 +2,10 @@
 module FormHelper
 
   # Renders a multi select text field.
-  def multi_select_field_tag(name, value, selected = [], options = {})
+  def multi_select_field_tag(name, value, selected = nil, options = {})
     options = {
       'data-multi-select' => name.to_s.pluralize,
-      'data-selected' => selected.join(' '),
+      'data-selected' => selected,
     }.merge(options)
 
     text_field_tag name, value, options

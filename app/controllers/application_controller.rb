@@ -13,7 +13,6 @@ class ApplicationController < ActionController::Base
   before_filter :set_locale
 
   helper_method :body_class
-  helper_method :arrayified_param
   helper_method :current_list
   helper_method :current_user
   helper_method :current_user?

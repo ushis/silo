@@ -11,11 +11,11 @@
                     placeholder: Partner.human_attribute_name(:company) %>
             </div>
             <div class="business">
-              <%= multi_select_field_tag :businesses, nil, arrayified_param(:businesses),
+              <%= multi_select_field_tag :businesses, nil, params[:businesses],
                     placeholder: Partner.human_attribute_name(:business) %>
             </div>
             <div class="country">
-              <%= multi_select_field_tag :country, nil, arrayified_param(:country),
+              <%= multi_select_field_tag :country, nil, params[:country],
                     placeholder: Partner.human_attribute_name(:country) %>
             </div>
           </div>
