@@ -158,7 +158,7 @@ class ApplicationController < ActionController::Base
     if current_list
       current_list
     else
-      raise ActiveRecord::RecordNotFound
+      raise ActiveRecord::RecordNotFound, 'Couldn\'t find current list.'
     end
   end
 

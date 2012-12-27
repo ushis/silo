@@ -2,8 +2,8 @@
 class Ajax::ListsController < AjaxController
   before_filter :find_list, only: [:show, :import, :edit, :copy, :open]
 
-  respond_to :html, only:   [:index, :new, :edit, :copy, :print]
-  respond_to :json, except: [:index, :new, :edit, :copy, :print]
+  respond_to :html, only:   [:index, :new, :edit, :copy]
+  respond_to :json, except: [:index, :new, :edit, :copy]
 
   caches_action :new, :edit, :copy, :print
 
