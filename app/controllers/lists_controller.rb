@@ -10,13 +10,14 @@ class ListsController < ApplicationController
 
   # Serves all lists.
   def index
-    @lists = List.search(params).accessible_for(current_user).page(params[:page])
+    @lists = current_user.accessible_lists.search(params).page(params[:page])
     @title = t('labels.list.all')
   end
 
   # Creates a new list and sets the users current list.
   def create
-    list = List.new_for_user(params[:list], current_user)
+    list = current_user.lists.build(params[:list])
+    list.current_users << current_user
 
     if list.save
       flash[:notice] = t('messages.list.success.create', title: list.title)
@@ -40,7 +41,7 @@ class ListsController < ApplicationController
 
   # Concats a list with another.
   def concat
-    other = List.find_for_user(params[:other], current_user)
+    other = current_user.accessible_lists.find(params[:other])
     @list.concat(other)
     flash[:notice] = t('messages.list.success.concat', title: other.title)
     redirect_to list_experts_url(@list)
@@ -77,7 +78,7 @@ class ListsController < ApplicationController
 
   # Finds the list.
   def find_list
-    @list = List.find_for_user(params[:id], current_user)
+    @list = current_user.accessible_lists.find(params[:id])
   end
 
   # Sets a flash and redirects the user.

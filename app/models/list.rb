@@ -32,44 +32,12 @@ class List < ActiveRecord::Base
 
   default_scope order('lists.private DESC, lists.title ASC')
 
-  # Inits a list for a user and sets it to the users current_list.
-  #
-  #   list = List.new_for_user(params[:list], current_user)
-  #   #=> #<List id: nil, title: 'Example'>
-  #
-  #   list.save                          #=> true
-  #   list.user == current_user          #=> true
-  #   current_user.current_list == list  #=> true
-  #
-  # Returns the new list object.
-  def self.new_for_user(params, user)
-    new(params).tap do |list|
-      list.user = user
-      list.current_users << user
-    end
-  end
-
-  # Finds a list and checks if it is accessible for the given user.
-  #
-  #   user.id
-  #   #=> 45
-  #
-  #   List.find_for_user(12, user)
-  #   #=> #<List id: 12, user_id: 45, private: true>
-  #
-  # Raises ActiveRecord::RecordNotFound and UnauthorizedError.
-  def self.find_for_user(id, user)
-    find(id).tap do |list|
-      raise UnauthorizedError unless list.accessible_for?(user)
-    end
-  end
-
   # Selects lists, that are accessible for a user, which means that they
   # are associated with the user or that they are not private.
   #
   #   current_user.id  #=> 2
   #
-  #   List.accessible_fur(current_user)
+  #   List.accessible_for(current_user)
   #   #=> [
   #   #     #<List id: 21, user_id: 2, private: true>,
   #   #     #<List id: 33, user_id: 2, private: false>,
@@ -89,7 +57,7 @@ class List < ActiveRecord::Base
   #
   # Returns a ActiveRecord::Relation.
   def self.search(params)
-    ListSearcher.new(params.slice(:title, :private, :exclude)).search
+    ListSearcher.new(params.slice(:title, :private, :exclude)).search(scoped)
   end
 
   # Validates the value of private. It is not allowed to set public lists

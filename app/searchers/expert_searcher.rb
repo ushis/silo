@@ -1,16 +1,6 @@
 # Searches the experts table and associations.
 class ExpertSearcher < ApplicationSearcher
 
-  # Inits the ExpertsSearcher. Takes a hash of conditions:
-  #
-  # - *:name*  To search name and prename for partial matches.
-  # - *:q*     To perform a fulltext search.
-  #
-  # Also takes association names and ids.
-  def initialize(conditions)
-    super(Expert, conditions)
-  end
-
   protected
 
   # Searches name and prename.

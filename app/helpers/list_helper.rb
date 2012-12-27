@@ -10,6 +10,16 @@ module ListHelper
     end
   end
 
+  # Renders a "print this list" button.
+  def print_list_button_for(list, item_type)
+    options = {
+      url: send("print_ajax_list_#{item_type}_path", list),
+      class: 'icon-print hidden-form'
+    }
+
+    link_to(t('actions.print'), options.delete(:url), options)
+  end
+
   # Renders a "Remove item from this list" link.
   def remove_from_list_button_for(list, list_item, options = {})
     options = {

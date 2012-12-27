@@ -2,7 +2,6 @@
 # methods, used by several other controllers. All controllers extend the
 # ApplicationController.
 class ApplicationController < ActionController::Base
-  rescue_from UnauthorizedError,                   with: :unauthorized
   rescue_from ActiveRecord::RecordNotFound,        with: :not_found
   rescue_from ActionController::MissingFile,       with: :file_not_found
   rescue_from ActionController::RedirectBackError, with: :go_home
@@ -151,6 +150,16 @@ class ApplicationController < ActionController::Base
   # Returns the current list of the current user.
   def current_list
     current_user.try(:current_list)
+  end
+
+  # Returns the current list, but raises ActiveRecord::RecordNotfound,
+  # when current_list is nil.
+  def current_list!
+    if current_list
+      current_list
+    else
+      raise ActiveRecord::RecordNotFound
+    end
   end
 
   # Checks if a user is the current user. Returns true if the user is the

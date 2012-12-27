@@ -83,20 +83,22 @@ Silo::Application.routes.draw do
       resources controller, only: :index
     end
 
-    resources :lists, except: [:update, :destroy] do
-      resources :list_item, only: [:update]
+    resources :lists, except: [:create, :update, :destroy] do
+      resources :list_items, only: [:update]
 
       member do
         put :open
         get :copy
         get :import
-        get :'print/:item_type', action: :print, as: :print
       end
 
       [:experts, :partners].each do |resource|
-        resources resource, only: [], controller: :lists do
-          post   :create,  action: :"add_#{resource}",    on: :collection
-          delete :destroy, action: :"remove_#{resource}", on: :collection
+        resources resource, only: [], controller: :list_items do
+          collection do
+            get    :print,   action: "print_#{resource}"
+            post   :create,  action: "create_#{resource}"
+            delete :destroy, action: "destroy_#{resource}"
+          end
         end
       end
     end

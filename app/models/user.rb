@@ -89,6 +89,11 @@ class User < ActiveRecord::Base
     save
   end
 
+  # Returns a ActiveRecord::Relation with lists accessible for the user.
+  def accessible_lists
+    List.accessible_for(self)
+  end
+
   # Returns a string containing prename and name of the user.
   #
   #   user.full_name

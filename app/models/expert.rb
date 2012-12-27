@@ -60,7 +60,7 @@ class Expert < ActiveRecord::Base
   def self.search(params)
     ExpertSearcher.new(
       params.slice(:name, :country, :languages, :q)
-    ).search.order('name, prename')
+    ).search(scoped).order('name, prename')
   end
 
   # Initializes the contact on access, if not already initalized.

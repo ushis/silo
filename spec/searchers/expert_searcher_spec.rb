@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe ExpertSearcher do
-  subject { ExpertSearcher.new(conditions).search.all }
+  subject { Expert.search(conditions).all }
 
   before(:all) do
     @area = create(:area, area: :EU)
@@ -105,6 +105,15 @@ describe ExpertSearcher do
 
       it 'should find nothing' do
         expect(subject).to be_empty
+      end
+    end
+
+    context 'when searching a scoped model' do
+      subject { Expert.limit(1).search(country: @countries[:DE]).all }
+
+      it 'should respect the scope' do
+        expect(subject).to have(1).item
+        expect(subject.first.country).to eq(@countries[:DE])
       end
     end
   end

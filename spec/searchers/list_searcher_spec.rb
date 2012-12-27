@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe ListSearcher do
-  subject { ListSearcher.new(conditions).search.all }
+  subject { List.search(conditions).all }
 
   before(:all) do
     @private_jane = create(:list, title: 'Jane Doe')
@@ -72,6 +72,15 @@ describe ListSearcher do
 
       it 'should be empty' do
         expect(subject).to be_empty
+      end
+    end
+
+    context 'when searching a scoped model' do
+      subject { List.limit(1).search(private: true).all }
+
+      it 'should resect the scope' do
+        expect(subject).to have(1).item
+        expect(subject.first.private?).to be_true
       end
     end
   end

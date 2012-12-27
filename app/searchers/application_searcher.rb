@@ -9,8 +9,7 @@ class ApplicationSearcher
   # default. Simply specify the the association name as key and an array of
   # ids as value. Additional search methods must be implemented in the
   # subclasses.
-  def initialize(model, conditions)
-    @model = model
+  def initialize(conditions)
     @conditions = normalize_conditions(conditions)
   end
 
@@ -19,8 +18,9 @@ class ApplicationSearcher
   #   searcher.search.order('created_at DESC')
   #
   # Returns a ActiveRecord::Relation.
-  def search
-    @scope = @model
+  def search(scope)
+    @model = scope.klass
+    @scope = scope
     @empty = false
 
     @conditions.each do |method, value|

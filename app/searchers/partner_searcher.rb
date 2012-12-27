@@ -1,17 +1,6 @@
 # Searches the partners table and its associations.
 class PartnerSearcher < ApplicationSearcher
 
-  # Initializes th epartner searcher. Takes a hash of conditions:
-  #
-  # - *:company*  To search the company attribute for partial macthes.
-  # - *:q*        To perform a fuzzy search.
-  #
-  # To search associations, pass the name of the association as key and
-  # an array of ids as value.
-  def initialize(conditions)
-    super(Partner, conditions)
-  end
-
   protected
 
   # Searches the company attribute.

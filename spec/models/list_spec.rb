@@ -39,63 +39,16 @@ describe List do
     it { should belong_to(:user) }
   end
 
-  describe :new_for_user do
-    before(:all) { @user = create(:user) }
-    after(:all) { @user.destroy }
-
-    def params
-      { title: 'Hello' }
-    end
-
-    it 'should be a new list' do
-      list = List.new_for_user(params, @user)
-      expect(list).to be_a(List)
-      expect(list).to be_new_record
-    end
-
-    it 'should set the owner to @user' do
-      list = List.new_for_user(params, @user)
-      expect(list.user).to eq(@user)
-    end
-
-    it 'should set the current list of the user after save' do
-      list = List.new_for_user(params, @user)
-      list.save
-      expect(@user.reload.current_list).to eq(list)
-    end
-  end
-
-  describe :find_for_user do
-    it 'should a find the users list' do
-      user = create(:user)
-      list = create(:list, user: user)
-
-      List.find_for_user(list.id, user).should == list
-    end
-
-    it 'should raise a not found error' do
-      user = create(:user)
-
-      expect { List.find_for_user(1, user) }.to raise_error(ActiveRecord::RecordNotFound)
-    end
-
-    it 'should raise an unauthorized error' do
-      stranger = create(:user)
-      list = create(:list)
-
-      expect { List.find_for_user(list.id, stranger) }.to raise_error(UnauthorizedError)
-    end
-  end
-
-  describe 'accessible_for' do
+  describe :accessible_for do
     it 'should find lists accessible for a specific user' do
       user = create(:user)
       a = create(:list)
       b = create(:list, :public)
       c = create(:list, user: user)
 
-      List.all.should =~ [a, b, c]
-      List.accessible_for(user) =~ [b, c]
+      expect(List.all).to match_array([a, b, c])
+      expect(List.accessible_for(user)).to match_array([b, c])
+      expect(user.accessible_lists).to match_array([b, c])
     end
   end
 

@@ -25,8 +25,7 @@
                       class: 'icon-download' %>
         </li>
         <li class="print">
-          <%= link_to t('actions.print'), print_ajax_list_path(id: @list, item_type: @item_type),
-                      class: 'icon-print hidden-form' %>
+          <%= print_list_button_for(@list, @item_type) %>
         </li>
       </ul>
 
