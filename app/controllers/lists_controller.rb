@@ -86,9 +86,4 @@ class ListsController < ApplicationController
     flash[:alert] = t('messages.list.errors.find')
     redirect_to(@list ? list_experts_url(@list) : lists_url)
   end
-
-  # Redirects to the lists index.
-  def unauthorized
-    super(lists_url)
-  end
 end
