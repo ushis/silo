@@ -73,7 +73,7 @@ module FormHelper
 
     # Returns fields for privileges. Its a bunch of check boxes and labels.
     def privilege_fields(method, disabled = false)
-      fields_for @object.send(method) do |fields|
+      fields_for(method, include_id: ! disabled) do |fields|
         html = fields.check_box(:admin, disabled: disabled, class: :admin)
         html << fields.label(:admin, class: :admin)
 

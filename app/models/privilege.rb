@@ -12,6 +12,8 @@
 class Privilege < ActiveRecord::Base
   belongs_to :user
 
+  attr_accessible :admin, :experts, :partners, :references, as: :admin
+
   # A list of all sections.
   SECTIONS = [:experts, :partners, :references]
 
@@ -24,24 +26,6 @@ class Privilege < ActiveRecord::Base
   # Returns true if access is granted, else false.
   def access?(section)
     admin? || (respond_to?(section) && send(section))
-  end
-
-  # Sets the privileges. It takes a hash of sections and their corresponding
-  # access values.
-  #
-  #   privilege.privileges = { experts: true, references: false }
-  #
-  #   privilege.experts?     #=> true
-  #   privilege.partners?    #=> false
-  #   privilege.references?  #=> false
-  #
-  # If the :admin is set to true, all sections will be set to true.
-  def privileges=(privileges)
-    self.admin = privileges[:admin]
-
-    SECTIONS.each do |section|
-      self[section] = admin? || privileges[section]
-    end
   end
 
   # Checks permissions to write some employees data. Employee is a subresource

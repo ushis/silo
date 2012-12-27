@@ -6,10 +6,11 @@ Silo::Application.routes.draw do
   post   'login' => 'login#login'
   delete 'login' => 'login#logout'
 
-  # Users
-  get 'profile' => 'users#profile'
-  put 'profile' => 'users#update_profile'
+  # Profile
+  get 'profile' => 'profile#edit'
+  put 'profile' => 'profile#update'
 
+  # Users
   resources :users, except: [:show]
 
   # Experts

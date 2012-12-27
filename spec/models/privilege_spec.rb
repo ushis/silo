@@ -1,76 +1,61 @@
 require 'spec_helper'
 
 describe Privilege do
-  context 'associations' do
+  describe :associations do
     it { should belong_to(:user) }
   end
 
-  describe 'SECTIONS' do
+  describe :SECTIONS do
     it 'should be an array of sections' do
-      Privilege::SECTIONS.should =~ [:partners, :experts, :references]
+      expect(Privilege::SECTIONS).to match_array([:partners, :experts, :references])
     end
   end
 
-  describe 'access?' do
-    it 'should always be false by default' do
-      privilege = Privilege.new
-
-      Privilege::SECTIONS.each do |section|
-        privilege.access?(section).should be_false
+  describe :access? do
+    context 'by default' do
+      it 'should always be false' do
+        Privilege::SECTIONS.each do |section|
+          expect(subject.access?(section)).to be_false
+        end
       end
     end
 
-    it 'should always be true for admins' do
-      privilege = build(:privilege, admin: true)
+    context 'as admin' do
+      subject { build(:privilege, admin: true) }
 
-      Privilege::SECTIONS.each do |section|
-        privilege.access?(section).should be_true
+      it 'should always be true' do
+        Privilege::SECTIONS.each do |section|
+          expect(subject.access?(section)).to be_true
+        end
       end
     end
 
     Privilege::SECTIONS.each do |section|
-      it "should be true for #{section} else false" do
-        privilege = build(:privilege, section => true)
+      context "when #{section} is accessible" do
+        subject { build(:privilege, section => true) }
 
-        Privilege::SECTIONS.each do |_section|
-          if _section == section
-            privilege.access?(_section).should be_true
-          else
-            privilege.access?(_section).should be_false
+        it "should be true for #{section} else false" do
+          Privilege::SECTIONS.each do |_section|
+            expect(subject.access?(_section)).to eq(_section == section)
           end
         end
       end
     end
   end
 
-  describe 'privileges=' do
-    it 'should set admin true' do
-      privilege = build(:privilege)
-      privilege.privileges = { admin: true }
-      privilege.admin?.should be_true
-    end
-
-    it 'should set the privileges' do
-      privileges = { partners: true, experts: true }
-      privilege = build(:privilege)
-      privilege.privileges = privileges
-      privilege.admin?.should be_false
-
-      Privilege::SECTIONS.each do |section|
-        privilege.access?(section).should (privileges[section] ? be_true : be_false)
+  describe :employees do
+    context 'by default' do
+      it 'should be false' do
+        expect(subject.employees).to be_false
       end
     end
-  end
 
-  describe 'employees' do
-    it 'should be false by default' do
-      privilege = Privilege.new
-      privilege.employees.should be_false
-    end
+    context 'when partners section is accessible' do
+      subject { build(:privilege, partners: true) }
 
-    it 'should be true if the partners section is accessible' do
-      privilege = build(:privilege, partners: true)
-      privilege.employees.should be_true
+      it 'should be true' do
+        expect(subject.employees).to be_true
+      end
     end
   end
 end

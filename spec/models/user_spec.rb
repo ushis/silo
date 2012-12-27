@@ -42,7 +42,7 @@ describe User do
   end
 
   describe :delegations do
-    [:access?, :admin?, :privileges=].each do |method|
+    [:access?, :admin?].each do |method|
       it { should delegate_method(method).to(:privilege) }
     end
   end

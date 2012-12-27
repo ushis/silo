@@ -1,47 +1,22 @@
-# The UsersController provides CRUD actions for the users data. It is
-# accessibles as admin only. Exceptions are the methods
-# UsersController#profile and UsersController#update_profile.
+# The UsersController provides CRUD actions for the users data.
+#
+# It is accessible as admin only.
 class UsersController < ApplicationController
-  before_filter :check_password, only: [:destroy]
-
-  skip_before_filter :authorize, only: [:profile, :update_profile]
-
-  # Serves the users profile. Admins are redirected to their edit page.
-  def profile
-    if current_user.admin?
-      redirect_to edit_user_url(current_user) and return
-    end
-
-    @user = current_user
-    @title = t('labels.user.profile')
-    body_class << :edit
-  end
-
-  # Updates a users profile. If a user wants to change his(her password, the
-  # old password is required.
-  def update_profile
-    @user = current_user
-    @user.check_old_password_before_save
-
-    if @user.update_attributes(params[:user])
-      I18n.locale = @user.locale
-      flash.now[:notice] = t('messages.generics.success.save')
-    else
-      flash.now[:alert] = t('messages.generics.errors.save')
-    end
-
-    @title = t('labels.user.profile')
-    body_class << :edit
-    render :profile
-  end
+  before_filter :check_password,     only: [:destroy]
+  before_filter :find_user,          only: [:destroy, :edit, :update]
+  before_filter :block_current_user, only: [:destroy]
 
   # Serves a list of all users.
+  #
+  # GET /users
   def index
     @users = User.includes(:privilege).order('name, prename')
     @title = t('labels.user.all')
   end
 
   # Serves a blank user form.
+  #
+  # GET /users/new
   def new
     @user = User.new
     @title = t('labels.user.new')
@@ -49,6 +24,8 @@ class UsersController < ApplicationController
   end
 
   # Creates a new user and redirects to the new users edit page.
+  #
+  # POST /users
   def create
     @user = User.new(params[:user], as: :admin)
 
@@ -64,24 +41,20 @@ class UsersController < ApplicationController
   end
 
   # Serves an edit form, populated with the users data.
+  #
+  # GET /users/:id/edit
   def edit
-    @user = User.find(params[:id])
     @title = t('labels.user.edit')
     render :form
   end
 
   # Updates the users data and serves the edit form.
   #
-  # *Note:* A user can not change his/her own privileges.
+  # PUT /users/:id
   def update
-    @user = User.find(params[:id])
-    @user.username = params[:user].try(:delete, :username)
+    context = current_user?(@user) ? :current_admin : :admin
 
-    unless current_user?(@user)
-      @user.privileges = params[:user].try(:delete, :privilege)
-    end
-
-    if @user.update_attributes(params[:user])
+    if @user.update_attributes(params[:user], as: context)
       I18n.locale = @user.locale if current_user?(@user)
       flash[:notice] = t('messages.user.success.save')
       redirect_to users_url and return
@@ -95,17 +68,10 @@ class UsersController < ApplicationController
 
   # Destroys a user and redirects to the users index page.
   #
-  # *Note:* A user can not destroy him/herself.
+  # DELETE /users/:id
   def destroy
-    user = User.find(params[:id])
-
-    if current_user?(user)
-      flash[:alert] = t('messages.user.errors.delete_current_user')
-      redirect_to users_url and return
-    end
-
-    if user.destroy
-      flash[:notice] = t('messages.user.success.delete', name: user.username)
+    if @user.destroy
+      flash[:notice] = t('messages.user.success.delete', name: @user.username)
     else
       flash[:alert] = t('messages.user.errors.delete')
     end
@@ -114,6 +80,16 @@ class UsersController < ApplicationController
   end
 
   private
+
+  # Finds the user
+  def find_user
+    @user = User.find(params[:id])
+  end
+
+  # Redirects if @user == current_user.
+  def block_current_user
+    unauthorized(users_url) if current_user?(@user)
+  end
 
   # Sets a "user not found" alert and redirects to the users index page.
   def not_found

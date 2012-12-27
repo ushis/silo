@@ -31,8 +31,11 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :password_old,
                   :name, :prename, :locale
 
-  attr_accessible :email, :password, :password_confirmation, :password_old,
-                  :name, :prename, :locale, :username, :privilege, as: :admin
+  attr_accessible :username, :email, :password, :password_confirmation,
+                  :name, :prename, :locale, as: :current_admin
+
+  attr_accessible :username, :email, :password, :password_confirmation,
+                  :name, :prename, :locale, :privilege_attributes, as: :admin
 
   has_secure_password
 
@@ -55,7 +58,9 @@ class User < ActiveRecord::Base
 
   belongs_to :current_list, class_name: :List
 
-  delegate :access?, :admin?, :privileges=, to: :privilege
+  delegate :access?, :admin?, to: :privilege
+
+  accepts_nested_attributes_for :privilege
 
   # Auto initializes the users privileges on access.
   def privilege

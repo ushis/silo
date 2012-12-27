@@ -19,8 +19,8 @@ module AccessSpecHelper
   end
 
   def set_access(section, value)
-    @user.privilege.send("#{section}=", value)
-    @user.save
+    @user.privilege[section] = value
+    @user.privilege.save
   end
 
   def grant_access(section)
