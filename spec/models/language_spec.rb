@@ -23,7 +23,7 @@ describe Language do
 
   describe :PRIORITIES do
     it 'should be a set of symbols' do
-      expect(Language::PRIORITIES).to eq([:de, :en, :fr, :es].to_set)
+      expect(Language::PRIORITIES).to eq(%w(de en fr es).to_set)
     end
   end
 

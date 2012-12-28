@@ -18,7 +18,7 @@ class Language < ActiveRecord::Base
   has_many :cvs
 
   # A set of prioritized language codes.
-  PRIORITIES = [:de, :en, :es, :fr].to_set
+  PRIORITIES = %w(de en es fr).to_set
 
   # Polymorphic language finder. Can handle Language, Fixnum, Symbol and
   # String arguments. Raises an ArgumentError in case of invalid input.
@@ -86,7 +86,7 @@ class Language < ActiveRecord::Base
   # Returns true if the language has priority, else false. The PRIORITIES
   # constant is used to determine the value.
   def prioritized?
-    @prioritized ||= PRIORITIES.include?(language.to_sym)
+    @prioritized ||= PRIORITIES.include?(language.to_s)
   end
 
   # Returns the localized language.
