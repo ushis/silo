@@ -39,8 +39,8 @@ class User < ActiveRecord::Base
 
   has_secure_password
 
-  symbolize :locale, in: I18n.available_locales, default: I18n.default_locale,
-            i18n_scope: :languages
+  discrete_values :locale, I18n.available_locales, default: I18n.default_locale,
+                  i18n_scope: :languages
 
   validates :password,   presence: true,  on: :create
   validates :username,   presence: true,  uniqueness: true, format: /\A[a-z0-9]+\z/

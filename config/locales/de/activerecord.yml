@@ -50,7 +50,7 @@ de:
               invalid: 'Darf nur aus Kleinbuchstaben und Zahlen bestehen.'
             password:
               confirmation: 'Passwörter stimmen nicht überein.'
-    symbolizes:
+    discrete:
       values:
         gender:
           female: 'Weiblich'

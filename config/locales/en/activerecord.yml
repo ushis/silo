@@ -50,7 +50,7 @@ en:
               invalid: 'Must only contain lower case letters and numbers.'
             password:
               confirmation: 'Passwords do not match.'
-    symbolizes:
+    discrete:
       values:
         gender:
           female: 'Female'

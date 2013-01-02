@@ -18,7 +18,7 @@ class Employee < ActiveRecord::Base
   attr_accessible :title, :name, :prename, :gender, :job
   attr_accessible :title, :name, :prename, :gender, :job, as: :exposable
 
-  symbolize :gender, in: [:female, :male], allow_nil: true
+  discrete_values :gender, [:female, :male], allow_nil: true
 
   validates :name, presence: true
 

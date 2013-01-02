@@ -4,7 +4,7 @@
   user.username = prename
   user.password = prename
   user.email = "#{prename}@example.com"
-  user.privileges = { admin: true }
+  user.privilege.admin = true
   user.save
 end
 

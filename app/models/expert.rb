@@ -25,7 +25,7 @@ class Expert < ActiveRecord::Base
 
   self.per_page = 50
 
-  symbolize :gender, in: [:female, :male]
+  discrete_values :gender, [:female, :male]
 
   is_commentable_with :comment, autosave: true, dependent: :destroy, as: :commentable
 
