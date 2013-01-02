@@ -41,13 +41,9 @@ class ApplicationSearcher
   #
   # Blanks are removed and method names symbolized.
   def normalize_conditions(conditions)
-    conditions.inject([]) do |results, tuple|
-      if tuple[1].present? || tuple[1].is_a?(FalseClass)
-        results << [tuple[0].to_sym, tuple[1]]
-      else
-        results
-      end
-    end
+    conditions.map do |k, v|
+      [k.to_sym, v] if v.present? || v.is_a?(FalseClass)
+    end.compact
   end
 
   # Triggers the search method and passes the query.
