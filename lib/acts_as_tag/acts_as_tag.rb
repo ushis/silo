@@ -35,11 +35,10 @@ module ActsAsTag
       # Extracts tags from a string.
       #
       # Returns a collection of tag like objects.
-      def from_s(s, delimiter = /\s*,\s*/)
+      def from_s(s, delimiter = ',')
         tags = s.split(delimiter).inject({}) do |hsh, tag|
-          next hsh if tag.blank?
           tag.strip!
-          hsh[tag.downcase] ||= tag
+          hsh[tag.downcase] ||= tag unless tag.empty?
           hsh
         end
 
