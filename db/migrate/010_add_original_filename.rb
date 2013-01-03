@@ -3,7 +3,7 @@ class AddOriginalFilename < ActiveRecord::Migration
     add_column :attachments, :original_filename, :string
 
     Attachment.all.each do |a|
-      a.title = File.basename(title, File.extname(filename))
+      a.title = File.basename(a.title, File.extname(a.filename))
       a.original_filename = a.filename
       a.save!(validate: false)
     end
