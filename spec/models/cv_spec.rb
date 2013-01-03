@@ -38,7 +38,7 @@ describe Cv do
     end
 
     ['acme.pdf', 'acme.doc'].each do |filename|
-      context "and it is #{filename}" do
+      context "when file is #{filename}" do
         let(:file) { fixture_file_upload(filename) }
 
         it 'should work too' do
@@ -58,6 +58,14 @@ describe Cv do
           subject.file = file
           expect(subject.cv).to be_blank
         end
+      end
+    end
+
+    context 'when argument is not a file' do
+      let(:file) { 'kittens.jpg' }
+
+      it 'should raise a TypeError' do
+        expect { subject.file = file }.to raise_error(TypeError)
       end
     end
   end
