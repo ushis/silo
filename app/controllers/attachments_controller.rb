@@ -19,7 +19,7 @@ class AttachmentsController < ApplicationController
   #
   # POST /parents/:parent_id/attachments
   def create
-    if Attachment.from_upload(params[:attachment]).try(:add_to, @parent)
+    if @parent.attachments.build(params[:attachment]).save_or_destroy
       flash[:notice] = t('messages.attachment.success.store')
     else
       flash[:alert] = t('messages.attachment.errors.store')

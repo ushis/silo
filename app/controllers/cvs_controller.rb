@@ -17,7 +17,7 @@ class CvsController < ApplicationController
   #
   # POST /experts/:expert_id/cvs
   def create
-    if @expert.add_cv_from_upload(params[:cv])
+    if @expert.cvs.build(params[:cv]).save_or_destroy
       flash[:notice] = t('messages.cv.success.store')
     else
       flash[:alert] = t('messages.cv.errors.store')

@@ -3,71 +3,75 @@ require 'spec_helper'
 describe Cv do
   include AttachmentSpecHelper
 
-  context 'validations' do
-    it 'must have a cv' do
-      cv = Cv.new
-      cv.should_not be_valid
-      cv.errors[:cv].should_not be_empty
-    end
+  describe :validations do
+    it { should validate_presence_of(:cv) }
   end
 
-  context 'associations' do
+  describe :associations do
     it { should have_one(:attachment).dependent(:destroy) }
 
     it { should belong_to(:language) }
     it { should belong_to(:expert) }
   end
 
-  context 'delegations' do
+  describe :delegations do
     [:created_at, :absolute_path, :ext].each do |method|
       it { should delegate_method(method).to(:attachment) }
     end
   end
 
-  describe 'from_file' do
-    it 'should store the file' do
-      cv = nil
-      language = build(:language)
+  describe :file= do
+    context 'when argument is a valid file' do
+      let(:file) { fixture_file_upload('lorem-ipsum.txt') }
 
-      expect {
-        cv = Cv.from_file(fixture_file_upload('lorem-ipsum.txt'), build(:language))
-      }.to change { count_files(Attachment::STORE) }.by(1)
+      it 'should store the file' do
+        expect { subject.file = file }.to change { count_files(Attachment::STORE) }.by(1)
+        expect(subject.absolute_path).to be_file
+      end
 
-      cv.should be_a(Cv)
-      cv.absolute_path.should be_a(Pathname)
-      cv.absolute_path.should be_file
+      it 'should load the files content into the cv attribute' do
+        expect(subject.cv).to be_nil
+        subject.file = file
+        file.rewind
+        expect(subject.cv.strip).to eq(file.read.strip)
+      end
     end
 
-    it 'should load the files content into the cv attribute' do
-      file = fixture_file_upload('lorem-ipsum.txt')
-      cv = Cv.from_file(file, build(:language))
-      file.rewind
-      cv.cv.strip.should == file.read.strip
+    ['acme.pdf', 'acme.doc'].each do |filename|
+      context "and it is #{filename}" do
+        let(:file) { fixture_file_upload(filename) }
+
+        it 'should work too' do
+          expect(subject.cv).to be_nil
+          subject.file = file
+          expect(subject.cv.strip).to eq('ACME Inc. - We do it right.')
+        end
+      end
     end
 
-    it 'should load pdf files as well' do
-      cv = Cv.from_file(fixture_file_upload('acme.pdf'), build(:language))
-      cv.cv.strip.should == 'ACME Inc. - We do it right.'
-    end
+    ['empty', 'kittens.jpg'].each do |filename|
+      context "when file is #{filename}" do
+        let(:file) { fixture_file_upload(filename) }
 
-    it 'should have a blank cv attribute for empty files' do
-      cv = Cv.from_file(fixture_file_upload('empty'), build(:language))
-      cv.cv.should be_blank
-    end
-
-    it 'should have a blank cv attribute for files with no textual content' do
-      cv = Cv.from_file(fixture_file_upload('kittens.jpg'), build(:language))
-      cv.cv.should be_blank
+        it 'should have a blank cv attribute' do
+          expect(subject.cv).to be_nil
+          subject.file = file
+          expect(subject.cv).to be_blank
+        end
+      end
     end
   end
 
-  describe 'public_filename' do
-    it 'should be combination of "cv", experts full_name, language and ext' do
+  describe :public_filename do
+    subject do
       expert = build(:expert, prename: 'John', name: 'Doe')
-      cv = build(:cv)
-      cv.language = build(:language, language: :de)
-      cv.attachment = build(:attachment, filename: 'example.pdf')
-      cv.public_filename.should == 'cv-john-doe-de.pdf'
+      language = build(:language, language: :de)
+      attachment = build(:attachment, original_filename: 'example.pdf')
+      build(:cv, expert: expert, language: language, attachment: attachment).public_filename
+    end
+
+    it 'should be combination of "cv", experts full_name, language and ext' do
+      expect(subject).to eq('cv-john-doe-de.pdf')
     end
   end
 end

@@ -35,6 +35,7 @@ CREATE TABLE `attachments` (
   `filename` varchar(255) NOT NULL,
   `title` varchar(255) NOT NULL,
   `created_at` datetime DEFAULT NULL,
+  `original_filename` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_attachments_on_filename` (`filename`),
   KEY `index_attachments_on_attachable_id_and_attachable_type` (`attachable_id`,`attachable_type`)
@@ -239,6 +240,8 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO schema_migrations (version) VALUES ('1');
+
+INSERT INTO schema_migrations (version) VALUES ('10');
 
 INSERT INTO schema_migrations (version) VALUES ('2');
 

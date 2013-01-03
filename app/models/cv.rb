@@ -11,7 +11,10 @@ require 'yomu'
 # - *language_id* integer
 # - *cv* text
 class Cv < ActiveRecord::Base
-  validates :cv, presence: true
+  attr_accessible :file, :language_id
+
+  validates :cv,          presence: true
+  validates :language_id, presence: true
 
   has_one :attachment, autosave: true, dependent: :destroy, as: :attachable
 
@@ -22,21 +25,24 @@ class Cv < ActiveRecord::Base
 
   default_scope includes(:language)
 
-  # Inits a new Cv from a file. The file is stored on the filesystem and the
-  # contents is stored in the _cv_ attribute.
+  # Saves the record or destroys it on failure.
   #
-  #   expert.cvs << Cv.from_file(upload, language))
-  #
-  # Returns a new Cv object and raises several exceptions on error.
-  def self.from_file(file, language)
-    cv = new
-    cv.attachment = Attachment.from_file!(file)
-    cv.language = Language.find_language!(language)
-    cv.load_document
-    cv
-  rescue
-    cv.destroy
-    raise
+  # It triggers all after_destroy callbacks, e.g. Attachment#unlink().
+  def save_or_destroy
+    success = save
+    destroy unless success
+    success
+  end
+
+  # Stores the file and loads its content into the cv attribute.
+  def file=(file)
+    build_attachment(file: file)
+    load_document
+  end
+
+  # Assignes a language.
+  def language_id=(id)
+    self.language = Language.find_language(id)
   end
 
   # Returns the public filename of the cv document.
@@ -46,6 +52,8 @@ class Cv < ActiveRecord::Base
   def public_filename
     "cv #{expert.full_name} #{language.language}".parameterize + ext.to_s
   end
+
+  private
 
   # Loads the documents text and stores it in the cv attribute.
   #
@@ -58,5 +66,7 @@ class Cv < ActiveRecord::Base
   # Returns the documents text.
   def load_document
     self.cv = Yomu.new(absolute_path).text
+  rescue
+    self.cv = nil
   end
 end

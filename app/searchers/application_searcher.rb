@@ -1,21 +1,41 @@
 # Base class of all searchers.
+#
+#   class ArticleSearcher < ApplicationSearcher
+#     def title(value)
+#       @scope.where('title LIKE ?', "%#{value}%")
+#     end
+#   end
+#
+#   class Article < ActiveRecord::Base
+#     has_and_belongs_to_many :tags
+#
+#     def self.search(params)
+#       ArticleSearcher.new(params.slice(:title, :tags)).search(scoped)
+#     end
+#
+#     def self.published
+#       where(published: true)
+#     end
+#   end
+#
+#   class ArticleController < ApplicationController
+#     def index
+#       @articles = Article.published.search(params).page(params[:page])
+#     end
+#   end
+#
+# The vanilla ApplicationSearcher can search the associated tables by
+# default. Simply specify the the association name as key and an array of
+# ids as value. Additional search methods must be implemented in the
+# subclasses.
 class ApplicationSearcher
 
-  # Inits the searcher. Takes the model to search and a hash of conditions.
-  #
-  #   searcher = ApplicationSearcher.new(Expert, name: 'pete', country: [1, 2])
-  #
-  # The vanilla ApplicationSearcher can search the associated tables by
-  # default. Simply specify the the association name as key and an array of
-  # ids as value. Additional search methods must be implemented in the
-  # subclasses.
+  # Inits the searcher. Takes a hash of conditions.
   def initialize(conditions)
     @conditions = normalize_conditions(conditions)
   end
 
   # Performs the search.
-  #
-  #   searcher.search.order('created_at DESC')
   #
   # Returns a ActiveRecord::Relation.
   def search(scope)

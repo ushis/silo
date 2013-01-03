@@ -51,34 +51,19 @@ namespace :cvs do
 
       f = File.open(cv)
 
-      begin
-        cv = Cv.from_file(f, lang)
-
-        unless (e.cvs << cv)
-          cv.destroy
-          raise 'Could not save cv.'
-        end
-
+      if (e.cvs.build(file: f, language_id: lang).save_or_destroy)
         f.close
         next
-      rescue
       end
 
       puts "=> Could not load cv: #{base}".red
       puts "=> Storing as attachment".yellow
 
-      begin
-        a = Attachment.from_file(f)
+      f.rewind
 
-        unless (e.attachments << a)
-          a.destroy
-          raise 'Could not save attachment.'
-        end
-
-        next
-      rescue
-      ensure
+      if (e.attachments.build(file: f).save_or_destroy)
         f.close
+        next
       end
 
       puts "=> Could not store attachment: #{base}".red

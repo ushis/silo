@@ -7,20 +7,28 @@ require 'securerandom'
 #
 # Database scheme:
 #
-# - *id* integer
-# - *attachable_id* integer
-# - *attachable_type* string
-# - *filename* string
-# - *title* string
-# - *created_at* datetime
-# - *updated_at* datetime
+# - *id:*                 integer
+# - *attachable_id:*      integer
+# - *attachable_type:*    string
+# - *filename:*           string
+# - *original_filename:*  string
+# - *title:*              string
+# - *created_at:*         datetime
+# - *updated_at:*         datetime
+#
+# The attributes *filename* and *original_filename* must be present. The
+# *title* attribute is populated before save, if it is blank.
 class Attachment < ActiveRecord::Base
-  attr_accessible :title
+  attr_accessible :title, :file
+
+  before_save :set_title
 
   after_destroy :unlink
 
-  validates :filename, presence: true, uniqueness: true
-  validates :title,    presence: true
+  validates :filename,          presence: true, uniqueness: true
+  validates :original_filename, presence: true
+
+  validates_with FileExistsValidator
 
   belongs_to :attachable, polymorphic: true
 
@@ -30,70 +38,35 @@ class Attachment < ActiveRecord::Base
   # Absolute path to the attachment store.
   STORE = Rails.root.join(DIRNAME)
 
-  # Inits a new Attachment from a file. The file is stored in the
-  # attachment store and new Attachment is returned.
+  # Saves the record or destroys it on failure.
   #
-  # Returns nil on error.
-  def self.from_file(file, title = nil)
-    from_file!(file, title)
-  rescue
-    nil
+  # It triggers all after_destroy callbacks, e.g. Attachment#unlink().
+  def save_or_destroy
+    success = save
+    destroy unless success
+    success
   end
 
-  # Does the same as Attachment.from_file, but raises several exceptions
-  # on error.
-  #
-  # Raises several exceptions on error.
-  def self.from_file!(file, title = nil)
-    attachment = Attachment.new
-    attachment.store(file)
-
-    if ! title.blank?
-      attachment.title = title
-    elsif file.is_a? ActionDispatch::Http::UploadedFile
-      attachment.title = file.original_filename
-    else
-      attachment.title = File.basename(file.path)
-    end
-
-    attachment
-  rescue
-    attachment.destroy
-    raise
+  # Sets the title from the original filename if it is blank.
+  def set_title
+    self.title = File.basename(original_filename.to_s, ext) if title.blank?
   end
 
-  # An alias for Attachment.from_file. But it is taking a hash as argument.
-  # The hash should include a _file_ and a _title_ key.
-  def self.from_upload(params)
-    from_file(params[:file], params[:title])
-  end
-
-  # Adds it self to another record.
-  #
-  #   attachment.add_to(expert)
-  #   #=> #<Attachment id: 12, attachable_id: 34, attachable_type: 'Expert'>
-  #
-  #   expert.attachments.include?(attachment)
-  #   #=> true
-  #
-  # Returns it self or false on error.
-  def add_to(record)
-    self.attachable = record
-    save && self
+  # Stores the file.
+  def file=(file)
+    store(file)
+  rescue IOError, SystemCallError
+    unlink
   end
 
   # Returns the file extension of the stored file.
   def ext
-    File.extname(filename.to_s)
+    File.extname(original_filename.to_s).downcase
   end
 
   # Returns a nice filename generated from the title.
   def public_filename
-    if (extension = File.extname(title)).blank?
-      extension = ext
-    end
-
-    File.basename(title, extension).parameterize + extension
+    File.basename(title, ext).parameterize + ext
   end
 
   # Returns the absolute path to the stored file.
@@ -101,60 +74,64 @@ class Attachment < ActiveRecord::Base
     STORE.join(filename.to_s)
   end
 
-  # Stores the attachment on the filesystem and sets the filename.
+  private
+
+  # Stores the attachment on the filesystem, sets filename
+  # and original_filename.
   #
   #   attachment.store(upload)
-  #   #=> 'e4b969da-10df-4374-afd7-648b15b09903.doc'
   #
   #   attachment.filename
   #   #=> 'e4b969da-10df-4374-afd7-648b15b09903.doc'
   #
-  # Returns the filename.
-  def store(attachment)
-    case attachment
+  #   attachment.original_filename
+  #   #=> 'my-cv.doc'
+  #
+  # Raises IOError and SystemCallError on failure.
+  def store(file)
+    case file
     when ActionDispatch::Http::UploadedFile
-      ext = File.extname(attachment.original_filename)
+      self.original_filename = file.original_filename
     when File
-      ext = File.extname(attachment.path)
+      self.original_filename = File.basename(file.path)
     else
       raise TypeError, 'Argument must be a File or a UploadedFile.'
     end
 
-    empty_file(ext.downcase) do |f|
-      while (chunk = attachment.read(16384))
-        f << chunk
-      end
-
+    empty_file(ext) do |f|
       self.filename = File.basename(f.path)
+      IO.copy_stream(file, f)
     end
-  end
-
-  private
-
-  # Removes the attachment from the file system. Returns true on success,
-  # else false.
-  def unlink
-    !!absolute_path.delete
-  rescue
-    false
   end
 
   # Opens a file with unique filename in _wb_ mode.
   #
   #   cv.empty_file('.doc')
   #   #=> <File:/path/to/store/e4b969da-10df-4374-afd7-648b15b09903.doc>
+  #
+  # Raises IOError and SystemCallError on failure.
   def empty_file(suffix = nil)
-    STORE.mkpath unless STORE.exist?
     date = Date.today.to_formatted_s(:db)
 
     begin
       path = STORE.join("#{date}-#{SecureRandom.uuid}#{suffix}")
     end while path.exist?
 
+    STORE.mkpath unless STORE.exist?
+
     if block_given?
       path.open('wb') { |f| yield(f) }
     else
       path.open('wb')
     end
+  end
+
+  # Removes the attachment from the file system.
+  #
+  # Returns true on success, else false.
+  def unlink
+    !! absolute_path.delete
+  rescue
+    false
   end
 end
