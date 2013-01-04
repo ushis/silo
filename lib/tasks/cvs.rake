@@ -51,7 +51,7 @@ namespace :cvs do
 
       f = File.open(cv)
 
-      if (e.cvs.build(file: f, language_id: lang).save_or_destroy)
+      if e.cvs.build(file: f, language: lang).save_or_destroy
         f.close
         next
       end
@@ -61,7 +61,7 @@ namespace :cvs do
 
       f.rewind
 
-      if (e.attachments.build(file: f).save_or_destroy)
+      if e.attachments.build(file: f).save_or_destroy
         f.close
         next
       end
