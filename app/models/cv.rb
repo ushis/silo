@@ -11,7 +11,7 @@ require 'yomu'
 # - *language_id* integer
 # - *cv* text
 class Cv < ActiveRecord::Base
-  attr_accessible :file, :language_id
+  attr_accessible :file, :language
 
   validates :cv,          presence: true
   validates :language_id, presence: true
@@ -41,8 +41,8 @@ class Cv < ActiveRecord::Base
   end
 
   # Assignes a language.
-  def language_id=(id)
-    self.language = Language.find_language(id)
+  def language=(language)
+    super(Language.find_language(language))
   end
 
   # Returns the public filename of the cv document.
