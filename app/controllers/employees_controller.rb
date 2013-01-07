@@ -24,7 +24,7 @@ class EmployeesController < ApplicationController
     if employee.save
       flash[:notice] = t('messages.employee.success.create', name: employee.name)
     else
-      flash[:alter] = t('messages.employee.errors.create')
+      flash[:alert] = t('messages.employee.errors.create')
     end
 
     redirect_to partner_employees_url(@partner)
@@ -50,7 +50,7 @@ class EmployeesController < ApplicationController
     if @employee.destroy
       flash[:notice] = t('messages.employee.success.delete', name: @employee.name)
     else
-      flash[:alter] = t('messages.employee.errors.delete')
+      flash[:alert] = t('messages.employee.errors.delete')
     end
 
     redirect_to partner_employees_url(@partner)
