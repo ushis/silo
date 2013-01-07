@@ -91,9 +91,9 @@ describe User do
     end
 
     it 'should save the record' do
-      expect(subject).to be_new_record
-      subject.refresh_login_hash!
-      expect(subject).to be_persisted
+      expect {
+        subject.refresh_login_hash!
+      }.to change { subject.persisted? }.from(false).to(true)
     end
 
     it 'should change the login_hash' do
