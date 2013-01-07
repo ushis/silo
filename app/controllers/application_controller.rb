@@ -154,17 +154,7 @@ class ApplicationController < ActionController::Base
   # Returns the current list, but raises ActiveRecord::RecordNotfound,
   # when current_list is nil.
   def current_list!
-    if current_list
-      current_list
-    else
-      raise ActiveRecord::RecordNotFound, 'Couldn\'t find current list.'
-    end
-  end
-
-  # Checks if a user is the current user. Returns true if the user is the
-  # current user, else false.
-  def current_user?(user)
-    user == current_user
+    current_list || raise(ActiveRecord::RecordNotFound, 'Couldn\'t find current list.')
   end
 
   # Returns the current user, if he/she is logged in.
@@ -172,6 +162,12 @@ class ApplicationController < ActionController::Base
     if session[:login_hash]
       @current_user ||= User.find_by_login_hash(session[:login_hash])
     end
+  end
+
+  # Checks if a user is the current user. Returns true if the user is the
+  # current user, else false.
+  def current_user?(user)
+    user == current_user
   end
 
   # Extracts the preferred locale from the ACCEPT-LANGUAGE header.
