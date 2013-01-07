@@ -1,17 +1,15 @@
 # Handles all partner related requests.
 class PartnersController < ApplicationController
   before_filter :check_password, only: [:destroy]
+  before_filter :find_partner,   only: [:show, :documents, :edit, :update, :destroy]
 
   skip_before_filter :authorize, only: [:index, :show, :documents]
 
   cache_sweeper :tag_sweeper, only: [:create, :update]
 
-  # Checks the users permissions.
-  def authorize
-    super(:partners, partners_url)
-  end
-
   # Searches for partners.
+  #
+  # GET /partners
   def index
     _params = params.merge(arrayified_params(:businesses, :country))
     @partners = Partner.with_meta.search(_params).page(params[:page])
@@ -19,8 +17,9 @@ class PartnersController < ApplicationController
   end
 
   # Serves the partners details page.
+  #
+  # GET /partners/:id
   def show
-    @partner = Partner.find(params[:id])
     @title = @partner.company
 
     respond_to do |format|
@@ -30,71 +29,88 @@ class PartnersController < ApplicationController
   end
 
   # Serves the experts documents page.
+  #
+  # GET /partners/:id/documents
   def documents
-    @partner = Partner.find(params[:id])
     @title = @partner.company
   end
 
   # Serves an empty partner form.
+  #
+  # GET /partners/new
   def new
     @partner = Partner.new
-    @title = t('labels.partner.new')
-    render :form
+    render_form(:new)
   end
 
   # Creates a new partner.
+  #
+  # POST /partners
   def create
-    @partner = Partner.new(params[:partner])
-    @partner.user = current_user
+    @partner = current_user.partners.build(params[:partner])
 
     if @partner.save
       flash[:notice] = t('messages.partner.success.create', name: @partner.company)
-      redirect_to partner_url(@partner) and return
+      redirect_to partner_url(@partner)
+    else
+      flash.now[:alert] = t('messages.partner.errors.create')
+      render_form(:new)
     end
-
-    flash.now[:alert] = t('messages.partner.errors.create')
-    @title = t('labels.partner.new')
-    body_class << :new
-    render :form
   end
 
   # Serves an edit form.
+  #
+  # GET /partners/:id/edit
   def edit
-    @partner = Partner.find(params[:id])
-    @title = t('labels.partner.edit')
-    render :form
+    render_form(:edit)
   end
 
   # Updates the partner.
+  #
+  # PUT /partners/:id
   def update
-    @partner = Partner.find(params[:id])
     @partner.user = current_user
 
     if @partner.update_attributes(params[:partner])
       flash[:notice] = t('messages.partner.success.save')
-      redirect_to partner_url(@partner) and return
+      redirect_to partner_url(@partner)
+    else
+      flash.now[:alert] = t('messages.partner.errors.save')
+      render_form(:edit)
     end
-
-    flash.now[:alert] = t('messages.partner.errors.save')
-    @title = t('labels.partner.edit')
-    body_class << :edit
-    render :form
   end
 
   # Deletes the partner.
+  #
+  # DELETE /partners/:id
   def destroy
-    partner = Partner.find(params[:id])
-
-    if partner.destroy
-      flash[:notice] = t('messages.partner.success.delete', name: partner.company)
+    if @partner.destroy
+      flash[:notice] = t('messages.partner.success.delete', name: @partner.company)
       redirect_to partners_url
     else
       flash[:alert] = t('messages.partner.errors.delete')
-      redirect_to partner_url(partner)
+      redirect_to partner_url(@partner)
     end
   end
 
   private
+
+  # Checks the users permissions.
+  def authorize
+    super(:partners, partners_url)
+  end
+
+  # Finds the partner.
+  def find_partner
+    @partner = Partner.find(params[:id])
+  end
+
+  # Renders the partners form.
+  def render_form(action)
+    body_class << action
+    @title = t("labels.partner.#{action}")
+    render :form
+  end
 
   # Sets an error message and redirects the user.
   def not_found

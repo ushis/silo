@@ -2,39 +2,27 @@ require 'spec_helper'
 
 describe User do
   describe :validations do
-    [:password, :username, :name, :prename, :email].each do |attr|
-      it "must have a #{attr}" do
-        user = User.new
-        user.should_not be_valid
-        user.errors[attr].should_not be_empty
-      end
+    before(:all) { @u = create(:user_with_login_hash) }
+    after(:all)  { @u.destroy }
+
+    %w(password username name prename email).each do |attr|
+      it { should validate_presence_of(attr) }
     end
 
-    [:username, :email, :login_hash].each do |attr|
-      it "must have a unique #{attr}" do
-        value = 'somevalidstring'
-        create(:user, attr => value)
-
-        user = build(:user, attr => value)
-        user.should_not be_valid
-        user.errors[attr].should_not be_empty
-      end
+    %w(username email login_hash).each do |attr|
+      it { should validate_uniqueness_of(attr) }
     end
 
-    it 'must have a valid username' do
-      ['Uppercase', 'white space', 'strange_*#'].each do |invalid|
-        user = build(:user, username: invalid)
-        user.should_not be_valid
-        user.errors[:username].should_not be_empty
-      end
-
-      user = build(:user, username: 'lowercase1and1numbers304')
-      user.errors[:username].should be_empty
+    ['Uppercase', 'white space', 'strange_*#'].each do |value|
+      it { should_not allow_value(value).for(:username) }
     end
+
+    it { should allow_value('lowercase1and1numbers304').for(:username) }
   end
 
   describe :associations do
     it { should have_many(:experts) }
+    it { should have_many(:partners) }
     it { should have_many(:lists) }
 
     it { should have_one(:privilege).dependent(:destroy) }
@@ -48,70 +36,84 @@ describe User do
   end
 
   describe :check_old_password_before_save do
+    before { subject.check_old_password_before_save }
+
     it 'should set the check_old_password_before_save flag to true' do
-      subject.check_old_password_before_save
       expect(subject.check_old_password_before_save?).to be_true
     end
   end
 
   describe :check_old_password_validation do
-    before(:each) do
-      @user = create(:user, password: 'secret')
-      @user.check_old_password_before_save
+    subject { create(:user, password: 'secret') }
+
+    before do
+      subject.check_old_password_before_save
+      subject.password = 'super new secure password'
     end
 
     context 'when password changed without old password' do
       it 'should not be valid' do
-        @user.password = 'password123'
-        expect(@user).to_not be_valid
-        expect(@user.errors[:password_old]).to_not be_empty
+        expect(subject).to_not be_valid
+        expect(subject.errors[:password_old]).to_not be_empty
       end
     end
 
     context 'when password changed and old password is correct' do
+      before { subject.password_old = 'secret' }
+
       it 'should be valid' do
-        @user.password = 'super secure'
-        @user.password_old = 'secret'
-        expect(@user).to be_valid
+        expect(subject).to be_valid
       end
     end
   end
 
   describe :refresh_login_hash do
-    it 'should set a brand new login_hash' do
-      user = build(:user_with_login_hash)
-      user.login_hash.should_not be_blank
-      hash = user.login_hash
-      user.refresh_login_hash
-      user.login_hash.should_not be_blank
-      user.login_hash.should_not == hash
-      user.login_hash_changed?.should be_true
+    subject { build(:user_with_login_hash) }
+
+    it 'should be a 160 bit hexdigest' do
+      expect(subject.refresh_login_hash).to match(%r{\A[a-f0-9]{40}\z})
+    end
+
+    it 'should change the login hash' do
+      expect { subject.refresh_login_hash }.to change { subject.login_hash }
+    end
+
+    it 'should be the same as the assigned login_hash' do
+      expect(subject.refresh_login_hash).to eq(subject.login_hash)
     end
   end
 
-  describe 'refresh_login_hash!' do
-    it 'should set a brand new login_hash and save the record' do
-      user = create(:user_with_login_hash)
-      user.login_hash.should_not be_blank
-      hash = user.login_hash
-      user.refresh_login_hash!
-      user.login_hash.should_not be_blank
-      user.login_hash.should_not == hash
-      user.login_hash_changed?.should be_false
+  describe :refresh_login_hash! do
+    subject { build(:user_with_login_hash) }
+
+    it 'should be true' do
+      expect(subject.refresh_login_hash!).to be_true
+    end
+
+    it 'should save the record' do
+      expect(subject).to be_new_record
+      subject.refresh_login_hash!
+      expect(subject).to be_persisted
+    end
+
+    it 'should change the login_hash' do
+      expect { subject.refresh_login_hash! }.to change { subject.login_hash }
     end
   end
 
-  describe 'full_name' do
+  describe :full_name do
+    subject { build(:user, prename: 'John', name: 'Doe').full_name }
+
     it 'should be a combination of name and prename' do
-      user = build(:user, prename: 'John', name: 'Doe')
-      user.full_name.should == 'John Doe'
+      expect(subject).to eq('John Doe')
     end
   end
 
-  describe 'to_s' do
+  describe :to_s do
+    subject { build(:user) }
+
     it 'should be the users full_name' do
-      user = build(:user)
-      user.to_s.should == user.full_name
+      expect(subject.to_s).to eq(subject.full_name)
     end
   end
 end

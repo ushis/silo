@@ -52,6 +52,7 @@ class User < ActiveRecord::Base
   validates_with OldPasswordValidator, if: :check_old_password_before_save?
 
   has_many :experts
+  has_many :partners
   has_many :lists
 
   has_one  :privilege, autosave: true, dependent: :destroy
