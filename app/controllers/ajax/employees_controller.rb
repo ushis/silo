@@ -1,5 +1,5 @@
 # Handles Employee specific AJAX requests.
-class Ajax::EmployeesController < AjaxController
+class Ajax::EmployeesController < Ajax::ApplicationController
   respond_to :html, only: [:new, :edit]
 
   caches_action :new, :edit

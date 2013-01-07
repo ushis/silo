@@ -1,5 +1,5 @@
 # The Ajax::CvsController handles Cv specific AJAX requests.
-class Ajax::CvsController < AjaxController
+class Ajax::CvsController < Ajax::ApplicationController
   respond_to :html, only: [:new]
 
   caches_action :new

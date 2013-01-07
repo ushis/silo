@@ -1,6 +1,7 @@
-# The AjaxController is the parent of all AJAX controllers. It provides
-# special error handling and some tools to ensure a nice ajaxified day.
-class AjaxController < ApplicationController
+# The Ajax::ApplicationController is the base of all controllers in the Ajax
+# namespace. It provides special error handling and some tools to ensure a
+# nice ajaxified day.
+class Ajax::ApplicationController < ApplicationController
   before_filter :check_xhr
 
   skip_before_filter :authorize
@@ -28,9 +29,7 @@ class AjaxController < ApplicationController
 
   # Redirects the user the root url, if this is no ajax request.
   def check_xhr
-    unless request.xhr? || Rails.env.development?
-      redirect_to root_url
-    end
+    redirect_to(root_url) unless request.xhr? || Rails.env.development?
   end
 
   # Renders an error message and sets the response status code.

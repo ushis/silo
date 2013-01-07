@@ -1,5 +1,5 @@
 # The Ajax::ListsController handles all list specific ajax requests.
-class Ajax::ListsController < AjaxController
+class Ajax::ListsController < Ajax::ApplicationController
   before_filter :find_list, only: [:show, :import, :edit, :copy, :open]
 
   respond_to :html, only:   [:index, :new, :edit, :copy]

@@ -1,6 +1,6 @@
 # The Ajax::LanguagesController provides several actions to retrieve
 # language views via Ajax.
-class Ajax::LanguagesController < AjaxController
+class Ajax::LanguagesController < Ajax::ApplicationController
   caches_action :index
 
   # Serves a multi select box.

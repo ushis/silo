@@ -1,5 +1,5 @@
 # The Ajax::AddressesController handles Address specific AJAX requests.
-class Ajax::AddressesController < AjaxController
+class Ajax::AddressesController < Ajax::ApplicationController
   respond_to :html, only: [:new]
 
   caches_action :new

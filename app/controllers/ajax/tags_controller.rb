@@ -1,7 +1,7 @@
 # The Ajax::TagsController provides helpers to access existing tag like models.
 # They should be used to help the user by filling out forms with widgets such
 # as autocompletion or multiselect boxes.
-class Ajax::TagsController < AjaxController
+class Ajax::TagsController < Ajax::ApplicationController
   before_filter :find_model
 
   caches_action :show

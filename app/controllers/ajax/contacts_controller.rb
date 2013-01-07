@@ -1,5 +1,5 @@
 # The Ajax::ContactsController handles Contact specific AJAX requests.
-class Ajax::ContactsController < AjaxController
+class Ajax::ContactsController < Ajax::ApplicationController
   respond_to :html, only: [:new]
 
   caches_action :new

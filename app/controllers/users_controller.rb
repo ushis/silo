@@ -19,8 +19,7 @@ class UsersController < ApplicationController
   # GET /users/new
   def new
     @user = User.new
-    @title = t('labels.user.new')
-    render :form
+    render_form(:new)
   end
 
   # Creates a new user and redirects to the new users edit page.
@@ -31,21 +30,18 @@ class UsersController < ApplicationController
 
     if @user.save
       flash[:notice] = t('messages.user.success.create', name: @user.username)
-      redirect_to users_url and return
+      redirect_to users_url
+    else
+      flash.now[:alert] = t('messages.user.errors.create')
+      render_form(:new)
     end
-
-    flash.now[:alert] = t('messages.user.errors.create')
-    @title = t('labels.user.new')
-    body_class << :new
-    render :form
   end
 
   # Serves an edit form, populated with the users data.
   #
   # GET /users/:id/edit
   def edit
-    @title = t('labels.user.edit')
-    render :form
+    render_form(:edit)
   end
 
   # Updates the users data and serves the edit form.
@@ -57,13 +53,11 @@ class UsersController < ApplicationController
     if @user.update_attributes(params[:user], as: context)
       I18n.locale = @user.locale if current_user?(@user)
       flash[:notice] = t('messages.user.success.save')
-      redirect_to users_url and return
+      redirect_to users_url
+    else
+      flash.now[:alert] = t('messages.user.errors.save')
+      render_form(:edit)
     end
-
-    flash.now[:alert] = t('messages.user.errors.save')
-    @title = t('labels.user.edit')
-    body_class << :edit
-    render :form
   end
 
   # Destroys a user and redirects to the users index page.
@@ -89,6 +83,13 @@ class UsersController < ApplicationController
   # Redirects if @user == current_user.
   def block_current_user
     unauthorized(users_url) if current_user?(@user)
+  end
+
+  # Renders the users form.
+  def render_form(action)
+    body_class << action
+    @title = t("labels.user.#{action}")
+    render :form
   end
 
   # Sets a "user not found" alert and redirects to the users index page.

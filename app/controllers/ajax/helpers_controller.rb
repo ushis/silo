@@ -1,5 +1,5 @@
 # The HelperController serves helper views. Such as generic confirm dialogs.
-class Ajax::HelpersController < AjaxController
+class Ajax::HelpersController < Ajax::ApplicationController
   caches_action :show
 
   # Serves a helper.

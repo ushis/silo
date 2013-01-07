@@ -4,7 +4,7 @@
 # To add a new help section create the view
 # _app/views/ajax/help/my_section.html.erb_. You can vistit it at
 # _/ajax/help/my_section_.
-class Ajax::HelpController < AjaxController
+class Ajax::HelpController < Ajax::ApplicationController
   caches_action :show
 
   # Serves a help section.

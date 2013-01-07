@@ -1,5 +1,5 @@
 # Handles list item related ajax requests.
-class Ajax::ListItemsController < AjaxController
+class Ajax::ListItemsController < Ajax::ApplicationController
   before_filter :find_list, except: [:print]
 
   skip_before_filter :authorize, only: [:update]

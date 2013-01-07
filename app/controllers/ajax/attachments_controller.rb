@@ -1,5 +1,5 @@
 # The Ajax::AttachmentsController handles Attachment specific AJAX requests.
-class Ajax::AttachmentsController < AjaxController
+class Ajax::AttachmentsController < Ajax::ApplicationController
   respond_to :html, only: [:new]
 
   caches_action :new
