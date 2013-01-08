@@ -20,7 +20,8 @@ p, div {
   position: relative;
   margin: -180px auto 0 auto;
   padding-top: 45px;
-  background: url('logo.png') 88px top no-repeat;
+  background: url('logo.svg') center top no-repeat;
+  background-size: 100px;
 }
 
 #msg {
@@ -95,7 +96,8 @@ p, div {
 #error.ie {
   width: 275px;
   padding-top: 35px;
-  background: url('logo.png') 101px top no-repeat;
+  background: url('logo.svg') center top no-repeat;
+  background-size: 90px;
 }
 
 #error.ie #msg {

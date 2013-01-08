@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Rails & mysql
-gem 'rails', '3.2.10'
+gem 'rails', '3.2.11'
 gem 'mysql2'
 
 # Assets
@@ -9,18 +9,17 @@ group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
   gem 'jquery-rails', '= 2.1.3'
-  gem 'libv8', '~> 3.11.8.4'
+  gem 'uglifier',     '>= 1.0.3'
   gem 'therubyracer', :platforms => :ruby
-  gem 'uglifier', '>= 1.0.3'
 end
 
 # Development
 group :test, :development do
-  gem 'rspec-rails', '~> 2.0'
-  gem 'shoulda-matchers', '~> 1.4.2'
+  gem 'rspec-rails',        '~> 2.0'
+  gem 'shoulda-matchers',   '~> 1.4.2'
   gem 'factory_girl_rails', '~> 4.1.0'
-  gem 'acts_as_fu' ,'~> 0.0.8'
-  gem 'carmen-rails', '~> 1.0.0.beta2'
+  gem 'acts_as_fu' ,        '~> 0.0.8'
+  gem 'carmen-rails',       '~> 1.0.0.beta2'
   gem 'colorize'
 end
 
