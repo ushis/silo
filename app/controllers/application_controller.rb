@@ -12,7 +12,6 @@ class ApplicationController < ActionController::Base
   before_filter :authorize
   before_filter :set_locale
 
-  helper_method :body_class
   helper_method :current_list
   helper_method :current_user
   helper_method :current_user?
@@ -126,21 +125,12 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  # Returns the body class Array. It is prepopulated with the current
-  # controller, action and the :admin class if the current user is an
-  # admin. New classes can be added with ease:
+  # Returns the body class.
   #
-  #   body_class << :special
-  #   #=> [:users, :edit, :admin, :special]
-  #
-  # In the layout:
-  #
-  #   <body class="<%= body_class.join(' ') %>">
-  #
-  # Returns an Array.
+  # See the BodyClass module for more info.
   def body_class
     @body_class ||= begin
-      body_class = params.values_at(:controller, :action)
+      body_class = super
       body_class << :admin if current_user.try(:admin?)
       body_class
     end
