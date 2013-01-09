@@ -52,11 +52,11 @@ class Contact < ActiveRecord::Base
   def add(field, value)
     field, value = normalize_input(field, value)
 
-    if value.blank? || ! FIELDS.include?(field) || send(field).include?(value)
-      return false
+    if value.present? && FIELDS.include?(field) && ! send(field).include?(value)
+      send(field) << value
+    else
+      false
     end
-
-    send(field) << value
   end
 
   # Does the same as Contact#add, but saves the record.
@@ -99,7 +99,7 @@ class Contact < ActiveRecord::Base
 
   # Removes all blank values from the contact hash.
   def remove_blanks
-    FIELDS.each { |f| send(f).delete_if { |val| val.blank? } }
+    FIELDS.each { |f| send(f).delete_if(&:blank?) }
   end
 
   # Normalizes untrusted input values.
