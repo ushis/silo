@@ -8,96 +8,95 @@ describe AsCsv do
       string :vendor
       integer :price
       boolean :nice
-
+      has_many :keys, autosave: true, dependent: :destroy
       attr_accessible :vendor, :price, :nice
       attr_accessible :vendor, :price, :nice, as: :exposable
-
-      has_many :keys, autosave: true, dependent: :destroy
     end
 
     build_model :key do
       string :code
       integer :keyboard_id
-
+      belongs_to :keyboard
       attr_accessible :code
       attr_accessible :code, as: :exposable
-
-      belongs_to :keyboard
     end
+
+    (1..2).each do |i|
+      kb = Keyboard.create!(vendor: "ACME-#{i}", price: i - 2)
+
+      %w(x y z).each { |code| kb.keys.create!(code: code) }
+    end
+
+    Keyboard.create!
+    Keyboard.create!(vendor: "ACME-3", price: 10, nice: true)
   end
 
-  describe 'as_csv' do
+  after(:all) { Keyboard.destroy_all }
+
+  describe :as_csv do
+    subject { Keyboard.as_csv(params) }
+
     context 'without exposable attributes' do
       it 'should raise a SecurityError' do
         expect { Dummy.as_csv }.to raise_error(SecurityError)
       end
     end
 
-    context 'with exposable attributes' do
-      before(:all) do
-        @keyboards = (1..6).map do |i|
-          Keyboard.create!(vendor: "ACME #{i}", price: i, nice: i % 2 == 0)
-        end
+    context 'without options' do
+      let(:params) { {} }
+
+      it 'should include all exposable attributes' do
+        expect(subject).to eq(<<-CSV.strip_heredoc)
+          vendor,price,nice
+          ACME-1,-1,""
+          ACME-2,0,""
+          "","",""
+          ACME-3,10,true
+        CSV
       end
 
-      after(:all) do
-        Keyboard.destroy_all
-      end
+      context 'scoped' do
+        subject { Keyboard.limit(2).as_csv }
 
-      it 'should be a string' do
-        expect(Keyboard.as_csv).to be_a(String)
-      end
-
-      it 'should have 7 lines' do
-        lines = Keyboard.as_csv.split("\n")
-        expect(lines).to have(7).items
-      end
-
-      it 'should have 3 lines' do
-        lines = Keyboard.limit(2).as_csv.split("\n")
-        expect(lines).to have(3).items
-      end
-
-      it 'should have all exposable attributes in the first line' do
-        attr = Keyboard.as_csv.lines.first.chomp.split(',')
-        expect(attr).to eq(['vendor', 'price', 'nice'])
-      end
-
-      it 'should have an equal number of cols in each line' do
-        Keyboard.as_csv.lines.each do |line|
-          expect(line.split(',')).to have(3).items
-        end
-      end
-
-      it 'should have the exact same rows as expected' do
-        Keyboard.as_csv.lines.each_with_index do |line, i|
-          next if i == 0
-          values = ["ACME #{i}", i, i % 2 == 0]
-          expect(line).to eq(CSV.generate_line(values))
+        it 'should respect the scope' do
+          expect(subject).to eq(<<-CSV.strip_heredoc)
+            vendor,price,nice
+            ACME-1,-1,""
+            ACME-2,0,""
+          CSV
         end
       end
     end
 
-    context 'with associations' do
-      before(:all) do
-        2.times do
-          keyboard = Keyboard.create!(vendor: 'ACME', price: 0)
-          (1..3).each { |code| keyboard.keys << Key.new(code: code) }
-        end
-      end
+    context 'with options' do
+      let(:params) { { only: :price } }
 
-      after(:all) do
-        Keyboard.destroy_all
+      it 'should respect them' do
+        expect(subject).to eq(<<-CSV.strip_heredoc)
+          price
+          -1
+          0
+          ""
+          10
+        CSV
       end
+    end
 
-      it 'should have 7 lines' do
-        lines = Keyboard.as_csv(include: :keys).split("\n")
-        expect(lines).to have(7).items
-      end
+    context 'with the include option' do
+      let(:params) { { include: :keys } }
 
-      it 'should have the exposable attributes of the association in the first line too' do
-        attr = Keyboard.as_csv(include: :keys).lines.first.chomp.split(',')
-        expect(attr).to eq(['vendor', 'price', 'nice', 'code'])
+      it 'should join the association' do
+        expect(subject).to eq(<<-CSV.strip_heredoc)
+          vendor,price,nice,code
+          ACME-1,-1,"",x
+          ACME-1,-1,"",y
+          ACME-1,-1,"",z
+          ACME-2,0,"",x
+          ACME-2,0,"",y
+          ACME-2,0,"",z
+          "","","",
+          ACME-3,10,true,
+        CSV
       end
     end
   end

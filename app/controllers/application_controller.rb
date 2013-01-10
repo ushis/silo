@@ -129,11 +129,7 @@ class ApplicationController < ActionController::Base
   #
   # See the BodyClass module for more info.
   def body_class
-    @body_class ||= begin
-      body_class = super
-      body_class << :admin if current_user.try(:admin?)
-      body_class
-    end
+    @body_class ||= super.tap { |b| b << :admin if current_user.try(:admin?) }
   end
 
   # Returns the current list of the current user.
