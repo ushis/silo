@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Rails & mysql
-gem 'rails', '3.2.11'
+gem 'rails', '3.2.12'
 gem 'mysql2'
 
 # Assets
@@ -17,7 +17,7 @@ end
 group :test, :development do
   gem 'rspec-rails',        '~> 2.0'
   gem 'shoulda-matchers',   '~> 1.4.2'
-  gem 'factory_girl_rails', '~> 4.1.0'
+  gem 'factory_girl_rails', '~> 4.2.0'
   gem 'acts_as_fu' ,        '~> 0.0.8'
   gem 'carmen-rails',       '~> 1.0.0.beta2'
   gem 'colorize'
