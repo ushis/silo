@@ -83,11 +83,12 @@ do ($ = jQuery) ->
         @_hasStorage = false
 
     # Redirects the evil browser.
-    redirectIE: -> window.location.replace('/ie.html') if $.browser.msie
+    redirectIE: ->
+      if /msie/.test(navigator.userAgent.toLowerCase())
+        window.location.replace('/ie.html')
 
-    # Returns the csrf values.
-    csrfParam: -> @_csrfParam ||= $('meta[name=csrf-param]').attr('content')
-    csrfToken: -> @_csrfToken ||= $('meta[name=csrf-token]').attr('content')
+    # Returns the content of a meta tag.
+    meta: (key) -> @_meta[key] ||= $("meta[#{key}]").attr('content')
 
     # A simple layer.
     _layer:

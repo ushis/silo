@@ -16,6 +16,6 @@ do ($ = jQuery) ->
       $.ajax url: el.attr('href'), dataType: 'html', success: (overlay) ->
         overlay = $(overlay).siloOverlay()
         form = overlay.find('form')
-        form.find("input[name=#{$.silo.csrfParam()}]").val($.silo.csrfToken())
+        form.find("input[name=#{$.silo.meta('csrf-param')}]").val($.silo.meta('csrf-token'))
         overlay.find(".#{settings.submitClass}").click -> form.submit()
         el.click -> overlay.trigger('show')

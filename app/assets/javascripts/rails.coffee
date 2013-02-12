@@ -31,7 +31,7 @@ do ($ = jQuery) ->
       if meta.method isnt 'GET'
         meta['_method'] = meta.method
         meta.method = 'POST'
-        meta[$.silo.csrfParam()] = $.silo.csrfToken()
+        meta[$.silo.meta('csrf-param')] = $.silo.meta('csrf-token')
 
       form = $('<form>',
         action: link.attr('href')

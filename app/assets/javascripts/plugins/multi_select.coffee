@@ -12,7 +12,7 @@ do ($ = jQuery) ->
 
     @each ->
       el = $(@)
-      el.accordion(autoHeight: false, active: el.data('active-group') || 0)
+      el.accordion(heightStyle: 'content', active: el.data('active-group') || 0)
 
       el.find('ul').each ->
         ul = $(@)
