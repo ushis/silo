@@ -87,8 +87,11 @@ do ($ = jQuery) ->
       if /msie/.test(navigator.userAgent.toLowerCase())
         window.location.replace('/ie.html')
 
+    # Holds some metadata. It gets populated on access.
+    _meta: {}
+
     # Returns the content of a meta tag.
-    meta: (key) -> @_meta[key] ||= $("meta[#{key}]").attr('content')
+    meta: (key) -> @_meta[key] ||= $("meta[name=#{key}]").attr('content')
 
     # A simple layer.
     _layer:
