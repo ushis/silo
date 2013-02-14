@@ -31,13 +31,13 @@
 
   <h3 class="updated_at">
     <%= Expert.human_attribute_name :updated_at %>:
-    <%= l @expert.updated_at, format: :short %>
-    <%= t 'labels.generic.by', name: @expert.user.try(:full_name) %>
+    <%= l expert.updated_at, format: :short %>
+    <%= t 'labels.generic.by', name: expert.user.try(:full_name) %>
   </h3>
 
   <h4>
     <%= Expert.human_attribute_name :lists %>
   </h4>
 
-  <%= render 'shared/list_tracker', parent: @expert %>
+  <%= render 'shared/list_tracker', parent: expert %>
 </div>

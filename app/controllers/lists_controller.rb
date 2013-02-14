@@ -49,8 +49,7 @@ class ListsController < ApplicationController
 
   # Copies a list.
   def copy
-    copy = @list.copy
-    copy.attributes = params[:list]
+    copy = @list.copy(params[:list])
     copy.user = current_user
     copy.private = true
 

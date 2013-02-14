@@ -4,10 +4,7 @@ describe Expert do
   include AttachmentSpecHelper
 
   describe :validations do
-    it 'must have a name' do
-      expect(subject).to_not be_valid
-      expect(subject.errors[:name]).to_not be_empty
-    end
+    it { should validate_presence_of(:name) }
   end
 
   describe :associations do
@@ -26,78 +23,141 @@ describe Expert do
     it { should belong_to(:country) }
   end
 
-  describe 'full_name' do
+  describe :full_name do
+    subject { build(:expert, prename: 'John', name: 'Doe').full_name }
+
     it 'should be a combination of prename and name' do
-      e = build(:expert, prename: 'John', name: 'Doe')
-      e.full_name.should == 'John Doe'
+      expect(subject).to eq('John Doe')
     end
   end
 
-  describe 'full_name_with_degree' do
-    it 'should be a combination of prename, name and degree' do
-      e = build(:expert, prename: 'John', name: 'Doe', degree: 'Ph.D.')
-      e.full_name_with_degree.should == 'John Doe, Ph.D.'
+  describe :full_name_with_degree do
+    subject do
+      build(:expert, prename: 'John', name: 'Doe', degree: degree).full_name_with_degree
     end
 
-    it 'should be full_name if degree is blank' do
-      e = build(:expert, prename: 'John', name: 'Doe')
-      e.full_name_with_degree.should == e.full_name
+    context 'with a degree' do
+      let(:degree) { 'Ph.D.' }
+
+      it 'should be a combination of prename, name and degree' do
+        expect(subject).to eq('John Doe, Ph.D.')
+      end
+    end
+
+    context 'without a degree' do
+      let(:degree) { nil }
+
+      it 'should be the full name' do
+        expect(subject).to eq('John Doe')
+      end
     end
   end
 
-  describe 'former_collaboration' do
+  describe :former_collaboration do
     it 'should be false by default' do
-      Expert.new.former_collaboration.should == false
+      expect(subject.former_collaboration).to be_false
     end
   end
 
   describe 'human_former_collaboration' do
-    it 'should be the translated string for false' do
-      e = build(:expert, former_collaboration: false)
-      e.human_former_collaboration.should == I18n.t('values.boolean.false')
+    subject do
+      build(:expert, former_collaboration: value).human_former_collaboration
     end
 
-    it 'should be the translated string for true' do
-      e = build(:expert, former_collaboration: true)
-      e.human_former_collaboration.should == I18n.t('values.boolean.true')
-    end
-  end
+    context 'when it is false' do
+      let(:value) { false }
 
-  describe 'human_birthday' do
-    it 'should be the short localized string for the date of birth' do
-      date = Date.new
-      e = build(:expert, birthday: date)
-      e.human_birthday.should == I18n.l(date, format: :short)
+      it 'should be the translated string for false' do
+        expect(subject).to eq(I18n.t('values.boolean.false'))
+      end
     end
 
-    it 'should be the long localized string for the date of birth' do
-      date = Date.new
-      e = build(:expert, birthday: date)
-      e.human_birthday(:long).should == I18n.l(date, format: :long)
+    context 'when it is true' do
+      let(:value) { true }
+
+      it 'should be the translated string for true' do
+        expect(subject).to eq(I18n.t('values.boolean.true'))
+      end
     end
   end
 
-  describe 'age' do
-    it 'should be nil for unset birthdays' do
-      Expert.new.age.should be_nil
+  describe :human_birthday do
+    subject do
+      build(:expert, birthday: Date.new)
     end
 
-    it 'should be the age in years for birthdays today or before' do
-      e = build(:expert, birthday: 24.years.ago.utc.to_date)
-      e.age.should == 24
+    it 'should be the short localized date' do
+      expect(subject.human_birthday).to eq(I18n.l(subject.birthday, format: :short))
     end
 
-    it 'should be the age in years for birthdays tomorrow or later' do
-      datetime = 24.years.ago + 1.day
-      e = build(:expert, birthday: datetime.utc.to_date)
-      e.age.should == 23
+    context 'when argument is :long' do
+      it 'should be the long localized date' do
+        expect(subject.human_birthday(:long)).to eq(I18n.l(subject.birthday, format: :long))
+      end
     end
   end
 
-  describe 'to_s' do
-    it 'should be full_name' do
-      e = build(:expert)
-      e.to_s.should == e.full_name
+  describe :age do
+    subject { build(:expert, birthday: birthday).age }
+
+    context 'when birthday is nill' do
+      let(:birthday) { nil }
+
+      it 'should be nil' do
+        expect(subject).to be_nil
+      end
+    end
+
+    context 'when expert is 24' do
+      let(:birthday) { 24.years.ago.utc.to_date }
+
+      it 'should be 24' do
+        expect(subject).to eq(24)
+      end
+    end
+
+    context 'when expert is 23' do
+      let(:birthday) { 24.years.ago + 1.day }
+
+      it 'should be 23' do
+        expect(subject).to eq(23)
+      end
+    end
+  end
+
+  describe :to_s do
+    subject { build(:expert, name: name, prename: prename).to_s }
+
+    let(:name) { 'Walter' }
+    let(:prename) { 'Bill' }
+
+    it 'should be a combination of last name, first name' do
+      expect(subject).to eq('Walter, Bill')
+    end
+
+    context 'without a first name' do
+      let(:prename) { nil }
+
+      it 'should be the last name' do
+        expect(subject).to eq('Walter')
+      end
+    end
+
+    context 'without a last name' do
+      let(:name) { nil }
+
+      it 'should be the first name' do
+        expect(subject).to eq('Bill')
+      end
+    end
+
+    context 'without any name' do
+      let(:name) { nil }
+      let(:prename) { nil }
+
+      it 'should be empty' do
+        expect(subject).to be_empty
+      end
     end
   end
 end

@@ -17,13 +17,15 @@
 # - *created_at:*            datetime
 # - *updated_at:*            datetime
 class Expert < ActiveRecord::Base
-  attr_accessible :name, :prename, :gender, :birthday, :fee, :job, :degree,
+  attr_accessible :name, :prename, :degree, :gender, :birthday, :fee, :job,
                   :former_collaboration, :country_id, :languages
 
-  attr_accessible :degree, :prename, :name, :gender, :birthday, :fee, :job,
+  attr_accessible :name, :prename, :degree, :gender, :birthday, :fee, :job,
                   :former_collaboration, :country, as: :exposable
 
   self.per_page = 50
+
+  DEFAULT_ORDER = 'experts.name, experts.prename'
 
   discrete_values :gender, [:female, :male]
 
@@ -60,7 +62,7 @@ class Expert < ActiveRecord::Base
   def self.search(params)
     ExpertSearcher.new(
       params.slice(:name, :country, :languages, :q)
-    ).search(scoped).order('name, prename')
+    ).search(scoped).order(DEFAULT_ORDER)
   end
 
   # Initializes the contact on access, if not already initalized.
@@ -84,8 +86,6 @@ class Expert < ActiveRecord::Base
   def full_name
     "#{prename} #{name}"
   end
-
-  alias :to_s :full_name
 
   # Returns a string containing degree, prename and name.
   #
@@ -112,10 +112,11 @@ class Expert < ActiveRecord::Base
     I18n.l(birthday, format: format) if birthday
   end
 
-  # Returns the experts age or nil if the birthday is unknown.
+  # Returns the experts age in years.
   #
-  #   expert.age
-  #   #=> 43
+  #   expert.age  #=> 43
+  #
+  # Returns nil if the birthday is unknown.
   def age
     return nil unless birthday
 
@@ -124,5 +125,10 @@ class Expert < ActiveRecord::Base
 
     (now.month < birthday.month ||
       (now.month == birthday.month && now.day < birthday.day)) ? age - 1 : age
+  end
+
+  # Returns a combination of name and prename.
+  def to_s
+    [name, prename].reject(&:blank?).join(', ')
   end
 end

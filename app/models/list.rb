@@ -75,9 +75,10 @@ class List < ActiveRecord::Base
   end
 
   # Returns a copy of the list with all its list items.
-  def copy
+  def copy(attributes = {})
     dup.tap do |copy|
-      copy.list_items = list_items.map { |item| item.copy(false) }
+      copy.attributes = attributes
+      copy.list_items = list_items.map(&:copy)
     end
   end
 
@@ -140,7 +141,7 @@ class List < ActiveRecord::Base
   #
   # Returns the list.
   def concat(other)
-    add_collection(other.list_items.map(&:copy))
+    add_collection(other.list_items.map { |item| item.copy(note: nil) })
     self
   end
 

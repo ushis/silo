@@ -49,7 +49,7 @@ class ListItemsController < ApplicationController
   def html_index(item_type)
     @title = @list.title
     @item_type = item_type
-    @items = @list.list_items.by_type(item_type).includes(:item)
+    @items = @list.list_items.by_type(item_type, order: true).includes(:item)
     body_class << (body_class.delete(item_type) + '-list')
     render :index
   end

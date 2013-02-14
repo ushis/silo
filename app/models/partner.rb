@@ -19,13 +19,15 @@
 #
 # The company attribute is required.
 class Partner < ActiveRecord::Base
-  attr_accessible :country_id, :company, :street, :city, :zip, :region,
+  attr_accessible :company, :street, :city, :zip, :region, :country_id,
                   :website, :email, :phone, :fax
 
-  attr_accessible :company, :street, :zip, :city, :region, :country, :website,
-                  :email, :phone, :fax, as: :exposable
+  attr_accessible :company, :street, :zip, :city, :region, :country,
+                  :website, :email, :phone, :fax, as: :exposable
 
   self.per_page = 50
+
+  DEFAULT_ORDER = 'partners.company'
 
   is_taggable_with :advisers
   is_taggable_with :businesses
@@ -57,7 +59,7 @@ class Partner < ActiveRecord::Base
   def self.search(params)
     PartnerSearcher.new(
       params.slice(:company, :country, :advisers, :businesses, :q)
-    ).search(scoped).order(:company)
+    ).search(scoped).order(DEFAULT_ORDER)
   end
 
   # Returns the company name.

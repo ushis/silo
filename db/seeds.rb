@@ -5,12 +5,12 @@
   user.password = prename
   user.email = "#{prename}@example.com"
   user.privilege.admin = true
-  user.save
+  user.save!
 end
 
 # Add all available languages
 I18n.t(:languages).each do |k, _|
-  Language.create(language: k)
+  Language.create!(language: k)
 end
 
 # Continents => Countries map
@@ -61,5 +61,5 @@ areas = {
 
 # Add all countries
 I18n.t(:countries).each do |k, _|
-  Country.create(country: k, area: areas.find { |_, v| v.include? k }.first)
+  Country.create!(country: k, area: areas.find { |_, v| v.include? k }.first)
 end

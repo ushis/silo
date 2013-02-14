@@ -21,6 +21,13 @@ class ListItem < ActiveRecord::Base
   # Hash containing possible item types.
   TYPES = { experts: Expert, partners: Partner }
 
+  # Setup a belongs to association for each item type.
+  TYPES.each_value do |klass|
+    belongs_to klass.to_s.downcase.to_sym,
+               foreign_key: :item_id,
+               conditions: "list_items.item_type = '#{klass}'"
+  end
+
   # Returns the model class for an item type.
   #
   #   ListItem.class_for_item_type(:experts)
@@ -33,11 +40,21 @@ class ListItem < ActiveRecord::Base
     raise ArgumentError, "Invalid item type: #{item_type}"
   end
 
-  # Adds a where condition with a proper item type to the relation.
+  # Adds a proper condition to the scope, to filter list items with a the
+  # specified item type. Set the order option, to get the list items ordered
+  # by their actual items default value.
+  #
+  #   List.list_items.by_type(:experts, order: true)
+  #   #=> [
+  #   #     #<ListItem id: 35, item_id: 13, item_type: "Expert">,
+  #   #     #<ListItem id: 14, item_id: 37, item_type: "Expert">
+  #   #   ]
   #
   # Raises ArgumentError for invalid item types.
-  def self.by_type(item_type)
-    where(item_type: class_for_item_type(item_type).to_s)
+  def self.by_type(item_type, options = {})
+    klass = class_for_item_type(item_type)
+    scope = joins(klass.to_s.downcase.to_sym)
+    options[:order] ? scope.order(klass::DEFAULT_ORDER) : scope
   end
 
   # Returns a collection of fresh ListItem objects, generated from an item
@@ -57,10 +74,9 @@ class ListItem < ActiveRecord::Base
     end
   end
 
-  # Returns a copy of the list item. By default the note of the copy is
-  # erased. Pass _false_ to prevent this behavior.
-  def copy(unset_note = true)
-    dup.tap { |copy| copy.note = nil if unset_note }
+  # Returns a copy of the list item after merging the optional attributes.
+  def copy(attributes = {})
+    dup.tap { |copy| copy.attributes = attributes }
   end
 
   # Returns the name of the list item.

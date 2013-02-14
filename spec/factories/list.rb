@@ -11,7 +11,7 @@ FactoryGirl.define do
 
   factory :list_with_items, parent: :list do
     after(:build) do |list|
-      10.times { list.list_items << build(:list_item) }
+      4.times { list.list_items << build(:list_item) }
     end
   end
 end

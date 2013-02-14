@@ -6,7 +6,7 @@ FactoryGirl.define do
     association :list, factory: :list
 
     after(:build) do |list_item|
-      list_item.item = build((rand(2) == 1) ? :expert : :partner)
+      list_item.item ||= build((rand(2) == 1) ? :expert : :partner)
     end
   end
 end
