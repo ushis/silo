@@ -1,7 +1,9 @@
+require 'securerandom'
+
 FactoryGirl.define do
   factory :expert do
-    name 'Doe'
-    prename 'John'
+    sequence(:name) { |_| SecureRandom.hex(32) }
+    sequence(:prename) { |_| SecureRandom.hex(32) }
     gender :male
     association :user, factory: :user
 
