@@ -51,7 +51,7 @@ class ListItem < ActiveRecord::Base
   # Raises ArgumentError for invalid item types.
   def self.by_type(item_type, options = {})
     klass = class_for_item_type(item_type)
-    scope = joins(klass.to_s.downcase.to_sym)
+    scope = joins(klass.to_s.downcase.to_sym).where(item_type: klass)
     options[:order] ? scope.order(klass::DEFAULT_ORDER) : scope
   end
 
