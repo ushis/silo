@@ -23,9 +23,7 @@ class ListItem < ActiveRecord::Base
 
   # Setup a belongs to association for each item type.
   TYPES.each_value do |klass|
-    belongs_to klass.to_s.downcase.to_sym,
-               foreign_key: :item_id,
-               conditions: "list_items.item_type = '#{klass}'"
+    belongs_to klass.to_s.downcase.to_sym, foreign_key: :item_id, foreign_type: klass
   end
 
   # Returns the model class for an item type.

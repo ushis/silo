@@ -109,6 +109,7 @@ module AsCsv
       associations.each do |association|
         if (reflection = @scope.reflect_on_association(association))
           @includes[association] = reflection.klass.exposable_attributes
+          @scope = @scope.includes(association)
         end
       end
     end
@@ -123,6 +124,7 @@ module AsCsv
     # Returns an Array of all included attribtues.
     def attributes(*attributes)
       @attributes.concat(attributes)
+      @scope = @scope.includes(@scope.filter_associations(attributes))
     end
 
     # Generates the Csv. Takes a hash of CSV specific options.
@@ -132,7 +134,7 @@ module AsCsv
       CSV::generate(options) do |csv|
         csv << headers
 
-        @scope.includes(@includes.keys).each do |record|
+        @scope.each do |record|
           rows_for(record) { |row| csv << row.flatten }
         end
       end

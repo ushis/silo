@@ -2,6 +2,7 @@
 require 'as_csv'
 require 'acts_as_tag'
 require 'acts_as_comment'
+require 'active_record_helpers'
 require 'body_class'
 require 'discrete_values'
 require 'exposable_attributes'

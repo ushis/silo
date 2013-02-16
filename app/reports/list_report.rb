@@ -15,29 +15,32 @@ class ListReport < ApplicationReport
 
   # Adds the list items.
   def items
-    klass = List.reflect_on_association(@item_type).klass
-    cols = klass.exposable_attributes(@options.merge(human: true))
-    items = @record.send(@item_type)
+    klass = ListItem.class_for_item_type(@item_type)
+    cols = klass.exposable_attributes(only: @options[:attributes], human: true)
+    incl = klass.filter_associations(cols.map(&:first))
+    items = @record.list_items.includes(item: incl).by_type(@item_type, order: true)
 
     h2 @item_type
 
     if cols.empty? || items.empty?
       p '-'
     else
-      items_table(klass, cols, items)
+      items_table(items, cols, klass)
     end
   end
 
   # Renders the items table.
-  def items_table(klass, cols, items)
-    data = []
+  def items_table(list_items, cols, klass)
+    note = !! @options[:note]
+    head = cols.map { |attr, _| klass.human_attribute_name(attr) }
+    head << ListItem.human_attribute_name(:note) if note
 
-    data << cols.map do |col|
-      klass.human_attribute_name(col[0])
-    end
+    data = [head]
 
-    data += items.map do |item|
-      cols.map { |col| item.send(col[1]).to_s }
+    data += list_items.map do |list_item|
+      row = cols.map { |_, method| list_item.item.send(method).to_s }
+      row << list_item.note if note
+      row
     end
 
     table data

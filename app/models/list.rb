@@ -23,12 +23,12 @@ class List < ActiveRecord::Base
   has_many :list_items, autosave: true, dependent: :destroy
   has_many :current_users, class_name: :User, foreign_key: :current_list_id
 
-  has_many :experts,  through: :list_items, source: :item, source_type: :Expert,  include: :country
-  has_many :partners, through: :list_items, source: :item, source_type: :Partner, include: :country
+  # Set up a has_many association for each item type.
+  ListItem::TYPES.each do |type, klass|
+    has_many type, through: :list_items, source: :item, source_type: klass
+  end
 
   belongs_to :user
-
-  scope :with_items, includes(ListItem::TYPES.keys)
 
   default_scope order('lists.private DESC, lists.title ASC')
 

@@ -34,7 +34,6 @@ class Ajax::ListItemsController < Ajax::ApplicationController
 
   # Serves a print dialog.
   def print(item_type)
-    @model = ListItem.class_for_item_type(item_type)
     @item_type = item_type
     render :print
   end

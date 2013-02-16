@@ -56,7 +56,7 @@ class ListItemsController < ApplicationController
 
   # Serves the lists items as pdf.
   def pdf_index(item_type)
-    send_report ListReport.new(@list, item_type, current_user, only: params[:attributes])
+    send_report ListReport.new(@list, item_type, current_user, params)
   end
 
   # Serves the lists items as csv.
