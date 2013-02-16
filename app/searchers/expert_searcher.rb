@@ -1,5 +1,6 @@
 # Searches the experts table and associations.
 class ExpertSearcher < ApplicationSearcher
+  search_helpers :name, :q, :languages
 
   protected
 
@@ -10,16 +11,7 @@ class ExpertSearcher < ApplicationSearcher
 
   # Searches the fulltext associations.
   def q(query)
-    search_ids(search_fulltext(query))
-  end
-
-  private
-
-  # Searches the experts fulltext associations.
-  #
-  # Returns an array of ids.
-  def search_fulltext(query)
-    sql = <<-SQL
+    search_ids(execute_sql(<<-SQL, q: query).map(&:first))
       (
         SELECT comments.commentable_id AS expert_id
         FROM comments
@@ -31,7 +23,11 @@ class ExpertSearcher < ApplicationSearcher
         WHERE MATCH (cvs.cv) AGAINST (:q IN BOOLEAN MODE)
       )
     SQL
+  end
 
-    execute_sql(sql, q: query).map(&:first)
+  # Search languages conjunct.
+  def languages(value)
+    search_ids(search_join_table_conjunct(
+      @klass.reflect_on_association(:languages), value))
   end
 end

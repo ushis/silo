@@ -1,5 +1,6 @@
 # Searches the partners table and its associations.
 class PartnerSearcher < ApplicationSearcher
+  search_helpers :company, :q
 
   protected
 
@@ -19,7 +20,7 @@ class PartnerSearcher < ApplicationSearcher
   #
   # Returns an array of partner ids.
   def search_fuzzy(query)
-    sql = <<-SQL
+    execute_sql(<<-SQL, q: query, like: "%#{query}%").map(&:first)
       (
         SELECT partners.id
         FROM partners
@@ -49,7 +50,5 @@ class PartnerSearcher < ApplicationSearcher
         WHERE MATCH (descriptions.description) AGAINST (:q)
       )
     SQL
-
-    execute_sql(sql, q: query, like: "%#{query}%").map(&:first)
   end
 end
