@@ -42,139 +42,192 @@ describe List do
   end
 
   describe :accessible_for do
-    it 'should find lists accessible for a specific user' do
-      user = create(:user)
-      a = create(:list)
-      b = create(:list, :public)
-      c = create(:list, user: user)
+    before do
+      create(:list, private: true)
+      create(:list, private: false)
+      create(:list, private: true, user: user)
+    end
 
-      expect(List.all).to match_array([a, b, c])
-      expect(List.accessible_for(user)).to match_array([b, c])
-      expect(user.accessible_lists).to match_array([b, c])
+    let(:user) { create(:user) }
+
+    subject { List.accessible_for(user) }
+
+    it { should have(2).items }
+
+    it 'should have lists which are accesible by the user' do
+      expect(subject).to be_all { |list| list.accessible_for?(user) }
     end
   end
 
-  describe 'accessible_for?' do
-    it 'should be false for strangers' do
-      user = build(:user)
-      list = build(:list)
+  describe :accessible_for? do
+    subject { list.accessible_for?(user) }
 
-      list.accessible_for?(user).should be_false
+    let(:user) { build(:user) }
+
+    context 'when list is private and user is not the owner' do
+      let(:list) { build(:list, private: true) }
+
+      it { should be_false }
     end
 
-    it 'should be true for public lists' do
-      user = build(:user)
-      list = build(:list, :public)
+    context 'when list is public' do
+      let(:list) { build(:list, private: false) }
 
-      list.accessible_for?(user).should be_true
+      it { should be_true }
     end
 
-    it 'should be true for list owners' do
-      user = build(:user)
-      list = build(:list, user: user)
+    context 'when user is the owner' do
+      let(:list) { build(:list, private: true, user: user) }
 
-      list.accessible_for?(user).should be_true
-    end
-  end
-
-  describe 'add' do
-    it 'should raise an ArgumentError for invalid item types' do
-      l = build(:list)
-      expect { l.add(:invalid, [1, 2, 3]) }.to raise_error(ArgumentError)
-    end
-
-    it 'should add experts to the list' do
-      list = create(:list)
-      experts = (1..4).map { |_| create(:expert) }
-      list.add(:experts, experts)
-      list.experts.should =~ experts
+      it { should be_true }
     end
   end
 
-  describe 'remove' do
-    it 'should raise an ArgumentError for invalid item types' do
-      l = build(:list)
-      expect { l.remove(:invalid, [1, 2, 3]) }.to raise_error(ArgumentError)
+  describe :add do
+    context 'when item type is invalid' do
+      subject { build(:list) }
+
+      it 'should raise an ArgumentError' do
+        expect { subject.add(:invalid, [1, 2]) }.to raise_error(ArgumentError)
+      end
     end
 
-    it 'should remove partners from the list' do
-      list = create(:list)
-      partners = (1..4).map { |_| create(:partner) }
-      list.add(:partners, partners)
-      list.partners.should =~ partners
-      list.remove(:partners, partners[0..1])
-      list.partners(true).should =~ partners[2..3]
+    context 'when valid arguments' do
+      subject { create(:list) }
+
+      let(:experts) { (1..4).map { |_| create(:expert) } }
+
+      it 'should a add the items' do
+        expect {
+          subject.add(:experts, experts)
+        }.to change {
+          subject.list_items.map(&:item)
+        }.from([]).to(experts)
+      end
+
+      context 'when adding not existing items' do
+        let(:experts) { [0, create(:expert), 1, -12] }
+
+        it 'should ignore them' do
+          expect {
+            subject.add(:experts, experts)
+          }.to change {
+            subject.list_items.map(&:item)
+          }.from([]).to([experts[1]])
+        end
+      end
+    end
+  end
+
+  describe :remove do
+    context 'when item type is invalid' do
+      subject { build(:list) }
+
+      it 'should raise an ArgumentError' do
+        expect { subject.remove(:invalid, [1, 2]) }.to raise_error(ArgumentError)
+      end
+    end
+
+    context 'when valid arguments' do
+      subject { create(:list) }
+
+      let(:partners) { (1..4).map { |_| create(:partner) } }
+
+      before { subject.add(:partners, partners) }
+
+      it 'remove the items' do
+        expect {
+          subject.remove(:partners, partners[0..1])
+        }.to change {
+          subject.list_items(true).map(&:item)
+        }.from(partners).to(partners[2..3])
+      end
+
+      context 'when removing none existing items' do
+        it 'should ignore them' do
+          expect {
+            subject.remove(:partners, [1, -12, 0, partners.last])
+          }.to change {
+            subject.list_items(true).map(&:item)
+          }.from(partners).to(partners[0..-2])
+        end
+      end
     end
   end
 
   describe :copy do
-    before do
-      @list = create(:list)
-      3.times { @list.list_items << build(:list_item) }
+    subject { create(:list_with_items) }
+
+    it 'should be be the same as the original' do
+      expect(subject.copy).to_not eq(subject)
     end
 
-    subject { @list.copy }
-
     it 'should not change the original list' do
-      expect(@list).to_not be_changed
+      expect { subject.copy }.to_not change { subject.changed? }
     end
 
     it 'should be a new record' do
-      expect(subject).to be_new_record
+      expect(subject.copy).to be_new_record
     end
 
     it 'should have excat same number of items as the original list' do
-      expect(subject.list_items.count).to eq(@list.list_items.count)
+      expect(subject.copy.list_items.length).to eq(subject.list_items.count)
     end
 
     it 'should have fresh copies of the list items' do
-      expect(subject.list_items).to be_all(&:new_record?)
+      expect(subject.copy.list_items).to be_all(&:new_record?)
     end
 
     it 'should have list items with copied notes' do
-      expect(subject.list_items).to be_all { |item| ! item.note.blank? }
+      expect(subject.copy.list_items).to be_all { |item| item.note.present? }
     end
 
     context 'with params' do
-      subject { @list.copy(title: 'Yet Another List Title') }
+      let(:title) { 'Yet Another List Title' }
 
       it 'should merge the params' do
-        expect(subject.title).to eq('Yet Another List Title')
+        expect(subject.copy(title: title).title).to eq(title)
       end
     end
 
     context 'with evil params' do
       it 'should raise an error' do
-        expect { @list.copy(user_id: 12) }.to raise_error
+        expect { subject.copy(user_id: 12) }.to raise_error
       end
     end
   end
 
   describe :concat do
-    subject { create(:list_with_items) }
+    subject { create(:list_with_3_items) }
 
     before do
-      @count = subject.list_items.length
       @other = create(:list_with_items)
-      subject.concat(@other)
     end
 
     it 'should not change to other list' do
-      expect(@other).to_not be_changed
+      expect { subject.concat(@other) }.to_not change { @other.changed? }
     end
 
     it 'should not change the list items of the other list' do
-      expect(@other.list_items).to_not be_any(&:changed?)
+      expect {
+        subject.concat(@other)
+      }.to_not change {
+        @other.list_items.any?(&:changed?)
+      }
     end
 
     it 'should include the items of the other list' do
-      expect(subject.list_items).to have(@count + @other.list_items.length).items
+      expect {
+        subject.concat(@other)
+      }.to change {
+        subject.list_items.length
+      }.from(3).to(3 + @other.list_items.count)
     end
 
     it 'should have fresh items' do
-      expect(subject.list_items).to_not be_any { |item|
-        @other.list_items.include?(item)
-      }
+      expect {
+        subject.concat(@other)
+      }.to_not change { subject.list_items(true) & @other.list_items }
     end
   end
 
