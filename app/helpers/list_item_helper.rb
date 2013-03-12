@@ -32,7 +32,7 @@ module ListItemHelper
   # Returns a nested array of options used by the print dialog
   # in the list view.
   def options_for_print_list_dialog(klass)
-    klass.exposable_attributes.map do |attr|
+    klass.exposable_attributes(:pdf).map do |attr|
       ['attributes[]', attr, klass.human_attribute_name(attr)]
     end << [:note, :note, ListItem.human_attribute_name(:note)]
   end

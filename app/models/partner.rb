@@ -22,8 +22,11 @@ class Partner < ActiveRecord::Base
   attr_accessible :company, :street, :city, :zip, :region, :country_id,
                   :website, :email, :phone, :fax
 
-  attr_accessible :company, :street, :zip, :city, :region, :country,
-                  :website, :email, :phone, :fax, as: :exposable
+  attr_exposable :company, :street, :zip, :city, :region, :country,
+                 :website, :email, :phone, :fax, as: :csv
+
+  attr_exposable :company, :businesses, :street, :zip, :city, :region, :country,
+                 :website, :email, :phone, :fax, as: :pdf
 
   self.per_page = 50
 

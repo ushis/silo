@@ -1,54 +1,62 @@
 require 'spec_helper'
 
 describe ExposableAttributes do
-  class Dummy < ActiveRecord::Base
-  end
+  class Dummy < ActiveRecord::Base; end
 
   class DummyWithExposableAttributes < Dummy
-    attr_accessible :name, :first_name, :gender, :email, as: :exposable
+    attr_exposable :name, :first_name, :gender, :email, as: :pdf
   end
 
   class DummyWithHumanMethods < DummyWithExposableAttributes
-    def human_gender
-    end
+    def human_gender; end
   end
 
-  describe 'exposable_attributes' do
-    context 'without exposable attributes' do
-      it 'should raise a SecurityError' do
-        expect { Dummy.exposable_attributes }.to raise_error(SecurityError)
-      end
-    end
-
+  describe :exposable_attributes do
     context 'with exposable attributes' do
-      before(:all) do
-        @dummy = DummyWithExposableAttributes
+      subject { DummyWithExposableAttributes.exposable_attributes(*params) }
+
+      context 'without options' do
+        let(:params) { [:pdf] }
+
+        it 'should be an array including all exposable attributes' do
+          expect(subject).to eq(['name', 'first_name', 'gender', 'email'])
+        end
       end
 
-      it 'should be an array including all exposable attributes' do
-        attr = @dummy.exposable_attributes
-        expect(attr).to eq(['name', 'first_name', 'gender', 'email'])
+      context 'with the :only option' do
+        let(:params) { [:pdf, { only: [:name, :first_name] }] }
+
+        it 'should be an array including only name and first_name' do
+          expect(subject).to eq(['name', 'first_name'])
+        end
       end
 
-      it 'should be an array including only name and first_name' do
-        attr = @dummy.exposable_attributes(only: [:name, :first_name])
-        expect(attr).to eq(['name', 'first_name'])
-      end
+      context 'with the :except option' do
+        let(:params) { [:pdf, { except: [:name, :email] }] }
 
-      it 'should be an array including attributes except name and email' do
-        attr = @dummy.exposable_attributes(except: [:name, :email])
-        expect(attr).to eq(['first_name', 'gender'])
+        it 'should be an array including attributes except name and email' do
+          expect(subject).to eq(['first_name', 'gender'])
+        end
       end
     end
 
     context 'with human_* methods' do
-      before(:all) do
-        @dummy = DummyWithHumanMethods
+      subject { DummyWithHumanMethods.exposable_attributes(*params) }
+
+      context 'with the :human option' do
+        let(:params) { [:pdf, { human: true, only: [:gender, :email] }] }
+
+        it 'should be an array of attributes with their human methods' do
+          expect(subject).to eq([['gender', 'human_gender'], ['email', 'email']])
+        end
       end
 
-      it 'should be an array including attributes and their human methods' do
-        attr = @dummy.exposable_attributes(human: true, only: [:gender, :email])
-        expect(attr).to eq([['gender', 'human_gender'], ['email', 'email']])
+      context 'without the human option' do
+        let(:params) { [:pdf, { only: [:gender, :email] }] }
+
+        it 'should be an array of attributes without their human methods' do
+          expect(subject).to eq(['gender', 'email'])
+        end
       end
     end
   end

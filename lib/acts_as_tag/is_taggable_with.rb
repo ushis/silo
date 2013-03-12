@@ -22,6 +22,10 @@ module ActsAsTag
         define_method("#{assoc}=") do |tags|
           super(tags.is_a?(String) ? klass.from_s(tags) : tags)
         end
+
+        define_method("human_#{assoc}") do
+          send(assoc).map(&:to_s).join(', ')
+        end
       end
     end
   end

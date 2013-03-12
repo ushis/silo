@@ -88,8 +88,8 @@ class ApplicationReport < Prawn::Document
   def info_table(record = @record)
     model = record.class
 
-    data = model.exposable_attributes(human: true).map do |attribute, method|
-      [model.human_attribute_name(attribute), record.send(method).to_s]
+    data = model.exposable_attributes(:pdf, human: true).map do |attr, method|
+      [model.human_attribute_name(attr), record.send(method).to_s]
     end
 
     table data

@@ -2,15 +2,13 @@ require 'spec_helper'
 
 describe AsCsv do
   before(:all) do
-    build_model :dummy
-
     build_model :keyboard do
       string :vendor
       integer :price
       boolean :nice
       has_many :keys, autosave: true, dependent: :destroy
       attr_accessible :vendor, :price, :nice
-      attr_accessible :vendor, :price, :nice, as: :exposable
+      attr_exposable :vendor, :price, :nice, as: :csv
     end
 
     build_model :key do
@@ -18,7 +16,7 @@ describe AsCsv do
       integer :keyboard_id
       belongs_to :keyboard
       attr_accessible :code
-      attr_accessible :code, as: :exposable
+      attr_exposable :code, as: :csv
     end
 
     (1..2).each do |i|
@@ -35,12 +33,6 @@ describe AsCsv do
 
   describe :as_csv do
     subject { Keyboard.as_csv(params) }
-
-    context 'without exposable attributes' do
-      it 'should raise a SecurityError' do
-        expect { Dummy.as_csv }.to raise_error(SecurityError)
-      end
-    end
 
     context 'without options' do
       let(:params) { {} }

@@ -5,7 +5,7 @@ require 'csv'
 # attributes to be exported.
 #
 #   class Article < ActiveRecord::Base
-#     attr_accessible :title, :sub_title, as: :exposable
+#     attr_exposable :title, :sub_title, as: :csv
 #   end
 #
 # To generate some CSV simply write something like this.
@@ -20,14 +20,14 @@ require 'csv'
 # following setup.
 #
 #   class Article < ActiveRecord::Base
-#     attr_accessible :title, :sub_title, as: :exposable
+#     attr_exposable :title, :sub_title, as: :csv
 #
 #     belongs_to :author
 #     has_and_belongs_to_many :tags
 #   end
 #
 #   class Tag < ActiveRecord::Base
-#     attr_accessible :tag, as: :exposable
+#     attr_exposable :tag, as: :csv
 #
 #     has_and_belongs_to_many :articles
 #   end
@@ -97,7 +97,7 @@ module AsCsv
       @scope, @includes, @attributes = scope, {}, []
 
       includes(*options[:include])
-      attributes(*scope.exposable_attributes(options.slice(:only, :except)))
+      attributes(*scope.exposable_attributes(:csv, options.slice(:only, :except)))
     end
 
     # Adds associations to the CSV.
@@ -108,7 +108,7 @@ module AsCsv
     def includes(*associations)
       associations.each do |association|
         if (reflection = @scope.reflect_on_association(association))
-          @includes[association] = reflection.klass.exposable_attributes
+          @includes[association] = reflection.klass.exposable_attributes(:csv)
           @scope = @scope.includes(association)
         end
       end

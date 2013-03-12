@@ -16,7 +16,9 @@
 # Every employee has one Contact.
 class Employee < ActiveRecord::Base
   attr_accessible :title, :name, :prename, :gender, :job
-  attr_accessible :title, :name, :prename, :gender, :job, as: :exposable
+
+  attr_exposable :title, :name, :prename, :gender, :job, as: :csv
+  attr_exposable :title, :name, :prename, :gender, :job, as: :pdf
 
   discrete_values :gender, [:female, :male], allow_nil: true
 

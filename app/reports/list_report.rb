@@ -16,7 +16,7 @@ class ListReport < ApplicationReport
   # Adds the list items.
   def items
     klass = ListItem.class_for_item_type(@item_type)
-    cols = klass.exposable_attributes(only: @options[:attributes], human: true)
+    cols = klass.exposable_attributes(:pdf, only: @options[:attributes], human: true)
     incl = klass.filter_associations(cols.map(&:first))
     items = @record.list_items.includes(item: incl).by_type(@item_type, order: true)
 

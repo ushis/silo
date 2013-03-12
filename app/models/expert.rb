@@ -20,8 +20,11 @@ class Expert < ActiveRecord::Base
   attr_accessible :name, :prename, :degree, :gender, :birthday, :fee, :job,
                   :former_collaboration, :country_id, :languages
 
-  attr_accessible :name, :prename, :degree, :gender, :birthday, :fee, :job,
-                  :former_collaboration, :country, as: :exposable
+  attr_exposable :name, :prename, :degree, :gender, :birthday, :fee, :job,
+                 :former_collaboration, :country, as: :csv
+
+  attr_exposable :name, :prename, :degree, :gender, :age, :fee, :job,
+                 :former_collaboration, :country, as: :pdf
 
   self.per_page = 50
 
