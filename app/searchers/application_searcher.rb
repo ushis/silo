@@ -117,7 +117,7 @@ class ApplicationSearcher
   def has_many(reflection, ids)
     @scope.joins(reflection.name).where(reflection.table_name => {
       reflection.association_primary_key => ids
-    }).group("#{@klass.table_name}.#{@klass.primary_key}")
+    })
   end
 
   alias :belongs_to :has_many
