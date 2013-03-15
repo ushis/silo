@@ -533,7 +533,7 @@ div.markdown td,
 div.markdown em {
   margin: 0;
   padding: 0;
-  border: 0;
+  border: 0 none transparent;
   font-size: 100%;
   font: inherit;
   vertical-align: baseline;
@@ -551,6 +551,7 @@ div.markdown h3,
 div.markdown h4,
 div.markdown h5,
 div.markdown h6 {
+  text-transform: none !important;
   font-weight: bold;
   padding: 3px 0;
 }
@@ -559,10 +560,28 @@ div.markdown a {
   text-decoration: underline;
 }
 
+div.markdown strong {
+  font-weight: bold;
+}
+
+div.markdown em {
+  font-style: italic;
+}
+
 div.markdown ol, div.markdown ul {
   font: normal normal normal 13px/17px Helvetica, Arial, sans-serif;
   list-style-type: square;
   margin: 5px 0 5px 20px;
+}
+
+div.markdown ol {
+  list-style-type: decimal;
+}
+
+div.markdown ol li, div.markdown ul li {
+  float: none !important;
+  padding: 3px 0 !important;
+  border: 0 none transparent !important;
 }
 
 div.markdown blockquote:before, div.markdown blockquote:after,
