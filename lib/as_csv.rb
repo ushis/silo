@@ -1,4 +1,5 @@
 require 'csv'
+require 'axlsx'
 
 # Generates a CSV from a ActiveRecord::Relation. It uses
 # ExposableAttributes::ClassMethods#exposable_attributes to choose the
@@ -127,19 +128,6 @@ module AsCsv
       @scope = @scope.includes(@scope.filter_associations(attributes))
     end
 
-    # Generates the Csv. Takes a hash of CSV specific options.
-    #
-    # See the CSV module for more info.
-    def generate(options = {})
-      CSV::generate(options) do |csv|
-        csv << headers
-
-        @scope.each do |record|
-          rows_for(record) { |row| csv << row.flatten }
-        end
-      end
-    end
-
     private
 
     # Returns the Csv headers.
@@ -182,6 +170,42 @@ module AsCsv
     end
   end
 
+  # Generates CSV.
+  class CsvGenerator < Generator
+
+    # Generates the CSV. Takes a hash of CSV specific options.
+    #
+    # See the CSV module for more info.
+    def generate(options = {})
+      CSV::generate(options) do |csv|
+        csv << headers
+
+        @scope.each do |record|
+          rows_for(record) { |row| csv << row.flatten }
+        end
+      end
+    end
+  end
+
+  # Generates the XLSX. Takes a hash of XLSX specific options.
+  class XlsxGenerator < Generator
+
+    # Generates the XLSX
+    def generate(options = {})
+      pkg = Axlsx::Package.new
+
+      pkg.workbook.add_worksheet(name: options.fetch(:name, 'Sheet')) do |sheet|
+        sheet.add_row(headers)
+
+        @scope.each do |record|
+          rows_for(record) { |row| sheet.add_row(row.flatten) }
+        end
+      end
+
+      pkg.to_stream.string
+    end
+  end
+
   # Mixin for ::ActiveRecord. See AsCsv for more info.
   module ActiveRecord
     extend ActiveSupport::Concern
@@ -193,10 +217,29 @@ module AsCsv
       #
       # See AsCsv for more info.
       def as_csv(options = {}, csv_options = {})
-        Generator.new(scoped, options).generate(csv_options)
+        CsvGenerator.new(scoped, options).generate(csv_options)
       end
+
+      # Generates a XLSX from a ::ActiveRecord::Relation.
+      def as_xlsx(options = {}, xlsx_options = {})
+        XlsxGenerator.new(scoped, options).generate(xlsx_options)
+      end
+    end
+  end
+
+  # Mixin for ::ActionController.
+  module ActionController
+    extend ActiveSupport::Concern
+
+    def send_csv(data, title)
+      send_data data, filename: "#{title.parameterize}.csv", type: :csv
+    end
+
+    def send_xlsx(data, title)
+      send_data data, filename: "#{title.parameterize}.xlsx", type: :xlsx
     end
   end
 end
 
 ActiveRecord::Base.send :include, AsCsv::ActiveRecord
+ActionController::Base.send :include, AsCsv::ActionController

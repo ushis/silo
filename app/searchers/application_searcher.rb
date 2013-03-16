@@ -1,6 +1,10 @@
+require 'set'
+
 # Base class of all searchers.
 #
 #   class ArticleSearcher < ApplicationSearcher
+#     search_helpers :title
+#
 #     def title(value)
 #       @scope.where('title LIKE ?', "%#{value}%")
 #     end
@@ -29,6 +33,7 @@
 # ids as value. Additional search methods must be implemented in the
 # subclasses.
 class ApplicationSearcher
+  class_attribute :_search_helpers
 
   # Inits the searcher. Takes a hash of conditions.
   def initialize(conditions)
@@ -39,20 +44,26 @@ class ApplicationSearcher
   #
   # Returns a ActiveRecord::Relation.
   def search(scope)
-    @model = scope.klass
     @scope = scope
-    @empty = false
-
-    @conditions.each do |method, value|
-      @scope = search_for(method, value)
-
-      return @model.where('1 < 0') if @empty
-    end
-
+    @klass = scope.klass
+    @conditions.each { |method, value| @scope = search_for(method, value) }
     @scope
+  rescue ActiveRecord::RecordNotFound
+    @klass.where('1 < 0')
   end
 
   private
+
+  # Registers and returns a set of search helpers.
+  def self.search_helpers(*methods)
+    self._search_helpers ||= Set.new
+    self._search_helpers += methods
+  end
+
+  # Returns the set of registered search helpers.
+  def search_helpers
+    self.class.search_helpers
+  end
 
   # Returns an array of tuples from a hash.
   #
@@ -70,14 +81,18 @@ class ApplicationSearcher
   #
   # Returns ActiveRecord::Relation.
   def search_for(attr, value)
-    respond_to?(attr) ? send(attr, value) : search_association(attr, value)
+    if search_helpers.include?(attr)
+      send(attr, value)
+    else
+      search_association(attr, value)
+    end
   end
 
   # Searches an association and returns a ActiveRecord::Relation
   #
   # Raises ArgumentError for invalid association names.
   def search_association(name, value)
-    if (reflection = @model.reflect_on_association(name))
+    if (reflection = @klass.reflect_on_association(name))
       send(reflection.macro, reflection, value)
     else
       raise ArgumentError, "#@model has no association called #{name}"
@@ -87,31 +102,26 @@ class ApplicationSearcher
   # Adds a id search condition to the relation.
   def search_ids(ids)
     if ids.empty?
-      @empty = true
-      @scope
+      raise ActiveRecord::RecordNotFound, "Couldn't find any records."
     else
-      @scope.where(@model.primary_key => ids)
+      @scope.where(@klass.primary_key => ids)
     end
   end
 
   # Executes some sql and returns the selected rows.
   def execute_sql(*args)
-    @model.connection.select_rows(@model.send(:sanitize_sql, args))
-  end
-
-  # Searches a belongs_to association.
-  def belongs_to(reflection, ids)
-    @scope.where(reflection.foreign_key => ids)
+    @klass.connection.select_rows(@klass.send(:sanitize_sql, args))
   end
 
   # Searches a has_one association.
-  def has_one(reflection, ids)
+  def has_many(reflection, ids)
     @scope.joins(reflection.name).where(reflection.table_name => {
       reflection.association_primary_key => ids
     })
   end
 
-  alias :has_many :has_one
+  alias :belongs_to :has_many
+  alias :has_one    :has_many
 
   # Searches a has_and_belongs_to_many association.
   def has_and_belongs_to_many(reflection, ids)
@@ -120,14 +130,22 @@ class ApplicationSearcher
 
   # Searches a join table and returns an array of ids.
   def search_join_table(reflection, ids)
-    sql = <<-SQL
+    execute_sql(<<-SQL, ids: ids).map(&:first)
+      SELECT join_table.#{reflection.foreign_key}
+      FROM #{reflection.options[:join_table]} AS join_table
+      WHERE join_table.#{reflection.association_foreign_key} IN (:ids)
+      GROUP BY join_table.#{reflection.foreign_key}
+    SQL
+  end
+
+  # Searches a join table conjunct and returns an array of ids.
+  def search_join_table_conjunct(reflection, ids)
+    execute_sql(<<-SQL, ids: ids, num: ids.length).map(&:first)
       SELECT join_table.#{reflection.foreign_key}, COUNT(*) AS num
       FROM #{reflection.options[:join_table]} AS join_table
       WHERE join_table.#{reflection.association_foreign_key} IN (:ids)
       GROUP BY join_table.#{reflection.foreign_key}
       HAVING num >= :num
     SQL
-
-    execute_sql(sql, ids: ids, num: ids.length).map(&:first)
   end
 end

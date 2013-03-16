@@ -1,8 +1,6 @@
 require 'spec_helper'
 
 describe ExpertSearcher do
-  subject { Expert.search(conditions).all }
-
   before(:all) do
     @area = create(:area, area: :EU)
 
@@ -44,6 +42,8 @@ describe ExpertSearcher do
   after(:all) do
     [Area, Country, Language, Expert, User].each { |m| m.destroy_all }
   end
+
+  subject { Expert.search(conditions).all }
 
   describe :search do
     context 'when searching for name' do

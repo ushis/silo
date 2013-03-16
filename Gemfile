@@ -44,5 +44,8 @@ gem 'prawn', '~> 0.12.0'
 # Markdown
 gem 'bluecloth', '~> 2.2.0'
 
+# Excel export
+gem 'axlsx', '~> 1.3.5'
+
 # To use debugger
 # gem 'debugger'

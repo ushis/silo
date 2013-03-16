@@ -1,5 +1,6 @@
 # Searches the lists table.
 class ListSearcher < ApplicationSearcher
+  search_helpers :title, :private, :exclude
 
   protected
 
