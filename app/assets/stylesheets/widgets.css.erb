@@ -571,15 +571,26 @@ div.markdown {
   padding-top: 3px;
 }
 
+#main div.sidebar.details div.markdown {
+  position: relative;
+  float: left;
+  width: 100%;
+}
+
 div.markdown h1,
 div.markdown h2,
 div.markdown h3,
 div.markdown h4,
 div.markdown h5,
 div.markdown h6 {
+  float: none !important;
+  font-size: 13px !important;
   text-transform: none !important;
-  font-weight: bold;
-  padding: 3px 0;
+  font-weight: bold !important;
+  padding: 3px 0 !important;
+  color: #444 !important;
+  text-shadow: none !important;
+  line-height: 15px !important;
 }
 
 div.markdown a {
@@ -595,6 +606,7 @@ div.markdown em {
 }
 
 div.markdown ol, div.markdown ul {
+  width: 100%;
   font: normal normal normal 13px/17px Helvetica, Arial, sans-serif;
   list-style-type: square;
   margin: 5px 0 5px 20px;
@@ -619,6 +631,29 @@ div.markdown q:before, div.markdown q:after {
 div.markdown table {
   border-collapse: collapse;
   border-spacing: 0;
+}
+
+#main div.sidebar.details div.markdown p,
+#main div.sidebar.details div.markdown ul {
+  position: relative;
+  float: left;
+  color: #777;
+  text-shadow: 0 1px 0 white;
+  line-height: 15px;
+  font-size: 12px;
+  padding-right: 15px;
+}
+
+#main div.sidebar.details div.markdown ul li {
+  color: #777;
+  text-shadow: 0 1px 0 white;
+  line-height: 15px;
+  font-size: 12px;
+  padding-right: 15px;
+}
+
+#main div.sidebar.details div.markdown p:before {
+  margin-right: 5px;
 }
 
 /* Dropdown Menus */
@@ -654,10 +689,13 @@ li.toggle-drop-down > p:before {
   vertical-align: bottom;
 }
 
-li.toggle-drop-down:hover ,
-li.toggle-drop-down.active {
+li.toggle-drop-down:hover {
   color: #5B5B5B !important;
   background: whiteSmoke !important;
+}
+
+li.toggle-drop-down.active {
+  background: #FFF !important;
 }
 
 li.toggle-drop-down.active ul.dropdown {
@@ -668,16 +706,16 @@ ul.dropdown {
   display: none;
   position: absolute;
   top: 100%;
-  left: -49px;
-  margin-top: 7px;
+  left: -47px;
+  margin-top: 8px;
   z-index: 99;
   min-width: 150px;
   border-radius: 4px;
   background: #FFF;
   padding: 5px;
-  box-shadow: 0 4px 10px rgba(0,0,0,.25), 0 3px 5px rgba(0,0,0,.25);
-  -moz-box-shadow: 0 4px 10px rgba(0,0,0,.25), 0 3px 5px rgba(0,0,0,.25);
-  -webkit-box-shadow: 0 4px 10px rgba(0,0,0,.25), 0 3px 5px rgba(0,0,0,.25);
+  box-shadow: 0px 0px 40px rgba(0,0,0,.15), 0px 2px 4px rgba(0,0,0,.15);
+  -moz-box-shadow: 0px 0px 40px rgba(0,0,0,.15), 0px 2px 4px rgba(0,0,0,.15);
+  -webkit-box-shadow: 0px 0px 40px rgba(0,0,0,.15), 0px 2px 4px rgba(0,0,0,.15);
   border: 1px solid #d5d5d5;
   text-align: left !important;
 }
@@ -717,6 +755,7 @@ ul.dropdown li {
 ul.dropdown li a {
   margin: 3px 0 !important;
   text-align: left !important;
+  border: 1px solid rgb(223, 223, 223) !important;;
 }
 
 ul.dropdown li:last-child a {
