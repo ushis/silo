@@ -233,6 +233,9 @@ div.clear {
   text-transform: none;
   font-size: 1em;
   background: none;
+  box-shadow: none;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -462,10 +465,10 @@ div.form-wrapper {
   font-weight: bold;
   color: #555;
   border: 0 none transparent;
-  background: #ececec;
+  background: #f1f1f1;
   text-shadow: 0 1px 0px rgba(255, 255, 255, 1);
   border-radius: 3px;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, .18), inset 0 1px 0 #FAFAFA, 0 2px 0 rgba(255, 255, 255, .4);
+  box-shadow: 0 0 0 1px #C0C0C0, inset 0 1px 0 #FAFAFA, 0 2px 0 rgba(255, 255, 255, .4);
 }
 
 #filter div.need-help:before {
@@ -478,7 +481,7 @@ div.form-wrapper {
   height: 0;
   margin-top: -3px;
   border-width: 5px;
-  border-right-color: rgba(0, 0, 0, .18);
+  border-right-color: #C0C0C0;
 }
 
 #filter div.need-help:after {
@@ -491,16 +494,16 @@ div.form-wrapper {
   height: 0;
   margin-top: -4px;
   border-width: 4px;
-  border-right-color: #ececec;
+  border-right-color: #f1f1f1;
 }
 
 #filter div.need-help:hover {
   color: #333;
-  background: rgba(255, 255, 255, .4);
+  background: #F5F5F5;
 }
 
 #filter div.need-help:hover:after {
-  border-right-color: #e9e9e9;
+  border-right-color: #F5F5F5;
 }
 
 /* Tabs */
