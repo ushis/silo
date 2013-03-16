@@ -33,14 +33,14 @@
               <%= link_to t('actions.excel'), url_for(params.merge(format: :xlsx)), 
                                             class: 'icon-file' %>
             </li>
-            <li>
+            <li class="label-partners">
               <p><%= t('labels.partner.employees') %></p>
             </li>
-            <li>
+            <li class="action-partners">
               <%= link_to t('actions.csv'), list_employees_path(list_id: @list, format: :csv), 
                                             class: 'icon-file' %>
             </li>
-            <li>
+            <li class="action-partners">
               <%= link_to t('actions.excel'), list_employees_path(list_id: @list, format: :xlsx), 
                                                           class: 'icon-file' %>
             </li>
