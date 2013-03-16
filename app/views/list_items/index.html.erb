@@ -30,7 +30,8 @@
                                             class: 'icon-file' %>
             </li>
             <li>
-              <a href="#"><%= t('actions.excel') %></a>
+              <%= link_to t('actions.excel'), url_for(params.merge(format: :xlsx)), 
+                                            class: 'icon-file' %>
             </li>
             <li>
               <p><%= t('labels.partner.employees') %></p>
@@ -40,7 +41,8 @@
                                             class: 'icon-file' %>
             </li>
             <li>
-              <a href="#"><%= t('actions.excel') %></a>
+              <%= link_to t('actions.excel'), list_employees_path(list_id: @list, format: :xlsx), 
+                                                          class: 'icon-file' %>
             </li>
           </ul>
         </li>
