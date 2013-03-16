@@ -23,7 +23,13 @@ class ListItemsController < ApplicationController
   #
   # GET /lists/:list_id/employees
   def employees
-    send_csv @list.partners.as_csv(include: :employees), "#{@list.title}-employees"
+    title = "#{@list.title}-employees"
+    partners = @list.partners
+
+    respond_to do |format|
+      format.csv  { send_csv partners.as_csv(include: :employees), title }
+      format.xlsx { send_xlsx partners.as_xlsx(include: :employees), title }
+    end
   end
 
   # Defines the actions needed to show the list items.
@@ -38,16 +44,18 @@ class ListItemsController < ApplicationController
 
   # Serves the lists items in various formats.
   def index(item_type)
+    @title = @list.title
+
     respond_to do |format|
       format.html { html_index(item_type) }
       format.pdf  { pdf_index(item_type) }
       format.csv  { csv_index(item_type) }
+      format.xlsx { xlsx_index(item_type) }
     end
   end
 
   # Serves the lists items as html.
   def html_index(item_type)
-    @title = @list.title
     @item_type = item_type
     @items = @list.list_items.by_type(item_type, order: true).includes(:item)
     body_class << (body_class.delete(item_type) + '-list')
@@ -61,7 +69,12 @@ class ListItemsController < ApplicationController
 
   # Serves the lists items as csv.
   def csv_index(item_type)
-    send_csv @list.send(item_type).as_csv, "#{@list.title} #{item_type}"
+    send_csv @list.send(item_type).as_csv, "#{@title} #{item_type}"
+  end
+
+  # Serves the lists items as xlsx.
+  def xlsx_index(item_type)
+    send_xlsx @list.send(item_type).as_xlsx, "#{@title} #{item_type}"
   end
 
   # Finds the list.

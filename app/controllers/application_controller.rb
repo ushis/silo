@@ -93,11 +93,6 @@ class ApplicationController < ActionController::Base
               disposition: 'inline'
   end
 
-  # Sends a csv to the browser.
-  def send_csv(csv, title)
-    send_data csv, filename: "#{title.parameterize}.csv", type: 'text/csv'
-  end
-
   # Returns a hash of arrayified params.
   #
   #   params[:some_ids]             #=> '123 423 65 34'
