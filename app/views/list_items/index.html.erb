@@ -15,42 +15,40 @@
 
     <div class="content">
       <ul class="tools">
-
-        <li class="export toggle-drop-down">
+        <li class="export toggle-drop-down" data-toggle="active">
           <p class="icon-download">
             <%= t('actions.export') %>
           </p>
           <ul class="dropdown">
             <li>
-              <p class="label-experts"><%= List.human_attribute_name(:experts) %></p>
-              <p class="label-partners"><%= List.human_attribute_name(:partners) %></p>
+              <p class="label-partners">
+                <%= List.human_attribute_name(:partners) %>
+              </p>
             </li>
             <li>
-              <%= link_to t('actions.csv'), url_for(params.merge(format: :csv)), 
+              <%= link_to t('actions.csv'), url_for(params.merge(format: :csv)),
                                             class: 'icon-file' %>
             </li>
             <li>
-              <%= link_to t('actions.excel'), url_for(params.merge(format: :xlsx)), 
-                                            class: 'icon-file' %>
+              <%= link_to t('actions.excel'), url_for(params.merge(format: :xlsx)),
+                                              class: 'icon-file' %>
             </li>
             <li class="label-partners">
               <p><%= t('labels.partner.employees') %></p>
             </li>
             <li class="action-partners">
-              <%= link_to t('actions.csv'), list_employees_path(list_id: @list, format: :csv), 
+              <%= link_to t('actions.csv'), list_employees_path(list_id: @list, format: :csv),
                                             class: 'icon-file' %>
             </li>
             <li class="action-partners">
-              <%= link_to t('actions.excel'), list_employees_path(list_id: @list, format: :xlsx), 
-                                                          class: 'icon-file' %>
+              <%= link_to t('actions.excel'), list_employees_path(list_id: @list, format: :xlsx),
+                                              class: 'icon-file' %>
             </li>
           </ul>
         </li>
-
         <li class="print">
           <%= print_list_button_for(@list, @item_type) %>
         </li>
-
       </ul>
 
       <table class="list-items">
@@ -93,19 +91,3 @@
 
   <div class="clear"></div>
 </div>
-
-
-<script type="text/javascript">
-jQuery.noConflict();
-jQuery(document).ready(function($){
-  $('.toggle-drop-down').click(function(e){
-    $(this).toggleClass('active');
-    e.stopPropagation();
-
-    $(document).click(function(){
-      $('.toggle-drop-down').toggleClass('active');
-      $(this).unbind('click');
-    });
-  })
-})
-</script>

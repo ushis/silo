@@ -28,6 +28,7 @@ do ($ = jQuery) ->
     $('a.hidden-form').siloHiddenForm()
     $('a.chooser').siloChooser()
     $('[data-help]').siloHelp()
+    $('[data-toggle]').siloToggle()
     $('[data-master-box]').siloMasterBox()
     $('a[data-confirm]').siloConfirm()
     $('a[data-editable]').siloEditable()
