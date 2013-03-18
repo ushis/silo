@@ -3,6 +3,7 @@
 # Boots the application.
 #
 # =require jquery
+# =require jquery.ui.effect
 # =require jquery.ui.accordion
 # =require jquery.ui.autocomplete
 # =require rails
