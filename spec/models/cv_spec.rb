@@ -14,12 +14,6 @@ describe Cv do
     it { should belong_to(:expert) }
   end
 
-  describe :delegations do
-    [:created_at, :absolute_path, :ext].each do |method|
-      it { should delegate_method(method).to(:attachment) }
-    end
-  end
-
   describe :file= do
     context 'when argument is a valid file' do
       let(:file) { fixture_file_upload('lorem-ipsum.txt') }
@@ -66,6 +60,16 @@ describe Cv do
 
       it 'should raise a TypeError' do
         expect { subject.file = file }.to raise_error(TypeError)
+      end
+    end
+  end
+
+  describe :delegations do
+    subject { create(:cv, file: fixture_file_upload('acme.pdf')) }
+
+    [:created_at, :absolute_path, :ext].each do |method|
+      it "should delegate :#{method} to the attachment" do
+        expect(subject.send(method)).to eq(subject.attachment.send(method))
       end
     end
   end
