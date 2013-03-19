@@ -16,7 +16,9 @@ module ApplicationHelper
   end
 
   # Renders markdown formatted text.
-  def markdown(txt)
+  def markdown(txt = nil, &block)
+    txt = capture(&block).strip_heredoc if block_given?
+
     content_tag :div, class: 'markdown' do
       BlueCloth.new(txt, auto_links: true, escape_html: true).to_html.html_safe
     end

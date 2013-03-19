@@ -1,0 +1,67 @@
+<div class="help">
+  <div class="header">
+    <h2>
+      <%= t 'labels.help.help', section:  t('labels.help.markdown.markdown') %>
+    </h2>
+    <div class="button abort">
+      <%= t 'actions.close' %>
+    </div>
+  </div>
+  <dl>
+    <dt>
+      <%= t 'labels.help.markdown.headings' %>
+    </dt>
+    <dd>
+      <p class="example">
+        # <%= t 'labels.help.markdown.heading' %>
+      </p>
+      <%= markdown do %>
+        # <%= t 'labels.help.markdown.heading' %>
+      <% end %>
+    </dd>
+    <dt>
+      <%= t 'labels.help.markdown.paragraphs' %>
+    </dt>
+    <dd>
+      <p class="example">
+        <%= t 'messages.help.markdown.paragraph' %><br/><br/>
+        <%= t 'messages.help.markdown.paragraph_alt' %>
+      </p>
+      <%= markdown do %>
+        <%= t 'messages.help.markdown.paragraph' %>
+
+        <%= t 'messages.help.markdown.paragraph_alt' %>
+      <% end %>
+    </dd>
+    <dt>
+      <%= t 'labels.help.markdown.emphasis' %>
+    </dt>
+    <dd>
+      <p class="example">
+        <%= t 'labels.help.markdown.normal' %>,
+        *<%= t 'labels.help.markdown.italic' %>*,
+        **<%= t 'labels.help.markdown.bold' %>**
+      </p>
+      <%= markdown do %>
+        <%= t 'labels.help.markdown.normal' %>,
+        *<%= t 'labels.help.markdown.italic' %>*,
+        **<%= t 'labels.help.markdown.bold' %>**
+      <% end %>
+    </dd>
+    <dt>
+      <%= t 'labels.help.markdown.lists' %>
+    </dt>
+    <dd>
+      <p class="example">
+        - <%= t 'labels.help.markdown.list_item', i: 1 %><br/>
+        - <%= t 'labels.help.markdown.list_item', i: 2 %><br/>
+        - <%= t 'labels.help.markdown.list_item', i: 3 %>
+      </p>
+      <%= markdown do %>
+        - <%= t 'labels.help.markdown.list_item', i: 1 %>
+        - <%= t 'labels.help.markdown.list_item', i: 2 %>
+        - <%= t 'labels.help.markdown.list_item', i: 3 %>
+      <% end %>
+    </dd>
+  </dl>
+</div>
