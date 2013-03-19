@@ -28,6 +28,5 @@ de:
         or: 'Finde Einträge, die mindestens eines der beiden Wörter beinhalten.'
         quote: "Finde Einträge, die die exakte Wortgruppe '%{phrase}' beinhalten."
       markdown:
-        blank_line: 'Nun kommt eine Leerzeile.'
         paragraph: 'Das ist ein Absatz.'
         paragraph_alt: 'Zwischen zwei Absätzen wird eine Leerzeile eingefügt.'
