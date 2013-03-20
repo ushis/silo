@@ -19,8 +19,7 @@ do ($ = jQuery) ->
         index:      '<%= paths.ajax_tag_path(id: :businesses) %>'
       countries:
         index:      '<%= paths.ajax_areas_path %>'
-      help:
-        fulltext:   '<%= paths.ajax_help_path(id: :fulltext) %>'
+      help:         '<%= paths.ajax_help_path(id: ':id') %>'
       helpers:
         confirm:    '<%= paths.ajax_helper_path(id: :confirm) %>'
         editable:   '<%= paths.ajax_helper_path(id: :editable) %>'

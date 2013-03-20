@@ -2,10 +2,22 @@
 en:
   labels:
     help:
-      fulltext: 'Fulltext'
+      fulltext:
+        fulltext: 'Fulltext'
+        no_operator: 'No Operator'
+        operator: '%{operator} Operator'
       help: 'Help: %{section}'
-      no_operator: 'No Operator'
-      operator: '%{operator} Operator'
+      markdown:
+        bold: 'Bold'
+        emphasis: 'Emphasis'
+        heading: 'Heading'
+        headings: 'Headings'
+        italic: 'Italic'
+        list_item: 'List Item %{i}'
+        lists: 'Lists'
+        markdown: 'Formatting'
+        normal: 'Normal'
+        paragraphs: 'Paragraphs'
   messages:
     help:
       fulltext:
@@ -15,3 +27,6 @@ en:
         not: "Find rows that contain '%{t1}' but not '%{t2}'."
         or: 'Find rows that contain at least one of the two words.'
         quote: "Find rows that contain the exact phrase '%{phrase}'."
+      markdown:
+        paragraph: 'This is a paragraph.'
+        paragraph_alt: 'Insert a blank line between two paragraphs.'

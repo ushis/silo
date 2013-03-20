@@ -3,6 +3,7 @@
 require 'carmen'
 require 'colorize'
 require 'psych'
+require 'csv'
 
 namespace :partners do
 
@@ -31,77 +32,69 @@ namespace :partners do
       Country.find_by_country(co.code)
     end
 
-    puts "Importing partners data from XML file: #{args[:input]}"
+    i = 0
+    user = User.first
+    puts "Importing partners data from CSV file: #{args[:input]}"
 
-    File.open(args[:input]) do |f|
-      user = User.first
-      partners = Hash.from_xml(f.read)['dataroot']['AdressenPartner']
-      len, err = [partners.length, 0]
+    CSV.foreach(args[:input], col_sep: ';', headers: true) do |row|
+      next if row.empty?
+      data = row.to_hash
+      $stdout.write "Importing: #{i += 1}\r"
+      p = Partner.new
+      p.user = user
 
-      partners.each_with_index do |data, i|
-        $stdout.write "Importing: #{i}/#{len}\r"
-        p = Partner.new
-        p.user = user
+      {
+        company: 'Firma',
+        zip:     'PLZ',
+        street:  'Straße',
+        city:    'Ort',
+        phone:   'TelefonD',
+        fax:     'Fax',
+        email:   'EmailD',
+        website: 'Homepage'
+      }.each { |attr, key| p[attr] = data[key].try(:strip) }
 
-        p.company = ['Firma1', 'Firma2'].map do |key|
-          data[key]
-        end.join(' ').strip.squeeze(" ")
+      p.country = country_from_s.call(data['Land']) unless data['Land'].blank?
 
-        {zip: 'FirmaPLZ', street: 'FirmaStra', city: 'FirmaOrt'}.each do |attr, key|
-          p[attr] = data[key].try(:strip)
-        end
+      p.comment.comment = data['Bemerkungen'].strip unless data['Bemerkungen'].blank?
 
-        p.country = country_from_s.call(data['Land']) unless data['Land'].blank?
+      p.businesses = data['Kategorie'] if data['Kategorie'].present?
 
-        p.comment.comment = data['Notizen'].strip unless data['Notizen'].blank?
+      unless (advisers = data['Ansprechpartner']).blank?
+        evil = ['dr.', 'd.k.', 'dk', 'bs', 'dr', 'f', 'd', 'm']
 
-        unless (phone = data['TelefonD']).blank?
-          p.phone = phone.strip
-        end
+        p.advisers = advisers.underscore.split(/[,_\s\/\+]+/).reject do |adviser|
+          evil.include?(adviser)
+        end.map(&:capitalize).join(',')
+      end
 
-        unless (fax = data['Fax']).blank?
-          p.fax = fax.strip
-        end
+      unless (name = data['Name']).blank?
+        p.employees << Employee.new.tap do |emp|
+          {
+            name: 'Name',
+            prename: 'Vorname',
+            job: 'Tätigkeit',
+            title: 'Titel'
+          }.each { |attr, key| emp[attr] = data[key].try(:strip) }
 
-        unless (website = data['Homepage']).blank?
-          p.website = website.split('#').pop.strip
-        end
+          emp.gender = (data['Anrede2'] =~ /Frau/) ? :female : :male
 
-        unless (email = data['E_Mail']).blank?
-          email.split('#').pop.gsub('mailto:', '').gsub('http://', '').strip.tap do |email|
-            p.email = email.downcase if email.index('@')
+          {
+            p_phones: 'TelefonP',
+            b_phones: 'TelefonD2',
+            m_phones: 'Handy',
+            emails: 'EmailP'
+          }.each do |attr, key|
+            emp.contact.send(attr) << data[key] unless data[key].blank?
           end
         end
+      end
 
-        unless (name = data['LTRName']).blank?
-          p.employees << Employee.new(name: name.strip).tap do |emp|
-            emp.job = data['LTRBez'].try(:strip)
-            emp.gender = (data['LTRGeschl'].try(:downcase) == 'w') ? :female : :male
-          end
-        end
+      unless p.save
+        $stderr.puts '=> Could not save dataset'.red
 
-        unless (name = data['AnsprPartner']).blank?
-          p.employees << Employee.new(name: name.strip).tap do |emp|
-            emp.contact.m_phones << data['Handy'].strip unless data['Handy'].blank?
-            emp.contact.p_phones << data['TelefonP'].strip unless data['TelefonP'].blank?
-          end
-        end
-
-        unless (advisers = data['IAKPartner']).blank?
-          evil = ['dr.', 'd.k.', 'f', 'd', 'm', 'geschäftsführg.']
-
-          p.advisers = advisers.underscore.split(/[,_\s\/\+]+/).reject do |adviser|
-            evil.include?(adviser)
-          end.map(&:capitalize).join(',')
-        end
-
-        unless p.save
-          $stderr.puts '=> Could not save dataset'.red
-          err += 1
-
-          p.errors.each do |attr, msg|
-            $stderr.puts "===> #{Partner.human_attribute_name(attr)}: #{msg}".yellow
-          end
+        p.errors.each do |attr, msg|
+          $stderr.puts "===> #{Partner.human_attribute_name(attr)}: #{msg}".yellow
         end
       end
     end

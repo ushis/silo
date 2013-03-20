@@ -12,7 +12,7 @@ do($ = jQuery) ->
 
     @each ->
       el = $(@)
-      url = $.silo.location(['help', el.data('help')])
+      url = $.silo.location('help', id: el.data('help'))
 
       $.ajax url: url, dataType: 'html', success: (help) =>
         help = $(help).siloOverlay()

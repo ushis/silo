@@ -2,10 +2,22 @@
 de:
   labels:
     help:
-      fulltext: 'Volltext'
+      fulltext:
+        fulltext: 'Volltext'
+        no_operator: 'Kein Operator'
+        operator: '%{operator} Operator'
       help: 'Hilfe: %{section}'
-      no_operator: 'Kein Operator'
-      operator: '%{operator} Operator'
+      markdown:
+        bold: 'Fett'
+        emphasis: 'Hervorhebung'
+        heading: 'Überschrift'
+        headings: 'Überschriften'
+        italic: 'Kursiv'
+        list_item: 'Listenpunkt %{i}'
+        lists: 'Listen'
+        markdown: 'Formatierung'
+        normal: 'Normal'
+        paragraphs: 'Absätze'
   messages:
     help:
       fulltext:
@@ -15,3 +27,6 @@ de:
         not: "Finde Einträge, die '%{t1}' beinhalten, aber nicht '%{t2}'."
         or: 'Finde Einträge, die mindestens eines der beiden Wörter beinhalten.'
         quote: "Finde Einträge, die die exakte Wortgruppe '%{phrase}' beinhalten."
+      markdown:
+        paragraph: 'Das ist ein Absatz.'
+        paragraph_alt: 'Zwischen zwei Absätzen wird eine Leerzeile eingefügt.'

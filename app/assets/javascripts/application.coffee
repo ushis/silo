@@ -3,6 +3,7 @@
 # Boots the application.
 #
 # =require jquery
+# =require jquery.ui.effect
 # =require jquery.ui.accordion
 # =require jquery.ui.autocomplete
 # =require rails
@@ -28,6 +29,7 @@ do ($ = jQuery) ->
     $('a.hidden-form').siloHiddenForm()
     $('a.chooser').siloChooser()
     $('[data-help]').siloHelp()
+    $('[data-toggle]').siloToggle()
     $('[data-master-box]').siloMasterBox()
     $('a[data-confirm]').siloConfirm()
     $('a[data-editable]').siloEditable()

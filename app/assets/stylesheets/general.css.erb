@@ -455,7 +455,8 @@ div.form-wrapper {
   float: right;
 }
 
-#filter div.need-help {
+/* Help */
+div.need-help {
   float: left;
   position: relative;
   cursor: pointer;
@@ -471,7 +472,7 @@ div.form-wrapper {
   box-shadow: 0 0 0 1px #C0C0C0, inset 0 1px 0 #FAFAFA, 0 2px 0 rgba(255, 255, 255, .4);
 }
 
-#filter div.need-help:before {
+div.need-help:before {
   content: ' ';
   position: absolute;
   top: 8px;
@@ -484,7 +485,7 @@ div.form-wrapper {
   border-right-color: #C0C0C0;
 }
 
-#filter div.need-help:after {
+div.need-help:after {
   content: ' ';
   position: absolute;
   top: 48%;
@@ -497,12 +498,12 @@ div.form-wrapper {
   border-right-color: #f1f1f1;
 }
 
-#filter div.need-help:hover {
+div.need-help:hover {
   color: #333;
   background: #F5F5F5;
 }
 
-#filter div.need-help:hover:after {
+div.need-help:hover:after {
   border-right-color: #F5F5F5;
 }
 
@@ -1265,6 +1266,11 @@ form label {
   font-weight: bold;
   text-shadow: 0 1px 0 #EEE;
   cursor: pointer;
+}
+
+form label[data-help] {
+  float: left;
+  line-height: 25px;
 }
 
 div.form-wrapper form textarea,

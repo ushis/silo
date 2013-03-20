@@ -30,8 +30,12 @@ describe User do
   end
 
   describe :delegations do
-    [:access?, :admin?].each do |method|
-      it { should delegate_method(method).to(:privilege) }
+    subject { build(:user) }
+
+    { access?: [:experts], admin?: [] }.each do |m, args|
+      it "should delegate :#{m} to privilege" do
+        expect(subject.send(m, *args)).to eq(subject.privilege.send(m, *args))
+      end
     end
   end
 
