@@ -63,13 +63,13 @@ de:
       employees: 'Geschäftspartner'
       new: 'Neuer Partner'
       search: 'Partner suchen'
-    reference:
-      all: 'Alle Referenzen'
+    project:
+      all: 'Alle Projekte'
     sections:
       experts: 'Experten'
       lists: 'Listen'
       partners: 'Partner'
-      references: 'Referenzen'
+      projects: 'Projekte'
       users: 'Benutzer'
     user:
       all: 'Alle Benutzer'

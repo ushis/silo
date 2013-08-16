@@ -39,8 +39,8 @@ Silo::Application.routes.draw do
     resources :contacts, only: [:create, :destroy]
   end
 
-  # References
-  resources :references
+  # Projects
+  resources :projects
 
   # Lists
   get 'lists(/page/:page)' => 'lists#index', as: :lists

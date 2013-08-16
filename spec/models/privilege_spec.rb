@@ -7,7 +7,7 @@ describe Privilege do
 
   describe :SECTIONS do
     it 'should be an array of sections' do
-      expect(Privilege::SECTIONS).to match_array([:partners, :experts, :references])
+      expect(Privilege::SECTIONS).to match_array([:partners, :experts, :projects])
     end
   end
 
