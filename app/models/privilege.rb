@@ -2,20 +2,20 @@
 #
 # Database Scheme:
 #
-# - *user_id* integer
-# - *amdin* boolean
-# - *experts* boolean
+# - *user_id*  integer
+# - *amdin*    boolean
+# - *experts*  boolean
 # - *partners* boolean
-# - *references* boolean
+# - *projects* boolean
 #
 # This is not very fancy.
 class Privilege < ActiveRecord::Base
   belongs_to :user
 
-  attr_accessible :admin, :experts, :partners, :references, as: :admin
+  attr_accessible :admin, :experts, :partners, :projects, as: :admin
 
   # A list of all sections.
-  SECTIONS = [:experts, :partners, :references]
+  SECTIONS = [:experts, :partners, :projects]
 
   # Checks for access privileges for a specified section.
   #

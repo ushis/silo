@@ -63,13 +63,13 @@ en:
       employees: 'Employees'
       new: 'New Partner'
       search: 'Search Partners'
-    reference:
-      all: 'All References'
+    project:
+      all: 'All Projects'
     sections:
       experts: 'Experts'
       lists: 'Lists'
       partners: 'Partners'
-      references: 'References'
+      projects: 'Projects'
       users: 'Users'
     user:
       all: 'All Users'

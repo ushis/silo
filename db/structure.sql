@@ -211,7 +211,7 @@ CREATE TABLE `privileges` (
   `admin` tinyint(1) NOT NULL DEFAULT '0',
   `experts` tinyint(1) NOT NULL DEFAULT '0',
   `partners` tinyint(1) NOT NULL DEFAULT '0',
-  `references` tinyint(1) NOT NULL DEFAULT '0',
+  `projects` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `index_privileges_on_user_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -242,6 +242,8 @@ CREATE TABLE `users` (
 INSERT INTO schema_migrations (version) VALUES ('1');
 
 INSERT INTO schema_migrations (version) VALUES ('10');
+
+INSERT INTO schema_migrations (version) VALUES ('11');
 
 INSERT INTO schema_migrations (version) VALUES ('2');
 

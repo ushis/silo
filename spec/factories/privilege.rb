@@ -3,7 +3,7 @@ FactoryGirl.define do
     admin false
     experts false
     partners false
-    references false
+    projects false
     association :user, factory: :user
   end
 end
