@@ -563,8 +563,8 @@ div.markdown em {
   font-size: 100%;
   font: inherit;
   vertical-align: baseline;
-  color: #666;
-  font: normal normal normal 13px/17px Helvetica, Arial, sans-serif;
+  color: #777;
+  font: normal normal normal 12px/17px Helvetica, Arial, sans-serif;
 }
 
 div.markdown {
@@ -606,10 +606,18 @@ div.markdown em {
 }
 
 div.markdown ol, div.markdown ul {
+  float: left;
+  width: 100%;
   color: #777;
   font: normal normal normal 13px/17px Helvetica, Arial, sans-serif;
   list-style-type: square;
   margin: 5px 0 10px 20px;
+}
+
+div.help.overlay div.markdown ol, 
+div.help.overlay  div.markdown ul {
+  float: none;
+  width: auto;
 }
 
 div.markdown ol {
@@ -640,7 +648,6 @@ div.markdown table {
   color: #777;
   text-shadow: 0 1px 0 white;
   line-height: 15px;
-  font-size: 12px;
   padding-right: 15px;
   margin-bottom: 10px;
 }
