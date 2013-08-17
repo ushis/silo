@@ -30,7 +30,7 @@ class Expert < ActiveRecord::Base
 
   DEFAULT_ORDER = 'experts.name, experts.prename'
 
-  discrete_values :gender, [:female, :male]
+  discrete_values :gender, [:male, :female]
 
   is_commentable_with :comment, autosave: true, dependent: :destroy, as: :commentable
 

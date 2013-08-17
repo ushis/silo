@@ -20,7 +20,7 @@ class Employee < ActiveRecord::Base
   attr_exposable :title, :name, :prename, :gender, :job, as: :csv
   attr_exposable :title, :name, :prename, :gender, :job, as: :pdf
 
-  discrete_values :gender, [:female, :male], allow_nil: true
+  discrete_values :gender, [:male, :female], allow_nil: true
 
   validates :name, presence: true
 
