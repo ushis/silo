@@ -234,8 +234,8 @@ CREATE TABLE `users` (
   `current_list_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_users_on_username` (`username`),
-  KEY `index_users_on_email` (`email`),
-  KEY `index_users_on_login_hash` (`login_hash`),
+  UNIQUE KEY `index_users_on_email` (`email`),
+  UNIQUE KEY `index_users_on_login_hash` (`login_hash`),
   KEY `index_users_on_current_list_id` (`current_list_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

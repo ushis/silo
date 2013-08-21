@@ -9,12 +9,12 @@ class ProjectsController < ApplicationController
 
   #
   def index
-    @title = t('labels.projects.all')
+    @title = t('labels.project.all')
   end
 
   #
   def not_found
-    flash[:alert] = t('messages.projects.errors.find')
+    flash[:alert] = t('messages.project.errors.find')
     redirect_to projects_url
   end
 end

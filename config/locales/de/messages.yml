@@ -126,6 +126,9 @@ de:
         create: 'Partner hinzugefügt: %{name}'
         delete: 'Partner gelöscht: %{name}'
         save: 'Partner gespeichert.'
+    project:
+      errors:
+        find: 'Projekt nicht gefunden.'
     user:
       confirm:
         delete: 'Möchtest du wirklich diesen Benutzer löschen?'
