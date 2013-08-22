@@ -18,7 +18,7 @@ class AddProjects < ActiveRecord::Migration
       add_index :projects, col
     end
 
-    create_table :project_info do |t|
+    create_table :project_infos do |t|
       t.integer :user_id,         null: false
       t.integer :project_id,      null: false
       t.integer :language_id,     null: false
@@ -30,8 +30,8 @@ class AddProjects < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index :project_info, :title
-    add_index :project_info, [:project_id, :language_id], unique: true
+    add_index :project_infos, :title
+    add_index :project_infos, [:project_id, :language_id], unique: true
 
     create_table :project_members do |t|
       t.integer :expert_id,  null: false
@@ -45,7 +45,7 @@ class AddProjects < ActiveRecord::Migration
 
   def down
     drop_table :projects
-    drop_table :project_info
+    drop_table :project_infos
     drop_table :project_members
   end
 end

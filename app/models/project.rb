@@ -7,6 +7,8 @@ class Project < ActiveRecord::Base
 
   discrete_values :status, [:forecast, :interested, :offer, :execution, :stopped, :complete]
 
-  has_many :info,    auto_save: true, dependent: :destroy, class_name: :ProjectInfo
-  has_many :members, auto_save: true, dependent: :destroy, class_name: :ProjectMember
+  has_many :infos,   autosave: true, dependent: :destroy, class_name: :ProjectInfo
+  has_many :members, autosave: true, dependent: :destroy, class_name: :ProjectMember
+
+  belongs_to :user, select: [:id, :name, :prename]
 end

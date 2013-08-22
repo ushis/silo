@@ -217,7 +217,7 @@ CREATE TABLE `privileges` (
   KEY `index_privileges_on_user_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `project_info` (
+CREATE TABLE `project_infos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `project_id` int(11) NOT NULL,
@@ -230,8 +230,8 @@ CREATE TABLE `project_info` (
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `index_project_info_on_project_id_and_language_id` (`project_id`,`language_id`),
-  KEY `index_project_info_on_title` (`title`)
+  UNIQUE KEY `index_project_infos_on_project_id_and_language_id` (`project_id`,`language_id`),
+  KEY `index_project_infos_on_title` (`title`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE `project_members` (
