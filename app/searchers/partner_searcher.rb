@@ -45,9 +45,10 @@ class PartnerSearcher < ApplicationSearcher
         WHERE comments.commentable_type = 'Partner'
           AND MATCH (comments.comment) AGAINST (:q)
       ) UNION (
-        SELECT descriptions.partner_id
+        SELECT descriptions.describable_id
         FROM descriptions
-        WHERE MATCH (descriptions.description) AGAINST (:q)
+        WHERE descriptions.describable_type = 'Partner'
+          AND MATCH (descriptions.description) AGAINST (:q)
       )
     SQL
   end
