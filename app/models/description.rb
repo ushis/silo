@@ -13,5 +13,5 @@
 #
 # See ActsAsComment for more info.
 class Description < ActiveRecord::Base
-  acts_as_comment :description, for: :partner
+  acts_as_comment :description, for: :describable, polymorphic: true
 end

@@ -1,4 +1,4 @@
-class AddProjects < ActiveRecord::Migration
+class RenameReferences < ActiveRecord::Migration
   def up
     rename_column :privileges, :references, :projects
   end

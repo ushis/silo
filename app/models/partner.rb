@@ -35,8 +35,8 @@ class Partner < ActiveRecord::Base
   is_taggable_with :advisers
   is_taggable_with :businesses
 
-  is_commentable_with :description, autosave: true, dependent: :destroy
   is_commentable_with :comment,     autosave: true, dependent: :destroy, as: :commentable
+  is_commentable_with :description, autosave: true, dependent: :destroy, as: :describable
 
   validates :company, presence: true
 

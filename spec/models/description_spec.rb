@@ -6,6 +6,6 @@ describe Description do
   end
 
   describe :associations do
-    it { should belong_to(:partner) }
+    it { should belong_to(:describable) }
   end
 end

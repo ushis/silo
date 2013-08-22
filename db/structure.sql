@@ -97,12 +97,14 @@ CREATE TABLE `cvs` (
 
 CREATE TABLE `descriptions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `partner_id` int(11) NOT NULL,
+  `describable_id` int(11) NOT NULL,
   `description` text NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
+  `describable_type` varchar(255) NOT NULL DEFAULT 'Partner',
   PRIMARY KEY (`id`),
-  KEY `index_descriptions_on_partner_id` (`partner_id`),
+  KEY `index_descriptions_on_partner_id` (`describable_id`),
+  KEY `index_descriptions_on_describable_id_and_describable_type` (`describable_id`,`describable_type`),
   FULLTEXT KEY `fulltext_description` (`description`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -216,6 +218,55 @@ CREATE TABLE `privileges` (
   KEY `index_privileges_on_user_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE `project_info` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `project_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `region` varchar(255) DEFAULT NULL,
+  `client` varchar(255) DEFAULT NULL,
+  `funders` varchar(255) DEFAULT NULL,
+  `focus` text,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_project_info_on_project_id` (`project_id`),
+  KEY `index_project_info_on_language_id` (`language_id`),
+  KEY `index_project_info_on_title` (`title`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `project_members` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `expert_id` int(11) NOT NULL,
+  `project_id` int(11) NOT NULL,
+  `role` varchar(255) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_project_members_on_expert_id_and_project_id` (`expert_id`,`project_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `projects` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `country_id` int(11) DEFAULT NULL,
+  `status` varchar(255) NOT NULL,
+  `carried_proportion` int(11) NOT NULL DEFAULT '0',
+  `start` varchar(255) DEFAULT NULL,
+  `end` varchar(255) DEFAULT NULL,
+  `partners` varchar(255) DEFAULT NULL,
+  `staff_months` int(11) DEFAULT NULL,
+  `order_value_us` int(11) DEFAULT NULL,
+  `order_value_eur` int(11) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_projects_on_country_id` (`country_id`),
+  KEY `index_projects_on_status` (`status`),
+  KEY `index_projects_on_start` (`start`),
+  KEY `index_projects_on_end` (`end`),
+  KEY `index_projects_on_partners` (`partners`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 CREATE TABLE `schema_migrations` (
   `version` varchar(255) NOT NULL,
   UNIQUE KEY `unique_schema_migrations` (`version`)
@@ -234,8 +285,8 @@ CREATE TABLE `users` (
   `current_list_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_users_on_username` (`username`),
-  UNIQUE KEY `index_users_on_email` (`email`),
-  UNIQUE KEY `index_users_on_login_hash` (`login_hash`),
+  KEY `index_users_on_email` (`email`),
+  KEY `index_users_on_login_hash` (`login_hash`),
   KEY `index_users_on_current_list_id` (`current_list_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -244,6 +295,10 @@ INSERT INTO schema_migrations (version) VALUES ('1');
 INSERT INTO schema_migrations (version) VALUES ('10');
 
 INSERT INTO schema_migrations (version) VALUES ('11');
+
+INSERT INTO schema_migrations (version) VALUES ('12');
+
+INSERT INTO schema_migrations (version) VALUES ('13');
 
 INSERT INTO schema_migrations (version) VALUES ('2');
 
