@@ -97,13 +97,12 @@ CREATE TABLE `cvs` (
 
 CREATE TABLE `descriptions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `describable_id` int(11) NOT NULL,
+  `describable_id` int(11) DEFAULT NULL,
   `description` text NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   `describable_type` varchar(255) NOT NULL DEFAULT 'Partner',
   PRIMARY KEY (`id`),
-  KEY `index_descriptions_on_partner_id` (`describable_id`),
   KEY `index_descriptions_on_describable_id_and_describable_type` (`describable_id`,`describable_type`),
   FULLTEXT KEY `fulltext_description` (`description`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -220,40 +219,41 @@ CREATE TABLE `privileges` (
 
 CREATE TABLE `project_info` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
   `project_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `region` varchar(255) DEFAULT NULL,
-  `client` varchar(255) DEFAULT NULL,
-  `funders` varchar(255) DEFAULT NULL,
-  `focus` text,
+  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `region` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `client` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `funders` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `focus` text COLLATE utf8_unicode_ci,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `index_project_info_on_project_id` (`project_id`),
-  KEY `index_project_info_on_language_id` (`language_id`),
+  UNIQUE KEY `index_project_info_on_project_id_and_language_id` (`project_id`,`language_id`),
   KEY `index_project_info_on_title` (`title`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE `project_members` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `expert_id` int(11) NOT NULL,
   `project_id` int(11) NOT NULL,
-  `role` varchar(255) NOT NULL,
+  `role` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_project_members_on_expert_id_and_project_id` (`expert_id`,`project_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE `projects` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
   `country_id` int(11) DEFAULT NULL,
-  `status` varchar(255) NOT NULL,
+  `status` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `carried_proportion` int(11) NOT NULL DEFAULT '0',
-  `start` varchar(255) DEFAULT NULL,
-  `end` varchar(255) DEFAULT NULL,
-  `partners` varchar(255) DEFAULT NULL,
+  `start` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `end` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `partners` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `staff_months` int(11) DEFAULT NULL,
   `order_value_us` int(11) DEFAULT NULL,
   `order_value_eur` int(11) DEFAULT NULL,
@@ -265,7 +265,7 @@ CREATE TABLE `projects` (
   KEY `index_projects_on_start` (`start`),
   KEY `index_projects_on_end` (`end`),
   KEY `index_projects_on_partners` (`partners`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE `schema_migrations` (
   `version` varchar(255) NOT NULL,
