@@ -110,7 +110,7 @@ class Attachment < ActiveRecord::Base
   #   #=> <File:/path/to/store/e4b969da-10df-4374-afd7-648b15b09903.doc>
   #
   # Raises IOError and SystemCallError on failure.
-  def empty_file(suffix = nil)
+  def empty_file(suffix = nil, &block)
     date = Date.today.to_formatted_s(:db)
 
     begin
@@ -119,11 +119,7 @@ class Attachment < ActiveRecord::Base
 
     STORE.mkpath unless STORE.exist?
 
-    if block_given?
-      path.open('wb') { |f| yield(f) }
-    else
-      path.open('wb')
-    end
+    path.open('wb', &block)
   end
 
   # Removes the attachment from the file system.
