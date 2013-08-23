@@ -67,6 +67,21 @@ class Language < ActiveRecord::Base
     where('languages.id IN (:q) OR languages.language IN (:q)', q: query)
   end
 
+  # Returns all prioritized languages.
+  #
+  #   Language.prioritized
+  #   #=> [
+  #     #<Language id: 81, language: "de">,
+  #     #<Language id: 83, language: "en">,
+  #     #<Language id: 84, language: "es">,
+  #     #<Language id: 90, language: "fr">
+  #   ]
+  #
+  # The results are in no special order.
+  def self.prioritized
+    where('languages.language IN (:q)', q: PRIORITIES)
+  end
+
   # Returns a collection of all languages ordered by localized name.
   def self.ordered
     all.sort { |x, y| x.human <=> y.human }

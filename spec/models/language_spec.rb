@@ -125,6 +125,24 @@ describe Language do
     end
   end
 
+  describe :prioritized do
+    before(:all) do
+      @langs = (Language::PRIORITIES + %w('hi it').to_set).map do |l|
+        create(:language, language: l)
+      end
+    end
+
+    after(:all) do
+      @langs.each { |l| l.destroy }
+    end
+
+    subject { Language.prioritized.pluck(:language) }
+
+    it 'should find all prioritized languages' do
+      expect(subject).to match_array(Language::PRIORITIES.to_a)
+    end
+  end
+
   describe 'ordered' do
     before(:all) do
       @hi = create(:language, language: :hi)  # Hindi
