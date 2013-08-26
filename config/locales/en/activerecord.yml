@@ -51,6 +51,14 @@ en:
             password:
               confirmation: 'Passwords do not match.'
     discrete:
+      project:
+        status:
+          forecast: 'Forecast'
+          interested: 'Interested'
+          offer: 'Offer'
+          execution: 'Execution'
+          stopped: 'Stopped'
+          complete: 'Complete'
       values:
         gender:
           female: 'Female'

@@ -51,6 +51,14 @@ de:
             password:
               confirmation: 'Passwörter stimmen nicht überein.'
     discrete:
+      project:
+        status:
+          forecast: 'Forecast'
+          interested: 'Interessiert'
+          offer: 'Angebot'
+          execution: 'Ausführung'
+          stopped: 'Eingestellt'
+          complete: 'Beendet'
       values:
         gender:
           female: 'Weiblich'
