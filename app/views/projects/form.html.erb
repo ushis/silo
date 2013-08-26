@@ -15,6 +15,85 @@
             <%= f.label :title %>
             <%= f.text_field :title %>
           </div>
+          <%= f.fields_for :project, @info.project do |p| %>
+            <div class="status">
+              <%= p.label :status %>
+              <%= p.select :status, Project.status_values %>
+            </div>
+          <% end %>
+        </div>
+        <div class="row">
+          <%= f.fields_for :project, @info.project do |p| %>
+            <div class="country">
+              <%= p.label :country %>
+              <%= p.country_select :country_id %>
+            </div>
+          <% end %>
+          <div class="region">
+            <%= f.label :region %>
+            <%= f.text_field :region %>
+          </div>
+        </div>
+        <div class="row main">
+          <div class="title">
+            <%= f.label :client %>
+            <%= f.text_field :client %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="funders">
+            <%= f.label :funders %>
+            <%= f.text_field :funders %>
+          </div>
+          <%= f.fields_for :project, @info.project do |p| %>
+            <div class="order_value_us">
+              <%= p.label :order_value_us %>
+              <%= p.text_field :order_value_us %>
+            </div>
+            <div class="order_value_eur">
+              <%= p.label :order_value_eur %>
+              <%= p.text_field :order_value_eur %>
+            </div>
+        </div>
+        <div class="row">
+            <div class="carried_proportion">
+              <%= p.label :carried_proportion %>
+              <%= p.text_field :carried_proportion %>
+            </div>
+        </div>
+        <div class="row">
+            <div class="start">
+              <%= p.label :start %>
+              <%= p.text_field :start %>
+            </div>
+            <div class="end">
+              <%= p.label :end %>
+              <%= p.text_field :end %>
+            </div>
+          <% end %>
+        </div>
+        <div class="row">
+          <div class="focus">
+            <%= f.label :focus, 'data-help' => 'markdown' %>
+            <%= f.text_area :focus %>
+          </div>
+          <div class="description">
+            <%= f.label :description %>
+            <%= f.text_area :description %>
+          </div>
+          <div class="service_details">
+            <%= f.label :service_details %>
+            <%= f.text_area :service_details %>
+          </div>
+        </div>
+        <div class="row">
+          
+        </div>
+        <div class="row">
+          
+        </div>
+        <div class="row">
+          
         </div>
         <div class="row">
           <div class="submit">
