@@ -15,6 +15,8 @@ class ProjectInfo < ActiveRecord::Base
   belongs_to :language
   belongs_to :project, inverse_of: :infos
 
+  accepts_nested_attributes_for :project
+
   default_scope order(:language).order(:title)
 
   self.per_page = 50
