@@ -1,0 +1,28 @@
+<%= render 'sidebar' %>
+
+<div id="main">
+  <div>
+    <h2 class="icon-project-edit">
+      <%= @title %>
+    </h2>
+    <% unless @info.errors.empty? %>
+      <%= render 'shared/validation_errors', model: @info %>
+    <% end %>
+    <div class ="form-wrapper">
+      <%= form_for @info, url: project_path(@info) do |f| %>
+        <div class="row main">
+          <div class="title">
+            <%= f.label :title %>
+            <%= f.text_field :title %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="submit">
+            <%= f.submit t('actions.save') %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="clear"></div>
+</div>
