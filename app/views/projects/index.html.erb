@@ -1,3 +1,31 @@
-<p class="icon-under-construction">
-  Coming soon
-</p>
+<%= render 'sidebar' %>
+
+<div id="main">
+  <div>
+    <div clas="header">
+      <div class="filter">
+
+      </div>
+      <%= paginate @projects %>
+    </div>
+    <table class="projects">
+      <tbody>
+        <% @projects.each do |project| %>
+          <% if project.info? %>
+            <tr>
+              <td>
+                <%= link_to project.info.title, project_path(project.info) %>
+              </td>
+              <td>
+                <%= list_infos project %>
+              </td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="pagination bottom">
+    <%= paginate @projects %>
+  </div>
+</div>

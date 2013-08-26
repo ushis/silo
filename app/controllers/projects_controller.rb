@@ -10,6 +10,7 @@ class ProjectsController < ApplicationController
   #
   def index
     @title = t('labels.project.all')
+    @projects = Project.ordered.includes(:infos).page(params[:page])
   end
 
   #
