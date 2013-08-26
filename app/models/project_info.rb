@@ -7,7 +7,7 @@ class ProjectInfo < ActiveRecord::Base
   discrete_values :language, %w(de en es fr), i18n_scope: :languages
 
   is_commentable_with :description,     autosave: true, dependent: :destroy, as: :describable
-  is_commentable_with :service_details, autosave: true, dependent: :destroy, as: :commentable
+  is_commentable_with :service_details, autosave: true, dependent: :destroy, as: :commentable, class_name: :Comment
 
   validates :title, presence: true
 
