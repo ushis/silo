@@ -40,7 +40,9 @@ Silo::Application.routes.draw do
   end
 
   # Projects
-  resources :projects
+  get 'projects(/page/:page)' => 'projects#index', as: :projects
+
+  resources :projects, except: [:index]
 
   # Lists
   get 'lists(/page/:page)' => 'lists#index', as: :lists

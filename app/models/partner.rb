@@ -40,6 +40,8 @@ class Partner < ActiveRecord::Base
 
   validates :company, presence: true
 
+  has_and_belongs_to_many :projects, uniq: true
+
   has_many :employees,   autosave: true, dependent: :destroy
   has_many :attachments, autosave: true, dependent: :destroy, as: :attachable
   has_many :list_items,  autosave: true, dependent: :destroy, as: :item
