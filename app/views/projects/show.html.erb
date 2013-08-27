@@ -9,5 +9,9 @@
     <%= project_info_selector(@info) %>
   </div>
 
+  <div>
+    <%= link_to t('actions.edit'), edit_project_path(@project, @info.language) %>
+  </div>
+
   <div class="clear"></div>
 </div>

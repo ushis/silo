@@ -64,7 +64,7 @@ class ProjectsController < ApplicationController
   # Renders the projects form.
   def render_form(action)
     body_class << action
-    @title = ("labels.action.#{action}")
+    @title = t("labels.project.#{action}")
     @info = @project.info_by_language(params[:lang])
     render :form
   end
