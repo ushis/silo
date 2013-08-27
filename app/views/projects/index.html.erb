@@ -14,7 +14,7 @@
           <% if project.info? %>
             <tr>
               <td>
-                <%= link_to project.info.title, project_path(project.info) %>
+                <%= link_to project.info.title, project_path(project, lang: project.info.language) %>
               </td>
               <td>
                 <%= list_infos project %>

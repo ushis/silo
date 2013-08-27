@@ -1,6 +1,7 @@
 #
 class ProjectsController < ApplicationController
   before_filter :check_password, only: [:destroy]
+  before_filter :find_project,   only: [:show, :edit, :update, :destroy]
 
   skip_before_filter :authorize, only: [:index, :show]
 
@@ -9,32 +10,30 @@ class ProjectsController < ApplicationController
     super(:projects, projects_url)
   end
 
-  # GET /projects
+  # GET /projects(/page/:page)
   def index
     @title = t('labels.project.all')
     @projects = Project.ordered.includes(:infos).page(params[:page])
   end
 
-  # GET /projects/:id
+  # GET /projects/:id/:lang
   def show
-    @info = ProjectInfo.find(params[:id])
+    @info = @project.info_by_language!(params[:lang])
     @title = @info.title
   end
 
-  # GET /projects/new
+  # GET /projects/new/:lang
   def new
-    @info = ProjectInfo.new
-    @info.project = Project.new
+    @project = Project.new
     render_form(:new)
   end
 
-  # POST /projects/:id
+  # POST /projects
   def create
   end
 
-  # GET /projects/:id/edit
+  # GET /projects/:id/edit/:lang
   def edit
-    @info = ProjectInfo.find(params[:id])
     render_form(:edit)
   end
 
@@ -44,8 +43,7 @@ class ProjectsController < ApplicationController
 
   # DELETE /projects/:id
   def destroy
-    project = Project.find(params[:id])
-    info = project.info
+    info = @project.info
 
     if project.destroy
       flash[:notice] = t('messages.project.success.delete', info.try(:title))
@@ -58,10 +56,16 @@ class ProjectsController < ApplicationController
 
   private
 
+  # Finds the project.
+  def find_project
+    @project = Project.find(params[:id])
+  end
+
   # Renders the projects form.
   def render_form(action)
     body_class << action
     @title = ("labels.action.#{action}")
+    @info = @project.info_by_language(params[:lang])
     render :form
   end
 

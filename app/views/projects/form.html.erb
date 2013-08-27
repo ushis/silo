@@ -5,101 +5,92 @@
     <h2 class="icon-project-edit">
       <%= @title %>
     </h2>
-    <% unless @info.errors.empty? %>
-      <%= render 'shared/validation_errors', model: @info %>
+    <div>
+      <%= select_tag :lang, options_for_select(ProjectInfo.language_values, @info.language) %>
+    </div>
+    <% unless @project.errors.empty? %>
+      <%= render 'shared/validation_errors', model: @project %>
     <% end %>
     <div class ="form-wrapper">
-      <%= form_for @info, url: project_path(@info) do |f| %>
-        <div class="row main">
-          <div class="title">
-            <%= f.label :title %>
-            <%= f.text_field :title %>
-          </div>
-          <%= f.fields_for :project, @info.project do |p| %>
+      <%= form_for @project do |f| %>
+        <%= fields_for :project_info, @info do |i| %>
+          <div class="row main">
+            <div class="title">
+              <%= i.label :title %>
+              <%= i.text_field :title %>
+            </div>
             <div class="status">
-              <%= p.label :status %>
-              <%= p.select :status, Project.status_values %>
+              <%= f.label :status %>
+              <%= f.select :status, Project.status_values %>
             </div>
-          <% end %>
-        </div>
-        <div class="row">
-          <%= f.fields_for :project, @info.project do |p| %>
+          </div>
+          <div class="row">
             <div class="country">
-              <%= p.label :country %>
-              <%= p.country_select :country_id %>
+              <%= f.label :country %>
+              <%= f.country_select :country_id %>
             </div>
-          <% end %>
-          <div class="region">
-            <%= f.label :region %>
-            <%= f.text_field :region %>
+            <div class="region">
+              <%= i.label :region %>
+              <%= i.text_field :region %>
+            </div>
           </div>
-        </div>
-        <div class="row main">
-          <div class="title">
-            <%= f.label :client %>
-            <%= f.text_field :client %>
+          <div class="row main">
+            <div class="title">
+              <%= i.label :client %>
+              <%= i.text_field :client %>
+            </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="funders">
-            <%= f.label :funders %>
-            <%= f.text_field :funders %>
-          </div>
-          <%= f.fields_for :project, @info.project do |p| %>
+          <div class="row">
+            <div class="funders">
+              <%= i.label :funders %>
+              <%= i.text_field :funders %>
+            </div>
             <div class="order_value_us">
-              <%= p.label :order_value_us %>
-              <%= p.text_field :order_value_us %>
+              <%= f.label :order_value_us %>
+              <%= f.text_field :order_value_us %>
             </div>
             <div class="order_value_eur">
-              <%= p.label :order_value_eur %>
-              <%= p.text_field :order_value_eur %>
+              <%= f.label :order_value_eur %>
+              <%= f.text_field :order_value_eur %>
             </div>
-        </div>
-        <div class="row">
+          </div>
+          <div class="row">
             <div class="carried_proportion">
-              <%= p.label :carried_proportion %>
-              <%= p.text_field :carried_proportion %>
+              <%= f.label :carried_proportion %>
+              <%= f.text_field :carried_proportion %>
             </div>
-        </div>
-        <div class="row">
+          </div>
+          <div class="row">
             <div class="start">
-              <%= p.label :start %>
-              <%= p.text_field :start %>
+              <%= f.label :start %>
+              <%= f.text_field :start %>
             </div>
             <div class="end">
-              <%= p.label :end %>
-              <%= p.text_field :end %>
+              <%= f.label :end %>
+              <%= f.text_field :end %>
             </div>
-          <% end %>
-        </div>
-        <div class="row">
-          <div class="focus">
-            <%= f.label :focus, 'data-help' => 'markdown' %>
-            <%= f.text_area :focus %>
           </div>
-          <div class="description">
-            <%= f.label :description %>
-            <%= f.text_area :description %>
+          <div class="row">
+            <div class="focus">
+              <%= i.label :focus, 'data-help' => 'markdown' %>
+              <%= i.text_area :focus %>
+            </div>
+            <div class="description">
+              <%= i.label :description %>
+              <%= i.text_area :description %>
+            </div>
+            <div class="service_details">
+              <%= i.label :service_details %>
+              <%= i.text_area :service_details %>
+            </div>
           </div>
-          <div class="service_details">
-            <%= f.label :service_details %>
-            <%= f.text_area :service_details %>
+          <div class="row">
+            <div class="submit">
+              <%= i.hidden_field :language %>
+              <%= f.submit t('actions.save') %>
+            </div>
           </div>
-        </div>
-        <div class="row">
-          
-        </div>
-        <div class="row">
-          
-        </div>
-        <div class="row">
-          
-        </div>
-        <div class="row">
-          <div class="submit">
-            <%= f.submit t('actions.save') %>
-          </div>
-        </div>
+        <% end %>
       <% end %>
     </div>
   </div>

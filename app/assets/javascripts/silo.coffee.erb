@@ -64,9 +64,12 @@ do ($ = jQuery) ->
         path += ".#{params.format}"
         delete(params.format)
 
+      @replaceParams(path, params)
+
+    # Replaces the params (:param) in a location path.
+    replaceParams: (path, params) ->
       for param, value of params
         path = path.replace(new RegExp(":#{param}(?=/|$)", 'gi'), value)
-
       path
 
     # Detects the availability of localStorage. Returns true if localStorage

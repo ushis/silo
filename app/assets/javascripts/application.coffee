@@ -35,6 +35,7 @@ do ($ = jQuery) ->
     $('a[data-editable]').siloEditable()
     $('input[data-complete]').siloAutocomplete()
     $('input[data-multi-select]').siloMultiSelect()
+    $('select[data-selector]').siloSelector()
 
     # Login
     $('#login-form').siloLogin()

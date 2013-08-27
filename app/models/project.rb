@@ -30,4 +30,18 @@ class Project < ActiveRecord::Base
   def info
     infos.first
   end
+
+  # Returns an info by given language. Allocates a fresh ProjectInfo, if it
+  # doesn't exist.
+  def info_by_language(lang)
+    infos.find_by_language(lang) || ProjectInfo.new.tap do |info|
+      info.project = self
+      info.language = lang
+    end
+  end
+
+  #
+  def info_by_language!(lang)
+    infos.find_by_language!(lang)
+  end
 end
