@@ -16,4 +16,12 @@ module ProjectHelper
     options = options_from_collection_for_select(info.project.infos, :language, :human_language, info.language)
     select_tag(:lang, options, html_options)
   end
+
+  # Returns a select tag with project languages.
+  def project_form_selector(info, html_options = {})
+    path = (params[:action] == :new) ? new_project_path(':lang') : edit_project_path(info.project, lang: ':lang')
+    html_options = html_options.merge({'data-selector' => path})
+    options = options_for_select(ProjectInfo.language_values, info.language)
+    select_tag(:lang, options, html_options)
+  end
 end

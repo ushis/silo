@@ -6,7 +6,7 @@
       <%= @title %>
     </h2>
     <div>
-      <%= select_tag :lang, options_for_select(ProjectInfo.language_values, @info.language) %>
+      <%= project_form_selector @info %>
     </div>
     <% unless @project.errors.empty? %>
       <%= render 'shared/validation_errors', model: @project %>

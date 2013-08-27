@@ -42,8 +42,8 @@ Silo::Application.routes.draw do
   # Projects
   get 'projects(/page/:page)'   => 'projects#index', as: :projects
   get 'projects/new/:lang'      => 'projects#new',   as: :new_project
-  get 'projects/:id/:lang'      => 'projects#show',  as: :project
   get 'projects/:id/edit/:lang' => 'projects#edit',  as: :edit_project
+  get 'projects/:id/:lang'      => 'projects#show',  as: :project
 
   resources :projects, except: [:index, :show, :new, :edit]
 
