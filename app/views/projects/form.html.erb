@@ -19,46 +19,6 @@
               <%= i.label :title %>
               <%= i.text_field :title %>
             </div>
-            <div class="status">
-              <%= f.label :status %>
-              <%= f.select :status, Project.status_values %>
-            </div>
-          </div>
-          <div class="row">
-            <div class="country">
-              <%= f.label :country %>
-              <%= f.country_select :country_id %>
-            </div>
-            <div class="region">
-              <%= i.label :region %>
-              <%= i.text_field :region %>
-            </div>
-          </div>
-          <div class="row main">
-            <div class="title">
-              <%= i.label :client %>
-              <%= i.text_field :client %>
-            </div>
-          </div>
-          <div class="row">
-            <div class="funders">
-              <%= i.label :funders %>
-              <%= i.text_field :funders %>
-            </div>
-            <div class="order_value_us">
-              <%= f.label :order_value_us %>
-              <%= f.text_field :order_value_us %>
-            </div>
-            <div class="order_value_eur">
-              <%= f.label :order_value_eur %>
-              <%= f.text_field :order_value_eur %>
-            </div>
-          </div>
-          <div class="row">
-            <div class="carried_proportion">
-              <%= f.label :carried_proportion %>
-              <%= f.text_field :carried_proportion %>
-            </div>
           </div>
           <div class="row">
             <div class="start">
@@ -68,6 +28,52 @@
             <div class="end">
               <%= f.label :end %>
               <%= f.text_field :end %>
+            </div>
+            <div class="carried_proportion">
+              <%= f.label :carried_proportion %>
+              <%= f.text_field :carried_proportion %>
+            </div>
+            <div class="status">
+              <%= f.label :status %>
+              <%= f.select :status, Project.status_values %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="left">
+              <div class="country">
+                <%= f.label :country %>
+                <%= f.country_select :country_id %>
+              </div>
+              <div class="region">
+                <%= i.label :region %>
+                <%= i.text_field :region %>
+              </div>
+            </div>
+            <div class="right">
+              <div class="address">
+                <%= i.label :address %>
+                <%= i.text_area :region %>
+              </div>
+            </div>
+          </div>
+          <div class="row main">
+            <div class="client">
+              <%= i.label :client %>
+              <%= i.text_field :client %>
+            </div>
+            <div class="funders">
+              <%= i.label :funders %>
+              <%= i.text_field :funders %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="order_value_us">
+              <%= f.label :order_value_us %>
+              <%= f.text_field :order_value_us %>
+            </div>
+            <div class="order_value_eur">
+              <%= f.label :order_value_eur %>
+              <%= f.text_field :order_value_eur %>
             </div>
           </div>
           <div class="row">
