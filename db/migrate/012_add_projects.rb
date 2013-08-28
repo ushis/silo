@@ -23,6 +23,7 @@ class AddProjects < ActiveRecord::Migration
       t.string  :title,      null: false
       t.string  :region,     null: true
       t.string  :client,     null: true
+      t.string  :address,    null: true
       t.string  :funders,    null: true
       t.text    :focus,      null: true
       t.timestamps

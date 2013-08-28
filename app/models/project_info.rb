@@ -2,7 +2,7 @@
 #
 #
 class ProjectInfo < ActiveRecord::Base
-  attr_accessible :title, :language, :region, :client, :funders, :focus
+  attr_accessible :title, :language, :region, :client, :address, :funders, :focus
 
   discrete_values :language, %w(de en es fr), i18n_scope: :languages
 

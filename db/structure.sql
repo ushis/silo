@@ -230,6 +230,7 @@ CREATE TABLE `project_infos` (
   `title` varchar(255) NOT NULL,
   `region` varchar(255) DEFAULT NULL,
   `client` varchar(255) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
   `funders` varchar(255) DEFAULT NULL,
   `focus` text,
   `created_at` datetime NOT NULL,
