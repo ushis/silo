@@ -22,23 +22,46 @@ class ProjectsController < ApplicationController
     @title = @info.title
   end
 
-  # GET /projects/new/:lang
+  # GET /projects/new
   def new
     @project = Project.new
+    @info = ProjectInfo.new
     render_form(:new)
   end
 
   # POST /projects
   def create
+    @project = current_user.projects.build(params[:project])
+    @info = @project.infos.build(params[:project_info])
+
+    if @info.save
+      flash[:notice] = t('messages.project.success.create')
+      redirect_to project_url(@project, @info.language)
+    else
+      flash[:alert] = t('messages.project.errors.create')
+      render_form(:new)
+    end
   end
 
   # GET /projects/:id/edit/:lang
   def edit
+    @info = @project.info_by_language(params[:lang])
     render_form(:edit)
   end
 
-  # PUT /projects/:id
+  # PUT /projects/:id/:lang
   def update
+    @info = @project.info_by_language(params[:lang])
+    @info.project.attributes = params[:project]
+    @info.project.user = current_user
+
+    if @info.update_attributes(params[:project_info])
+      flash[:notice] = t('messages.project.success.save')
+      redirect_to project_url(@project, @info.language)
+    else
+      flash[:alert] = t('messages.project.erros.save')
+      render_form(:edit)
+    end
   end
 
   # DELETE /projects/:id
@@ -50,7 +73,7 @@ class ProjectsController < ApplicationController
       redirect_to projects_url
     else
       flash[:alert] = t('messages.project.errors.delete')
-      redirect_to project_url(info)
+      redirect_to project_url(@project, info.try(:language))
     end
   end
 
@@ -65,7 +88,6 @@ class ProjectsController < ApplicationController
   def render_form(action)
     body_class << action
     @title = t("labels.project.#{action}")
-    @info = @project.info_by_language(params[:lang])
     render :form
   end
 

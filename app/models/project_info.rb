@@ -10,12 +10,9 @@ class ProjectInfo < ActiveRecord::Base
   is_commentable_with :service_details, autosave: true, dependent: :destroy, as: :commentable, class_name: :Comment
 
   validates :title, presence: true
+  validate :language_cannot_be_changed
 
-  belongs_to :user
-  belongs_to :language
-  belongs_to :project, inverse_of: :infos
-
-  accepts_nested_attributes_for :project
+  belongs_to :project, autosave: true, inverse_of: :infos
 
   default_scope order(:language).order(:title)
 
@@ -24,6 +21,13 @@ class ProjectInfo < ActiveRecord::Base
   #
   def self.languages
     language_values.map(&:last)
+  end
+
+  #
+  def language_cannot_be_changed
+    if ! language_was.nil? && language_changed?
+      errors.add(:language, I18n.t('messages.project_info.errors.language_changed'))
+    end
   end
 
   #

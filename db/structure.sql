@@ -225,7 +225,6 @@ CREATE TABLE `privileges` (
 
 CREATE TABLE `project_infos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
   `project_id` int(11) NOT NULL,
   `language` varchar(255) NOT NULL,
   `title` varchar(255) NOT NULL,

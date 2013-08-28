@@ -54,6 +54,7 @@ class User < ActiveRecord::Base
   has_many :experts
   has_many :partners
   has_many :lists
+  has_many :projects
 
   has_one  :privilege, autosave: true, dependent: :destroy
 

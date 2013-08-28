@@ -18,7 +18,6 @@ class AddProjects < ActiveRecord::Migration
     end
 
     create_table :project_infos do |t|
-      t.integer :user_id,    null: false
       t.integer :project_id, null: false
       t.string  :language,   null: false
       t.string  :title,      null: false

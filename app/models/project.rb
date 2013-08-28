@@ -40,7 +40,8 @@ class Project < ActiveRecord::Base
     end
   end
 
-  #
+  # Returns an info by given language. Raises ActiveRecord::RecordNotFound, if
+  # it doesn't esxist.
   def info_by_language!(lang)
     infos.find_by_language!(lang)
   end
