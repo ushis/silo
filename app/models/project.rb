@@ -1,11 +1,28 @@
+# Handles project related data.
 #
+# Database schema:
 #
+# - *id:*                  integer
+# - *user_id:*             integer
+# - *country_id:*          integer
+# - *status:*              string
+# - *carried_proportion:*  integer
+# - *start*                string
+# - *end*                  string
+# - *staff_months:*        integer
+# - *order_value_us:*      integer
+# - *order_value_eur:*     integer
+# - *created_at:*          datetime
+# - *updated_at:*          datetime
 #
+# The columns *user_id* and *status* are required.
 class Project < ActiveRecord::Base
   attr_accessible :country_id, :status, :carried_proportion, :start, :end,
                   :staff_months, :order_value_us, :order_value_eur
 
   discrete_values :status, [:forecast, :interested, :offer, :execution, :stopped, :complete]
+
+  validates :carried_proportion, inclusion: 0..100
 
   has_and_belongs_to_many :partners, uniq: true
 
