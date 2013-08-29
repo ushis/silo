@@ -4,8 +4,7 @@
       <%= link_to t('labels.project.all'), projects_path, class: 'icon-list-ul' %>
     </li>
     <li class="new">
-      <%= restricted_link_to t('labels.project.new'),
-                             new_project_path(ProjectInfo.languages.first),
+      <%= restricted_link_to t('labels.project.new'), new_project_path,
                              :projects, class: 'icon-project-add' %>
     </li>
   </ul>

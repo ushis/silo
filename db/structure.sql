@@ -225,12 +225,12 @@ CREATE TABLE `privileges` (
 
 CREATE TABLE `project_infos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
   `project_id` int(11) NOT NULL,
   `language` varchar(255) NOT NULL,
   `title` varchar(255) NOT NULL,
   `region` varchar(255) DEFAULT NULL,
   `client` varchar(255) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
   `funders` varchar(255) DEFAULT NULL,
   `focus` text,
   `created_at` datetime NOT NULL,

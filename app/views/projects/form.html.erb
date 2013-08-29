@@ -6,10 +6,10 @@
       <%= @title %>
     </h2>
     <div>
-      <%= project_form_selector @info %>
+      <%= project_form_selector(@info) if @project.persisted? %>
     </div>
-    <% unless @project.errors.empty? %>
-      <%= render 'shared/validation_errors', model: @project %>
+    <% unless @info.errors.empty? %>
+      <%= render 'shared/validation_errors', model: @info %>
     <% end %>
     <div class ="form-wrapper">
       <%= form_for @project do |f| %>
@@ -19,6 +19,12 @@
               <%= i.label :title %>
               <%= i.text_field :title %>
             </div>
+            <% unless @project.persisted?  %>
+              <div class="language">
+                <%= i.label :language %>
+                <%= i.select :language, ProjectInfo.language_values %>
+              </div>
+            <% end %>
           </div>
           <div class="row">
             <div class="start">
@@ -52,7 +58,7 @@
             <div class="right">
               <div class="address">
                 <%= i.label :address %>
-                <%= i.text_area :region %>
+                <%= i.text_area :address %>
               </div>
             </div>
           </div>
@@ -92,7 +98,6 @@
           </div>
           <div class="row">
             <div class="submit">
-              <%= i.hidden_field :language %>
               <%= f.submit t('actions.save') %>
             </div>
           </div>
