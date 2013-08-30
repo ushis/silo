@@ -41,16 +41,18 @@ Silo::Application.routes.draw do
 
   # Projects
   get 'projects(/page/:page)'   => 'projects#index',     as: :projects
-  get 'projects/new'            => 'projects#new',       as: :new_project
-  get 'projects/:id/edit/:lang' => 'projects#edit',      as: :edit_project
-  get 'projects/:id/documents'  => 'projects#documents', as: :project_documents
-  get 'projects/:id/:lang'      => 'projects#show',      as: :project
-  put 'projects/:id/:lang'      => 'projects#update'
-  delete 'projects/:id'         => 'projects#destroy',   as: :destroy_project
 
-  resources :projects, only: [:create] do
-    resources :attachments, only: [:show, :create, :destroy]
+  resources :projects, only: [:new, :create] do
+    resources :attachments,     only: [:show, :create, :destroy]
+    resources :project_members, only: [:index, :create, :destroy], as: :members
+
+    get :documents, on: :member
   end
+
+  get    'projects/:id/edit/:lang' => 'projects#edit',    as: :edit_project
+  get    'projects/:id/:lang'      => 'projects#show',    as: :project
+  put    'projects/:id/:lang'      => 'projects#update'
+  delete 'projects/:id'            => 'projects#destroy', as: :destroy_project
 
   # Lists
   get 'lists(/page/:page)' => 'lists#index', as: :lists
@@ -91,7 +93,8 @@ Silo::Application.routes.draw do
     end
 
     resources :projects, only: [] do
-      resources :attachments, only: :new
+      resources :attachments,     only: :new
+      resources :project_members, only: :new, as: :members
     end
 
     [:areas, :languages].each do |controller|

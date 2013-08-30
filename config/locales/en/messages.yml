@@ -132,6 +132,9 @@ en:
                 attachments?'
       errors:
         find: 'Project not found.'
+    project_member:
+      confirm:
+        delete: 'Do you really want to delete this member?'
     user:
       confirm:
         delete: 'Do you really want to delete this user?'

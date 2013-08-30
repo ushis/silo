@@ -132,6 +132,9 @@ de:
                 löschen.'
       errors:
         find: 'Projekt nicht gefunden.'
+    project_member:
+      confirm:
+        delete: 'Möchtest du wirklich diesen Teilnehmer löschen?'
     user:
       confirm:
         delete: 'Möchtest du wirklich diesen Benutzer löschen?'
