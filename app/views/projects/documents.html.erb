@@ -1,0 +1,33 @@
+<%= render 'sidebar' %>
+
+<div id="main">
+  <%= render 'details_sidebar', info: @info %>
+
+  <div class="tabbed-content">
+    <%= render 'tabs', info: @info %>
+
+    <div class="content">
+      <% if current_user.access?(:projects) %>
+        <ul class="tools">
+          <li class="new-attachment">
+            <%= link_to t('labels.attachment.new'),
+                        new_ajax_project_attachment_path(@project),
+                        class: 'hidden-form icon-plus' %>
+          </li>
+        </ul>
+      <% end %>
+
+      <div class="docs info">
+        <div class="attachments">
+          <h4>
+            <%= Project.human_attribute_name :attachments %>
+          </h4>
+
+          <%= render 'shared/attachments_table', parent: @project %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="clear"></div>
+</div>

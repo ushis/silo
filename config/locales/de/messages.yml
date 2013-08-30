@@ -127,6 +127,9 @@ de:
         delete: 'Partner gelöscht: %{name}'
         save: 'Partner gespeichert.'
     project:
+      confirm:
+        delete: 'Möchtest du wirklich dieses Projekt mit all seinen Anhängen
+                löschen.'
       errors:
         find: 'Projekt nicht gefunden.'
     user:

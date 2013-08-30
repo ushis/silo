@@ -26,8 +26,11 @@ class Project < ActiveRecord::Base
 
   has_and_belongs_to_many :partners, uniq: true
 
-  has_many :infos,   autosave: true, dependent: :destroy, class_name: :ProjectInfo,   inverse_of: :project
-  has_many :members, autosave: true, dependent: :destroy, class_name: :ProjectMember, inverse_of: :project
+  has_many :infos,       autosave: true, dependent: :destroy, class_name: :ProjectInfo,   inverse_of: :project
+  has_many :members,     autosave: true, dependent: :destroy, class_name: :ProjectMember, inverse_of: :project
+  has_many :attachments, autosave: true, dependent: :destroy, as: :attachable
+  has_many :list_items,  autosave: true, dependent: :destroy, as: :item
+  has_many :lists,       through:  :list_items
 
   belongs_to :user, select: [:id, :name, :prename]
   belongs_to :country

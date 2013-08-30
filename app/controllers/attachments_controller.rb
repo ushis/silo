@@ -5,7 +5,7 @@ class AttachmentsController < ApplicationController
 
   skip_before_filter :authorize, only: [:show]
 
-  polymorphic_parent :experts, :partners
+  polymorphic_parent :experts, :partners, :projects
 
   # Sends the stored file to the user.
   #

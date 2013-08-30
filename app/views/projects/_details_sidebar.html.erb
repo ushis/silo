@@ -1,0 +1,45 @@
+<div class="sidebar details">
+  <h2 class="icon-project">
+    <%= info.title %>
+  </h2>
+
+  <ul class="tools">
+    <li>
+      <%= listable_button_for(info.project) do %>
+        <span class="inactive icon-addtolist">
+          <%= t 'labels.list.add' %>
+        </span>
+        <span class="active icon-removefromlist">
+          <%= t 'labels.list.remove' %>
+        </span>
+      <% end %>
+    </li>
+    <li>
+      <%= link_to(t('actions.print'),
+                  project_path(info.project, info.language, format: :pdf),
+                  class: 'icon-print') %>
+    </li>
+    <% if current_user.access?(:projects) %>
+      <li>
+        <%= link_to(t('actions.edit'),
+                    edit_project_path(info.project, info.language),
+                    class: 'icon-pencil') %>
+      </li>
+    <%end%>
+    <li>
+      <%= delete_button_for(info.project, url: destroy_project_path(info.project)) %>
+    </li>
+  </ul>
+
+  <h3 class="updated_at">
+    <%= Project.human_attribute_name :updated_at %>
+    <%= l info.project.try(:updated_at), format: :short %>
+    <%= t 'labels.generic.by', name: info.project.try(:user).try(:full_name) %>
+  </h3>
+
+  <h4>
+    <%= Project.human_attribute_name :lists %>
+  </h4>
+
+  <%= render 'shared/list_tracker', parent: info.project %>
+</div>

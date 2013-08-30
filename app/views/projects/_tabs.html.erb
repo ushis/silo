@@ -1,0 +1,14 @@
+<ul class="tabs">
+  <li class="show">
+    <%= link_to t('labels.project.details'), project_path(info.project, info.language) %>
+  </li>
+  <li class="experts">
+    <%= link_to Project.human_attribute_name(:members), project_path(info.project, info.language) %>
+  </li>
+  <li class="partners">
+    <%= link_to Project.human_attribute_name(:partners), project_path(info.project, info.language) %>
+  </li>
+  <li class="documents">
+    <%= link_to t('labels.project.documents'), project_documents_path(info.project) %>
+  </li>
+</ul>

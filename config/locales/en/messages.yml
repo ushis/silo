@@ -127,6 +127,9 @@ en:
         delete: 'Deleted partner: %{name}'
         save: 'Saved partner'
     project:
+      confirm:
+        delete: 'Do you really want to delete this project with all its
+                attachments?'
       errors:
         find: 'Project not found.'
     user:
