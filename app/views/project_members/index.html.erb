@@ -35,6 +35,12 @@
                   <%= member.role %>
                 </td>
                 <% if current_user.access?(:projects) %>
+                  <td class="edit">
+                    <%= link_to t('actions.edit'),
+                                edit_ajax_project_member_path(@project, member),
+                                class: 'hidden-form icon-pencil' %>
+
+                  </td>
                   <td class="del">
                     <%= delete_button_for member,
                                           password: false,

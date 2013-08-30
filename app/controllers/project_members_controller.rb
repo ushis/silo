@@ -1,6 +1,6 @@
 #
 class ProjectMembersController < ApplicationController
-  before_filter :find_project, only: [:index, :create, :destroy]
+  before_filter :find_project, only: [:index, :create, :update, :destroy]
 
   skip_before_filter :authorize, only: [:index]
 
@@ -16,6 +16,19 @@ class ProjectMembersController < ApplicationController
       flash[:notice] = t('messages.project_member.success.create')
     else
       flash[:alert] = t('messages.project_member.errors.create')
+    end
+
+    redirect_to project_members_path(@project)
+  end
+
+  # PUT /projects/:project_id/project_members/:id
+  def update
+    member = @project.members.find(params[:id])
+
+    if member.update_attributes(params[:project_member])
+      flash[:notice] = t('messages.project_member.success.save')
+    else
+      flash[:alert] = t('messages.project_member.errors.save')
     end
 
     redirect_to project_members_path(@project)

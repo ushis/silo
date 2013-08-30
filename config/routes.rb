@@ -44,7 +44,7 @@ Silo::Application.routes.draw do
 
   resources :projects, only: [:new, :create] do
     resources :attachments,     only: [:show, :create, :destroy]
-    resources :project_members, only: [:index, :create, :destroy], as: :members
+    resources :project_members, only: [:index, :create, :update, :destroy], as: :members
 
     get :documents, on: :member
   end
@@ -94,7 +94,7 @@ Silo::Application.routes.draw do
 
     resources :projects, only: [] do
       resources :attachments,     only: :new
-      resources :project_members, only: :new, as: :members
+      resources :project_members, only: [:new, :edit], as: :members
     end
 
     [:areas, :languages].each do |controller|
