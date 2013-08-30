@@ -29,7 +29,7 @@
             <% @project.members.each do |member| %>
               <tr>
                 <td>
-                  <%= member.name %>
+                  <%= link_to member.name, expert_path(member.expert) %>
                 </td>
                 <td>
                   <%= member.role %>
