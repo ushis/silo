@@ -6,7 +6,7 @@
     <%= link_to Project.human_attribute_name(:members), project_members_path(info.project) %>
   </li>
   <li class="partners">
-    <%= link_to Project.human_attribute_name(:partners), project_path(info.project, info.language) %>
+    <%= link_to Project.human_attribute_name(:partners), project_partners_path(info.project) %>
   </li>
   <li class="documents">
     <%= link_to t('labels.project.documents'), documents_project_path(info.project) %>

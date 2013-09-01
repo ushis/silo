@@ -1,0 +1,23 @@
+<div class="overlay project-partner-form">
+  <div class="header">
+    <h2>
+      <%= t params[:action], scope: [:labels, :partner] %>
+    </h2>
+    <div class="submit button">
+      <%= t 'actions.save' %>
+    </div>
+    <div class="abort button">
+      <%= t 'actions.abort' %>
+    </div>
+  </div>
+  <div class="form-wrapper">
+    <%= form_tag @url do %>
+      <div class="row">
+        <div class="partner">
+          <%= label_tag Partner.model_name.human %>
+          <%= select_tag :id, options_from_collection_for_select(Partner.ordered, :id, :to_s) %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

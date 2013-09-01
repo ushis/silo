@@ -12,7 +12,9 @@ class ProjectMembersController < ApplicationController
 
   # POST /projects/:project_id/members
   def create
-    if @project.members.create(params[:project_member])
+    member = @project.members.build(params[:project_member])
+
+    if member.save
       flash[:notice] = t('messages.project_member.success.create')
     else
       flash[:alert] = t('messages.project_member.errors.create')

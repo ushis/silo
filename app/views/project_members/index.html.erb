@@ -26,7 +26,7 @@
               </td>
             </tr>
           <% else %>
-            <% @project.members.each do |member| %>
+            <% @project.members.ordered.each do |member| %>
               <tr>
                 <td>
                   <%= link_to member.name, expert_path(member.expert) %>

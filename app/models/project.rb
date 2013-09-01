@@ -37,8 +37,7 @@ class Project < ActiveRecord::Base
 
   # Orders the projects by title.
   def self.ordered
-    joins('LEFT JOIN project_infos AS pi ON pi.project_id = projects.id')
-      .group('projects.id').order('pi.language, pi.title')
+    includes(:infos).order('project_infos.language, project_infos.title')
   end
 
   # Returns true if the project has some infos, else false
@@ -64,5 +63,17 @@ class Project < ActiveRecord::Base
   # it doesn't esxist.
   def info_by_language!(lang)
     infos.find_by_language!(lang)
+  end
+
+  #
+  def add_partner(partner)
+    partners << partner
+  rescue ActiveRecord::RecordNotUnique
+    false
+  end
+
+  # Returns the first info as a string.
+  def to_s
+    info.try(:to_s)
   end
 end
