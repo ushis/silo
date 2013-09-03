@@ -51,7 +51,7 @@ Silo::Application.routes.draw do
   end
 
   get    'projects/:id/edit/:lang' => 'projects#edit',    as: :edit_project
-  get    'projects/:id/:lang'      => 'projects#show',    as: :project
+  get    'projects/:id(/:lang)'    => 'projects#show',    as: :project
   put    'projects/:id/:lang'      => 'projects#update'
   delete 'projects/:id'            => 'projects#destroy', as: :destroy_project
 

@@ -24,6 +24,8 @@ class Project < ActiveRecord::Base
 
   validates :carried_proportion, inclusion: 0..100
 
+  DEFAULT_ORDER = 'projects.title'
+
   has_and_belongs_to_many :partners, uniq: true
 
   has_many :infos,       autosave: true, dependent: :destroy, class_name: :ProjectInfo,   inverse_of: :project
@@ -37,7 +39,7 @@ class Project < ActiveRecord::Base
 
   # Orders the projects by title.
   def self.ordered
-    includes(:infos).order('project_infos.language, project_infos.title')
+    order(DEFAULT_ORDER)
   end
 
   # Returns true if the project has some infos, else false
@@ -72,8 +74,13 @@ class Project < ActiveRecord::Base
     false
   end
 
+  #
+  def update_title
+    update_attribute(:title, info.try(:title))
+  end
+
   # Returns the first info as a string.
   def to_s
-    info.try(:to_s)
+    title.to_s
   end
 end
