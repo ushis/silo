@@ -76,8 +76,25 @@
           <h4><%= Expert.human_attribute_name :contacts %></h4>
           <%= render 'shared/contacts_table', parent: @expert %>
         </div><!-- contacts -->
-      </div>
 
+        <div class="info projects">
+          <h4><%= Expert.human_attribute_name :projects %></h4>
+          <table>
+            <% if @expert.project_members.empty? %>
+              <tr class="empty">
+                <td><%= t 'messages.expert.errors.no_projects' %></td>
+              </tr>
+            <% else %>
+              <% @expert.project_members.each do |member| %>
+                <tr>
+                  <td><%= link_to member.project.to_s, member.project %></td>
+                  <td><%= member.role %></td>
+                </tr>
+              <% end %>
+            <% end %>
+          </table>
+        </div><!-- projects -->
+      </div>
     </div>
   </div>
   <div class="clear"></div>
