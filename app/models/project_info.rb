@@ -20,15 +20,15 @@ class ProjectInfo < ActiveRecord::Base
 
   discrete_values :language, %w(de en es fr), i18n_scope: :languages
 
-  is_commentable_with :description,     autosave: true, dependent: :destroy, as: :describable
-  is_commentable_with :service_details, autosave: true, dependent: :destroy, as: :commentable, class_name: :Comment
-
-  after_save :update_project
-
   validates :title, presence: true
   validate :language_cannot_be_changed
 
+  is_commentable_with :description,     autosave: true, dependent: :destroy, as: :describable
+  is_commentable_with :service_details, autosave: true, dependent: :destroy, as: :commentable, class_name: :Comment
+
   belongs_to :project, autosave: true, inverse_of: :infos
+
+  after_save :update_project
 
   default_scope order(:language)
 

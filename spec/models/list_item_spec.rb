@@ -10,7 +10,7 @@ describe ListItem do
     subject { ListItem::TYPES }
 
     it 'should be a hash containing item types' do
-      expect(subject).to eq({ experts: Expert, partners: Partner })
+      expect(subject).to eq({ experts: Expert, partners: Partner, projects: Project })
     end
   end
 
