@@ -1,0 +1,49 @@
+<%= render 'projects/sidebar' %>
+
+<div id="main">
+  <%= render 'projects/details_sidebar', info: @project.info %>
+
+  <div class="tabbed-content">
+    <%= render 'projects/tabs', info: @project.info %>
+
+    <div class="content">
+      <% if current_user.access?(:projects) %>
+        <ul class="tools">
+          <li class="new-member">
+            <%= link_to t('labels.partner.new'),
+                        new_ajax_project_partner_path(@project),
+                        class: 'hidden-form icon-plus' %>
+          </li>
+        </ul>
+    <% end %>
+
+      <table>
+        <tbody>
+          <% if @project.partners.empty? %>
+            <tr class="empty">
+              <td>
+                <%= t 'messages.project.errors.no_partners' %>
+              </td>
+            </tr>
+          <% else %>
+            <% @project.partners.ordered.each do |partner| %>
+              <tr>
+                <td>
+                  <%= link_to partner.to_s, partner_path(partner) %>
+                </td>
+                <% if current_user.access?(:projects) %>
+                  <td class="del">
+                    <%= delete_button_for partner,
+                                          password: false,
+                                          url: project_partner_path(@project, partner) %>
+                  </td>
+                <% end %>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="clear"></div>
+</div>

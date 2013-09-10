@@ -40,13 +40,20 @@ Silo::Application.routes.draw do
   end
 
   # Projects
-  get 'projects(/page/:page)'   => 'projects#index', as: :projects
-  get 'projects/new'            => 'projects#new',   as: :new_project
-  get 'projects/:id/edit/:lang' => 'projects#edit',  as: :edit_project
-  get 'projects/:id/:lang'      => 'projects#show',  as: :project
-  put 'projects/:id/:lang'      => 'projects#update'
+  get 'projects(/page/:page)'   => 'projects#index',     as: :projects
 
-  resources :projects, except: [:index, :show, :new, :edit]
+  resources :projects, only: [:new, :create] do
+    resources :attachments,     only: [:show, :create, :destroy]
+    resources :project_members, only: [:index, :create, :update, :destroy], as: :members
+    resources :partners,        only: [:index, :create, :destroy], controller: :project_partners
+
+    get :documents, on: :member
+  end
+
+  get    'projects/:id/edit/:lang' => 'projects#edit',    as: :edit_project
+  get    'projects/:id(/:lang)'    => 'projects#show',    as: :project
+  put    'projects/:id/:lang'      => 'projects#update'
+  delete 'projects/:id'            => 'projects#destroy', as: :destroy_project
 
   # Lists
   get 'lists(/page/:page)' => 'lists#index', as: :lists
@@ -57,7 +64,7 @@ Silo::Application.routes.draw do
     put :copy,    on: :member
     put :concat,  on: :member
 
-    [:experts, :partners, :employees].each do |item_type|
+    [:experts, :partners, :projects, :employees].each do |item_type|
       resources item_type, only: [], controller: :list_items do
         get :index, action: item_type, on: :collection
       end
@@ -86,6 +93,12 @@ Silo::Application.routes.draw do
       resources :contacts, only: :new
     end
 
+    resources :projects, only: [] do
+      resources :attachments,     only: :new
+      resources :partners,        only: :new, controller: :project_partners
+      resources :project_members, only: [:new, :edit], as: :members
+    end
+
     [:areas, :languages].each do |controller|
       resources controller, only: :index
     end
@@ -99,7 +112,7 @@ Silo::Application.routes.draw do
         get :import
       end
 
-      [:experts, :partners].each do |resource|
+      [:experts, :partners, :projects].each do |resource|
         resources resource, only: [], controller: :list_items do
           collection do
             get    :print,   action: "print_#{resource}"

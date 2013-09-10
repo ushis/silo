@@ -255,6 +255,7 @@ CREATE TABLE `projects` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `country_id` int(11) DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
   `status` varchar(255) NOT NULL,
   `carried_proportion` int(11) NOT NULL DEFAULT '0',
   `start` varchar(255) DEFAULT NULL,

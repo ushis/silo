@@ -4,17 +4,7 @@
   <%= render 'details_sidebar', partner: @partner %>
 
   <div class="tabbed-content">
-    <ul class="tabs">
-      <li class="show">
-        <%= link_to t('labels.partner.details'), partner_path(@partner) %>
-      </li>
-      <li class="employees">
-        <%= link_to t('labels.partner.employees'), partner_employees_path(@partner) %>
-      </li>
-      <li class="documents">
-        <%= link_to t('labels.partner.documents'), documents_partner_path(@partner) %>
-      </li>
-    </ul>
+    <%= render 'tabs', partner: @partner %>
 
     <div class="content">
       <div class="left">
@@ -34,6 +24,18 @@
           <li class="comments">
             <h4><%= Partner.human_attribute_name :comment %></h4>
             <%= markdown @partner.comment %>
+          </li>
+          <li>
+            <h4><%= Partner.human_attribute_name :projects %></h4>
+            <ul>
+              <% if @partner.projects.empty? %>
+                <li class="empty"><%= t 'messages.partner.errors.no_projects' %></li>
+              <% else %>
+                <% @partner.projects.each do |project| %>
+                  <li><%= link_to project.to_s, project %></li>
+                <% end %>
+              <% end %>
+            </ul>
           </li>
         </ul>
       </div><!-- left -->

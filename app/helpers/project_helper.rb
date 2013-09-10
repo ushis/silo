@@ -24,4 +24,13 @@ module ProjectHelper
     options = options_for_select(ProjectInfo.language_values, info.language)
     select_tag(:lang, options, html_options)
   end
+
+  #
+  def project_form_action_path(project, info)
+    if project.persisted?
+      project_path(project, info.language)
+    else
+      projects_path
+    end
+  end
 end

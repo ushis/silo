@@ -4,17 +4,7 @@
   <%= render 'partners/details_sidebar', partner: @partner %>
 
   <div class="tabbed-content">
-    <ul class="tabs">
-      <li class="show">
-        <%= link_to t('labels.partner.details'), partner_path(@partner) %>
-      </li>
-      <li class="employees">
-        <%= link_to t('labels.partner.employees'), partner_employees_path(@partner) %>
-      </li>
-      <li class="documents">
-        <%= link_to t('labels.partner.documents'), documents_partner_path(@partner) %>
-      </li>
-    </ul>
+    <%= render 'partners/tabs', partner: @partner %>
 
     <div class="content">
       <% if current_user.access?(:partners) %>

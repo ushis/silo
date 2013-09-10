@@ -1,7 +1,7 @@
 #
 class ProjectsController < ApplicationController
   before_filter :check_password, only: [:destroy]
-  before_filter :find_project,   only: [:show, :edit, :update, :destroy]
+  before_filter :find_project,   only: [:show, :documents, :edit, :update, :destroy]
 
   skip_before_filter :authorize, only: [:index, :show]
 
@@ -13,13 +13,24 @@ class ProjectsController < ApplicationController
   # GET /projects(/page/:page)
   def index
     @title = t('labels.project.all')
-    @projects = Project.ordered.includes(:infos).page(params[:page])
+    @projects = Project.includes(:infos).ordered.page(params[:page])
   end
 
-  # GET /projects/:id/:lang
+  # GET /projects/:id(/:lang)
   def show
-    @info = @project.info_by_language!(params[:lang])
+    if params.key?(:lang)
+      @info = @project.info_by_language!(params[:lang])
+    else
+      @info = @project.info
+    end
+
     @title = @info.title
+  end
+
+  # GET /projects/:id/documents
+  def documents
+    @info = @project.info
+    @title = @info.try(:title)
   end
 
   # GET /projects/new
@@ -68,7 +79,7 @@ class ProjectsController < ApplicationController
   def destroy
     info = @project.info
 
-    if project.destroy
+    if @project.destroy
       flash[:notice] = t('messages.project.success.delete', info.try(:title))
       redirect_to projects_url
     else

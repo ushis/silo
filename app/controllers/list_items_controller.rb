@@ -36,6 +36,7 @@ class ListItemsController < ApplicationController
   #
   # GET /lists/:list_id/experts
   # GET /lists/:list_id/partners
+  # GET /lists/:list_id/projects
   ListItem::TYPES.each_key do |item_type|
     define_method(item_type) { index(item_type) }
   end

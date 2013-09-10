@@ -9,12 +9,23 @@
       <%= paginate @projects %>
     </div>
     <table class="projects">
+      <thead>
+        <tr>
+          <th>
+            <%= listable_button_for @projects %>
+            <%= Project.human_attribute_name :title %>
+          </th>
+          <th>
+          </th>
+        </tr>
+      </thead>
       <tbody>
         <% @projects.each do |project| %>
           <% if project.info? %>
             <tr>
               <td>
-                <%= link_to project.info.title, project_path(project, lang: project.info.language) %>
+                <%= listable_button_for project %>
+                <%= link_to project.title, project_path(project, lang: project.info.language) %>
               </td>
               <td>
                 <%= list_infos project %>

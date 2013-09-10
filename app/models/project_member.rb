@@ -9,12 +9,18 @@
 #
 # The fields *expert_id*, *project_id* and *role* are required.
 class ProjectMember < ActiveRecord::Base
-  attr_accessible :role
+  attr_accessible :expert_id, :role
 
   belongs_to :expert
   belongs_to :project, inverse_of: :members
 
-  validates :role, presence: true
+  validates :role,      presence: true
+  validates :expert_id, uniqueness: {scope: :project_id}
+
+  #
+  def self.ordered
+    includes(:expert).order(Expert::DEFAULT_ORDER)
+  end
 
   # Returns the experts name.
   def name

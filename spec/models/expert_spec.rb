@@ -15,6 +15,8 @@ describe Expert do
     it { should have_many(:list_items).dependent(:destroy) }
     it { should have_many(:lists).through(:list_items) }
     it { should have_many(:cvs).dependent(:destroy) }
+    it { should have_many(:project_members).dependent(:destroy) }
+    it { should have_many(:projects).through(:project_members) }
 
     it { should have_one(:contact).dependent(:destroy) }
     it { should have_one(:comment).dependent(:destroy) }

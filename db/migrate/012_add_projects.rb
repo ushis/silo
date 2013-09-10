@@ -3,6 +3,7 @@ class AddProjects < ActiveRecord::Migration
     create_table :projects do |t|
       t.integer :user_id,            null: false
       t.integer :country_id,         null: true
+      t.string  :title,              null: true
       t.string  :status,             null: false
       t.integer :carried_proportion, null: false, default: 0
       t.string  :start,              null: true

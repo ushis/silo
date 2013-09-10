@@ -19,7 +19,7 @@ class ListItem < ActiveRecord::Base
   belongs_to :item, polymorphic: true
 
   # Hash containing possible item types.
-  TYPES = { experts: Expert, partners: Partner }
+  TYPES = { experts: Expert, partners: Partner, projects: Project }
 
   # Setup a belongs to association for each item type.
   TYPES.each_value do |klass|

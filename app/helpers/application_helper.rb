@@ -38,7 +38,7 @@ module ApplicationHelper
       method: :delete,
       password: true,
       class: 'icon-trash',
-      confirm: t(:"messages.#{record.class.name.downcase}.confirm.delete")
+      confirm: t(:"messages.#{record.class.name.underscore.downcase}.confirm.delete")
     }.merge(options)
 
     options['data-password'] = options.delete(:password)

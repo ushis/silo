@@ -64,7 +64,12 @@ class Partner < ActiveRecord::Base
   def self.search(params)
     PartnerSearcher.new(
       params.slice(:company, :country, :advisers, :businesses, :q)
-    ).search(scoped).order(DEFAULT_ORDER)
+    ).search(scoped).ordered
+  end
+
+  #
+  def self.ordered
+    order(DEFAULT_ORDER)
   end
 
   # Returns the company name.

@@ -1,17 +1,16 @@
 <%= render 'sidebar' %>
 
 <div id="main">
-  <h2 class="icon-project">
-    <%= @info.title %>
-  </h2>
+  <%= render 'details_sidebar', info: @info %>
 
-  <div>
-    <%= project_info_selector(@info) %>
+  <div class="tabbed-content">
+    <%= render 'tabs', info: @info %>
+
+    <div class="content">
+      <div>
+        <%= project_info_selector(@info) %>
+      </div>
+    </div>
   </div>
-
-  <div>
-    <%= link_to t('actions.edit'), edit_project_path(@project, @info.language) %>
-  </div>
-
   <div class="clear"></div>
 </div>
