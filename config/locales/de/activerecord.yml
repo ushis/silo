@@ -29,7 +29,8 @@ de:
         zip: 'Postleitzahl'
       privilege:
         admin: 'Admin'
-        projects: 'Projekte'
+      project:
+        members: 'Teilnehmer'
       user:
         email: 'Email'
         locale: 'Sprache'
@@ -86,6 +87,8 @@ de:
     partners: 'Partner'
     phone: 'Telefon'
     prename: 'Vorname'
+    projects: 'Projekte'
+    role: 'Rolle'
     title: 'Titel'
     updated_at: 'Zuletzt bearbeitet'
     website: 'Webseite'

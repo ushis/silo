@@ -91,7 +91,7 @@ en:
         copy: 'Could not copy list.'
         create: 'Could not create list.'
         delete: 'Could not delete list.'
-        find: 'Could not find list.'
+        find: 'List not found.'
         no_experts: 'This list has no experts.'
         no_partners: 'This list has no partners.'
         open: 'Could not open list.'
@@ -105,7 +105,7 @@ en:
         save: 'Saved list.'
     list_item:
       errors:
-        find: 'Could not find list item.'
+        find: 'List item not found.'
         delete: 'Could not delete list item.'
       success:
         delete: 'Deleted list item: %{name}'
@@ -113,6 +113,7 @@ en:
       confirm:
         delete: 'Do you really want to delete this partner with all its
                  attachments?'
+        remove_partner: 'Do you really want to remove this partner.'
       errors:
         create: 'Could not create partner.'
         delete: 'Could not delete partner.'
@@ -131,10 +132,33 @@ en:
         delete: 'Do you really want to delete this project with all its
                 attachments?'
       errors:
+        add_partner: 'Could not add partner to the project.'
+        create: 'Could not create project.'
+        delete: 'Could not delete project.'
         find: 'Project not found.'
+        no_attachments: 'This project has no attachments.'
+        no_members: 'This project has no members.'
+        no_partner: 'This project has no partners.'
+        remove_partner: 'Could not remove partner from the project.'
+        save: 'Could not save project.'
+      success:
+        add_partner: 'Added partner to the project: %{name}'
+        create: 'Created project: %{title}'
+        delete: 'Deleted project: %{title}'
+        remove_partner: 'Removed partner from the project: %{name}'
+        save: 'Saved project.'
     project_member:
       confirm:
         delete: 'Do you really want to delete this member?'
+      errors:
+        create: 'Could not create member.'
+        delete: 'Could not delete member.'
+        find: 'Member not found.'
+        save: 'Could not save member.'
+      success:
+        create: 'Created member: %{name}'
+        delete: 'Deleted member: %{name}'
+        save: 'Saved member.'
     user:
       confirm:
         delete: 'Do you really want to delete this user?'

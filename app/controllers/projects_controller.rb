@@ -46,7 +46,7 @@ class ProjectsController < ApplicationController
     @info = @project.infos.build(params[:project_info])
 
     if @info.save
-      flash[:notice] = t('messages.project.success.create')
+      flash[:notice] = t('messages.project.success.create', title: @info.title)
       redirect_to project_url(@project, @info.language)
     else
       flash[:alert] = t('messages.project.errors.create')
@@ -77,14 +77,12 @@ class ProjectsController < ApplicationController
 
   # DELETE /projects/:id
   def destroy
-    info = @project.info
-
     if @project.destroy
-      flash[:notice] = t('messages.project.success.delete', info.try(:title))
+      flash[:notice] = t('messages.project.success.delete', title: @project.title)
       redirect_to projects_url
     else
       flash[:alert] = t('messages.project.errors.delete')
-      redirect_to project_url(@project, info.try(:language))
+      redirect_to project_url(@project)
     end
   end
 

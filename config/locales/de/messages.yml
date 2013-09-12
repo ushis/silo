@@ -130,11 +130,35 @@ de:
       confirm:
         delete: 'Möchtest du wirklich dieses Projekt mit all seinen Anhängen
                 löschen.'
+        remove_partner: 'Möchtest du wirklich diesen Partner entfernen.'
       errors:
+        add_partner: 'Partner konnte nicht hinzugefügt werden.'
+        create: 'Projekt konnte nicht hinzugefügt werden.'
+        delete: 'Projekt konnte nicht gelöscht werden.'
         find: 'Projekt nicht gefunden.'
+        no_attachments: 'Dieses Projekt hat keine Anhänge.'
+        no_members: 'Dieses Projekt hat keine Teilnehmer.'
+        no_partners: 'Dieses Projekt hat keine Partner.'
+        remove_partner: 'Partner konnte nicht entfernt werden.'
+        save: 'Projekt konnte nicht gespeichert werden.'
+      success:
+        add_partner: 'Partner wurde hinzugefügt: %{name}'
+        create: 'Projekt wurde hinzugefügt: %{title}'
+        delete: 'Projekt wurd gelöscht: %{title}'
+        remove_partner: 'Partner wurde entfernt: %{name}'
+        save: 'Projekt wurde gepseichert.'
     project_member:
       confirm:
         delete: 'Möchtest du wirklich diesen Teilnehmer löschen?'
+      errors:
+        create: 'Teilnehmer konnte nicht hinzugefügt werden.'
+        delete: 'Teilnehmer konnte nicht gelöscht werden.'
+        find: 'Teilnehmer nicht gefunden.'
+        save: 'Teilnehmer konnte nicht gespeichert werden.'
+      success:
+        create: 'Teilnehmer wurde hinzugefügt: %{name}'
+        delete: 'Teilnehmer wurde gelöscht: %{name}'
+        save: 'Teilnehmer gespeichert.'
     user:
       confirm:
         delete: 'Möchtest du wirklich diesen Benutzer löschen?'

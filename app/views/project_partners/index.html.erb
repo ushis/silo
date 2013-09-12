@@ -35,6 +35,7 @@
                   <td class="del">
                     <%= delete_button_for partner,
                                           password: false,
+                                          confirm: t('messages.project.confirm.remove_partner'),
                                           url: project_partner_path(@project, partner) %>
                   </td>
                 <% end %>

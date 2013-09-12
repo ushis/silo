@@ -24,9 +24,9 @@ class ProjectPartnersController < ApplicationController
   # DELETE /projects/:project_id/partners/:id
   def destroy
     if @project.partners.destroy(@partner)
-      flash[:notice] = t('messages.partner.success.remove_partner', name: @partner.to_s)
+      flash[:notice] = t('messages.project.success.remove_partner', name: @partner.to_s)
     else
-      flash[:alert] = t('messages.partner.errors.remove_partner')
+      flash[:alert] = t('messages.project.errors.remove_partner')
     end
 
     redirect_to project_partners_url(@project)

@@ -65,8 +65,12 @@ de:
       search: 'Partner suchen'
     project:
       all: 'Alle Projekte'
+      details: 'Details'
+      documents: 'Dokumente'
       edit: 'Projekt bearbeiten'
       new: 'Neues Projekt'
+    project_member:
+      new: 'Neuer Teilnehmer'
     sections:
       experts: 'Experten'
       lists: 'Listen'

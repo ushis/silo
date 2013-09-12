@@ -29,7 +29,8 @@ en:
         zip: 'Zip Code'
       privilege:
         admin: 'Admin'
-        projects: 'Projects'
+      project:
+        members: 'Members'
       user:
         email: 'Email'
         locale: 'Locale'
@@ -86,6 +87,8 @@ en:
     partners: 'Partners'
     phone: 'Phone'
     prename: 'First Name'
+    projects: 'Projects'
+    role: 'Role'
     title: 'Title'
     updated_at: 'Updated At'
     website: 'Website'
