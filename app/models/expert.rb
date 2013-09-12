@@ -57,11 +57,10 @@ class Expert < ActiveRecord::Base
 
   # Searches for experts. Takes a hash with condtions:
   #
-  # - *:name* A (partial) name used to search _name_ and _prename_
-  # - *:country* One or more country ids
-  # - *:languages* An array of language ids
-  # - *:q* A arbitrary string used for a fulltext search in the _comment_ and
-  #   the _cv_
+  # - *:name*       a (partial) name used to search _name_ and _prename_
+  # - *:country*    one or more country ids
+  # - *:languages*  an array of language ids
+  # - *:q*          arbitrary string used for a fulltext search
   #
   # The results are ordered by name and prename.
   def self.search(params)

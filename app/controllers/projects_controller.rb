@@ -13,7 +13,7 @@ class ProjectsController < ApplicationController
   # GET /projects(/page/:page)
   def index
     @title = t('labels.project.all')
-    @projects = Project.includes(:infos).ordered.page(params[:page])
+    @projects = Project.includes(:infos).search(params).page(params[:page])
   end
 
   # GET /projects/:id(/:lang)

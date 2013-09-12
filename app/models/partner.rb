@@ -54,11 +54,11 @@ class Partner < ActiveRecord::Base
 
   # Searches for partners. Takes a hash of conditions.
   #
-  # - *:company* A (partial) company name.
-  # - *:country* On or more country ids.
-  # - *:advisers* An Array of adviser ids.
-  # - *:businesses* An Array of business ids.
-  # - *:q* A string used for fulltext search.
+  # - *:company*     a (partial) company name
+  # - *:country*     one or more country ids
+  # - *:advisers*    an array of adviser ids
+  # - *:businesses*  an array of business ids
+  # - *:q*           a string used for fulltext search
   #
   # The results are ordered by company.
   def self.search(params)

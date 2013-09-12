@@ -37,6 +37,22 @@ class Project < ActiveRecord::Base
   belongs_to :user, select: [:id, :name, :prename]
   belongs_to :country
 
+  # Searches for projects. Takes a hash of conditions.
+  #
+  # - *:title*    a (partial) title
+  # - *:funders*  (partial) funder names
+  # - *:status*   a projects status
+  # - *:start*    year before the projects start
+  # - *:end*      year after the projects end
+  # - *:q*        string used for fulltext search
+  #
+  # The results are ordered by title.
+  def self.search(params)
+    ProjectSearcher.new(
+      params.slice(:title, :funders, :status, :start, :end, :q)
+    ).search(scoped).ordered
+  end
+
   # Orders the projects by title.
   def self.ordered
     order(DEFAULT_ORDER)
