@@ -29,11 +29,13 @@
           <div class="row">
             <div class="start">
               <%= f.label :start %>
-              <%= f.text_field :start %>
+              <%= f.date_select(:start, start_year: Project.first_period_year,
+                                end_year: Project.last_period_year, prompt: true) %>
             </div>
             <div class="end">
               <%= f.label :end %>
-              <%= f.text_field :end %>
+              <%= f.date_select(:end, start_year: Project.first_period_year,
+                                end_year: Project.last_period_year, prompt: true) %>
             </div>
             <div class="carried_proportion">
               <%= f.label :carried_proportion %>
@@ -70,6 +72,16 @@
             <div class="funders">
               <%= i.label :funders %>
               <%= i.text_field :funders %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="staff">
+              <%= i.label :staff %>
+              <%= i.text_field :staff %>
+            </div>
+            <div class="staff_months">
+              <%= i.label :staff_months %>
+              <%= i.text_field :staff_months %>
             </div>
           </div>
           <div class="row">

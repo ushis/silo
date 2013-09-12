@@ -6,9 +6,8 @@ class AddProjects < ActiveRecord::Migration
       t.string  :title,              null: true
       t.string  :status,             null: false
       t.integer :carried_proportion, null: false, default: 0
-      t.string  :start,              null: true
-      t.string  :end,                null: true
-      t.integer :staff_months,       null: true
+      t.date    :start,              null: true
+      t.date    :end,                null: true
       t.integer :order_value_us,     null: true
       t.integer :order_value_eur,    null: true
       t.timestamps
@@ -19,14 +18,16 @@ class AddProjects < ActiveRecord::Migration
     end
 
     create_table :project_infos do |t|
-      t.integer :project_id, null: false
-      t.string  :language,   null: false
-      t.string  :title,      null: false
-      t.string  :region,     null: true
-      t.string  :client,     null: true
-      t.string  :address,    null: true
-      t.string  :funders,    null: true
-      t.text    :focus,      null: true
+      t.integer :project_id,   null: false
+      t.string  :language,     null: false
+      t.string  :title,        null: false
+      t.string  :region,       null: true
+      t.string  :client,       null: true
+      t.string  :address,      null: true
+      t.string  :funders,      null: true
+      t.string  :staff,        null: true
+      t.string  :staff_months, null: true
+      t.text    :focus,        null: true
       t.timestamps
     end
 

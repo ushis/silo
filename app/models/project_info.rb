@@ -2,21 +2,24 @@
 #
 # Database schema:
 #
-# - *id:*          integer
-# - *project_id:*  integer
-# - *language:*    string
-# - *title:*       string
-# - *region:*      string
-# - *client:*      string
-# - *address:*     string
-# - *funders:*     string
-# - *focus:*       text
-# - *created_at:*  datetime
-# - *updated_at:*  datetime
+# - *id:*            integer
+# - *project_id:*    integer
+# - *language:*      string
+# - *title:*         string
+# - *region:*        string
+# - *client:*        string
+# - *address:*       string
+# - *funders:*       string
+# - *staff:*         string
+# - *staff_months:*  string
+# - *focus:*         text
+# - *created_at:*    datetime
+# - *updated_at:*    datetime
 #
 # The fields *project_id*, *language* and *title* are required.
 class ProjectInfo < ActiveRecord::Base
-  attr_accessible :title, :language, :region, :client, :address, :funders, :focus
+  attr_accessible :title, :language, :region, :client, :address, :funders,
+                  :staff, :staff_months, :focus
 
   discrete_values :language, %w(de en es fr), i18n_scope: :languages
 

@@ -146,7 +146,7 @@ de:
         create: 'Projekt wurde hinzugefügt: %{title}'
         delete: 'Projekt wurd gelöscht: %{title}'
         remove_partner: 'Partner wurde entfernt: %{name}'
-        save: 'Projekt wurde gepseichert.'
+        save: 'Projekt wurde gespeichert.'
     project_member:
       confirm:
         delete: 'Möchtest du wirklich diesen Teilnehmer löschen?'

@@ -17,26 +17,34 @@
         <%= form_tag projects_path, method: :get do %>
           <div class="row title">
             <div class="title">
-              <input type="text" placeholder="Title">
+              <%= text_field_tag :title, params[:title],
+                    placeholder: ProjectInfo.human_attribute_name(:title) %>
             </div>
-            <div class="funder">
-              <input type="text" placeholder="Funder">
+            <div class="funders">
+              <%= text_field_tag :funders, params[:funders],
+                    placeholder: ProjectInfo.human_attribute_name(:funders) %>
             </div>
             <div class="status">
-              <select>
-                <option>Status</option>
-              </select>
+              <%= select_tag :status,
+                    options_for_select(Project.status_values, params[:status]),
+                    prompt: Project.human_attribute_name(:status) %>
             </div>
           </div>
           <div class="row">
             <div class="period-start">
-              <input type="text" placeholder="Start">
+              <%= select_tag(:start,
+                    options_for_select(Project.max_period, params[:start]),
+                    prompt: Project.human_attribute_name(:start)) %>
             </div>
             <div class="period-end">
-              <input type="text" placeholder="End">
+              <%= select_tag(:end,
+                    options_for_select(Project.max_period, params[:end]),
+                    prompt: Project.human_attribute_name(:end)) %>
             </div>
             <div class="q">
-              <input type="text" placeholder="Search">
+              <%= text_field_tag :q, params[:q],
+                    placeholder: t('labels.generic.fuzzy_search') %>
+
               <%= submit_tag t('actions.search') %>
             </div>
           </div>

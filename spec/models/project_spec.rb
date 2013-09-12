@@ -5,6 +5,48 @@ describe Project do
     it { should ensure_inclusion_of(:carried_proportion).in_range(0..100) }
     it { should ensure_inclusion_of(:status).in_array(
       [:forecast, :interested, :offer, :execution, :stopped, :complete]) }
+
+    describe :start_must_be_earlier_than_end do
+      subject { build(:project, start: startDate, end: endDate) }
+
+      context 'when start is earlier than end' do
+        let(:startDate) { Date.new(1980, 3, 3) }
+        let(:endDate)   { Date.new(2000, 2, 1) }
+
+        it 'should be valid' do
+          expect(subject).to be_valid
+        end
+      end
+
+      context 'when start is nil' do
+        let(:startDate) { nil }
+        let(:endDate)   { Date.new(2000, 2, 1) }
+
+        it 'should be valid' do
+          expect(subject).to be_valid
+        end
+      end
+
+      context 'when end is nil' do
+        let(:startDate) { Date.new(1980, 3, 3) }
+        let(:endDate)   { nil }
+
+        it 'should be valid' do
+          expect(subject).to be_valid
+        end
+      end
+
+      context 'when start is later than end' do
+        let(:startDate) { Date.new(2000, 2, 1) }
+        let(:endDate)   { Date.new(1980, 3, 3) }
+
+        it 'should not be valid' do
+          expect(subject).to_not be_valid
+          expect(subject.errors[:start]).to_not be_empty
+          expect(subject.errors[:end]).to_not be_empty
+        end
+      end
+    end
   end
 
   describe :associations do
@@ -18,6 +60,30 @@ describe Project do
 
     it { should belong_to(:user) }
     it { should belong_to(:country) }
+  end
+
+  describe :first_period_year do
+    subject { Project.first_period_year }
+
+    it 'should be 1970' do
+      expect(subject).to eq(1970)
+    end
+  end
+
+  describe :last_period_year do
+    subject { Project.last_period_year }
+
+    it 'should be 50 years after today' do
+      expect(subject).to eq(Time.now.year + 50)
+    end
+  end
+
+  describe :max_period do
+    subject { Project.max_period }
+
+    it 'should be range from the first possible year to the last' do
+      expect(subject).to eq(Project.first_period_year..Project.last_period_year)
+    end
   end
 
   describe :info? do
