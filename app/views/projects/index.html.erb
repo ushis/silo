@@ -2,9 +2,45 @@
 
 <div id="main">
   <div>
-    <div clas="header">
-      <div class="filter">
+    <div class="header">
+      <div id="filter">
 
+        <!--
+
+        Status Auswahlfeld
+        Zeitraum von ... bis ... (Jahreszahl) ODER Auswahl der letzen 1...20 Jahre Land Auswahlfeld
+        Geberorganisation Freie Texteingabe
+        Inhalt Freie Suche in Beschreibung, Dienstleistungen, Titel und Partner
+
+        -->
+
+        <%= form_tag projects_path, method: :get do %>
+          <div class="row title">
+            <div class="title">
+              <input type="text" placeholder="Title">
+            </div>
+            <div class="funder">
+              <input type="text" placeholder="Funder">
+            </div>
+            <div class="status">
+              <select>
+                <option>Status</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="period-start">
+              <input type="text" placeholder="Start">
+            </div>
+            <div class="period-end">
+              <input type="text" placeholder="End">
+            </div>
+            <div class="q">
+              <input type="text" placeholder="Search">
+              <%= submit_tag t('actions.search') %>
+            </div>
+          </div>
+        <% end %>
       </div>
       <%= paginate @projects %>
     </div>
@@ -16,6 +52,13 @@
             <%= Project.human_attribute_name :title %>
           </th>
           <th>
+            <%= Project.human_attribute_name :status %>
+          </th>
+          <th>
+            <%= Project.human_attribute_name :funder %>
+          </th>
+          <th>
+            <%= Project.human_attribute_name :period %>
           </th>
         </tr>
       </thead>
@@ -28,7 +71,23 @@
                 <%= link_to project.title, project_path(project, lang: project.info.language) %>
               </td>
               <td>
+                <%= project.human_status %>
+              </td>
+              <td>
+                <%= project.info.funders %>
+              </td>
+              <td>
+                <%= project.start %> - <%= project.end %>
+              </td>
+              <td class="languages">
                 <%= list_infos project %>
+              </td>
+              <td class="attachments">
+                <% unless project.attachments.empty? %>
+                  <%= link_to t('labels.project.documents'),
+                              documents_project_path(project),
+                              class: 'icon-attachment' %>
+                <% end %>
               </td>
             </tr>
           <% end %>
