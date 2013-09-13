@@ -4,33 +4,17 @@
   <div>
     <div class="header">
       <div id="filter">
-
-        <!--
-
-        Status Auswahlfeld
-        Zeitraum von ... bis ... (Jahreszahl) ODER Auswahl der letzen 1...20 Jahre Land Auswahlfeld
-        Geberorganisation Freie Texteingabe
-        Inhalt Freie Suche in Beschreibung, Dienstleistungen, Titel und Partner
-
-        -->
-
         <%= form_tag projects_path, method: :get do %>
           <div class="row title">
             <div class="title">
               <%= text_field_tag :title, params[:title],
                     placeholder: ProjectInfo.human_attribute_name(:title) %>
             </div>
-            <div class="funders">
-              <%= text_field_tag :funders, params[:funders],
-                    placeholder: ProjectInfo.human_attribute_name(:funders) %>
-            </div>
             <div class="status">
               <%= select_tag :status,
                     options_for_select(Project.status_values, params[:status]),
                     prompt: Project.human_attribute_name(:status) %>
             </div>
-          </div>
-          <div class="row">
             <div class="period-start">
               <%= select_tag(:start,
                     options_for_select(Project.max_period, params[:start]),
@@ -41,6 +25,8 @@
                     options_for_select(Project.max_period, params[:end]),
                     prompt: Project.human_attribute_name(:end)) %>
             </div>
+          </div>
+          <div class="row">
             <div class="q">
               <%= text_field_tag :q, params[:q],
                     placeholder: t('labels.generic.fuzzy_search') %>
