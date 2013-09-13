@@ -35,9 +35,19 @@
     <%= t 'labels.generic.by', name: partner.user.try(:full_name) %>
   </h3>
 
+  <h4><%= Partner.human_attribute_name :projects %></h4>
+  <ul class="projects">
+    <% if @partner.projects.empty? %>
+      <li class="empty"><%= t 'messages.partner.errors.no_projects' %></li>
+    <% else %>
+      <% @partner.projects.each do |project| %>
+        <li><%= link_to project.to_s, project %></li>
+      <% end %>
+    <% end %>
+  </ul>
+
   <h4>
     <%= Partner.human_attribute_name :lists %>
   </h4>
-
   <%= render 'shared/list_tracker', parent: partner %>
 </div>

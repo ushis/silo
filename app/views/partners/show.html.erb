@@ -25,18 +25,6 @@
             <h4><%= Partner.human_attribute_name :comment %></h4>
             <%= markdown @partner.comment %>
           </li>
-          <li>
-            <h4><%= Partner.human_attribute_name :projects %></h4>
-            <ul>
-              <% if @partner.projects.empty? %>
-                <li class="empty"><%= t 'messages.partner.errors.no_projects' %></li>
-              <% else %>
-                <% @partner.projects.each do |project| %>
-                  <li><%= link_to project.to_s, project %></li>
-                <% end %>
-              <% end %>
-            </ul>
-          </li>
         </ul>
       </div><!-- left -->
 
