@@ -1,17 +1,12 @@
 # Searches the projects table and its associations.
 class ProjectSearcher < ApplicationSearcher
-  search_helpers :title, :funders, :status, :start, :end, :q
+  search_helpers :title, :status, :start, :end, :q
 
   protected
 
   # Searches the title attribute.
   def title(q)
     @scope.includes(:infos).where('project_infos.title LIKE ?', "%#{q}%")
-  end
-
-  # Searches the funders attribute.
-  def funders(q)
-    @scope.includes(:infos).where('project_infos.funders LIKE ?', "%#{q}%")
   end
 
   # Searches the status attribute.
@@ -42,6 +37,10 @@ class ProjectSearcher < ApplicationSearcher
   def search_fuzzy(query)
     execute_sql(<<-SQL, q: query, like: "%#{query}%").map(&:first)
       (
+        SELECT project_infos.project_id
+        FROM project_infos
+        WHERE project_infos.funders LIKE :like
+      ) UNION (
         SELECT partners_projects.project_id
         FROM partners_projects
         JOIN partners
@@ -58,7 +57,6 @@ class ProjectSearcher < ApplicationSearcher
           AND descriptions.describable_type = 'ProjectInfo'
         WHERE MATCH (comments.comment) AGAINST (:q)
           OR MATCH (descriptions.description) AGAINST (:q)
-        GROUP BY project_infos.project_id
       )
     SQL
   end

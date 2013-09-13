@@ -54,14 +54,6 @@ describe ProjectSearcher do
       end
     end
 
-    context 'when searching for partial funder' do
-      let(:conditions) { { funders: 'welt' } }
-
-      it 'should find the project with the correct funders' do
-        expect(subject).to eq([@europe])
-      end
-    end
-
     context 'when searching for status' do
       let(:conditions) { { status: :complete } }
 
@@ -90,6 +82,14 @@ describe ProjectSearcher do
       let(:conditions) { { q: 'Management' } }
 
       it 'should find the corerect projects' do
+        expect(subject).to eq([@europe])
+      end
+    end
+
+    context 'when searching full text for funders' do
+      let(:conditions) { { q: 'welt' } }
+
+      it 'should find the project with the correct funders' do
         expect(subject).to eq([@europe])
       end
     end
