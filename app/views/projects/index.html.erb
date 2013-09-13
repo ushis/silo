@@ -49,7 +49,7 @@
             <%= Project.human_attribute_name :status %>
           </th>
           <th>
-            <%= Project.human_attribute_name :funder %>
+            <%= ProjectInfo.human_attribute_name :funders %>
           </th>
           <th>
             <%= Project.human_attribute_name :period %>
@@ -71,7 +71,7 @@
                 <%= project.info.funders %>
               </td>
               <td>
-                <%= l project.start, format: :my %> - <%= l project.end, format: :my %>
+                <%= project.human_start(:my) %> - <%= project.human_end(:my) %>
               </td>
               <td class="languages">
                 <%= list_infos project %>

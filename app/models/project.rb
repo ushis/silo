@@ -72,6 +72,16 @@ class Project < ActiveRecord::Base
     first_period_year..last_period_year
   end
 
+  # Returns a human readable start date.
+  def human_start(format)
+    I18n.l(start, format: format) if start
+  end
+
+  # Returns a human readable end date.
+  def human_end(format)
+    I18n.l(self.end, format: format) if self.end
+  end
+
   # Returns true if the project has some infos, else false
   def info?
     ! infos.empty?

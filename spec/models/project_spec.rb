@@ -86,6 +86,46 @@ describe Project do
     end
   end
 
+  describe :human_start do
+    subject { build(:project, start: date).human_start(:short) }
+
+    context 'when the start date is nil' do
+      let(:date) { nil }
+
+      it 'should be nil' do
+        expect(subject).to be_nil
+      end
+    end
+
+    context 'when the start date is a valid date' do
+      let(:date) { Date.new(2001, 1, 13) }
+
+      it 'should be the human readable start date' do
+        expect(subject).to eq('January 13, 2001')
+      end
+    end
+  end
+
+  describe :human_end do
+    subject { build(:project, end: date).human_end(:short) }
+
+    context 'when the start date is nil' do
+      let(:date) { nil }
+
+      it 'should be nil' do
+        expect(subject).to be_nil
+      end
+    end
+
+    context 'when the start date is a valid date' do
+      let(:date) { Date.new(2001, 1, 13) }
+
+      it 'should be the human readable end date' do
+        expect(subject).to eq('January 13, 2001')
+      end
+    end
+  end
+
   describe :info? do
     context 'without any infos' do
       subject { create(:project) }

@@ -17,11 +17,11 @@
         <ul class="info">
           <li class="start">
             <h4><%= Project.human_attribute_name :start %></h4>
-            <p><%= l(@project.start, format: :short) %></p>
+            <p><%= @project.human_start(:short) %></p>
           </li>
           <li class="end">
             <h4><%= Project.human_attribute_name :end %></h4>
-            <p><%= l(@project.end, format: :short) %></p>
+            <p><%= @project.human_end(:short) %></p>
           </li>
           <li class="status">
             <h4><%= Project.human_attribute_name :status %></h4>
@@ -36,11 +36,11 @@
             <p><%= @project.country.try(:human) %></p>
           </li>
           <li class="region">
-            <h4><%= Project.human_attribute_name :region %></h4>
+            <h4><%= ProjectInfo.human_attribute_name :region %></h4>
             <p><%= @info.region %></p>
           </li>
           <li class="address">
-            <h4><%= Project.human_attribute_name :address %></h4>
+            <h4><%= ProjectInfo.human_attribute_name :address %></h4>
             <p><%= @info.address %></p>
           </li>
         </ul>
@@ -49,11 +49,11 @@
       <div class="right">
         <ul class="info">
           <li class="client">
-            <h4><%= Project.human_attribute_name :client %></h4>
+            <h4><%= ProjectInfo.human_attribute_name :client %></h4>
             <p><%= @info.client %></p>
           </li>
           <li class="funders">
-            <h4><%= Project.human_attribute_name :funders %></h4>
+            <h4><%= ProjectInfo.human_attribute_name :funders %></h4>
             <p><%= @info.funders %></p>
           </li>
           <li class="order-value-us">
@@ -65,11 +65,11 @@
             <p><%= @project.order_value_eur %></p>
           </li>
           <li class="staff">
-            <h4><%= Project.human_attribute_name :staff %></h4>
+            <h4><%= ProjectInfo.human_attribute_name :staff %></h4>
             <p><%= @info.staff %></p>
           </li>
           <li class="staff-months">
-            <h4><%= Project.human_attribute_name :staff_months %></h4>
+            <h4><%= ProjectInfo.human_attribute_name :staff_months %></h4>
             <p><%= @info.staff_months %></p>
           </li>
         </ul>
@@ -78,15 +78,15 @@
       <div class="wide">
         <ul class="info">
           <li class="focus">
-            <h4><%= Project.human_attribute_name :focus %></h4>
+            <h4><%= ProjectInfo.human_attribute_name :focus %></h4>
             <p><%= @info.focus %></p>
           </li>
           <li class="description">
-            <h4><%= Project.human_attribute_name :description %></h4>
+            <h4><%= ProjectInfo.human_attribute_name :description %></h4>
             <p><%= @info.description %></p>
           </li>
           <li class="service-details">
-            <h4><%= Project.human_attribute_name :service_details %></h4>
+            <h4><%= ProjectInfo.human_attribute_name :service_details %></h4>
             <p><%= @info.service_details %></p>
           </li>
         </ul>
