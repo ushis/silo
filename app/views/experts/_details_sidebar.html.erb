@@ -35,9 +35,19 @@
     <%= t 'labels.generic.by', name: expert.user.try(:full_name) %>
   </h3>
 
+  <h4><%= Expert.human_attribute_name :projects %></h4>
+  <ul class="projects">
+    <% if @expert.project_members.empty? %>
+      <li class="empty"><%= t 'messages.partner.errors.no_projects' %></li>
+    <% else %>
+      <% @expert.project_members.each do |member| %>
+        <li><%= link_to member.project.to_s, member.project, class: 'icon-project' %></li>
+      <% end %>
+    <% end %>
+  </ul>
+
   <h4>
     <%= Expert.human_attribute_name :lists %>
   </h4>
-
   <%= render 'shared/list_tracker', parent: expert %>
 </div>
