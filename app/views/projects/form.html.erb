@@ -11,7 +11,7 @@
     <% unless @info.errors.empty? %>
       <%= render 'shared/validation_errors', model: @info %>
     <% end %>
-    <div class ="form-wrapper">
+    <div class ="form-wrapper projects">
       <%= form_for @project, url: project_form_action_path(@project, @info) do |f| %>
         <%= fields_for :project_info, @info do |i| %>
           <div class="row main">
@@ -48,10 +48,6 @@
           </div>
           <div class="row">
             <div class="left">
-              <div class="address">
-                <%= i.label :address %>
-                <%= i.text_field :address %>
-              </div>
               <div class="country">
                 <%= f.label :country %>
                 <%= f.country_select :country_id %>
@@ -63,13 +59,21 @@
             </div>
           </div>
           <div class="row main">
-            <div class="client">
-              <%= i.label :client %>
-              <%= i.text_field :client %>
+            <div class="left">
+              <div class="client">
+                <%= i.label :client %>
+                <%= i.text_field :client %>
+              </div>
+              <div class="address">
+                <%= i.label :address %>
+                <%= i.text_field :address %>
+              </div>
             </div>
-            <div class="funders">
-              <%= i.label :funders %>
-              <%= i.text_field :funders %>
+            <div class="right">
+              <div class="funders">
+                <%= i.label :funders %>
+                <%= i.text_field :funders %>
+              </div>
             </div>
           </div>
           <div class="row">

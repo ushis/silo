@@ -36,35 +36,49 @@ body.projects.index #filter div.row:last-child {
 }
 
 body.projects.index #filter div.title input {
-  width: 240px;
+  width: 302px;
 }
 
-body.projects.index #filter div.funder input {
-  width: 240px;
+body.projects.index #filter div.funders input {
+  width: 302px;
 }
 
 body.projects.index #filter div.status {
   float: right;
+  margin-right: 0 !important;
 }
 
 body.projects.index #filter div.status select {
-  width: 90px;
+  width: 95px;
 }
 
-body.projects.index #filter div.period-start input {
-  width: 115px;
+body.projects.index #filter div.period-start select,
+body.projects.index #filter div.period-end select {
+  width: 76px;
 }
 
-body.projects.index #filter div.period-end input {
-  width: 115px;
+body.projects.index #filter div.period-start {
+  position: relative;
+  padding-right: 26px;
+  margin-right: 0 !important;
 }
+
+body.projects.index #filter div.period-start:after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 26px;
+  height: 16px;
+  text-align: center;
+  content: '-';
+} 
 
 body.projects.index #filter div.q {
-  width: 452px;
+  width: 600px;
 }
 
-body.projects.index #filter div.q input[type=text] {
-  width: 344px !important;
+body.projects.index #filter #q {
+  width: 520px !important;
 }
 
 body.projects.index #filter div.q input[type=submit] {
@@ -121,77 +135,88 @@ body.projects.new select#lang {
   right: 12px;
 }
 
-body.projects.edit #main div.form-wrapper div.left,
-body.projects.edit #main div.form-wrapper div.right {
+body.projects #main div.form-wrapper.projects div.left,
+body.projects #main div.form-wrapper.projects div.right {
   float: left;
   width: 350px;
 }
 
-body.projects.edit #main div.form-wrapper input[type=text],
-body.projects.edit #main div.form-wrapper select,
-body.projects.new #main div.form-wrapper input[type=text],
-body.projects.new #main div.form-wrapper select {
+body.projects #main div.form-wrapper.projects input[type=text],
+body.projects #main div.form-wrapper.projects select {
   width: 350px;
 }
 
-body.projects.edit #main div.form-wrapper textarea {
+body.projects #main div.form-wrapper.projects textarea {
   width: 720px;
   height: 150px;
   margin-bottom: 20px;
 }
 
-body.projects.edit #main div.form-wrapper div.carried-proportion,
-body.projects.edit #main div.form-wrapper div.carried-proportion input {
+body.projects #main div.form-wrapper.projects div.carried-proportion,
+body.projects #main div.form-wrapper.projects div.carried-proportion input {
   width: 120px;
 }
 
-body.projects.edit #main div.form-wrapper div.title input {
+body.projects #main div.form-wrapper.projects div.title input {
   width: 580px;
 }
 
-body.projects.edit #main div.form-wrapper div.region {
+body.projects #main div.form-wrapper.projects div.region {
   margin: 10px 0 0 0;
 }
 
-body.projects.edit #main div.form-wrapper div.address textarea {
+body.projects #main div.form-wrapper.projects div.address textarea {
   height: 82px;
   width: 350px;
 }
 
-body.projects.edit #main div.form-wrapper div.start,
-body.projects.edit #main div.form-wrapper div.end {
+body.projects #main div.form-wrapper.projects div.start,
+body.projects #main div.form-wrapper.projects div.end {
   float: right;  
-  width: 270px;
+  width: 250px;
 }
 
-body.projects.edit #main div.form-wrapper div.end {
+body.projects #main div.form-wrapper.projects div.end {
   margin-right: 0;
   margin-left: 10px;
 }
 
-body.projects.edit #main div.form-wrapper div.start select,
-body.projects.edit #main div.form-wrapper div.end select {
-  width: 30%;
+body.projects #main div.form-wrapper.projects div.start select,
+body.projects #main div.form-wrapper.projects div.end select {
+  width: 25%;
   margin-right: 3%;
 }
 
-body.projects.edit #main div.form-wrapper div.start select:last-child,
-body.projects.edit #main div.form-wrapper div.end select:last-child {
+body.projects #main div.form-wrapper.projects div.start select:nth-child(3),
+body.projects #main div.form-wrapper.projects div.end select:nth-child(3) {
+  width: 40%;
+}
+
+body.projects #main div.form-wrapper.projects div.start select:last-child,
+body.projects #main div.form-wrapper.projects div.end select:last-child {
   margin-right: 0;
 }
 
-body.projects.edit #main div.form-wrapper div.status,
-body.projects.edit #main div.form-wrapper div.status select {
+body.projects #main div.form-wrapper.projects div.status,
+body.projects #main div.form-wrapper.projects div.status select {
   float: right;
   width: 100px;
 }
 
-body.projects.edit #main div.form-wrapper div.address,
-body.projects.edit #main div.form-wrapper div.country {
+body.projects #main div.form-wrapper.projects div.country,
+body.projects #main div.form-wrapper.projects div.region {
   float: left;
-  margin-bottom: 15px;
 }
 
-body.projects.edit #main div.form-wrapper div.submit {
+body.projects #main div.form-wrapper.projects div.address {
+  float: left;
+}
+
+body.projects #main div.form-wrapper.projects div.client {
+  float: left;
+  margin-bottom: 10px;
+}
+
+body.projects #main div.form-wrapper.projects div.submit {
   padding-top: 20px;
 }
