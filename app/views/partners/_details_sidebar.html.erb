@@ -41,7 +41,7 @@
       <li class="empty"><%= t 'messages.partner.errors.no_projects' %></li>
     <% else %>
       <% @partner.projects.each do |project| %>
-        <li><%= link_to project.to_s, project %></li>
+        <li><%= link_to project.to_s, project, class: 'icon-project' %></li>
       <% end %>
     <% end %>
   </ul>
