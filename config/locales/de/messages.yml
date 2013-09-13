@@ -94,6 +94,7 @@ de:
         find: 'Liste nicht gefunden.'
         no_experts: 'Diese Liste hat keine Experten.'
         no_partners: 'Diese Liste hat keine Partner.'
+        no_projects: 'Diese Liste hat keine Projekte.'
         open: 'Liste konnte nicht geöffnet werden.'
         public_to_private: 'Öffentliche Liste kann nicht privatisiert werden.'
         save: 'Liste konnte nicht gespeichert werden.'
