@@ -21,9 +21,10 @@ de:
       last_word_connector: ' und '
   time:
     formats:
+      long: '%d.%m.%Y %H:%M'
+      md: '%m.%Y'
       save: '%Y-%m-%d'
       short: '%d.%m.%Y'
-      long: '%d.%m.%Y %H:%M'
   values:
     boolean:
       'false': 'Nein'

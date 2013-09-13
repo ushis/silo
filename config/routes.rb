@@ -95,8 +95,11 @@ Silo::Application.routes.draw do
 
     resources :projects, only: [] do
       resources :attachments,     only: :new
-      resources :partners,        only: :new, controller: :project_partners
       resources :project_members, only: [:new, :edit], as: :members
+
+      resources :partners, only: [:index], controller: :project_partners do
+        get :search, on: :collection
+      end
     end
 
     [:areas, :languages].each do |controller|

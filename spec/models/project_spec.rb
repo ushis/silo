@@ -156,6 +156,38 @@ describe Project do
     end
   end
 
+  describe :potential_partners do
+    before(:all) do
+      @acme = create(:partner, company: 'ACME')
+      @linux = create(:partner, company: 'Linux Foundation')
+      @apache = create(:partner, company: 'Apache Foundation')
+    end
+
+    after(:all) do
+      [Partner, User].each { |m| m.destroy_all }
+    end
+
+    subject { create(:project, partners: [@linux]) }
+
+    context 'when :q is empty' do
+      it 'should be a collection of all partners not associated with the project' do
+        expect(subject.potential_partners(nil)).to match_array([@acme, @apache])
+      end
+    end
+
+    context 'when :q is "oundati"' do
+      it 'should find the apache foundation' do
+        expect(subject.potential_partners('oundati')).to eq([@apache])
+      end
+    end
+
+    context 'when :q is "something strange"' do
+      it 'should find nothing' do
+        expect(subject.potential_partners('something strange')).to eq([])
+      end
+    end
+  end
+
   describe :add_partner do
     subject { create(:project, :with_partners) }
 

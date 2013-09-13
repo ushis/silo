@@ -123,4 +123,4 @@ do ($ = jQuery) ->
       ->
         args = arguments
         clearTimeout(timeout)
-        setTimeout((=> callback.apply(@, args)), delay)
+        timeout = setTimeout((=> callback.apply(@, args)), delay)

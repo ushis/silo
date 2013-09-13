@@ -98,14 +98,19 @@ class Project < ActiveRecord::Base
     infos.find_by_language!(lang)
   end
 
-  #
+  # Returns a collection of potential partners.
+  def potential_partners(q)
+    Partner.where('id NOT IN (:ids) AND company LIKE :q', ids: partners.pluck(:id), q: "%#{q}%")
+  end
+
+  # Adds a partners to the project.
   def add_partner(partner)
     partners << partner
   rescue ActiveRecord::RecordNotUnique
     false
   end
 
-  #
+  # Updates the title.
   def update_title
     update_attribute(:title, info.try(:title))
   end

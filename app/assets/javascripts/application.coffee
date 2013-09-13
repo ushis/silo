@@ -27,6 +27,7 @@ do ($ = jQuery) ->
     # General stuff
     $('div.flash').siloFlash()
     $('a.hidden-form').siloHiddenForm()
+    $('a.hidden-chooser').siloHiddenChooser()
     $('a.chooser').siloChooser()
     $('[data-help]').siloHelp()
     $('[data-toggle]').siloToggle()

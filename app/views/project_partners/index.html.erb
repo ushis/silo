@@ -11,8 +11,8 @@
         <ul class="tools">
           <li class="new-member">
             <%= link_to t('labels.partner.new'),
-                        new_ajax_project_partner_path(@project),
-                        class: 'hidden-form icon-plus' %>
+                        ajax_project_partners_path(@project),
+                        class: 'hidden-chooser icon-plus' %>
           </li>
         </ul>
     <% end %>
