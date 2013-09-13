@@ -19,6 +19,10 @@
               <%= i.label :title %>
               <%= i.text_field :title %>
             </div>
+            <div class="status">
+              <%= f.label :status %>
+              <%= f.select :status, Project.status_values %>
+            </div>
             <% unless @project.persisted?  %>
               <div class="language">
                 <%= i.label :language %>
@@ -27,27 +31,27 @@
             <% end %>
           </div>
           <div class="row">
-            <div class="start">
-              <%= f.label :start %>
-              <%= f.date_select(:start, start_year: Project.first_period_year,
-                                end_year: Project.last_period_year, prompt: true) %>
+            <div class="carried-proportion">
+              <%= f.label :carried_proportion %>
+              <%= f.text_field :carried_proportion %>
             </div>
             <div class="end">
               <%= f.label :end %>
               <%= f.date_select(:end, start_year: Project.first_period_year,
                                 end_year: Project.last_period_year, prompt: true) %>
             </div>
-            <div class="carried_proportion">
-              <%= f.label :carried_proportion %>
-              <%= f.text_field :carried_proportion %>
-            </div>
-            <div class="status">
-              <%= f.label :status %>
-              <%= f.select :status, Project.status_values %>
+            <div class="start">
+              <%= f.label :start %>
+              <%= f.date_select(:start, start_year: Project.first_period_year,
+                                end_year: Project.last_period_year, prompt: true) %>
             </div>
           </div>
           <div class="row">
             <div class="left">
+              <div class="address">
+                <%= i.label :address %>
+                <%= i.text_field :address %>
+              </div>
               <div class="country">
                 <%= f.label :country %>
                 <%= f.country_select :country_id %>
@@ -55,12 +59,6 @@
               <div class="region">
                 <%= i.label :region %>
                 <%= i.text_field :region %>
-              </div>
-            </div>
-            <div class="right">
-              <div class="address">
-                <%= i.label :address %>
-                <%= i.text_area :address %>
               </div>
             </div>
           </div>
