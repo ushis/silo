@@ -1,10 +1,1 @@
-<table>
-  <% @partners.each do |partner| %>
-    <tr>
-      <td>
-        <%= link_to(partner.company, project_partners_path(@project),
-                    'data-method' => 'post', 'data-id' => partner.id) %>
-      </td>
-    </tr>
-  <% end %>
-</table>
+<%= render 'results', project: @project, partners: @partners %>

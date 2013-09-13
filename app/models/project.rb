@@ -109,7 +109,9 @@ class Project < ActiveRecord::Base
 
   # Returns a collection of potential partners.
   def potential_partners(q)
-    Partner.where('id NOT IN (:ids) AND company LIKE :q', ids: partners.pluck(:id), q: "%#{q}%")
+    ids = partners.pluck(:id)
+    scope = ids.empty? ? Partner : Partner.where('id NOT IN (?)', ids)
+    scope.where('company LIKE ?', "%#{q}%")
   end
 
   # Adds a partners to the project.
