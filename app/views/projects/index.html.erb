@@ -85,7 +85,7 @@
                 <%= project.info.funders %>
               </td>
               <td>
-                <%= project.start %> - <%= project.end %>
+                <%= l project.start, format: :my %> - <%= l project.end, format: :my %>
               </td>
               <td class="languages">
                 <%= list_infos project %>

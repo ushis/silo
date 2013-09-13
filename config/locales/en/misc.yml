@@ -2,6 +2,7 @@
 en:
   date:
     formats:
+      my: '%Y/%m'
       short: '%B %e, %Y'
     month_names: [~, January, February, March, April, May, June, July, August,
                   September, October, November, December]
@@ -22,7 +23,6 @@ en:
   time:
     formats:
       long: '%Y/%m/%d %H:%M'
-      md: '%Y/%m'
       save: '%Y-%m-%d'
       short: '%Y/%m/%d'
   values:
