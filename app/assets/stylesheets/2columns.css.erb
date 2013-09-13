@@ -243,12 +243,15 @@ body.projects.documents #main {
   margin-right: 5px;
 }
 
-#main div.sidebar.details .lists {
-  margin-bottom: 20px;
+#main div.sidebar.details ul.lists,
+#main div.sidebar.details ul.projects {
+  margin-bottom: 10px;
 }
 
 #main div.sidebar.details ul.lists,
-#main div.sidebar.details ul.lists li {
+#main div.sidebar.details ul.lists li,
+#main div.sidebar.details ul.projects,
+#main div.sidebar.details ul.projects li  {
   float: left;
   width: 100%;
   text-align: left;
@@ -258,12 +261,14 @@ body.projects.documents #main {
   margin-top: 5px;
 }
 
-#main div.sidebar.details ul.lists li a {
+#main div.sidebar.details ul.lists li a,
+#main div.sidebar.details ul.projects li a {
   width: auto;
   text-align: left;
 }
 
-#main div.sidebar.details ul.lists li a:before {
+#main div.sidebar.details ul.lists li a:before,
+#main div.sidebar.details ul.projects li a:before {
   margin: 0 7px 0 0;
   padding: 0;
   font-size: 14px;
@@ -406,6 +411,15 @@ body.projects.documents #main {
   margin-left: -1px;
   padding-left: 20px;
   border-left: 1px solid #EEE;
+}
+
+#main div.tabbed-content div.content div.wide {
+  float: left;
+  width: 100%;
+  padding: 15px 10px 30px 10px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  background: #FFF;
 }
 
 #main div.tabbed-content div.content ul.info {

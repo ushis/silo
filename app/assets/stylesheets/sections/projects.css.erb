@@ -60,11 +60,11 @@ body.projects.index #filter div.period-end input {
 }
 
 body.projects.index #filter div.q {
-  width: 349px;
+  width: 452px;
 }
 
 body.projects.index #filter div.q input[type=text] {
-  width: 240px;
+  width: 344px !important;
 }
 
 body.projects.index #filter div.q input[type=submit] {
@@ -80,6 +80,36 @@ body.projects.documents #main div.tabbed-content ul.tabs li.documents {
   background: #FFF;
   color: #555;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.33);
+}
+
+body.projects.show #main div.tabbed-content div.content ul.info li.address, 
+body.projects.show #main div.tabbed-content div.content ul.info li.staff,
+body.projects.show #main div.tabbed-content div.content ul.info li.focus,
+body.projects.show #main div.tabbed-content div.content ul.info li.description,
+body.projects.show #main div.tabbed-content div.content ul.info li.service-details {
+  width: 100%;
+}
+
+/* Project Members */
+
+body.project-members.index table td.functions {
+  width: 46px;
+  padding: 0 0 0 10px;
+}
+
+body.project-members.index table td.functions a {
+  display: block;
+  width: 20px;
+  height: 20px;
+  overflow: hidden;
+  color: #666;
+  float: left;
+  font-size: 14px;
+  margin: 0 4px -4px 0;
+}
+
+body.project-members.index table td.functions a:last-child {
+  margin: 0 0 -4px 0;
 }
 
 /* Edit / New Form */
@@ -107,6 +137,16 @@ body.projects.new #main div.form-wrapper select {
 body.projects.edit #main div.form-wrapper textarea {
   width: 720px;
   height: 150px;
+  margin-bottom: 20px;
+}
+
+body.projects.edit #main div.form-wrapper div.carried-proportion,
+body.projects.edit #main div.form-wrapper div.carried-proportion input {
+  width: 120px;
+}
+
+body.projects.edit #main div.form-wrapper div.title input {
+  width: 580px;
 }
 
 body.projects.edit #main div.form-wrapper div.region {
@@ -118,27 +158,38 @@ body.projects.edit #main div.form-wrapper div.address textarea {
   width: 350px;
 }
 
-body.projects.edit #main div.form-wrapper div.title input {
-  width: 720px;
+body.projects.edit #main div.form-wrapper div.start,
+body.projects.edit #main div.form-wrapper div.end {
+  float: right;  
+  width: 270px;
 }
 
 body.projects.edit #main div.form-wrapper div.end {
-  margin-right: 20px;
+  margin-right: 0;
+  margin-left: 10px;
 }
 
-body.projects.edit #main div.form-wrapper div.start input,
-body.projects.edit #main div.form-wrapper div.end input,
-body.projects.edit #main div.form-wrapper div.carried_proportion input {
-  width: 103px;
+body.projects.edit #main div.form-wrapper div.start select,
+body.projects.edit #main div.form-wrapper div.end select {
+  width: 30%;
+  margin-right: 3%;
 }
 
-body.projects.edit #main div.form-wrapper div.status {
-  float: right;
-  margin: 0;
+body.projects.edit #main div.form-wrapper div.start select:last-child,
+body.projects.edit #main div.form-wrapper div.end select:last-child {
+  margin-right: 0;
 }
 
+body.projects.edit #main div.form-wrapper div.status,
 body.projects.edit #main div.form-wrapper div.status select {
-  width: 140px;
+  float: right;
+  width: 100px;
+}
+
+body.projects.edit #main div.form-wrapper div.address,
+body.projects.edit #main div.form-wrapper div.country {
+  float: left;
+  margin-bottom: 15px;
 }
 
 body.projects.edit #main div.form-wrapper div.submit {
