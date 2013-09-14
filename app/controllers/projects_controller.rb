@@ -49,7 +49,7 @@ class ProjectsController < ApplicationController
       flash[:notice] = t('messages.project.success.create', title: @info.title)
       redirect_to project_url(@project, @info.language)
     else
-      flash[:alert] = t('messages.project.errors.create')
+      flash.now[:alert] = t('messages.project.errors.create')
       render_form(:new)
     end
   end
@@ -70,7 +70,7 @@ class ProjectsController < ApplicationController
       flash[:notice] = t('messages.project.success.save')
       redirect_to project_url(@project, @info.language)
     else
-      flash[:alert] = t('messages.project.erros.save')
+      flash.now[:alert] = t('messages.project.erros.save')
       render_form(:edit)
     end
   end
