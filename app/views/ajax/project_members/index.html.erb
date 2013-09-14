@@ -1,0 +1,21 @@
+<div class="overlay project-members">
+  <div class="header">
+    <h2>
+      <%= t :new, scope: [:labels, :project_member] %>
+    </h2>
+    <div class="abort button">
+      <%= t 'actions.abort' %>
+    </div>
+  </div>
+  <div class="form-wrapper">
+    <%= form_tag search_ajax_project_members_path(@project), method: :get, remote: true do %>
+      <div class="search">
+        <%= text_field_tag :name, nil, placeholder: t('labels.generic.search'), autofocus: true %>
+      </div>
+    <% end %>
+
+    <div id="results">
+      <%= render 'results', project: @project, experts: @experts %>
+    </div>
+  </div>
+</div>

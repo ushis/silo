@@ -11,8 +11,8 @@
         <ul class="tools">
           <li class="new-member">
             <%= link_to t('labels.project_member.new'),
-                        new_ajax_project_member_path(@project),
-                        class: 'hidden-form icon-plus' %>
+                        ajax_project_members_path(@project),
+                        class: 'hidden-chooser icon-plus' %>
           </li>
         </ul>
     <% end %>
@@ -32,16 +32,17 @@
                   <%= link_to member.name, expert_path(member.expert) %>
                 </td>
                 <td>
-                  <%= member.role %>
+                  <% if current_user.access?(:projects) %>
+                    <%= editable_button_for member, :role, url: ajax_project_member_path(@project, member) %>
+                  <% else %>
+                    <%= member.role %>
+                  <% end %>
                 </td>
                 <% if current_user.access?(:projects) %>
                   <td class="functions">
-                    <%= link_to t('actions.edit'),
-                                edit_ajax_project_member_path(@project, member),
-                                class: 'hidden-form icon-pencil' %>
-                    <%= delete_button_for member,
+                    <%= delete_button_for(member,
                                           password: false,
-                                          url: project_member_path(@project, member) %>
+                                          url: project_member_path(@project, member)) %>
                   </td>
                 <% end %>
               </tr>

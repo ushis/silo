@@ -27,6 +27,13 @@ class Ajax::ApplicationController < ApplicationController
     unauthorized unless current_user
   end
 
+  # Renders an error message and sets the 401, if the user is not authorized.
+  def authenticate(section = nil)
+    unless (section ? current_user.access?(section) : current_user.admin?)
+      unauthorized
+    end
+  end
+
   # Redirects the user the root url, if this is no ajax request.
   def check_xhr
     redirect_to(root_url) unless request.xhr? || Rails.env.development?

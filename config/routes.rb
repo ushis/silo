@@ -44,7 +44,7 @@ Silo::Application.routes.draw do
 
   resources :projects, only: [:new, :create] do
     resources :attachments,     only: [:show, :create, :destroy]
-    resources :project_members, only: [:index, :create, :update, :destroy], as: :members
+    resources :project_members, only: [:index, :create, :destroy], as: :members
     resources :partners,        only: [:index, :create, :destroy], controller: :project_partners
 
     get :documents, on: :member
@@ -95,7 +95,13 @@ Silo::Application.routes.draw do
 
     resources :projects, only: [] do
       resources :attachments,     only: :new
-      resources :project_members, only: [:new, :edit], as: :members
+
+      resources :project_members, only: [:index, :update], as: :members do
+        collection do
+          get 'new/:expert_id' => 'project_members#new', as: :new
+          get :search
+        end
+      end
 
       resources :partners, only: [:index], controller: :project_partners do
         get :search, on: :collection

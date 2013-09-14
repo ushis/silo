@@ -24,17 +24,6 @@ class ProjectMembersController < ApplicationController
     redirect_to project_members_path(@project)
   end
 
-  # PUT /projects/:project_id/project_members/:id
-  def update
-    if @member.update_attributes(params[:project_member])
-      flash[:notice] = t('messages.project_member.success.save')
-    else
-      flash[:alert] = t('messages.project_member.errors.save')
-    end
-
-    redirect_to project_members_path(@project)
-  end
-
   # DELETE /projects/:project_id/members/:id
   def destroy
     if @member.destroy

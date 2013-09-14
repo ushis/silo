@@ -1,0 +1,11 @@
+<table>
+  <% experts.each do |expert| %>
+    <tr>
+      <td>
+        <%= link_to(expert.full_name,
+                    new_ajax_project_members_path(project, expert),
+                    remote: true) %>
+      </td>
+    </tr>
+  <% end %>
+</table>

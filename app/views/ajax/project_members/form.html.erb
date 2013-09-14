@@ -15,7 +15,8 @@
       <div class="row">
         <div class="expert">
           <%= f.label :expert %>
-          <%= f.collection_select :expert_id, Expert.ordered, :id, :to_s %>
+          <%= f.hidden_field :expert_id %>
+          <p><%= @expert.full_name_with_degree %></p>
         </div>
       </div>
       <div class="row">
