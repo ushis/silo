@@ -196,34 +196,66 @@ describe Project do
     end
   end
 
-  describe :potential_partners do
-    before(:all) do
-      @acme = create(:partner, company: 'ACME')
-      @linux = create(:partner, company: 'Linux Foundation')
-      @apache = create(:partner, company: 'Apache Foundation')
-    end
+  describe :potential_experts do
+    before(:all) { @members = (1..3).map { create(:project_member) } }
 
-    after(:all) do
-      [Partner, User].each { |m| m.destroy_all }
-    end
+    after(:all) { [Expert, Project, User].each { |m| m.destroy_all } }
 
-    subject { create(:project, partners: [@linux]) }
+    subject { create(:project, members: members).potential_experts }
 
-    context 'when :q is empty' do
-      it 'should be a collection of all partners not associated with the project' do
-        expect(subject.potential_partners(nil)).to match_array([@acme, @apache])
+    context 'when the project has no members' do
+      let(:members) { [] }
+
+      it 'should be a collection of all members' do
+        expect(subject).to match_array(@members.map(&:expert))
       end
     end
 
-    context 'when :q is "oundati"' do
-      it 'should find the apache foundation' do
-        expect(subject.potential_partners('oundati')).to eq([@apache])
-      end
-    end
+    context 'when the project has all members' do
+      let(:members) { @members }
 
-    context 'when :q is "something strange"' do
       it 'should find nothing' do
-        expect(subject.potential_partners('something strange')).to eq([])
+        expect(subject).to eq([])
+      end
+    end
+
+    context 'when project has one member' do
+      let(:members) { [@members[0]] }
+
+      it 'should find the other partners' do
+          expect(subject).to match_array(@members[1..2].map(&:expert))
+      end
+    end
+  end
+
+  describe :potential_partners do
+    before(:all) { @partners = (1..3).map { create(:partner) } }
+
+    after(:all) { [Partner, User].each { |m| m.destroy_all } }
+
+    subject { create(:project, partners: partners).potential_partners }
+
+    context 'when the project has no partners' do
+      let(:partners) { [] }
+
+      it 'should be a collection of all partners' do
+        expect(subject).to match_array(@partners)
+      end
+    end
+
+    context 'when the project has all partners' do
+      let(:partners) { @partners }
+
+      it 'should find nothing' do
+        expect(subject).to eq([])
+      end
+    end
+
+    context 'when project has one partner' do
+      let(:partners) { [@partners[0]] }
+
+      it 'should find the other partners' do
+          expect(subject).to match_array(@partners[1..2])
       end
     end
   end

@@ -107,11 +107,16 @@ class Project < ActiveRecord::Base
     infos.find_by_language!(lang)
   end
 
+  # Returns a collection of potential experts.
+  def potential_experts
+    ids = members.pluck(:expert_id)
+    ids.empty? ? Expert.scoped : Expert.where('id NOT IN (?)', ids)
+  end
+
   # Returns a collection of potential partners.
-  def potential_partners(q)
+  def potential_partners
     ids = partners.pluck(:id)
-    scope = ids.empty? ? Partner : Partner.where('id NOT IN (?)', ids)
-    scope.where('company LIKE ?', "%#{q}%")
+    ids.empty? ? Partner.scoped : Partner.where('id NOT IN (?)', ids)
   end
 
   # Adds a partners to the project.

@@ -22,6 +22,6 @@ class Ajax::ProjectPartnersController < Ajax::ApplicationController
   end
 
   def find_potential_partners
-    @partners = @project.potential_partners(params[:q]).ordered.limit(10)
+    @partners = @project.potential_partners.search(params).limit(10)
   end
 end
