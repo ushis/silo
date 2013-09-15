@@ -107,7 +107,7 @@ body.projects.show #main div.tabbed-content div.content ul.info li.service-detai
 /* Project Members */
 
 body.project-members.index table td.functions {
-  width: 46px;
+  width: 20px;
   padding: 0 0 0 10px;
 }
 
@@ -124,6 +124,30 @@ body.project-members.index table td.functions a {
 
 body.project-members.index table td.functions a:last-child {
   margin: 0 0 -4px 0;
+}
+
+body.project-members.index table td.role a {
+  position: relative;
+  color: #8D8D8D;
+  text-shadow: 0 1px 0 #FFF;
+  line-height: 15px;
+  padding: 9px 24px 9px 10px;
+  margin: -6px -10px -5px -10px;
+}
+
+body.project-members.index table td.role:hover a:after {
+  position: absolute;
+  top: 9px;
+  right: 10px;
+  font-family: FontAwesome;
+  content: '\f040';
+  font-size: 1.2em;
+  font-style: normal;
+  color: #555;
+}
+
+body.project-members div.overlay.project-members td a {
+  display: block;
 }
 
 /* Edit / New Form */
