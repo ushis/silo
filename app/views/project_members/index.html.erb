@@ -31,7 +31,7 @@
                 <td>
                   <%= link_to member.name, expert_path(member.expert) %>
                 </td>
-                <td>
+                <td class="role">
                   <% if current_user.access?(:projects) %>
                     <%= editable_button_for member, :role, url: ajax_project_member_path(@project, member) %>
                   <% else %>
